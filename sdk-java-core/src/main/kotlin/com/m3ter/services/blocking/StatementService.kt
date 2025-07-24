@@ -44,30 +44,30 @@ interface StatementService {
      */
     fun createCsv(id: String): ObjectUrlResponse = createCsv(id, StatementCreateCsvParams.none())
 
-    /** @see [createCsv] */
+    /** @see createCsv */
     fun createCsv(
         id: String,
         params: StatementCreateCsvParams = StatementCreateCsvParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ObjectUrlResponse = createCsv(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [createCsv] */
+    /** @see createCsv */
     fun createCsv(
         id: String,
         params: StatementCreateCsvParams = StatementCreateCsvParams.none(),
     ): ObjectUrlResponse = createCsv(id, params, RequestOptions.none())
 
-    /** @see [createCsv] */
+    /** @see createCsv */
     fun createCsv(
         params: StatementCreateCsvParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ObjectUrlResponse
 
-    /** @see [createCsv] */
+    /** @see createCsv */
     fun createCsv(params: StatementCreateCsvParams): ObjectUrlResponse =
         createCsv(params, RequestOptions.none())
 
-    /** @see [createCsv] */
+    /** @see createCsv */
     fun createCsv(id: String, requestOptions: RequestOptions): ObjectUrlResponse =
         createCsv(id, StatementCreateCsvParams.none(), requestOptions)
 
@@ -84,30 +84,30 @@ interface StatementService {
      */
     fun getCsv(id: String): ObjectUrlResponse = getCsv(id, StatementGetCsvParams.none())
 
-    /** @see [getCsv] */
+    /** @see getCsv */
     fun getCsv(
         id: String,
         params: StatementGetCsvParams = StatementGetCsvParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ObjectUrlResponse = getCsv(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [getCsv] */
+    /** @see getCsv */
     fun getCsv(
         id: String,
         params: StatementGetCsvParams = StatementGetCsvParams.none(),
     ): ObjectUrlResponse = getCsv(id, params, RequestOptions.none())
 
-    /** @see [getCsv] */
+    /** @see getCsv */
     fun getCsv(
         params: StatementGetCsvParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ObjectUrlResponse
 
-    /** @see [getCsv] */
+    /** @see getCsv */
     fun getCsv(params: StatementGetCsvParams): ObjectUrlResponse =
         getCsv(params, RequestOptions.none())
 
-    /** @see [getCsv] */
+    /** @see getCsv */
     fun getCsv(id: String, requestOptions: RequestOptions): ObjectUrlResponse =
         getCsv(id, StatementGetCsvParams.none(), requestOptions)
 
@@ -123,30 +123,30 @@ interface StatementService {
      */
     fun getJson(id: String): ObjectUrlResponse = getJson(id, StatementGetJsonParams.none())
 
-    /** @see [getJson] */
+    /** @see getJson */
     fun getJson(
         id: String,
         params: StatementGetJsonParams = StatementGetJsonParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ObjectUrlResponse = getJson(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [getJson] */
+    /** @see getJson */
     fun getJson(
         id: String,
         params: StatementGetJsonParams = StatementGetJsonParams.none(),
     ): ObjectUrlResponse = getJson(id, params, RequestOptions.none())
 
-    /** @see [getJson] */
+    /** @see getJson */
     fun getJson(
         params: StatementGetJsonParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ObjectUrlResponse
 
-    /** @see [getJson] */
+    /** @see getJson */
     fun getJson(params: StatementGetJsonParams): ObjectUrlResponse =
         getJson(params, RequestOptions.none())
 
-    /** @see [getJson] */
+    /** @see getJson */
     fun getJson(id: String, requestOptions: RequestOptions): ObjectUrlResponse =
         getJson(id, StatementGetJsonParams.none(), requestOptions)
 
@@ -172,7 +172,7 @@ interface StatementService {
         fun createCsv(id: String): HttpResponseFor<ObjectUrlResponse> =
             createCsv(id, StatementCreateCsvParams.none())
 
-        /** @see [createCsv] */
+        /** @see createCsv */
         @MustBeClosed
         fun createCsv(
             id: String,
@@ -181,26 +181,26 @@ interface StatementService {
         ): HttpResponseFor<ObjectUrlResponse> =
             createCsv(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [createCsv] */
+        /** @see createCsv */
         @MustBeClosed
         fun createCsv(
             id: String,
             params: StatementCreateCsvParams = StatementCreateCsvParams.none(),
         ): HttpResponseFor<ObjectUrlResponse> = createCsv(id, params, RequestOptions.none())
 
-        /** @see [createCsv] */
+        /** @see createCsv */
         @MustBeClosed
         fun createCsv(
             params: StatementCreateCsvParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ObjectUrlResponse>
 
-        /** @see [createCsv] */
+        /** @see createCsv */
         @MustBeClosed
         fun createCsv(params: StatementCreateCsvParams): HttpResponseFor<ObjectUrlResponse> =
             createCsv(params, RequestOptions.none())
 
-        /** @see [createCsv] */
+        /** @see createCsv */
         @MustBeClosed
         fun createCsv(
             id: String,
@@ -216,7 +216,7 @@ interface StatementService {
         fun getCsv(id: String): HttpResponseFor<ObjectUrlResponse> =
             getCsv(id, StatementGetCsvParams.none())
 
-        /** @see [getCsv] */
+        /** @see getCsv */
         @MustBeClosed
         fun getCsv(
             id: String,
@@ -225,26 +225,26 @@ interface StatementService {
         ): HttpResponseFor<ObjectUrlResponse> =
             getCsv(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [getCsv] */
+        /** @see getCsv */
         @MustBeClosed
         fun getCsv(
             id: String,
             params: StatementGetCsvParams = StatementGetCsvParams.none(),
         ): HttpResponseFor<ObjectUrlResponse> = getCsv(id, params, RequestOptions.none())
 
-        /** @see [getCsv] */
+        /** @see getCsv */
         @MustBeClosed
         fun getCsv(
             params: StatementGetCsvParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ObjectUrlResponse>
 
-        /** @see [getCsv] */
+        /** @see getCsv */
         @MustBeClosed
         fun getCsv(params: StatementGetCsvParams): HttpResponseFor<ObjectUrlResponse> =
             getCsv(params, RequestOptions.none())
 
-        /** @see [getCsv] */
+        /** @see getCsv */
         @MustBeClosed
         fun getCsv(id: String, requestOptions: RequestOptions): HttpResponseFor<ObjectUrlResponse> =
             getCsv(id, StatementGetCsvParams.none(), requestOptions)
@@ -257,7 +257,7 @@ interface StatementService {
         fun getJson(id: String): HttpResponseFor<ObjectUrlResponse> =
             getJson(id, StatementGetJsonParams.none())
 
-        /** @see [getJson] */
+        /** @see getJson */
         @MustBeClosed
         fun getJson(
             id: String,
@@ -266,26 +266,26 @@ interface StatementService {
         ): HttpResponseFor<ObjectUrlResponse> =
             getJson(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [getJson] */
+        /** @see getJson */
         @MustBeClosed
         fun getJson(
             id: String,
             params: StatementGetJsonParams = StatementGetJsonParams.none(),
         ): HttpResponseFor<ObjectUrlResponse> = getJson(id, params, RequestOptions.none())
 
-        /** @see [getJson] */
+        /** @see getJson */
         @MustBeClosed
         fun getJson(
             params: StatementGetJsonParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ObjectUrlResponse>
 
-        /** @see [getJson] */
+        /** @see getJson */
         @MustBeClosed
         fun getJson(params: StatementGetJsonParams): HttpResponseFor<ObjectUrlResponse> =
             getJson(params, RequestOptions.none())
 
-        /** @see [getJson] */
+        /** @see getJson */
         @MustBeClosed
         fun getJson(
             id: String,

@@ -60,7 +60,7 @@ interface MeterServiceAsync {
     fun create(params: MeterCreateParams): CompletableFuture<MeterResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: MeterCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -70,7 +70,7 @@ interface MeterServiceAsync {
     fun retrieve(id: String): CompletableFuture<MeterResponse> =
         retrieve(id, MeterRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: MeterRetrieveParams = MeterRetrieveParams.none(),
@@ -78,23 +78,23 @@ interface MeterServiceAsync {
     ): CompletableFuture<MeterResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: MeterRetrieveParams = MeterRetrieveParams.none(),
     ): CompletableFuture<MeterResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: MeterRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<MeterResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: MeterRetrieveParams): CompletableFuture<MeterResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<MeterResponse> =
         retrieve(id, MeterRetrieveParams.none(), requestOptions)
 
@@ -108,18 +108,18 @@ interface MeterServiceAsync {
     fun update(id: String, params: MeterUpdateParams): CompletableFuture<MeterResponse> =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: MeterUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<MeterResponse> = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: MeterUpdateParams): CompletableFuture<MeterResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: MeterUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -128,48 +128,48 @@ interface MeterServiceAsync {
     /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
     fun list(): CompletableFuture<MeterListPageAsync> = list(MeterListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: MeterListParams = MeterListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<MeterListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: MeterListParams = MeterListParams.none()
     ): CompletableFuture<MeterListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<MeterListPageAsync> =
         list(MeterListParams.none(), requestOptions)
 
     /** Delete the Meter with the given UUID. */
     fun delete(id: String): CompletableFuture<MeterResponse> = delete(id, MeterDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: MeterDeleteParams = MeterDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<MeterResponse> = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: MeterDeleteParams = MeterDeleteParams.none(),
     ): CompletableFuture<MeterResponse> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: MeterDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<MeterResponse>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: MeterDeleteParams): CompletableFuture<MeterResponse> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<MeterResponse> =
         delete(id, MeterDeleteParams.none(), requestOptions)
 
@@ -192,7 +192,7 @@ interface MeterServiceAsync {
         fun create(params: MeterCreateParams): CompletableFuture<HttpResponseFor<MeterResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: MeterCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -205,7 +205,7 @@ interface MeterServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<MeterResponse>> =
             retrieve(id, MeterRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: MeterRetrieveParams = MeterRetrieveParams.none(),
@@ -213,26 +213,26 @@ interface MeterServiceAsync {
         ): CompletableFuture<HttpResponseFor<MeterResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: MeterRetrieveParams = MeterRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<MeterResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: MeterRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<MeterResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: MeterRetrieveParams
         ): CompletableFuture<HttpResponseFor<MeterResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -249,7 +249,7 @@ interface MeterServiceAsync {
         ): CompletableFuture<HttpResponseFor<MeterResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: MeterUpdateParams,
@@ -257,11 +257,11 @@ interface MeterServiceAsync {
         ): CompletableFuture<HttpResponseFor<MeterResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(params: MeterUpdateParams): CompletableFuture<HttpResponseFor<MeterResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: MeterUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -274,19 +274,19 @@ interface MeterServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<MeterListPageAsync>> =
             list(MeterListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: MeterListParams = MeterListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<MeterListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: MeterListParams = MeterListParams.none()
         ): CompletableFuture<HttpResponseFor<MeterListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<MeterListPageAsync>> =
@@ -299,7 +299,7 @@ interface MeterServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<MeterResponse>> =
             delete(id, MeterDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: MeterDeleteParams = MeterDeleteParams.none(),
@@ -307,24 +307,24 @@ interface MeterServiceAsync {
         ): CompletableFuture<HttpResponseFor<MeterResponse>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: MeterDeleteParams = MeterDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<MeterResponse>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: MeterDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<MeterResponse>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(params: MeterDeleteParams): CompletableFuture<HttpResponseFor<MeterResponse>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,

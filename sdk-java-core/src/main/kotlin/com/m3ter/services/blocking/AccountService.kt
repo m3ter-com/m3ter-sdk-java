@@ -37,7 +37,7 @@ interface AccountService {
     /** Create a new Account within the Organization. */
     fun create(params: AccountCreateParams): AccountResponse = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: AccountCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -46,30 +46,30 @@ interface AccountService {
     /** Retrieve the Account with the given Account UUID. */
     fun retrieve(id: String): AccountResponse = retrieve(id, AccountRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: AccountRetrieveParams = AccountRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: AccountRetrieveParams = AccountRetrieveParams.none(),
     ): AccountResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: AccountRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: AccountRetrieveParams): AccountResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): AccountResponse =
         retrieve(id, AccountRetrieveParams.none(), requestOptions)
 
@@ -83,17 +83,17 @@ interface AccountService {
     fun update(id: String, params: AccountUpdateParams): AccountResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: AccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: AccountUpdateParams): AccountResponse = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: AccountUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -102,17 +102,17 @@ interface AccountService {
     /** Retrieve a list of Accounts that can be filtered by Account ID or Account Code. */
     fun list(): AccountListPage = list(AccountListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: AccountListParams = AccountListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: AccountListParams = AccountListParams.none()): AccountListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): AccountListPage =
         list(AccountListParams.none(), requestOptions)
 
@@ -122,29 +122,29 @@ interface AccountService {
      */
     fun delete(id: String): AccountResponse = delete(id, AccountDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: AccountDeleteParams = AccountDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: AccountDeleteParams = AccountDeleteParams.none(),
     ): AccountResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: AccountDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: AccountDeleteParams): AccountResponse = delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): AccountResponse =
         delete(id, AccountDeleteParams.none(), requestOptions)
 
@@ -161,7 +161,7 @@ interface AccountService {
     ): AccountEndDateBillingEntitiesResponse =
         endDateBillingEntities(id, params, RequestOptions.none())
 
-    /** @see [endDateBillingEntities] */
+    /** @see endDateBillingEntities */
     fun endDateBillingEntities(
         id: String,
         params: AccountEndDateBillingEntitiesParams,
@@ -169,12 +169,12 @@ interface AccountService {
     ): AccountEndDateBillingEntitiesResponse =
         endDateBillingEntities(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [endDateBillingEntities] */
+    /** @see endDateBillingEntities */
     fun endDateBillingEntities(
         params: AccountEndDateBillingEntitiesParams
     ): AccountEndDateBillingEntitiesResponse = endDateBillingEntities(params, RequestOptions.none())
 
-    /** @see [endDateBillingEntities] */
+    /** @see endDateBillingEntities */
     fun endDateBillingEntities(
         params: AccountEndDateBillingEntitiesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -183,30 +183,30 @@ interface AccountService {
     /** Retrieve a list of Accounts that are children of the specified Account. */
     fun getChildren(id: String): AccountResponse = getChildren(id, AccountGetChildrenParams.none())
 
-    /** @see [getChildren] */
+    /** @see getChildren */
     fun getChildren(
         id: String,
         params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountResponse = getChildren(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [getChildren] */
+    /** @see getChildren */
     fun getChildren(
         id: String,
         params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
     ): AccountResponse = getChildren(id, params, RequestOptions.none())
 
-    /** @see [getChildren] */
+    /** @see getChildren */
     fun getChildren(
         params: AccountGetChildrenParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountResponse
 
-    /** @see [getChildren] */
+    /** @see getChildren */
     fun getChildren(params: AccountGetChildrenParams): AccountResponse =
         getChildren(params, RequestOptions.none())
 
-    /** @see [getChildren] */
+    /** @see getChildren */
     fun getChildren(id: String, requestOptions: RequestOptions): AccountResponse =
         getChildren(id, AccountGetChildrenParams.none(), requestOptions)
 
@@ -219,17 +219,17 @@ interface AccountService {
      */
     fun search(): AccountSearchResponse = search(AccountSearchParams.none())
 
-    /** @see [search] */
+    /** @see search */
     fun search(
         params: AccountSearchParams = AccountSearchParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountSearchResponse
 
-    /** @see [search] */
+    /** @see search */
     fun search(params: AccountSearchParams = AccountSearchParams.none()): AccountSearchResponse =
         search(params, RequestOptions.none())
 
-    /** @see [search] */
+    /** @see search */
     fun search(requestOptions: RequestOptions): AccountSearchResponse =
         search(AccountSearchParams.none(), requestOptions)
 
@@ -251,7 +251,7 @@ interface AccountService {
         fun create(params: AccountCreateParams): HttpResponseFor<AccountResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: AccountCreateParams,
@@ -266,7 +266,7 @@ interface AccountService {
         fun retrieve(id: String): HttpResponseFor<AccountResponse> =
             retrieve(id, AccountRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -275,26 +275,26 @@ interface AccountService {
         ): HttpResponseFor<AccountResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: AccountRetrieveParams = AccountRetrieveParams.none(),
         ): HttpResponseFor<AccountResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: AccountRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: AccountRetrieveParams): HttpResponseFor<AccountResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<AccountResponse> =
             retrieve(id, AccountRetrieveParams.none(), requestOptions)
@@ -307,7 +307,7 @@ interface AccountService {
         fun update(id: String, params: AccountUpdateParams): HttpResponseFor<AccountResponse> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -316,12 +316,12 @@ interface AccountService {
         ): HttpResponseFor<AccountResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: AccountUpdateParams): HttpResponseFor<AccountResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: AccountUpdateParams,
@@ -334,20 +334,20 @@ interface AccountService {
          */
         @MustBeClosed fun list(): HttpResponseFor<AccountListPage> = list(AccountListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: AccountListParams = AccountListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: AccountListParams = AccountListParams.none()
         ): HttpResponseFor<AccountListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<AccountListPage> =
             list(AccountListParams.none(), requestOptions)
@@ -360,7 +360,7 @@ interface AccountService {
         fun delete(id: String): HttpResponseFor<AccountResponse> =
             delete(id, AccountDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -369,26 +369,26 @@ interface AccountService {
         ): HttpResponseFor<AccountResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: AccountDeleteParams = AccountDeleteParams.none(),
         ): HttpResponseFor<AccountResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: AccountDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: AccountDeleteParams): HttpResponseFor<AccountResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<AccountResponse> =
             delete(id, AccountDeleteParams.none(), requestOptions)
@@ -405,7 +405,7 @@ interface AccountService {
         ): HttpResponseFor<AccountEndDateBillingEntitiesResponse> =
             endDateBillingEntities(id, params, RequestOptions.none())
 
-        /** @see [endDateBillingEntities] */
+        /** @see endDateBillingEntities */
         @MustBeClosed
         fun endDateBillingEntities(
             id: String,
@@ -414,14 +414,14 @@ interface AccountService {
         ): HttpResponseFor<AccountEndDateBillingEntitiesResponse> =
             endDateBillingEntities(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [endDateBillingEntities] */
+        /** @see endDateBillingEntities */
         @MustBeClosed
         fun endDateBillingEntities(
             params: AccountEndDateBillingEntitiesParams
         ): HttpResponseFor<AccountEndDateBillingEntitiesResponse> =
             endDateBillingEntities(params, RequestOptions.none())
 
-        /** @see [endDateBillingEntities] */
+        /** @see endDateBillingEntities */
         @MustBeClosed
         fun endDateBillingEntities(
             params: AccountEndDateBillingEntitiesParams,
@@ -436,7 +436,7 @@ interface AccountService {
         fun getChildren(id: String): HttpResponseFor<AccountResponse> =
             getChildren(id, AccountGetChildrenParams.none())
 
-        /** @see [getChildren] */
+        /** @see getChildren */
         @MustBeClosed
         fun getChildren(
             id: String,
@@ -445,26 +445,26 @@ interface AccountService {
         ): HttpResponseFor<AccountResponse> =
             getChildren(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [getChildren] */
+        /** @see getChildren */
         @MustBeClosed
         fun getChildren(
             id: String,
             params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
         ): HttpResponseFor<AccountResponse> = getChildren(id, params, RequestOptions.none())
 
-        /** @see [getChildren] */
+        /** @see getChildren */
         @MustBeClosed
         fun getChildren(
             params: AccountGetChildrenParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountResponse>
 
-        /** @see [getChildren] */
+        /** @see getChildren */
         @MustBeClosed
         fun getChildren(params: AccountGetChildrenParams): HttpResponseFor<AccountResponse> =
             getChildren(params, RequestOptions.none())
 
-        /** @see [getChildren] */
+        /** @see getChildren */
         @MustBeClosed
         fun getChildren(
             id: String,
@@ -479,20 +479,20 @@ interface AccountService {
         @MustBeClosed
         fun search(): HttpResponseFor<AccountSearchResponse> = search(AccountSearchParams.none())
 
-        /** @see [search] */
+        /** @see search */
         @MustBeClosed
         fun search(
             params: AccountSearchParams = AccountSearchParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountSearchResponse>
 
-        /** @see [search] */
+        /** @see search */
         @MustBeClosed
         fun search(
             params: AccountSearchParams = AccountSearchParams.none()
         ): HttpResponseFor<AccountSearchResponse> = search(params, RequestOptions.none())
 
-        /** @see [search] */
+        /** @see search */
         @MustBeClosed
         fun search(requestOptions: RequestOptions): HttpResponseFor<AccountSearchResponse> =
             search(AccountSearchParams.none(), requestOptions)

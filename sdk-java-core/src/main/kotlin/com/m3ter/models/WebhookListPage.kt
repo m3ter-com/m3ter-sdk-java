@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [WebhookService.list] */
+/** @see WebhookService.list */
 class WebhookListPage
 private constructor(
     private val service: WebhookService,
@@ -21,14 +21,14 @@ private constructor(
     /**
      * Delegates to [WebhookListPageResponse], but gracefully handles missing data.
      *
-     * @see [WebhookListPageResponse.data]
+     * @see WebhookListPageResponse.data
      */
     fun data(): List<Webhook> = response._data().getOptional("data").getOrNull() ?: emptyList()
 
     /**
      * Delegates to [WebhookListPageResponse], but gracefully handles missing data.
      *
-     * @see [WebhookListPageResponse.nextToken]
+     * @see WebhookListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

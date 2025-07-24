@@ -38,7 +38,7 @@ interface CounterPricingServiceAsync {
     fun create(params: CounterPricingCreateParams): CompletableFuture<CounterPricingResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: CounterPricingCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -48,7 +48,7 @@ interface CounterPricingServiceAsync {
     fun retrieve(id: String): CompletableFuture<CounterPricingResponse> =
         retrieve(id, CounterPricingRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CounterPricingRetrieveParams = CounterPricingRetrieveParams.none(),
@@ -56,23 +56,23 @@ interface CounterPricingServiceAsync {
     ): CompletableFuture<CounterPricingResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CounterPricingRetrieveParams = CounterPricingRetrieveParams.none(),
     ): CompletableFuture<CounterPricingResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CounterPricingRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterPricingResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: CounterPricingRetrieveParams): CompletableFuture<CounterPricingResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -90,7 +90,7 @@ interface CounterPricingServiceAsync {
         params: CounterPricingUpdateParams,
     ): CompletableFuture<CounterPricingResponse> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: CounterPricingUpdateParams,
@@ -98,11 +98,11 @@ interface CounterPricingServiceAsync {
     ): CompletableFuture<CounterPricingResponse> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: CounterPricingUpdateParams): CompletableFuture<CounterPricingResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CounterPricingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -115,18 +115,18 @@ interface CounterPricingServiceAsync {
     fun list(): CompletableFuture<CounterPricingListPageAsync> =
         list(CounterPricingListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CounterPricingListParams = CounterPricingListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterPricingListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CounterPricingListParams = CounterPricingListParams.none()
     ): CompletableFuture<CounterPricingListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<CounterPricingListPageAsync> =
         list(CounterPricingListParams.none(), requestOptions)
 
@@ -134,7 +134,7 @@ interface CounterPricingServiceAsync {
     fun delete(id: String): CompletableFuture<CounterPricingResponse> =
         delete(id, CounterPricingDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CounterPricingDeleteParams = CounterPricingDeleteParams.none(),
@@ -142,23 +142,23 @@ interface CounterPricingServiceAsync {
     ): CompletableFuture<CounterPricingResponse> =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CounterPricingDeleteParams = CounterPricingDeleteParams.none(),
     ): CompletableFuture<CounterPricingResponse> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: CounterPricingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CounterPricingResponse>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: CounterPricingDeleteParams): CompletableFuture<CounterPricingResponse> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         requestOptions: RequestOptions,
@@ -189,7 +189,7 @@ interface CounterPricingServiceAsync {
         ): CompletableFuture<HttpResponseFor<CounterPricingResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: CounterPricingCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -202,7 +202,7 @@ interface CounterPricingServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<CounterPricingResponse>> =
             retrieve(id, CounterPricingRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: CounterPricingRetrieveParams = CounterPricingRetrieveParams.none(),
@@ -210,26 +210,26 @@ interface CounterPricingServiceAsync {
         ): CompletableFuture<HttpResponseFor<CounterPricingResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: CounterPricingRetrieveParams = CounterPricingRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<CounterPricingResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: CounterPricingRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CounterPricingResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: CounterPricingRetrieveParams
         ): CompletableFuture<HttpResponseFor<CounterPricingResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -246,7 +246,7 @@ interface CounterPricingServiceAsync {
         ): CompletableFuture<HttpResponseFor<CounterPricingResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: CounterPricingUpdateParams,
@@ -254,13 +254,13 @@ interface CounterPricingServiceAsync {
         ): CompletableFuture<HttpResponseFor<CounterPricingResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: CounterPricingUpdateParams
         ): CompletableFuture<HttpResponseFor<CounterPricingResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: CounterPricingUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -273,19 +273,19 @@ interface CounterPricingServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<CounterPricingListPageAsync>> =
             list(CounterPricingListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: CounterPricingListParams = CounterPricingListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CounterPricingListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: CounterPricingListParams = CounterPricingListParams.none()
         ): CompletableFuture<HttpResponseFor<CounterPricingListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CounterPricingListPageAsync>> =
@@ -298,7 +298,7 @@ interface CounterPricingServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<CounterPricingResponse>> =
             delete(id, CounterPricingDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: CounterPricingDeleteParams = CounterPricingDeleteParams.none(),
@@ -306,26 +306,26 @@ interface CounterPricingServiceAsync {
         ): CompletableFuture<HttpResponseFor<CounterPricingResponse>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: CounterPricingDeleteParams = CounterPricingDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<CounterPricingResponse>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: CounterPricingDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CounterPricingResponse>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: CounterPricingDeleteParams
         ): CompletableFuture<HttpResponseFor<CounterPricingResponse>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,

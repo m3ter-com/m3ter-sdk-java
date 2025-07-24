@@ -41,7 +41,7 @@ interface ResourceGroupServiceAsync {
         params: ResourceGroupCreateParams,
     ): CompletableFuture<ResourceGroupResponse> = create(type, params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         type: String,
         params: ResourceGroupCreateParams,
@@ -49,11 +49,11 @@ interface ResourceGroupServiceAsync {
     ): CompletableFuture<ResourceGroupResponse> =
         create(params.toBuilder().type(type).build(), requestOptions)
 
-    /** @see [create] */
+    /** @see create */
     fun create(params: ResourceGroupCreateParams): CompletableFuture<ResourceGroupResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: ResourceGroupCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -65,7 +65,7 @@ interface ResourceGroupServiceAsync {
         params: ResourceGroupRetrieveParams,
     ): CompletableFuture<ResourceGroupResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ResourceGroupRetrieveParams,
@@ -73,11 +73,11 @@ interface ResourceGroupServiceAsync {
     ): CompletableFuture<ResourceGroupResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: ResourceGroupRetrieveParams): CompletableFuture<ResourceGroupResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: ResourceGroupRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -89,7 +89,7 @@ interface ResourceGroupServiceAsync {
         params: ResourceGroupUpdateParams,
     ): CompletableFuture<ResourceGroupResponse> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: ResourceGroupUpdateParams,
@@ -97,11 +97,11 @@ interface ResourceGroupServiceAsync {
     ): CompletableFuture<ResourceGroupResponse> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: ResourceGroupUpdateParams): CompletableFuture<ResourceGroupResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: ResourceGroupUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -111,7 +111,7 @@ interface ResourceGroupServiceAsync {
     fun list(type: String): CompletableFuture<ResourceGroupListPageAsync> =
         list(type, ResourceGroupListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         type: String,
         params: ResourceGroupListParams = ResourceGroupListParams.none(),
@@ -119,23 +119,23 @@ interface ResourceGroupServiceAsync {
     ): CompletableFuture<ResourceGroupListPageAsync> =
         list(params.toBuilder().type(type).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         type: String,
         params: ResourceGroupListParams = ResourceGroupListParams.none(),
     ): CompletableFuture<ResourceGroupListPageAsync> = list(type, params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ResourceGroupListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ResourceGroupListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: ResourceGroupListParams): CompletableFuture<ResourceGroupListPageAsync> =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         type: String,
         requestOptions: RequestOptions,
@@ -148,7 +148,7 @@ interface ResourceGroupServiceAsync {
         params: ResourceGroupDeleteParams,
     ): CompletableFuture<ResourceGroupResponse> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: ResourceGroupDeleteParams,
@@ -156,11 +156,11 @@ interface ResourceGroupServiceAsync {
     ): CompletableFuture<ResourceGroupResponse> =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: ResourceGroupDeleteParams): CompletableFuture<ResourceGroupResponse> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: ResourceGroupDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -173,7 +173,7 @@ interface ResourceGroupServiceAsync {
     ): CompletableFuture<ResourceGroupResponse> =
         addResource(resourceGroupId, params, RequestOptions.none())
 
-    /** @see [addResource] */
+    /** @see addResource */
     fun addResource(
         resourceGroupId: String,
         params: ResourceGroupAddResourceParams,
@@ -181,12 +181,12 @@ interface ResourceGroupServiceAsync {
     ): CompletableFuture<ResourceGroupResponse> =
         addResource(params.toBuilder().resourceGroupId(resourceGroupId).build(), requestOptions)
 
-    /** @see [addResource] */
+    /** @see addResource */
     fun addResource(
         params: ResourceGroupAddResourceParams
     ): CompletableFuture<ResourceGroupResponse> = addResource(params, RequestOptions.none())
 
-    /** @see [addResource] */
+    /** @see addResource */
     fun addResource(
         params: ResourceGroupAddResourceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -199,7 +199,7 @@ interface ResourceGroupServiceAsync {
     ): CompletableFuture<ResourceGroupListContentsPageAsync> =
         listContents(resourceGroupId, params, RequestOptions.none())
 
-    /** @see [listContents] */
+    /** @see listContents */
     fun listContents(
         resourceGroupId: String,
         params: ResourceGroupListContentsParams,
@@ -207,13 +207,13 @@ interface ResourceGroupServiceAsync {
     ): CompletableFuture<ResourceGroupListContentsPageAsync> =
         listContents(params.toBuilder().resourceGroupId(resourceGroupId).build(), requestOptions)
 
-    /** @see [listContents] */
+    /** @see listContents */
     fun listContents(
         params: ResourceGroupListContentsParams
     ): CompletableFuture<ResourceGroupListContentsPageAsync> =
         listContents(params, RequestOptions.none())
 
-    /** @see [listContents] */
+    /** @see listContents */
     fun listContents(
         params: ResourceGroupListContentsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -226,7 +226,7 @@ interface ResourceGroupServiceAsync {
     ): CompletableFuture<ResourceGroupListPermissionsPageAsync> =
         listPermissions(resourceGroupId, params, RequestOptions.none())
 
-    /** @see [listPermissions] */
+    /** @see listPermissions */
     fun listPermissions(
         resourceGroupId: String,
         params: ResourceGroupListPermissionsParams,
@@ -234,13 +234,13 @@ interface ResourceGroupServiceAsync {
     ): CompletableFuture<ResourceGroupListPermissionsPageAsync> =
         listPermissions(params.toBuilder().resourceGroupId(resourceGroupId).build(), requestOptions)
 
-    /** @see [listPermissions] */
+    /** @see listPermissions */
     fun listPermissions(
         params: ResourceGroupListPermissionsParams
     ): CompletableFuture<ResourceGroupListPermissionsPageAsync> =
         listPermissions(params, RequestOptions.none())
 
-    /** @see [listPermissions] */
+    /** @see listPermissions */
     fun listPermissions(
         params: ResourceGroupListPermissionsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -253,7 +253,7 @@ interface ResourceGroupServiceAsync {
     ): CompletableFuture<ResourceGroupResponse> =
         removeResource(resourceGroupId, params, RequestOptions.none())
 
-    /** @see [removeResource] */
+    /** @see removeResource */
     fun removeResource(
         resourceGroupId: String,
         params: ResourceGroupRemoveResourceParams,
@@ -261,12 +261,12 @@ interface ResourceGroupServiceAsync {
     ): CompletableFuture<ResourceGroupResponse> =
         removeResource(params.toBuilder().resourceGroupId(resourceGroupId).build(), requestOptions)
 
-    /** @see [removeResource] */
+    /** @see removeResource */
     fun removeResource(
         params: ResourceGroupRemoveResourceParams
     ): CompletableFuture<ResourceGroupResponse> = removeResource(params, RequestOptions.none())
 
-    /** @see [removeResource] */
+    /** @see removeResource */
     fun removeResource(
         params: ResourceGroupRemoveResourceParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -297,7 +297,7 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             create(type, params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             type: String,
             params: ResourceGroupCreateParams,
@@ -305,13 +305,13 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             create(params.toBuilder().type(type).build(), requestOptions)
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: ResourceGroupCreateParams
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: ResourceGroupCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -327,7 +327,7 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: ResourceGroupRetrieveParams,
@@ -335,13 +335,13 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: ResourceGroupRetrieveParams
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: ResourceGroupRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -357,7 +357,7 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: ResourceGroupUpdateParams,
@@ -365,13 +365,13 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: ResourceGroupUpdateParams
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: ResourceGroupUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -384,7 +384,7 @@ interface ResourceGroupServiceAsync {
         fun list(type: String): CompletableFuture<HttpResponseFor<ResourceGroupListPageAsync>> =
             list(type, ResourceGroupListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             type: String,
             params: ResourceGroupListParams = ResourceGroupListParams.none(),
@@ -392,26 +392,26 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupListPageAsync>> =
             list(params.toBuilder().type(type).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             type: String,
             params: ResourceGroupListParams = ResourceGroupListParams.none(),
         ): CompletableFuture<HttpResponseFor<ResourceGroupListPageAsync>> =
             list(type, params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ResourceGroupListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ResourceGroupListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ResourceGroupListParams
         ): CompletableFuture<HttpResponseFor<ResourceGroupListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             type: String,
             requestOptions: RequestOptions,
@@ -429,7 +429,7 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: ResourceGroupDeleteParams,
@@ -437,13 +437,13 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: ResourceGroupDeleteParams
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: ResourceGroupDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -460,7 +460,7 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             addResource(resourceGroupId, params, RequestOptions.none())
 
-        /** @see [addResource] */
+        /** @see addResource */
         fun addResource(
             resourceGroupId: String,
             params: ResourceGroupAddResourceParams,
@@ -468,13 +468,13 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             addResource(params.toBuilder().resourceGroupId(resourceGroupId).build(), requestOptions)
 
-        /** @see [addResource] */
+        /** @see addResource */
         fun addResource(
             params: ResourceGroupAddResourceParams
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             addResource(params, RequestOptions.none())
 
-        /** @see [addResource] */
+        /** @see addResource */
         fun addResource(
             params: ResourceGroupAddResourceParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -491,7 +491,7 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupListContentsPageAsync>> =
             listContents(resourceGroupId, params, RequestOptions.none())
 
-        /** @see [listContents] */
+        /** @see listContents */
         fun listContents(
             resourceGroupId: String,
             params: ResourceGroupListContentsParams,
@@ -502,13 +502,13 @@ interface ResourceGroupServiceAsync {
                 requestOptions,
             )
 
-        /** @see [listContents] */
+        /** @see listContents */
         fun listContents(
             params: ResourceGroupListContentsParams
         ): CompletableFuture<HttpResponseFor<ResourceGroupListContentsPageAsync>> =
             listContents(params, RequestOptions.none())
 
-        /** @see [listContents] */
+        /** @see listContents */
         fun listContents(
             params: ResourceGroupListContentsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -525,7 +525,7 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupListPermissionsPageAsync>> =
             listPermissions(resourceGroupId, params, RequestOptions.none())
 
-        /** @see [listPermissions] */
+        /** @see listPermissions */
         fun listPermissions(
             resourceGroupId: String,
             params: ResourceGroupListPermissionsParams,
@@ -536,13 +536,13 @@ interface ResourceGroupServiceAsync {
                 requestOptions,
             )
 
-        /** @see [listPermissions] */
+        /** @see listPermissions */
         fun listPermissions(
             params: ResourceGroupListPermissionsParams
         ): CompletableFuture<HttpResponseFor<ResourceGroupListPermissionsPageAsync>> =
             listPermissions(params, RequestOptions.none())
 
-        /** @see [listPermissions] */
+        /** @see listPermissions */
         fun listPermissions(
             params: ResourceGroupListPermissionsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -559,7 +559,7 @@ interface ResourceGroupServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             removeResource(resourceGroupId, params, RequestOptions.none())
 
-        /** @see [removeResource] */
+        /** @see removeResource */
         fun removeResource(
             resourceGroupId: String,
             params: ResourceGroupRemoveResourceParams,
@@ -570,13 +570,13 @@ interface ResourceGroupServiceAsync {
                 requestOptions,
             )
 
-        /** @see [removeResource] */
+        /** @see removeResource */
         fun removeResource(
             params: ResourceGroupRemoveResourceParams
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             removeResource(params, RequestOptions.none())
 
-        /** @see [removeResource] */
+        /** @see removeResource */
         fun removeResource(
             params: ResourceGroupRemoveResourceParams,
             requestOptions: RequestOptions = RequestOptions.none(),

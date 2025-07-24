@@ -36,7 +36,7 @@ interface TransactionTypeService {
     fun create(params: TransactionTypeCreateParams): TransactionTypeResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: TransactionTypeCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -46,30 +46,30 @@ interface TransactionTypeService {
     fun retrieve(id: String): TransactionTypeResponse =
         retrieve(id, TransactionTypeRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: TransactionTypeRetrieveParams = TransactionTypeRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionTypeResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: TransactionTypeRetrieveParams = TransactionTypeRetrieveParams.none(),
     ): TransactionTypeResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: TransactionTypeRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionTypeResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: TransactionTypeRetrieveParams): TransactionTypeResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): TransactionTypeResponse =
         retrieve(id, TransactionTypeRetrieveParams.none(), requestOptions)
 
@@ -80,18 +80,18 @@ interface TransactionTypeService {
     fun update(id: String, params: TransactionTypeUpdateParams): TransactionTypeResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: TransactionTypeUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionTypeResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: TransactionTypeUpdateParams): TransactionTypeResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: TransactionTypeUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -103,48 +103,48 @@ interface TransactionTypeService {
      */
     fun list(): TransactionTypeListPage = list(TransactionTypeListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: TransactionTypeListParams = TransactionTypeListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionTypeListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: TransactionTypeListParams = TransactionTypeListParams.none()
     ): TransactionTypeListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): TransactionTypeListPage =
         list(TransactionTypeListParams.none(), requestOptions)
 
     /** Deletes the TransactionType with the given UUID from the specified Organization. */
     fun delete(id: String): TransactionTypeResponse = delete(id, TransactionTypeDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: TransactionTypeDeleteParams = TransactionTypeDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionTypeResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: TransactionTypeDeleteParams = TransactionTypeDeleteParams.none(),
     ): TransactionTypeResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: TransactionTypeDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionTypeResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: TransactionTypeDeleteParams): TransactionTypeResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): TransactionTypeResponse =
         delete(id, TransactionTypeDeleteParams.none(), requestOptions)
 
@@ -171,7 +171,7 @@ interface TransactionTypeService {
         fun create(params: TransactionTypeCreateParams): HttpResponseFor<TransactionTypeResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: TransactionTypeCreateParams,
@@ -187,7 +187,7 @@ interface TransactionTypeService {
         fun retrieve(id: String): HttpResponseFor<TransactionTypeResponse> =
             retrieve(id, TransactionTypeRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -196,27 +196,27 @@ interface TransactionTypeService {
         ): HttpResponseFor<TransactionTypeResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: TransactionTypeRetrieveParams = TransactionTypeRetrieveParams.none(),
         ): HttpResponseFor<TransactionTypeResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: TransactionTypeRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionTypeResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: TransactionTypeRetrieveParams
         ): HttpResponseFor<TransactionTypeResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -235,7 +235,7 @@ interface TransactionTypeService {
             params: TransactionTypeUpdateParams,
         ): HttpResponseFor<TransactionTypeResponse> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -244,12 +244,12 @@ interface TransactionTypeService {
         ): HttpResponseFor<TransactionTypeResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: TransactionTypeUpdateParams): HttpResponseFor<TransactionTypeResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: TransactionTypeUpdateParams,
@@ -264,20 +264,20 @@ interface TransactionTypeService {
         fun list(): HttpResponseFor<TransactionTypeListPage> =
             list(TransactionTypeListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: TransactionTypeListParams = TransactionTypeListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionTypeListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: TransactionTypeListParams = TransactionTypeListParams.none()
         ): HttpResponseFor<TransactionTypeListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<TransactionTypeListPage> =
             list(TransactionTypeListParams.none(), requestOptions)
@@ -291,7 +291,7 @@ interface TransactionTypeService {
         fun delete(id: String): HttpResponseFor<TransactionTypeResponse> =
             delete(id, TransactionTypeDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -300,26 +300,26 @@ interface TransactionTypeService {
         ): HttpResponseFor<TransactionTypeResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: TransactionTypeDeleteParams = TransactionTypeDeleteParams.none(),
         ): HttpResponseFor<TransactionTypeResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: TransactionTypeDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<TransactionTypeResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: TransactionTypeDeleteParams): HttpResponseFor<TransactionTypeResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,

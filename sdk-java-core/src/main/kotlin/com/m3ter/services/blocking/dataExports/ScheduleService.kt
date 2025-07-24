@@ -71,7 +71,7 @@ interface ScheduleService {
     fun create(params: DataExportScheduleCreateParams): DataExportScheduleCreateResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: DataExportScheduleCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -84,7 +84,7 @@ interface ScheduleService {
     fun retrieve(id: String): DataExportScheduleRetrieveResponse =
         retrieve(id, DataExportScheduleRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: DataExportScheduleRetrieveParams = DataExportScheduleRetrieveParams.none(),
@@ -92,23 +92,23 @@ interface ScheduleService {
     ): DataExportScheduleRetrieveResponse =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: DataExportScheduleRetrieveParams = DataExportScheduleRetrieveParams.none(),
     ): DataExportScheduleRetrieveResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: DataExportScheduleRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportScheduleRetrieveResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: DataExportScheduleRetrieveParams): DataExportScheduleRetrieveResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): DataExportScheduleRetrieveResponse =
         retrieve(id, DataExportScheduleRetrieveParams.none(), requestOptions)
 
@@ -145,18 +145,18 @@ interface ScheduleService {
         params: DataExportScheduleUpdateParams,
     ): DataExportScheduleUpdateResponse = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: DataExportScheduleUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportScheduleUpdateResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: DataExportScheduleUpdateParams): DataExportScheduleUpdateResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: DataExportScheduleUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -171,18 +171,18 @@ interface ScheduleService {
      */
     fun list(): DataExportScheduleListPage = list(DataExportScheduleListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: DataExportScheduleListParams = DataExportScheduleListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportScheduleListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: DataExportScheduleListParams = DataExportScheduleListParams.none()
     ): DataExportScheduleListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): DataExportScheduleListPage =
         list(DataExportScheduleListParams.none(), requestOptions)
 
@@ -193,30 +193,30 @@ interface ScheduleService {
     fun delete(id: String): DataExportScheduleDeleteResponse =
         delete(id, DataExportScheduleDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: DataExportScheduleDeleteParams = DataExportScheduleDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportScheduleDeleteResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: DataExportScheduleDeleteParams = DataExportScheduleDeleteParams.none(),
     ): DataExportScheduleDeleteResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: DataExportScheduleDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportScheduleDeleteResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: DataExportScheduleDeleteParams): DataExportScheduleDeleteResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): DataExportScheduleDeleteResponse =
         delete(id, DataExportScheduleDeleteParams.none(), requestOptions)
 
@@ -239,7 +239,7 @@ interface ScheduleService {
             params: DataExportScheduleCreateParams
         ): HttpResponseFor<DataExportScheduleCreateResponse> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: DataExportScheduleCreateParams,
@@ -254,7 +254,7 @@ interface ScheduleService {
         fun retrieve(id: String): HttpResponseFor<DataExportScheduleRetrieveResponse> =
             retrieve(id, DataExportScheduleRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -263,7 +263,7 @@ interface ScheduleService {
         ): HttpResponseFor<DataExportScheduleRetrieveResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -271,21 +271,21 @@ interface ScheduleService {
         ): HttpResponseFor<DataExportScheduleRetrieveResponse> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: DataExportScheduleRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportScheduleRetrieveResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: DataExportScheduleRetrieveParams
         ): HttpResponseFor<DataExportScheduleRetrieveResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -304,7 +304,7 @@ interface ScheduleService {
         ): HttpResponseFor<DataExportScheduleUpdateResponse> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -313,13 +313,13 @@ interface ScheduleService {
         ): HttpResponseFor<DataExportScheduleUpdateResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: DataExportScheduleUpdateParams
         ): HttpResponseFor<DataExportScheduleUpdateResponse> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: DataExportScheduleUpdateParams,
@@ -334,20 +334,20 @@ interface ScheduleService {
         fun list(): HttpResponseFor<DataExportScheduleListPage> =
             list(DataExportScheduleListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: DataExportScheduleListParams = DataExportScheduleListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportScheduleListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: DataExportScheduleListParams = DataExportScheduleListParams.none()
         ): HttpResponseFor<DataExportScheduleListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<DataExportScheduleListPage> =
             list(DataExportScheduleListParams.none(), requestOptions)
@@ -361,7 +361,7 @@ interface ScheduleService {
         fun delete(id: String): HttpResponseFor<DataExportScheduleDeleteResponse> =
             delete(id, DataExportScheduleDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -370,7 +370,7 @@ interface ScheduleService {
         ): HttpResponseFor<DataExportScheduleDeleteResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -378,20 +378,20 @@ interface ScheduleService {
         ): HttpResponseFor<DataExportScheduleDeleteResponse> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: DataExportScheduleDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportScheduleDeleteResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: DataExportScheduleDeleteParams
         ): HttpResponseFor<DataExportScheduleDeleteResponse> = delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,

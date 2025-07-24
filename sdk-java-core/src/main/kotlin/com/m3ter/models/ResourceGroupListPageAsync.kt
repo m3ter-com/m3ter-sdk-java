@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ResourceGroupServiceAsync.list] */
+/** @see ResourceGroupServiceAsync.list */
 class ResourceGroupListPageAsync
 private constructor(
     private val service: ResourceGroupServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [ResourceGroupListPageResponse], but gracefully handles missing data.
      *
-     * @see [ResourceGroupListPageResponse.data]
+     * @see ResourceGroupListPageResponse.data
      */
     fun data(): List<ResourceGroupResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [ResourceGroupListPageResponse], but gracefully handles missing data.
      *
-     * @see [ResourceGroupListPageResponse.nextToken]
+     * @see ResourceGroupListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

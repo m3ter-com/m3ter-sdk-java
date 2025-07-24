@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ExternalMappingServiceAsync.listByM3terEntity] */
+/** @see ExternalMappingServiceAsync.listByM3terEntity */
 class ExternalMappingListByM3terEntityPageAsync
 private constructor(
     private val service: ExternalMappingServiceAsync,
@@ -25,7 +25,7 @@ private constructor(
      * Delegates to [ExternalMappingListByM3terEntityPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [ExternalMappingListByM3terEntityPageResponse.data]
+     * @see ExternalMappingListByM3terEntityPageResponse.data
      */
     fun data(): List<ExternalMappingResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -34,7 +34,7 @@ private constructor(
      * Delegates to [ExternalMappingListByM3terEntityPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [ExternalMappingListByM3terEntityPageResponse.nextToken]
+     * @see ExternalMappingListByM3terEntityPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

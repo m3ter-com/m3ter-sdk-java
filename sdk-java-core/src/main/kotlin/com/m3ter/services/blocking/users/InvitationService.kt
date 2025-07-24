@@ -35,7 +35,7 @@ interface InvitationService {
     fun create(params: UserInvitationCreateParams): InvitationResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: UserInvitationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -44,48 +44,48 @@ interface InvitationService {
     /** Retrieve the specified invitation with the given UUID. */
     fun retrieve(id: String): InvitationResponse = retrieve(id, UserInvitationRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvitationResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
     ): InvitationResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: UserInvitationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvitationResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: UserInvitationRetrieveParams): InvitationResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): InvitationResponse =
         retrieve(id, UserInvitationRetrieveParams.none(), requestOptions)
 
     /** Retrieve a list of all invitations in the Organization. */
     fun list(): UserInvitationListPage = list(UserInvitationListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: UserInvitationListParams = UserInvitationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UserInvitationListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: UserInvitationListParams = UserInvitationListParams.none()
     ): UserInvitationListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): UserInvitationListPage =
         list(UserInvitationListParams.none(), requestOptions)
 
@@ -109,7 +109,7 @@ interface InvitationService {
         fun create(params: UserInvitationCreateParams): HttpResponseFor<InvitationResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: UserInvitationCreateParams,
@@ -124,7 +124,7 @@ interface InvitationService {
         fun retrieve(id: String): HttpResponseFor<InvitationResponse> =
             retrieve(id, UserInvitationRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -133,26 +133,26 @@ interface InvitationService {
         ): HttpResponseFor<InvitationResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
         ): HttpResponseFor<InvitationResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: UserInvitationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InvitationResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: UserInvitationRetrieveParams): HttpResponseFor<InvitationResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -167,20 +167,20 @@ interface InvitationService {
         @MustBeClosed
         fun list(): HttpResponseFor<UserInvitationListPage> = list(UserInvitationListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: UserInvitationListParams = UserInvitationListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<UserInvitationListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: UserInvitationListParams = UserInvitationListParams.none()
         ): HttpResponseFor<UserInvitationListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<UserInvitationListPage> =
             list(UserInvitationListParams.none(), requestOptions)

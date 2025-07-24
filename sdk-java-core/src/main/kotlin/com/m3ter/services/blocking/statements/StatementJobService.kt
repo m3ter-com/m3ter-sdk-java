@@ -63,7 +63,7 @@ interface StatementJobService {
     fun create(params: StatementStatementJobCreateParams): StatementJobResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: StatementStatementJobCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -86,30 +86,30 @@ interface StatementJobService {
     fun retrieve(id: String): StatementJobResponse =
         retrieve(id, StatementStatementJobRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: StatementStatementJobRetrieveParams = StatementStatementJobRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): StatementJobResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: StatementStatementJobRetrieveParams = StatementStatementJobRetrieveParams.none(),
     ): StatementJobResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: StatementStatementJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): StatementJobResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: StatementStatementJobRetrieveParams): StatementJobResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): StatementJobResponse =
         retrieve(id, StatementStatementJobRetrieveParams.none(), requestOptions)
 
@@ -131,18 +131,18 @@ interface StatementJobService {
      */
     fun list(): StatementStatementJobListPage = list(StatementStatementJobListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: StatementStatementJobListParams = StatementStatementJobListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): StatementStatementJobListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: StatementStatementJobListParams = StatementStatementJobListParams.none()
     ): StatementStatementJobListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): StatementStatementJobListPage =
         list(StatementStatementJobListParams.none(), requestOptions)
 
@@ -156,30 +156,30 @@ interface StatementJobService {
     fun cancel(id: String): StatementJobResponse =
         cancel(id, StatementStatementJobCancelParams.none())
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(
         id: String,
         params: StatementStatementJobCancelParams = StatementStatementJobCancelParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): StatementJobResponse = cancel(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(
         id: String,
         params: StatementStatementJobCancelParams = StatementStatementJobCancelParams.none(),
     ): StatementJobResponse = cancel(id, params, RequestOptions.none())
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(
         params: StatementStatementJobCancelParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): StatementJobResponse
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(params: StatementStatementJobCancelParams): StatementJobResponse =
         cancel(params, RequestOptions.none())
 
-    /** @see [cancel] */
+    /** @see cancel */
     fun cancel(id: String, requestOptions: RequestOptions): StatementJobResponse =
         cancel(id, StatementStatementJobCancelParams.none(), requestOptions)
 
@@ -217,7 +217,7 @@ interface StatementJobService {
     fun createBatch(params: StatementStatementJobCreateBatchParams): List<StatementJobResponse> =
         createBatch(params, RequestOptions.none())
 
-    /** @see [createBatch] */
+    /** @see createBatch */
     fun createBatch(
         params: StatementStatementJobCreateBatchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -246,7 +246,7 @@ interface StatementJobService {
             params: StatementStatementJobCreateParams
         ): HttpResponseFor<StatementJobResponse> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: StatementStatementJobCreateParams,
@@ -261,7 +261,7 @@ interface StatementJobService {
         fun retrieve(id: String): HttpResponseFor<StatementJobResponse> =
             retrieve(id, StatementStatementJobRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -271,27 +271,27 @@ interface StatementJobService {
         ): HttpResponseFor<StatementJobResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: StatementStatementJobRetrieveParams = StatementStatementJobRetrieveParams.none(),
         ): HttpResponseFor<StatementJobResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: StatementStatementJobRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<StatementJobResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: StatementStatementJobRetrieveParams
         ): HttpResponseFor<StatementJobResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -307,20 +307,20 @@ interface StatementJobService {
         fun list(): HttpResponseFor<StatementStatementJobListPage> =
             list(StatementStatementJobListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: StatementStatementJobListParams = StatementStatementJobListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<StatementStatementJobListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: StatementStatementJobListParams = StatementStatementJobListParams.none()
         ): HttpResponseFor<StatementStatementJobListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<StatementStatementJobListPage> =
             list(StatementStatementJobListParams.none(), requestOptions)
@@ -333,7 +333,7 @@ interface StatementJobService {
         fun cancel(id: String): HttpResponseFor<StatementJobResponse> =
             cancel(id, StatementStatementJobCancelParams.none())
 
-        /** @see [cancel] */
+        /** @see cancel */
         @MustBeClosed
         fun cancel(
             id: String,
@@ -342,27 +342,27 @@ interface StatementJobService {
         ): HttpResponseFor<StatementJobResponse> =
             cancel(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [cancel] */
+        /** @see cancel */
         @MustBeClosed
         fun cancel(
             id: String,
             params: StatementStatementJobCancelParams = StatementStatementJobCancelParams.none(),
         ): HttpResponseFor<StatementJobResponse> = cancel(id, params, RequestOptions.none())
 
-        /** @see [cancel] */
+        /** @see cancel */
         @MustBeClosed
         fun cancel(
             params: StatementStatementJobCancelParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<StatementJobResponse>
 
-        /** @see [cancel] */
+        /** @see cancel */
         @MustBeClosed
         fun cancel(
             params: StatementStatementJobCancelParams
         ): HttpResponseFor<StatementJobResponse> = cancel(params, RequestOptions.none())
 
-        /** @see [cancel] */
+        /** @see cancel */
         @MustBeClosed
         fun cancel(
             id: String,
@@ -379,7 +379,7 @@ interface StatementJobService {
             params: StatementStatementJobCreateBatchParams
         ): HttpResponseFor<List<StatementJobResponse>> = createBatch(params, RequestOptions.none())
 
-        /** @see [createBatch] */
+        /** @see createBatch */
         @MustBeClosed
         fun createBatch(
             params: StatementStatementJobCreateBatchParams,

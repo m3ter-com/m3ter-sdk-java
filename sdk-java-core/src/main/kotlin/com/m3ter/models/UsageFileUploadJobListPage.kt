@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [JobService.list] */
+/** @see JobService.list */
 class UsageFileUploadJobListPage
 private constructor(
     private val service: JobService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [UsageFileUploadJobListPageResponse], but gracefully handles missing data.
      *
-     * @see [UsageFileUploadJobListPageResponse.data]
+     * @see UsageFileUploadJobListPageResponse.data
      */
     fun data(): List<FileUploadJobResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [UsageFileUploadJobListPageResponse], but gracefully handles missing data.
      *
-     * @see [UsageFileUploadJobListPageResponse.nextToken]
+     * @see UsageFileUploadJobListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

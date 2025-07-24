@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [JobServiceAsync.list] */
+/** @see JobServiceAsync.list */
 class DataExportJobListPageAsync
 private constructor(
     private val service: JobServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [DataExportJobListPageResponse], but gracefully handles missing data.
      *
-     * @see [DataExportJobListPageResponse.data]
+     * @see DataExportJobListPageResponse.data
      */
     fun data(): List<DataExportJobResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [DataExportJobListPageResponse], but gracefully handles missing data.
      *
-     * @see [DataExportJobListPageResponse.nextToken]
+     * @see DataExportJobListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

@@ -30,7 +30,7 @@ interface AuthenticationServiceAsync {
     ): CompletableFuture<AuthenticationGetBearerTokenResponse> =
         getBearerToken(params, RequestOptions.none())
 
-    /** @see [getBearerToken] */
+    /** @see getBearerToken */
     fun getBearerToken(
         params: AuthenticationGetBearerTokenParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -60,7 +60,7 @@ interface AuthenticationServiceAsync {
         ): CompletableFuture<HttpResponseFor<AuthenticationGetBearerTokenResponse>> =
             getBearerToken(params, RequestOptions.none())
 
-        /** @see [getBearerToken] */
+        /** @see getBearerToken */
         fun getBearerToken(
             params: AuthenticationGetBearerTokenParams,
             requestOptions: RequestOptions = RequestOptions.none(),

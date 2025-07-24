@@ -59,7 +59,7 @@ interface MeterService {
      */
     fun create(params: MeterCreateParams): MeterResponse = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: MeterCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -68,30 +68,30 @@ interface MeterService {
     /** Retrieve the Meter with the given UUID. */
     fun retrieve(id: String): MeterResponse = retrieve(id, MeterRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: MeterRetrieveParams = MeterRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MeterResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: MeterRetrieveParams = MeterRetrieveParams.none(),
     ): MeterResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: MeterRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MeterResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: MeterRetrieveParams): MeterResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): MeterResponse =
         retrieve(id, MeterRetrieveParams.none(), requestOptions)
 
@@ -105,17 +105,17 @@ interface MeterService {
     fun update(id: String, params: MeterUpdateParams): MeterResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: MeterUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MeterResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: MeterUpdateParams): MeterResponse = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: MeterUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -124,44 +124,44 @@ interface MeterService {
     /** Retrieve a list of Meters that can be filtered by Product, Meter ID, or Meter short code. */
     fun list(): MeterListPage = list(MeterListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: MeterListParams = MeterListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MeterListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: MeterListParams = MeterListParams.none()): MeterListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): MeterListPage =
         list(MeterListParams.none(), requestOptions)
 
     /** Delete the Meter with the given UUID. */
     fun delete(id: String): MeterResponse = delete(id, MeterDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: MeterDeleteParams = MeterDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MeterResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, params: MeterDeleteParams = MeterDeleteParams.none()): MeterResponse =
         delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: MeterDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): MeterResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: MeterDeleteParams): MeterResponse = delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): MeterResponse =
         delete(id, MeterDeleteParams.none(), requestOptions)
 
@@ -183,7 +183,7 @@ interface MeterService {
         fun create(params: MeterCreateParams): HttpResponseFor<MeterResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: MeterCreateParams,
@@ -198,7 +198,7 @@ interface MeterService {
         fun retrieve(id: String): HttpResponseFor<MeterResponse> =
             retrieve(id, MeterRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -207,26 +207,26 @@ interface MeterService {
         ): HttpResponseFor<MeterResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: MeterRetrieveParams = MeterRetrieveParams.none(),
         ): HttpResponseFor<MeterResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: MeterRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<MeterResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: MeterRetrieveParams): HttpResponseFor<MeterResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<MeterResponse> =
             retrieve(id, MeterRetrieveParams.none(), requestOptions)
@@ -239,7 +239,7 @@ interface MeterService {
         fun update(id: String, params: MeterUpdateParams): HttpResponseFor<MeterResponse> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -248,12 +248,12 @@ interface MeterService {
         ): HttpResponseFor<MeterResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: MeterUpdateParams): HttpResponseFor<MeterResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: MeterUpdateParams,
@@ -266,19 +266,19 @@ interface MeterService {
          */
         @MustBeClosed fun list(): HttpResponseFor<MeterListPage> = list(MeterListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: MeterListParams = MeterListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<MeterListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(params: MeterListParams = MeterListParams.none()): HttpResponseFor<MeterListPage> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<MeterListPage> =
             list(MeterListParams.none(), requestOptions)
@@ -291,7 +291,7 @@ interface MeterService {
         fun delete(id: String): HttpResponseFor<MeterResponse> =
             delete(id, MeterDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -300,26 +300,26 @@ interface MeterService {
         ): HttpResponseFor<MeterResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: MeterDeleteParams = MeterDeleteParams.none(),
         ): HttpResponseFor<MeterResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: MeterDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<MeterResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: MeterDeleteParams): HttpResponseFor<MeterResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<MeterResponse> =
             delete(id, MeterDeleteParams.none(), requestOptions)

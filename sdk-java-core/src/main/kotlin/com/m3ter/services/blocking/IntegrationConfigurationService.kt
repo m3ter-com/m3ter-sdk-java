@@ -40,7 +40,7 @@ interface IntegrationConfigurationService {
         params: IntegrationConfigurationCreateParams
     ): IntegrationConfigurationCreateResponse = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: IntegrationConfigurationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -55,7 +55,7 @@ interface IntegrationConfigurationService {
     fun retrieve(id: String): IntegrationConfigurationResponse =
         retrieve(id, IntegrationConfigurationRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: IntegrationConfigurationRetrieveParams =
@@ -64,24 +64,24 @@ interface IntegrationConfigurationService {
     ): IntegrationConfigurationResponse =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: IntegrationConfigurationRetrieveParams =
             IntegrationConfigurationRetrieveParams.none(),
     ): IntegrationConfigurationResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: IntegrationConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): IntegrationConfigurationResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: IntegrationConfigurationRetrieveParams): IntegrationConfigurationResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): IntegrationConfigurationResponse =
         retrieve(id, IntegrationConfigurationRetrieveParams.none(), requestOptions)
 
@@ -96,7 +96,7 @@ interface IntegrationConfigurationService {
         params: IntegrationConfigurationUpdateParams,
     ): IntegrationConfigurationUpdateResponse = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: IntegrationConfigurationUpdateParams,
@@ -104,12 +104,12 @@ interface IntegrationConfigurationService {
     ): IntegrationConfigurationUpdateResponse =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: IntegrationConfigurationUpdateParams
     ): IntegrationConfigurationUpdateResponse = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: IntegrationConfigurationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -123,18 +123,18 @@ interface IntegrationConfigurationService {
      */
     fun list(): IntegrationConfigurationListPage = list(IntegrationConfigurationListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): IntegrationConfigurationListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none()
     ): IntegrationConfigurationListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): IntegrationConfigurationListPage =
         list(IntegrationConfigurationListParams.none(), requestOptions)
 
@@ -147,7 +147,7 @@ interface IntegrationConfigurationService {
     fun delete(id: String): IntegrationConfigurationDeleteResponse =
         delete(id, IntegrationConfigurationDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: IntegrationConfigurationDeleteParams = IntegrationConfigurationDeleteParams.none(),
@@ -155,24 +155,24 @@ interface IntegrationConfigurationService {
     ): IntegrationConfigurationDeleteResponse =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: IntegrationConfigurationDeleteParams = IntegrationConfigurationDeleteParams.none(),
     ): IntegrationConfigurationDeleteResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: IntegrationConfigurationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): IntegrationConfigurationDeleteResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: IntegrationConfigurationDeleteParams
     ): IntegrationConfigurationDeleteResponse = delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): IntegrationConfigurationDeleteResponse =
         delete(id, IntegrationConfigurationDeleteParams.none(), requestOptions)
 
@@ -182,7 +182,7 @@ interface IntegrationConfigurationService {
     fun enable(id: String): IntegrationConfigurationEnableResponse =
         enable(id, IntegrationConfigurationEnableParams.none())
 
-    /** @see [enable] */
+    /** @see enable */
     fun enable(
         id: String,
         params: IntegrationConfigurationEnableParams = IntegrationConfigurationEnableParams.none(),
@@ -190,24 +190,24 @@ interface IntegrationConfigurationService {
     ): IntegrationConfigurationEnableResponse =
         enable(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [enable] */
+    /** @see enable */
     fun enable(
         id: String,
         params: IntegrationConfigurationEnableParams = IntegrationConfigurationEnableParams.none(),
     ): IntegrationConfigurationEnableResponse = enable(id, params, RequestOptions.none())
 
-    /** @see [enable] */
+    /** @see enable */
     fun enable(
         params: IntegrationConfigurationEnableParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): IntegrationConfigurationEnableResponse
 
-    /** @see [enable] */
+    /** @see enable */
     fun enable(
         params: IntegrationConfigurationEnableParams
     ): IntegrationConfigurationEnableResponse = enable(params, RequestOptions.none())
 
-    /** @see [enable] */
+    /** @see enable */
     fun enable(id: String, requestOptions: RequestOptions): IntegrationConfigurationEnableResponse =
         enable(id, IntegrationConfigurationEnableParams.none(), requestOptions)
 
@@ -215,7 +215,7 @@ interface IntegrationConfigurationService {
     fun getByEntity(entityType: String): IntegrationConfigurationResponse =
         getByEntity(entityType, IntegrationConfigurationGetByEntityParams.none())
 
-    /** @see [getByEntity] */
+    /** @see getByEntity */
     fun getByEntity(
         entityType: String,
         params: IntegrationConfigurationGetByEntityParams =
@@ -224,25 +224,25 @@ interface IntegrationConfigurationService {
     ): IntegrationConfigurationResponse =
         getByEntity(params.toBuilder().entityType(entityType).build(), requestOptions)
 
-    /** @see [getByEntity] */
+    /** @see getByEntity */
     fun getByEntity(
         entityType: String,
         params: IntegrationConfigurationGetByEntityParams =
             IntegrationConfigurationGetByEntityParams.none(),
     ): IntegrationConfigurationResponse = getByEntity(entityType, params, RequestOptions.none())
 
-    /** @see [getByEntity] */
+    /** @see getByEntity */
     fun getByEntity(
         params: IntegrationConfigurationGetByEntityParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): IntegrationConfigurationResponse
 
-    /** @see [getByEntity] */
+    /** @see getByEntity */
     fun getByEntity(
         params: IntegrationConfigurationGetByEntityParams
     ): IntegrationConfigurationResponse = getByEntity(params, RequestOptions.none())
 
-    /** @see [getByEntity] */
+    /** @see getByEntity */
     fun getByEntity(
         entityType: String,
         requestOptions: RequestOptions,
@@ -274,7 +274,7 @@ interface IntegrationConfigurationService {
         ): HttpResponseFor<IntegrationConfigurationCreateResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: IntegrationConfigurationCreateParams,
@@ -289,7 +289,7 @@ interface IntegrationConfigurationService {
         fun retrieve(id: String): HttpResponseFor<IntegrationConfigurationResponse> =
             retrieve(id, IntegrationConfigurationRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -299,7 +299,7 @@ interface IntegrationConfigurationService {
         ): HttpResponseFor<IntegrationConfigurationResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -308,21 +308,21 @@ interface IntegrationConfigurationService {
         ): HttpResponseFor<IntegrationConfigurationResponse> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: IntegrationConfigurationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<IntegrationConfigurationResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: IntegrationConfigurationRetrieveParams
         ): HttpResponseFor<IntegrationConfigurationResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -341,7 +341,7 @@ interface IntegrationConfigurationService {
         ): HttpResponseFor<IntegrationConfigurationUpdateResponse> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -350,14 +350,14 @@ interface IntegrationConfigurationService {
         ): HttpResponseFor<IntegrationConfigurationUpdateResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: IntegrationConfigurationUpdateParams
         ): HttpResponseFor<IntegrationConfigurationUpdateResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: IntegrationConfigurationUpdateParams,
@@ -372,20 +372,20 @@ interface IntegrationConfigurationService {
         fun list(): HttpResponseFor<IntegrationConfigurationListPage> =
             list(IntegrationConfigurationListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<IntegrationConfigurationListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: IntegrationConfigurationListParams = IntegrationConfigurationListParams.none()
         ): HttpResponseFor<IntegrationConfigurationListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -400,7 +400,7 @@ interface IntegrationConfigurationService {
         fun delete(id: String): HttpResponseFor<IntegrationConfigurationDeleteResponse> =
             delete(id, IntegrationConfigurationDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -410,7 +410,7 @@ interface IntegrationConfigurationService {
         ): HttpResponseFor<IntegrationConfigurationDeleteResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -419,21 +419,21 @@ interface IntegrationConfigurationService {
         ): HttpResponseFor<IntegrationConfigurationDeleteResponse> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: IntegrationConfigurationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<IntegrationConfigurationDeleteResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: IntegrationConfigurationDeleteParams
         ): HttpResponseFor<IntegrationConfigurationDeleteResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -450,7 +450,7 @@ interface IntegrationConfigurationService {
         fun enable(id: String): HttpResponseFor<IntegrationConfigurationEnableResponse> =
             enable(id, IntegrationConfigurationEnableParams.none())
 
-        /** @see [enable] */
+        /** @see enable */
         @MustBeClosed
         fun enable(
             id: String,
@@ -460,7 +460,7 @@ interface IntegrationConfigurationService {
         ): HttpResponseFor<IntegrationConfigurationEnableResponse> =
             enable(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [enable] */
+        /** @see enable */
         @MustBeClosed
         fun enable(
             id: String,
@@ -469,21 +469,21 @@ interface IntegrationConfigurationService {
         ): HttpResponseFor<IntegrationConfigurationEnableResponse> =
             enable(id, params, RequestOptions.none())
 
-        /** @see [enable] */
+        /** @see enable */
         @MustBeClosed
         fun enable(
             params: IntegrationConfigurationEnableParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<IntegrationConfigurationEnableResponse>
 
-        /** @see [enable] */
+        /** @see enable */
         @MustBeClosed
         fun enable(
             params: IntegrationConfigurationEnableParams
         ): HttpResponseFor<IntegrationConfigurationEnableResponse> =
             enable(params, RequestOptions.none())
 
-        /** @see [enable] */
+        /** @see enable */
         @MustBeClosed
         fun enable(
             id: String,
@@ -500,7 +500,7 @@ interface IntegrationConfigurationService {
         fun getByEntity(entityType: String): HttpResponseFor<IntegrationConfigurationResponse> =
             getByEntity(entityType, IntegrationConfigurationGetByEntityParams.none())
 
-        /** @see [getByEntity] */
+        /** @see getByEntity */
         @MustBeClosed
         fun getByEntity(
             entityType: String,
@@ -510,7 +510,7 @@ interface IntegrationConfigurationService {
         ): HttpResponseFor<IntegrationConfigurationResponse> =
             getByEntity(params.toBuilder().entityType(entityType).build(), requestOptions)
 
-        /** @see [getByEntity] */
+        /** @see getByEntity */
         @MustBeClosed
         fun getByEntity(
             entityType: String,
@@ -519,21 +519,21 @@ interface IntegrationConfigurationService {
         ): HttpResponseFor<IntegrationConfigurationResponse> =
             getByEntity(entityType, params, RequestOptions.none())
 
-        /** @see [getByEntity] */
+        /** @see getByEntity */
         @MustBeClosed
         fun getByEntity(
             params: IntegrationConfigurationGetByEntityParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<IntegrationConfigurationResponse>
 
-        /** @see [getByEntity] */
+        /** @see getByEntity */
         @MustBeClosed
         fun getByEntity(
             params: IntegrationConfigurationGetByEntityParams
         ): HttpResponseFor<IntegrationConfigurationResponse> =
             getByEntity(params, RequestOptions.none())
 
-        /** @see [getByEntity] */
+        /** @see getByEntity */
         @MustBeClosed
         fun getByEntity(
             entityType: String,

@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [CounterAdjustmentServiceAsync.list] */
+/** @see CounterAdjustmentServiceAsync.list */
 class CounterAdjustmentListPageAsync
 private constructor(
     private val service: CounterAdjustmentServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [CounterAdjustmentListPageResponse], but gracefully handles missing data.
      *
-     * @see [CounterAdjustmentListPageResponse.data]
+     * @see CounterAdjustmentListPageResponse.data
      */
     fun data(): List<CounterAdjustmentResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [CounterAdjustmentListPageResponse], but gracefully handles missing data.
      *
-     * @see [CounterAdjustmentListPageResponse.nextToken]
+     * @see CounterAdjustmentListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

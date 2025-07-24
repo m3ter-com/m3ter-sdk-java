@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [StatementDefinitionService.list] */
+/** @see StatementDefinitionService.list */
 class StatementStatementDefinitionListPage
 private constructor(
     private val service: StatementDefinitionService,
@@ -22,7 +22,7 @@ private constructor(
      * Delegates to [StatementStatementDefinitionListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [StatementStatementDefinitionListPageResponse.data]
+     * @see StatementStatementDefinitionListPageResponse.data
      */
     fun data(): List<StatementDefinitionResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -31,7 +31,7 @@ private constructor(
      * Delegates to [StatementStatementDefinitionListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [StatementStatementDefinitionListPageResponse.nextToken]
+     * @see StatementStatementDefinitionListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

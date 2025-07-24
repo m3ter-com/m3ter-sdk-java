@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ScheduleService.list] */
+/** @see ScheduleService.list */
 class DataExportScheduleListPage
 private constructor(
     private val service: ScheduleService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [DataExportScheduleListPageResponse], but gracefully handles missing data.
      *
-     * @see [DataExportScheduleListPageResponse.data]
+     * @see DataExportScheduleListPageResponse.data
      */
     fun data(): List<DataExportScheduleListResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [DataExportScheduleListPageResponse], but gracefully handles missing data.
      *
-     * @see [DataExportScheduleListPageResponse.nextToken]
+     * @see DataExportScheduleListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

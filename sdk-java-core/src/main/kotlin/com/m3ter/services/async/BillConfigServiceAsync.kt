@@ -29,18 +29,18 @@ interface BillConfigServiceAsync {
     fun retrieve(): CompletableFuture<BillConfigResponse> =
         retrieve(BillConfigRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillConfigRetrieveParams = BillConfigRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillConfigResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillConfigRetrieveParams = BillConfigRetrieveParams.none()
     ): CompletableFuture<BillConfigResponse> = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(requestOptions: RequestOptions): CompletableFuture<BillConfigResponse> =
         retrieve(BillConfigRetrieveParams.none(), requestOptions)
 
@@ -53,18 +53,18 @@ interface BillConfigServiceAsync {
      */
     fun update(): CompletableFuture<BillConfigResponse> = update(BillConfigUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: BillConfigUpdateParams = BillConfigUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillConfigResponse>
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: BillConfigUpdateParams = BillConfigUpdateParams.none()
     ): CompletableFuture<BillConfigResponse> = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(requestOptions: RequestOptions): CompletableFuture<BillConfigResponse> =
         update(BillConfigUpdateParams.none(), requestOptions)
 
@@ -90,19 +90,19 @@ interface BillConfigServiceAsync {
         fun retrieve(): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             retrieve(BillConfigRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: BillConfigRetrieveParams = BillConfigRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: BillConfigRetrieveParams = BillConfigRetrieveParams.none()
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
@@ -115,19 +115,19 @@ interface BillConfigServiceAsync {
         fun update(): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             update(BillConfigUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: BillConfigUpdateParams = BillConfigUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>>
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: BillConfigUpdateParams = BillConfigUpdateParams.none()
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =

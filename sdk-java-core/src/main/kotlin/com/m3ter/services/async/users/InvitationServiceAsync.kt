@@ -35,7 +35,7 @@ interface InvitationServiceAsync {
     fun create(params: UserInvitationCreateParams): CompletableFuture<InvitationResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: UserInvitationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -45,7 +45,7 @@ interface InvitationServiceAsync {
     fun retrieve(id: String): CompletableFuture<InvitationResponse> =
         retrieve(id, UserInvitationRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
@@ -53,23 +53,23 @@ interface InvitationServiceAsync {
     ): CompletableFuture<InvitationResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
     ): CompletableFuture<InvitationResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: UserInvitationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InvitationResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: UserInvitationRetrieveParams): CompletableFuture<InvitationResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -80,18 +80,18 @@ interface InvitationServiceAsync {
     fun list(): CompletableFuture<UserInvitationListPageAsync> =
         list(UserInvitationListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: UserInvitationListParams = UserInvitationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserInvitationListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: UserInvitationListParams = UserInvitationListParams.none()
     ): CompletableFuture<UserInvitationListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<UserInvitationListPageAsync> =
         list(UserInvitationListParams.none(), requestOptions)
 
@@ -119,7 +119,7 @@ interface InvitationServiceAsync {
         ): CompletableFuture<HttpResponseFor<InvitationResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: UserInvitationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -132,7 +132,7 @@ interface InvitationServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<InvitationResponse>> =
             retrieve(id, UserInvitationRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
@@ -140,26 +140,26 @@ interface InvitationServiceAsync {
         ): CompletableFuture<HttpResponseFor<InvitationResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<InvitationResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: UserInvitationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<InvitationResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: UserInvitationRetrieveParams
         ): CompletableFuture<HttpResponseFor<InvitationResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -173,19 +173,19 @@ interface InvitationServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<UserInvitationListPageAsync>> =
             list(UserInvitationListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: UserInvitationListParams = UserInvitationListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UserInvitationListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: UserInvitationListParams = UserInvitationListParams.none()
         ): CompletableFuture<HttpResponseFor<UserInvitationListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<UserInvitationListPageAsync>> =

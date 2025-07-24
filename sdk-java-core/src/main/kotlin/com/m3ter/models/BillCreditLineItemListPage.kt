@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [CreditLineItemService.list] */
+/** @see CreditLineItemService.list */
 class BillCreditLineItemListPage
 private constructor(
     private val service: CreditLineItemService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [BillCreditLineItemListPageResponse], but gracefully handles missing data.
      *
-     * @see [BillCreditLineItemListPageResponse.data]
+     * @see BillCreditLineItemListPageResponse.data
      */
     fun data(): List<CreditLineItemResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [BillCreditLineItemListPageResponse], but gracefully handles missing data.
      *
-     * @see [BillCreditLineItemListPageResponse.nextToken]
+     * @see BillCreditLineItemListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

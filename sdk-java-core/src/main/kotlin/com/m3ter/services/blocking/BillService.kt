@@ -51,27 +51,27 @@ interface BillService {
      */
     fun retrieve(id: String): BillResponse = retrieve(id, BillRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BillRetrieveParams = BillRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, params: BillRetrieveParams = BillRetrieveParams.none()): BillResponse =
         retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: BillRetrieveParams): BillResponse = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): BillResponse =
         retrieve(id, BillRetrieveParams.none(), requestOptions)
 
@@ -84,17 +84,17 @@ interface BillService {
      */
     fun list(): BillListPage = list(BillListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BillListParams = BillListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: BillListParams = BillListParams.none()): BillListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): BillListPage =
         list(BillListParams.none(), requestOptions)
 
@@ -109,27 +109,27 @@ interface BillService {
      */
     fun delete(id: String): BillResponse = delete(id, BillDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: BillDeleteParams = BillDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, params: BillDeleteParams = BillDeleteParams.none()): BillResponse =
         delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: BillDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: BillDeleteParams): BillResponse = delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): BillResponse =
         delete(id, BillDeleteParams.none(), requestOptions)
 
@@ -151,7 +151,7 @@ interface BillService {
     fun approve(params: BillApproveParams): BillApproveResponse =
         approve(params, RequestOptions.none())
 
-    /** @see [approve] */
+    /** @see approve */
     fun approve(
         params: BillApproveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -166,7 +166,7 @@ interface BillService {
     fun latestByAccount(accountId: String): BillResponse =
         latestByAccount(accountId, BillLatestByAccountParams.none())
 
-    /** @see [latestByAccount] */
+    /** @see latestByAccount */
     fun latestByAccount(
         accountId: String,
         params: BillLatestByAccountParams = BillLatestByAccountParams.none(),
@@ -174,23 +174,23 @@ interface BillService {
     ): BillResponse =
         latestByAccount(params.toBuilder().accountId(accountId).build(), requestOptions)
 
-    /** @see [latestByAccount] */
+    /** @see latestByAccount */
     fun latestByAccount(
         accountId: String,
         params: BillLatestByAccountParams = BillLatestByAccountParams.none(),
     ): BillResponse = latestByAccount(accountId, params, RequestOptions.none())
 
-    /** @see [latestByAccount] */
+    /** @see latestByAccount */
     fun latestByAccount(
         params: BillLatestByAccountParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillResponse
 
-    /** @see [latestByAccount] */
+    /** @see latestByAccount */
     fun latestByAccount(params: BillLatestByAccountParams): BillResponse =
         latestByAccount(params, RequestOptions.none())
 
-    /** @see [latestByAccount] */
+    /** @see latestByAccount */
     fun latestByAccount(accountId: String, requestOptions: RequestOptions): BillResponse =
         latestByAccount(accountId, BillLatestByAccountParams.none(), requestOptions)
 
@@ -205,27 +205,27 @@ interface BillService {
      */
     fun lock(id: String): BillResponse = lock(id, BillLockParams.none())
 
-    /** @see [lock] */
+    /** @see lock */
     fun lock(
         id: String,
         params: BillLockParams = BillLockParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillResponse = lock(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [lock] */
+    /** @see lock */
     fun lock(id: String, params: BillLockParams = BillLockParams.none()): BillResponse =
         lock(id, params, RequestOptions.none())
 
-    /** @see [lock] */
+    /** @see lock */
     fun lock(
         params: BillLockParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillResponse
 
-    /** @see [lock] */
+    /** @see lock */
     fun lock(params: BillLockParams): BillResponse = lock(params, RequestOptions.none())
 
-    /** @see [lock] */
+    /** @see lock */
     fun lock(id: String, requestOptions: RequestOptions): BillResponse =
         lock(id, BillLockParams.none(), requestOptions)
 
@@ -238,17 +238,17 @@ interface BillService {
      */
     fun search(): BillSearchResponse = search(BillSearchParams.none())
 
-    /** @see [search] */
+    /** @see search */
     fun search(
         params: BillSearchParams = BillSearchParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillSearchResponse
 
-    /** @see [search] */
+    /** @see search */
     fun search(params: BillSearchParams = BillSearchParams.none()): BillSearchResponse =
         search(params, RequestOptions.none())
 
-    /** @see [search] */
+    /** @see search */
     fun search(requestOptions: RequestOptions): BillSearchResponse =
         search(BillSearchParams.none(), requestOptions)
 
@@ -261,18 +261,18 @@ interface BillService {
     fun updateStatus(id: String, params: BillUpdateStatusParams): BillResponse =
         updateStatus(id, params, RequestOptions.none())
 
-    /** @see [updateStatus] */
+    /** @see updateStatus */
     fun updateStatus(
         id: String,
         params: BillUpdateStatusParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillResponse = updateStatus(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [updateStatus] */
+    /** @see updateStatus */
     fun updateStatus(params: BillUpdateStatusParams): BillResponse =
         updateStatus(params, RequestOptions.none())
 
-    /** @see [updateStatus] */
+    /** @see updateStatus */
     fun updateStatus(
         params: BillUpdateStatusParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -302,7 +302,7 @@ interface BillService {
         fun retrieve(id: String): HttpResponseFor<BillResponse> =
             retrieve(id, BillRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -311,26 +311,26 @@ interface BillService {
         ): HttpResponseFor<BillResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: BillRetrieveParams = BillRetrieveParams.none(),
         ): HttpResponseFor<BillResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: BillRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: BillRetrieveParams): HttpResponseFor<BillResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<BillResponse> =
             retrieve(id, BillRetrieveParams.none(), requestOptions)
@@ -341,19 +341,19 @@ interface BillService {
          */
         @MustBeClosed fun list(): HttpResponseFor<BillListPage> = list(BillListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BillListParams = BillListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(params: BillListParams = BillListParams.none()): HttpResponseFor<BillListPage> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<BillListPage> =
             list(BillListParams.none(), requestOptions)
@@ -365,7 +365,7 @@ interface BillService {
         @MustBeClosed
         fun delete(id: String): HttpResponseFor<BillResponse> = delete(id, BillDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -373,26 +373,26 @@ interface BillService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillResponse> = delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: BillDeleteParams = BillDeleteParams.none(),
         ): HttpResponseFor<BillResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: BillDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: BillDeleteParams): HttpResponseFor<BillResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<BillResponse> =
             delete(id, BillDeleteParams.none(), requestOptions)
@@ -405,7 +405,7 @@ interface BillService {
         fun approve(params: BillApproveParams): HttpResponseFor<BillApproveResponse> =
             approve(params, RequestOptions.none())
 
-        /** @see [approve] */
+        /** @see approve */
         @MustBeClosed
         fun approve(
             params: BillApproveParams,
@@ -420,7 +420,7 @@ interface BillService {
         fun latestByAccount(accountId: String): HttpResponseFor<BillResponse> =
             latestByAccount(accountId, BillLatestByAccountParams.none())
 
-        /** @see [latestByAccount] */
+        /** @see latestByAccount */
         @MustBeClosed
         fun latestByAccount(
             accountId: String,
@@ -429,26 +429,26 @@ interface BillService {
         ): HttpResponseFor<BillResponse> =
             latestByAccount(params.toBuilder().accountId(accountId).build(), requestOptions)
 
-        /** @see [latestByAccount] */
+        /** @see latestByAccount */
         @MustBeClosed
         fun latestByAccount(
             accountId: String,
             params: BillLatestByAccountParams = BillLatestByAccountParams.none(),
         ): HttpResponseFor<BillResponse> = latestByAccount(accountId, params, RequestOptions.none())
 
-        /** @see [latestByAccount] */
+        /** @see latestByAccount */
         @MustBeClosed
         fun latestByAccount(
             params: BillLatestByAccountParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillResponse>
 
-        /** @see [latestByAccount] */
+        /** @see latestByAccount */
         @MustBeClosed
         fun latestByAccount(params: BillLatestByAccountParams): HttpResponseFor<BillResponse> =
             latestByAccount(params, RequestOptions.none())
 
-        /** @see [latestByAccount] */
+        /** @see latestByAccount */
         @MustBeClosed
         fun latestByAccount(
             accountId: String,
@@ -463,7 +463,7 @@ interface BillService {
         @MustBeClosed
         fun lock(id: String): HttpResponseFor<BillResponse> = lock(id, BillLockParams.none())
 
-        /** @see [lock] */
+        /** @see lock */
         @MustBeClosed
         fun lock(
             id: String,
@@ -471,26 +471,26 @@ interface BillService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillResponse> = lock(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [lock] */
+        /** @see lock */
         @MustBeClosed
         fun lock(
             id: String,
             params: BillLockParams = BillLockParams.none(),
         ): HttpResponseFor<BillResponse> = lock(id, params, RequestOptions.none())
 
-        /** @see [lock] */
+        /** @see lock */
         @MustBeClosed
         fun lock(
             params: BillLockParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillResponse>
 
-        /** @see [lock] */
+        /** @see lock */
         @MustBeClosed
         fun lock(params: BillLockParams): HttpResponseFor<BillResponse> =
             lock(params, RequestOptions.none())
 
-        /** @see [lock] */
+        /** @see lock */
         @MustBeClosed
         fun lock(id: String, requestOptions: RequestOptions): HttpResponseFor<BillResponse> =
             lock(id, BillLockParams.none(), requestOptions)
@@ -502,20 +502,20 @@ interface BillService {
         @MustBeClosed
         fun search(): HttpResponseFor<BillSearchResponse> = search(BillSearchParams.none())
 
-        /** @see [search] */
+        /** @see search */
         @MustBeClosed
         fun search(
             params: BillSearchParams = BillSearchParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillSearchResponse>
 
-        /** @see [search] */
+        /** @see search */
         @MustBeClosed
         fun search(
             params: BillSearchParams = BillSearchParams.none()
         ): HttpResponseFor<BillSearchResponse> = search(params, RequestOptions.none())
 
-        /** @see [search] */
+        /** @see search */
         @MustBeClosed
         fun search(requestOptions: RequestOptions): HttpResponseFor<BillSearchResponse> =
             search(BillSearchParams.none(), requestOptions)
@@ -530,7 +530,7 @@ interface BillService {
             params: BillUpdateStatusParams,
         ): HttpResponseFor<BillResponse> = updateStatus(id, params, RequestOptions.none())
 
-        /** @see [updateStatus] */
+        /** @see updateStatus */
         @MustBeClosed
         fun updateStatus(
             id: String,
@@ -539,12 +539,12 @@ interface BillService {
         ): HttpResponseFor<BillResponse> =
             updateStatus(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [updateStatus] */
+        /** @see updateStatus */
         @MustBeClosed
         fun updateStatus(params: BillUpdateStatusParams): HttpResponseFor<BillResponse> =
             updateStatus(params, RequestOptions.none())
 
-        /** @see [updateStatus] */
+        /** @see updateStatus */
         @MustBeClosed
         fun updateStatus(
             params: BillUpdateStatusParams,

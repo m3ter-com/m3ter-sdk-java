@@ -40,7 +40,7 @@ interface ContractService {
     fun create(params: ContractCreateParams): ContractResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: ContractCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -49,30 +49,30 @@ interface ContractService {
     /** Retrieves the Contract with the given UUID. Used to obtain the details of a Contract. */
     fun retrieve(id: String): ContractResponse = retrieve(id, ContractRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ContractRetrieveParams = ContractRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ContractResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ContractRetrieveParams = ContractRetrieveParams.none(),
     ): ContractResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: ContractRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ContractResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: ContractRetrieveParams): ContractResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): ContractResponse =
         retrieve(id, ContractRetrieveParams.none(), requestOptions)
 
@@ -89,18 +89,18 @@ interface ContractService {
     fun update(id: String, params: ContractUpdateParams): ContractResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: ContractUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ContractResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: ContractUpdateParams): ContractResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: ContractUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -112,17 +112,17 @@ interface ContractService {
      */
     fun list(): ContractListPage = list(ContractListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ContractListParams = ContractListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ContractListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: ContractListParams = ContractListParams.none()): ContractListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): ContractListPage =
         list(ContractListParams.none(), requestOptions)
 
@@ -135,30 +135,30 @@ interface ContractService {
      */
     fun delete(id: String): ContractResponse = delete(id, ContractDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: ContractDeleteParams = ContractDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ContractResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: ContractDeleteParams = ContractDeleteParams.none(),
     ): ContractResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: ContractDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ContractResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: ContractDeleteParams): ContractResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): ContractResponse =
         delete(id, ContractDeleteParams.none(), requestOptions)
 
@@ -181,7 +181,7 @@ interface ContractService {
     ): ContractEndDateBillingEntitiesResponse =
         endDateBillingEntities(id, params, RequestOptions.none())
 
-    /** @see [endDateBillingEntities] */
+    /** @see endDateBillingEntities */
     fun endDateBillingEntities(
         id: String,
         params: ContractEndDateBillingEntitiesParams,
@@ -189,13 +189,13 @@ interface ContractService {
     ): ContractEndDateBillingEntitiesResponse =
         endDateBillingEntities(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [endDateBillingEntities] */
+    /** @see endDateBillingEntities */
     fun endDateBillingEntities(
         params: ContractEndDateBillingEntitiesParams
     ): ContractEndDateBillingEntitiesResponse =
         endDateBillingEntities(params, RequestOptions.none())
 
-    /** @see [endDateBillingEntities] */
+    /** @see endDateBillingEntities */
     fun endDateBillingEntities(
         params: ContractEndDateBillingEntitiesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -219,7 +219,7 @@ interface ContractService {
         fun create(params: ContractCreateParams): HttpResponseFor<ContractResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: ContractCreateParams,
@@ -234,7 +234,7 @@ interface ContractService {
         fun retrieve(id: String): HttpResponseFor<ContractResponse> =
             retrieve(id, ContractRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -243,26 +243,26 @@ interface ContractService {
         ): HttpResponseFor<ContractResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: ContractRetrieveParams = ContractRetrieveParams.none(),
         ): HttpResponseFor<ContractResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: ContractRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ContractResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: ContractRetrieveParams): HttpResponseFor<ContractResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -278,7 +278,7 @@ interface ContractService {
         fun update(id: String, params: ContractUpdateParams): HttpResponseFor<ContractResponse> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -287,12 +287,12 @@ interface ContractService {
         ): HttpResponseFor<ContractResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: ContractUpdateParams): HttpResponseFor<ContractResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: ContractUpdateParams,
@@ -306,20 +306,20 @@ interface ContractService {
         @MustBeClosed
         fun list(): HttpResponseFor<ContractListPage> = list(ContractListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: ContractListParams = ContractListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ContractListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: ContractListParams = ContractListParams.none()
         ): HttpResponseFor<ContractListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<ContractListPage> =
             list(ContractListParams.none(), requestOptions)
@@ -332,7 +332,7 @@ interface ContractService {
         fun delete(id: String): HttpResponseFor<ContractResponse> =
             delete(id, ContractDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -341,26 +341,26 @@ interface ContractService {
         ): HttpResponseFor<ContractResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: ContractDeleteParams = ContractDeleteParams.none(),
         ): HttpResponseFor<ContractResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: ContractDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<ContractResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: ContractDeleteParams): HttpResponseFor<ContractResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<ContractResponse> =
             delete(id, ContractDeleteParams.none(), requestOptions)
@@ -377,7 +377,7 @@ interface ContractService {
         ): HttpResponseFor<ContractEndDateBillingEntitiesResponse> =
             endDateBillingEntities(id, params, RequestOptions.none())
 
-        /** @see [endDateBillingEntities] */
+        /** @see endDateBillingEntities */
         @MustBeClosed
         fun endDateBillingEntities(
             id: String,
@@ -386,14 +386,14 @@ interface ContractService {
         ): HttpResponseFor<ContractEndDateBillingEntitiesResponse> =
             endDateBillingEntities(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [endDateBillingEntities] */
+        /** @see endDateBillingEntities */
         @MustBeClosed
         fun endDateBillingEntities(
             params: ContractEndDateBillingEntitiesParams
         ): HttpResponseFor<ContractEndDateBillingEntitiesResponse> =
             endDateBillingEntities(params, RequestOptions.none())
 
-        /** @see [endDateBillingEntities] */
+        /** @see endDateBillingEntities */
         @MustBeClosed
         fun endDateBillingEntities(
             params: ContractEndDateBillingEntitiesParams,

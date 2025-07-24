@@ -41,7 +41,7 @@ interface BalanceServiceAsync {
     fun create(params: BalanceCreateParams): CompletableFuture<Balance> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: BalanceCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -55,30 +55,30 @@ interface BalanceServiceAsync {
     fun retrieve(id: String): CompletableFuture<Balance> =
         retrieve(id, BalanceRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BalanceRetrieveParams = BalanceRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Balance> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BalanceRetrieveParams = BalanceRetrieveParams.none(),
     ): CompletableFuture<Balance> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BalanceRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Balance>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: BalanceRetrieveParams): CompletableFuture<Balance> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<Balance> =
         retrieve(id, BalanceRetrieveParams.none(), requestOptions)
 
@@ -91,18 +91,18 @@ interface BalanceServiceAsync {
     fun update(id: String, params: BalanceUpdateParams): CompletableFuture<Balance> =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: BalanceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Balance> = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: BalanceUpdateParams): CompletableFuture<Balance> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: BalanceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -121,18 +121,18 @@ interface BalanceServiceAsync {
      */
     fun list(): CompletableFuture<BalanceListPageAsync> = list(BalanceListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BalanceListParams = BalanceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BalanceListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BalanceListParams = BalanceListParams.none()
     ): CompletableFuture<BalanceListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<BalanceListPageAsync> =
         list(BalanceListParams.none(), requestOptions)
 
@@ -143,30 +143,30 @@ interface BalanceServiceAsync {
      */
     fun delete(id: String): CompletableFuture<Balance> = delete(id, BalanceDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: BalanceDeleteParams = BalanceDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Balance> = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: BalanceDeleteParams = BalanceDeleteParams.none(),
     ): CompletableFuture<Balance> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: BalanceDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Balance>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: BalanceDeleteParams): CompletableFuture<Balance> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<Balance> =
         delete(id, BalanceDeleteParams.none(), requestOptions)
 
@@ -193,7 +193,7 @@ interface BalanceServiceAsync {
         fun create(params: BalanceCreateParams): CompletableFuture<HttpResponseFor<Balance>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: BalanceCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -206,7 +206,7 @@ interface BalanceServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<Balance>> =
             retrieve(id, BalanceRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: BalanceRetrieveParams = BalanceRetrieveParams.none(),
@@ -214,23 +214,23 @@ interface BalanceServiceAsync {
         ): CompletableFuture<HttpResponseFor<Balance>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: BalanceRetrieveParams = BalanceRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<Balance>> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: BalanceRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Balance>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(params: BalanceRetrieveParams): CompletableFuture<HttpResponseFor<Balance>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -246,7 +246,7 @@ interface BalanceServiceAsync {
             params: BalanceUpdateParams,
         ): CompletableFuture<HttpResponseFor<Balance>> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: BalanceUpdateParams,
@@ -254,11 +254,11 @@ interface BalanceServiceAsync {
         ): CompletableFuture<HttpResponseFor<Balance>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(params: BalanceUpdateParams): CompletableFuture<HttpResponseFor<Balance>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: BalanceUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -271,19 +271,19 @@ interface BalanceServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<BalanceListPageAsync>> =
             list(BalanceListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: BalanceListParams = BalanceListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BalanceListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: BalanceListParams = BalanceListParams.none()
         ): CompletableFuture<HttpResponseFor<BalanceListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<BalanceListPageAsync>> =
@@ -296,7 +296,7 @@ interface BalanceServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<Balance>> =
             delete(id, BalanceDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: BalanceDeleteParams = BalanceDeleteParams.none(),
@@ -304,23 +304,23 @@ interface BalanceServiceAsync {
         ): CompletableFuture<HttpResponseFor<Balance>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: BalanceDeleteParams = BalanceDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<Balance>> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: BalanceDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<Balance>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(params: BalanceDeleteParams): CompletableFuture<HttpResponseFor<Balance>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,

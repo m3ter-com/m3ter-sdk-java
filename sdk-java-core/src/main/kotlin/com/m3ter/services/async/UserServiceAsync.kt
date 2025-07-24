@@ -47,30 +47,30 @@ interface UserServiceAsync {
     fun retrieve(id: String): CompletableFuture<UserResponse> =
         retrieve(id, UserRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UserRetrieveParams = UserRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserResponse> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UserRetrieveParams = UserRetrieveParams.none(),
     ): CompletableFuture<UserResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: UserRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: UserRetrieveParams): CompletableFuture<UserResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<UserResponse> =
         retrieve(id, UserRetrieveParams.none(), requestOptions)
 
@@ -83,30 +83,30 @@ interface UserServiceAsync {
      */
     fun update(id: String): CompletableFuture<UserResponse> = update(id, UserUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: UserUpdateParams = UserUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserResponse> = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: UserUpdateParams = UserUpdateParams.none(),
     ): CompletableFuture<UserResponse> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: UserUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserResponse>
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: UserUpdateParams): CompletableFuture<UserResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): CompletableFuture<UserResponse> =
         update(id, UserUpdateParams.none(), requestOptions)
 
@@ -119,17 +119,17 @@ interface UserServiceAsync {
      */
     fun list(): CompletableFuture<UserListPageAsync> = list(UserListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: UserListParams = UserListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: UserListParams = UserListParams.none()): CompletableFuture<UserListPageAsync> =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<UserListPageAsync> =
         list(UserListParams.none(), requestOptions)
 
@@ -142,7 +142,7 @@ interface UserServiceAsync {
     fun getPermissions(id: String): CompletableFuture<PermissionPolicyResponse> =
         getPermissions(id, UserGetPermissionsParams.none())
 
-    /** @see [getPermissions] */
+    /** @see getPermissions */
     fun getPermissions(
         id: String,
         params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
@@ -150,25 +150,25 @@ interface UserServiceAsync {
     ): CompletableFuture<PermissionPolicyResponse> =
         getPermissions(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [getPermissions] */
+    /** @see getPermissions */
     fun getPermissions(
         id: String,
         params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
     ): CompletableFuture<PermissionPolicyResponse> =
         getPermissions(id, params, RequestOptions.none())
 
-    /** @see [getPermissions] */
+    /** @see getPermissions */
     fun getPermissions(
         params: UserGetPermissionsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PermissionPolicyResponse>
 
-    /** @see [getPermissions] */
+    /** @see getPermissions */
     fun getPermissions(
         params: UserGetPermissionsParams
     ): CompletableFuture<PermissionPolicyResponse> = getPermissions(params, RequestOptions.none())
 
-    /** @see [getPermissions] */
+    /** @see getPermissions */
     fun getPermissions(
         id: String,
         requestOptions: RequestOptions,
@@ -201,7 +201,7 @@ interface UserServiceAsync {
     fun getUserGroups(id: String): CompletableFuture<ResourceGroupResponse> =
         getUserGroups(id, UserGetUserGroupsParams.none())
 
-    /** @see [getUserGroups] */
+    /** @see getUserGroups */
     fun getUserGroups(
         id: String,
         params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
@@ -209,23 +209,23 @@ interface UserServiceAsync {
     ): CompletableFuture<ResourceGroupResponse> =
         getUserGroups(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [getUserGroups] */
+    /** @see getUserGroups */
     fun getUserGroups(
         id: String,
         params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
     ): CompletableFuture<ResourceGroupResponse> = getUserGroups(id, params, RequestOptions.none())
 
-    /** @see [getUserGroups] */
+    /** @see getUserGroups */
     fun getUserGroups(
         params: UserGetUserGroupsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ResourceGroupResponse>
 
-    /** @see [getUserGroups] */
+    /** @see getUserGroups */
     fun getUserGroups(params: UserGetUserGroupsParams): CompletableFuture<ResourceGroupResponse> =
         getUserGroups(params, RequestOptions.none())
 
-    /** @see [getUserGroups] */
+    /** @see getUserGroups */
     fun getUserGroups(
         id: String,
         requestOptions: RequestOptions,
@@ -235,17 +235,17 @@ interface UserServiceAsync {
     /** Retrieve information about the current user */
     fun me(): CompletableFuture<UserMeResponse> = me(UserMeParams.none())
 
-    /** @see [me] */
+    /** @see me */
     fun me(
         params: UserMeParams = UserMeParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserMeResponse>
 
-    /** @see [me] */
+    /** @see me */
     fun me(params: UserMeParams = UserMeParams.none()): CompletableFuture<UserMeResponse> =
         me(params, RequestOptions.none())
 
-    /** @see [me] */
+    /** @see me */
     fun me(requestOptions: RequestOptions): CompletableFuture<UserMeResponse> =
         me(UserMeParams.none(), requestOptions)
 
@@ -253,30 +253,30 @@ interface UserServiceAsync {
     fun resendPassword(id: String): CompletableFuture<Void?> =
         resendPassword(id, UserResendPasswordParams.none())
 
-    /** @see [resendPassword] */
+    /** @see resendPassword */
     fun resendPassword(
         id: String,
         params: UserResendPasswordParams = UserResendPasswordParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?> = resendPassword(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [resendPassword] */
+    /** @see resendPassword */
     fun resendPassword(
         id: String,
         params: UserResendPasswordParams = UserResendPasswordParams.none(),
     ): CompletableFuture<Void?> = resendPassword(id, params, RequestOptions.none())
 
-    /** @see [resendPassword] */
+    /** @see resendPassword */
     fun resendPassword(
         params: UserResendPasswordParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 
-    /** @see [resendPassword] */
+    /** @see resendPassword */
     fun resendPassword(params: UserResendPasswordParams): CompletableFuture<Void?> =
         resendPassword(params, RequestOptions.none())
 
-    /** @see [resendPassword] */
+    /** @see resendPassword */
     fun resendPassword(id: String, requestOptions: RequestOptions): CompletableFuture<Void?> =
         resendPassword(id, UserResendPasswordParams.none(), requestOptions)
 
@@ -299,7 +299,7 @@ interface UserServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<UserResponse>> =
             retrieve(id, UserRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: UserRetrieveParams = UserRetrieveParams.none(),
@@ -307,24 +307,24 @@ interface UserServiceAsync {
         ): CompletableFuture<HttpResponseFor<UserResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: UserRetrieveParams = UserRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<UserResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: UserRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UserResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(params: UserRetrieveParams): CompletableFuture<HttpResponseFor<UserResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -338,7 +338,7 @@ interface UserServiceAsync {
         fun update(id: String): CompletableFuture<HttpResponseFor<UserResponse>> =
             update(id, UserUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: UserUpdateParams = UserUpdateParams.none(),
@@ -346,24 +346,24 @@ interface UserServiceAsync {
         ): CompletableFuture<HttpResponseFor<UserResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: UserUpdateParams = UserUpdateParams.none(),
         ): CompletableFuture<HttpResponseFor<UserResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: UserUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UserResponse>>
 
-        /** @see [update] */
+        /** @see update */
         fun update(params: UserUpdateParams): CompletableFuture<HttpResponseFor<UserResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -377,19 +377,19 @@ interface UserServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<UserListPageAsync>> =
             list(UserListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: UserListParams = UserListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UserListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: UserListParams = UserListParams.none()
         ): CompletableFuture<HttpResponseFor<UserListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<UserListPageAsync>> =
@@ -404,7 +404,7 @@ interface UserServiceAsync {
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
             getPermissions(id, UserGetPermissionsParams.none())
 
-        /** @see [getPermissions] */
+        /** @see getPermissions */
         fun getPermissions(
             id: String,
             params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
@@ -412,26 +412,26 @@ interface UserServiceAsync {
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
             getPermissions(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [getPermissions] */
+        /** @see getPermissions */
         fun getPermissions(
             id: String,
             params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
             getPermissions(id, params, RequestOptions.none())
 
-        /** @see [getPermissions] */
+        /** @see getPermissions */
         fun getPermissions(
             params: UserGetPermissionsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>>
 
-        /** @see [getPermissions] */
+        /** @see getPermissions */
         fun getPermissions(
             params: UserGetPermissionsParams
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
             getPermissions(params, RequestOptions.none())
 
-        /** @see [getPermissions] */
+        /** @see getPermissions */
         fun getPermissions(
             id: String,
             requestOptions: RequestOptions,
@@ -445,7 +445,7 @@ interface UserServiceAsync {
         fun getUserGroups(id: String): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             getUserGroups(id, UserGetUserGroupsParams.none())
 
-        /** @see [getUserGroups] */
+        /** @see getUserGroups */
         fun getUserGroups(
             id: String,
             params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
@@ -453,26 +453,26 @@ interface UserServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             getUserGroups(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [getUserGroups] */
+        /** @see getUserGroups */
         fun getUserGroups(
             id: String,
             params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             getUserGroups(id, params, RequestOptions.none())
 
-        /** @see [getUserGroups] */
+        /** @see getUserGroups */
         fun getUserGroups(
             params: UserGetUserGroupsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>>
 
-        /** @see [getUserGroups] */
+        /** @see getUserGroups */
         fun getUserGroups(
             params: UserGetUserGroupsParams
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             getUserGroups(params, RequestOptions.none())
 
-        /** @see [getUserGroups] */
+        /** @see getUserGroups */
         fun getUserGroups(
             id: String,
             requestOptions: RequestOptions,
@@ -485,18 +485,18 @@ interface UserServiceAsync {
          */
         fun me(): CompletableFuture<HttpResponseFor<UserMeResponse>> = me(UserMeParams.none())
 
-        /** @see [me] */
+        /** @see me */
         fun me(
             params: UserMeParams = UserMeParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UserMeResponse>>
 
-        /** @see [me] */
+        /** @see me */
         fun me(
             params: UserMeParams = UserMeParams.none()
         ): CompletableFuture<HttpResponseFor<UserMeResponse>> = me(params, RequestOptions.none())
 
-        /** @see [me] */
+        /** @see me */
         fun me(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<UserMeResponse>> =
             me(UserMeParams.none(), requestOptions)
 
@@ -507,7 +507,7 @@ interface UserServiceAsync {
         fun resendPassword(id: String): CompletableFuture<HttpResponse> =
             resendPassword(id, UserResendPasswordParams.none())
 
-        /** @see [resendPassword] */
+        /** @see resendPassword */
         fun resendPassword(
             id: String,
             params: UserResendPasswordParams = UserResendPasswordParams.none(),
@@ -515,23 +515,23 @@ interface UserServiceAsync {
         ): CompletableFuture<HttpResponse> =
             resendPassword(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [resendPassword] */
+        /** @see resendPassword */
         fun resendPassword(
             id: String,
             params: UserResendPasswordParams = UserResendPasswordParams.none(),
         ): CompletableFuture<HttpResponse> = resendPassword(id, params, RequestOptions.none())
 
-        /** @see [resendPassword] */
+        /** @see resendPassword */
         fun resendPassword(
             params: UserResendPasswordParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponse>
 
-        /** @see [resendPassword] */
+        /** @see resendPassword */
         fun resendPassword(params: UserResendPasswordParams): CompletableFuture<HttpResponse> =
             resendPassword(params, RequestOptions.none())
 
-        /** @see [resendPassword] */
+        /** @see resendPassword */
         fun resendPassword(
             id: String,
             requestOptions: RequestOptions,

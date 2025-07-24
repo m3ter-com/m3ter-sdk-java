@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [CommitmentServiceAsync.list] */
+/** @see CommitmentServiceAsync.list */
 class CommitmentListPageAsync
 private constructor(
     private val service: CommitmentServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [CommitmentListPageResponse], but gracefully handles missing data.
      *
-     * @see [CommitmentListPageResponse.data]
+     * @see CommitmentListPageResponse.data
      */
     fun data(): List<CommitmentResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [CommitmentListPageResponse], but gracefully handles missing data.
      *
-     * @see [CommitmentListPageResponse.nextToken]
+     * @see CommitmentListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

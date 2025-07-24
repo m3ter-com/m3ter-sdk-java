@@ -28,18 +28,18 @@ interface BillConfigService {
     /** Retrieve the Organization-wide BillConfig. */
     fun retrieve(): BillConfigResponse = retrieve(BillConfigRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillConfigRetrieveParams = BillConfigRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillConfigResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillConfigRetrieveParams = BillConfigRetrieveParams.none()
     ): BillConfigResponse = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(requestOptions: RequestOptions): BillConfigResponse =
         retrieve(BillConfigRetrieveParams.none(), requestOptions)
 
@@ -52,17 +52,17 @@ interface BillConfigService {
      */
     fun update(): BillConfigResponse = update(BillConfigUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: BillConfigUpdateParams = BillConfigUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillConfigResponse
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: BillConfigUpdateParams = BillConfigUpdateParams.none()): BillConfigResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(requestOptions: RequestOptions): BillConfigResponse =
         update(BillConfigUpdateParams.none(), requestOptions)
 
@@ -86,20 +86,20 @@ interface BillConfigService {
         fun retrieve(): HttpResponseFor<BillConfigResponse> =
             retrieve(BillConfigRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: BillConfigRetrieveParams = BillConfigRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillConfigResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: BillConfigRetrieveParams = BillConfigRetrieveParams.none()
         ): HttpResponseFor<BillConfigResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(requestOptions: RequestOptions): HttpResponseFor<BillConfigResponse> =
             retrieve(BillConfigRetrieveParams.none(), requestOptions)
@@ -111,20 +111,20 @@ interface BillConfigService {
         @MustBeClosed
         fun update(): HttpResponseFor<BillConfigResponse> = update(BillConfigUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: BillConfigUpdateParams = BillConfigUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillConfigResponse>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: BillConfigUpdateParams = BillConfigUpdateParams.none()
         ): HttpResponseFor<BillConfigResponse> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(requestOptions: RequestOptions): HttpResponseFor<BillConfigResponse> =
             update(BillConfigUpdateParams.none(), requestOptions)

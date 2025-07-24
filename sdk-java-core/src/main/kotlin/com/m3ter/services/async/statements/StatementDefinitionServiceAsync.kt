@@ -39,7 +39,7 @@ interface StatementDefinitionServiceAsync {
         params: StatementStatementDefinitionCreateParams
     ): CompletableFuture<StatementDefinitionResponse> = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: StatementStatementDefinitionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -55,7 +55,7 @@ interface StatementDefinitionServiceAsync {
     fun retrieve(id: String): CompletableFuture<StatementDefinitionResponse> =
         retrieve(id, StatementStatementDefinitionRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: StatementStatementDefinitionRetrieveParams =
@@ -64,25 +64,25 @@ interface StatementDefinitionServiceAsync {
     ): CompletableFuture<StatementDefinitionResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: StatementStatementDefinitionRetrieveParams =
             StatementStatementDefinitionRetrieveParams.none(),
     ): CompletableFuture<StatementDefinitionResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: StatementStatementDefinitionRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<StatementDefinitionResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: StatementStatementDefinitionRetrieveParams
     ): CompletableFuture<StatementDefinitionResponse> = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -101,7 +101,7 @@ interface StatementDefinitionServiceAsync {
         params: StatementStatementDefinitionUpdateParams,
     ): CompletableFuture<StatementDefinitionResponse> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: StatementStatementDefinitionUpdateParams,
@@ -109,12 +109,12 @@ interface StatementDefinitionServiceAsync {
     ): CompletableFuture<StatementDefinitionResponse> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: StatementStatementDefinitionUpdateParams
     ): CompletableFuture<StatementDefinitionResponse> = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: StatementStatementDefinitionUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -129,21 +129,21 @@ interface StatementDefinitionServiceAsync {
     fun list(): CompletableFuture<StatementStatementDefinitionListPageAsync> =
         list(StatementStatementDefinitionListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: StatementStatementDefinitionListParams =
             StatementStatementDefinitionListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<StatementStatementDefinitionListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: StatementStatementDefinitionListParams =
             StatementStatementDefinitionListParams.none()
     ): CompletableFuture<StatementStatementDefinitionListPageAsync> =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         requestOptions: RequestOptions
     ): CompletableFuture<StatementStatementDefinitionListPageAsync> =
@@ -158,7 +158,7 @@ interface StatementDefinitionServiceAsync {
     fun delete(id: String): CompletableFuture<StatementDefinitionResponse> =
         delete(id, StatementStatementDefinitionDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: StatementStatementDefinitionDeleteParams =
@@ -167,25 +167,25 @@ interface StatementDefinitionServiceAsync {
     ): CompletableFuture<StatementDefinitionResponse> =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: StatementStatementDefinitionDeleteParams =
             StatementStatementDefinitionDeleteParams.none(),
     ): CompletableFuture<StatementDefinitionResponse> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: StatementStatementDefinitionDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<StatementDefinitionResponse>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: StatementStatementDefinitionDeleteParams
     ): CompletableFuture<StatementDefinitionResponse> = delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         requestOptions: RequestOptions,
@@ -216,7 +216,7 @@ interface StatementDefinitionServiceAsync {
         ): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: StatementStatementDefinitionCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -229,7 +229,7 @@ interface StatementDefinitionServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>> =
             retrieve(id, StatementStatementDefinitionRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: StatementStatementDefinitionRetrieveParams =
@@ -238,7 +238,7 @@ interface StatementDefinitionServiceAsync {
         ): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: StatementStatementDefinitionRetrieveParams =
@@ -246,19 +246,19 @@ interface StatementDefinitionServiceAsync {
         ): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: StatementStatementDefinitionRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: StatementStatementDefinitionRetrieveParams
         ): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -275,7 +275,7 @@ interface StatementDefinitionServiceAsync {
         ): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: StatementStatementDefinitionUpdateParams,
@@ -283,13 +283,13 @@ interface StatementDefinitionServiceAsync {
         ): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: StatementStatementDefinitionUpdateParams
         ): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: StatementStatementDefinitionUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -302,21 +302,21 @@ interface StatementDefinitionServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<StatementStatementDefinitionListPageAsync>> =
             list(StatementStatementDefinitionListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: StatementStatementDefinitionListParams =
                 StatementStatementDefinitionListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<StatementStatementDefinitionListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: StatementStatementDefinitionListParams =
                 StatementStatementDefinitionListParams.none()
         ): CompletableFuture<HttpResponseFor<StatementStatementDefinitionListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<StatementStatementDefinitionListPageAsync>> =
@@ -330,7 +330,7 @@ interface StatementDefinitionServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>> =
             delete(id, StatementStatementDefinitionDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: StatementStatementDefinitionDeleteParams =
@@ -339,7 +339,7 @@ interface StatementDefinitionServiceAsync {
         ): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: StatementStatementDefinitionDeleteParams =
@@ -347,19 +347,19 @@ interface StatementDefinitionServiceAsync {
         ): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: StatementStatementDefinitionDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: StatementStatementDefinitionDeleteParams
         ): CompletableFuture<HttpResponseFor<StatementDefinitionResponse>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,

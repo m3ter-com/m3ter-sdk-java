@@ -40,7 +40,7 @@ interface BalanceService {
      */
     fun create(params: BalanceCreateParams): Balance = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: BalanceCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -53,29 +53,29 @@ interface BalanceService {
      */
     fun retrieve(id: String): Balance = retrieve(id, BalanceRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BalanceRetrieveParams = BalanceRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Balance = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BalanceRetrieveParams = BalanceRetrieveParams.none(),
     ): Balance = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BalanceRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Balance
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: BalanceRetrieveParams): Balance = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): Balance =
         retrieve(id, BalanceRetrieveParams.none(), requestOptions)
 
@@ -88,17 +88,17 @@ interface BalanceService {
     fun update(id: String, params: BalanceUpdateParams): Balance =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: BalanceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Balance = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: BalanceUpdateParams): Balance = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: BalanceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -117,17 +117,17 @@ interface BalanceService {
      */
     fun list(): BalanceListPage = list(BalanceListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BalanceListParams = BalanceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: BalanceListParams = BalanceListParams.none()): BalanceListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): BalanceListPage =
         list(BalanceListParams.none(), requestOptions)
 
@@ -138,27 +138,27 @@ interface BalanceService {
      */
     fun delete(id: String): Balance = delete(id, BalanceDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: BalanceDeleteParams = BalanceDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Balance = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, params: BalanceDeleteParams = BalanceDeleteParams.none()): Balance =
         delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: BalanceDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Balance
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: BalanceDeleteParams): Balance = delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): Balance =
         delete(id, BalanceDeleteParams.none(), requestOptions)
 
@@ -182,7 +182,7 @@ interface BalanceService {
         fun create(params: BalanceCreateParams): HttpResponseFor<Balance> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: BalanceCreateParams,
@@ -197,7 +197,7 @@ interface BalanceService {
         fun retrieve(id: String): HttpResponseFor<Balance> =
             retrieve(id, BalanceRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -205,26 +205,26 @@ interface BalanceService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Balance> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: BalanceRetrieveParams = BalanceRetrieveParams.none(),
         ): HttpResponseFor<Balance> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: BalanceRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Balance>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: BalanceRetrieveParams): HttpResponseFor<Balance> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<Balance> =
             retrieve(id, BalanceRetrieveParams.none(), requestOptions)
@@ -237,7 +237,7 @@ interface BalanceService {
         fun update(id: String, params: BalanceUpdateParams): HttpResponseFor<Balance> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -245,12 +245,12 @@ interface BalanceService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Balance> = update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: BalanceUpdateParams): HttpResponseFor<Balance> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: BalanceUpdateParams,
@@ -263,20 +263,20 @@ interface BalanceService {
          */
         @MustBeClosed fun list(): HttpResponseFor<BalanceListPage> = list(BalanceListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BalanceListParams = BalanceListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BalanceListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BalanceListParams = BalanceListParams.none()
         ): HttpResponseFor<BalanceListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<BalanceListPage> =
             list(BalanceListParams.none(), requestOptions)
@@ -288,7 +288,7 @@ interface BalanceService {
         @MustBeClosed
         fun delete(id: String): HttpResponseFor<Balance> = delete(id, BalanceDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -296,26 +296,26 @@ interface BalanceService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Balance> = delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: BalanceDeleteParams = BalanceDeleteParams.none(),
         ): HttpResponseFor<Balance> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: BalanceDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<Balance>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: BalanceDeleteParams): HttpResponseFor<Balance> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<Balance> =
             delete(id, BalanceDeleteParams.none(), requestOptions)

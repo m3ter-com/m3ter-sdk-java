@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [PlanGroupLinkServiceAsync.list] */
+/** @see PlanGroupLinkServiceAsync.list */
 class PlanGroupLinkListPageAsync
 private constructor(
     private val service: PlanGroupLinkServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [PlanGroupLinkListPageResponse], but gracefully handles missing data.
      *
-     * @see [PlanGroupLinkListPageResponse.data]
+     * @see PlanGroupLinkListPageResponse.data
      */
     fun data(): List<PlanGroupLinkResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [PlanGroupLinkListPageResponse], but gracefully handles missing data.
      *
-     * @see [PlanGroupLinkListPageResponse.nextToken]
+     * @see PlanGroupLinkListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

@@ -36,7 +36,7 @@ interface TransactionTypeServiceAsync {
     fun create(params: TransactionTypeCreateParams): CompletableFuture<TransactionTypeResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: TransactionTypeCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -46,7 +46,7 @@ interface TransactionTypeServiceAsync {
     fun retrieve(id: String): CompletableFuture<TransactionTypeResponse> =
         retrieve(id, TransactionTypeRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: TransactionTypeRetrieveParams = TransactionTypeRetrieveParams.none(),
@@ -54,24 +54,24 @@ interface TransactionTypeServiceAsync {
     ): CompletableFuture<TransactionTypeResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: TransactionTypeRetrieveParams = TransactionTypeRetrieveParams.none(),
     ): CompletableFuture<TransactionTypeResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: TransactionTypeRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionTypeResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: TransactionTypeRetrieveParams
     ): CompletableFuture<TransactionTypeResponse> = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -87,7 +87,7 @@ interface TransactionTypeServiceAsync {
         params: TransactionTypeUpdateParams,
     ): CompletableFuture<TransactionTypeResponse> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: TransactionTypeUpdateParams,
@@ -95,11 +95,11 @@ interface TransactionTypeServiceAsync {
     ): CompletableFuture<TransactionTypeResponse> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: TransactionTypeUpdateParams): CompletableFuture<TransactionTypeResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: TransactionTypeUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -112,18 +112,18 @@ interface TransactionTypeServiceAsync {
     fun list(): CompletableFuture<TransactionTypeListPageAsync> =
         list(TransactionTypeListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: TransactionTypeListParams = TransactionTypeListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionTypeListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: TransactionTypeListParams = TransactionTypeListParams.none()
     ): CompletableFuture<TransactionTypeListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<TransactionTypeListPageAsync> =
         list(TransactionTypeListParams.none(), requestOptions)
 
@@ -131,7 +131,7 @@ interface TransactionTypeServiceAsync {
     fun delete(id: String): CompletableFuture<TransactionTypeResponse> =
         delete(id, TransactionTypeDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: TransactionTypeDeleteParams = TransactionTypeDeleteParams.none(),
@@ -139,23 +139,23 @@ interface TransactionTypeServiceAsync {
     ): CompletableFuture<TransactionTypeResponse> =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: TransactionTypeDeleteParams = TransactionTypeDeleteParams.none(),
     ): CompletableFuture<TransactionTypeResponse> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: TransactionTypeDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<TransactionTypeResponse>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: TransactionTypeDeleteParams): CompletableFuture<TransactionTypeResponse> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         requestOptions: RequestOptions,
@@ -186,7 +186,7 @@ interface TransactionTypeServiceAsync {
         ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: TransactionTypeCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -200,7 +200,7 @@ interface TransactionTypeServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
             retrieve(id, TransactionTypeRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: TransactionTypeRetrieveParams = TransactionTypeRetrieveParams.none(),
@@ -208,26 +208,26 @@ interface TransactionTypeServiceAsync {
         ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: TransactionTypeRetrieveParams = TransactionTypeRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: TransactionTypeRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: TransactionTypeRetrieveParams
         ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -245,7 +245,7 @@ interface TransactionTypeServiceAsync {
         ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: TransactionTypeUpdateParams,
@@ -253,13 +253,13 @@ interface TransactionTypeServiceAsync {
         ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: TransactionTypeUpdateParams
         ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: TransactionTypeUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -272,19 +272,19 @@ interface TransactionTypeServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<TransactionTypeListPageAsync>> =
             list(TransactionTypeListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: TransactionTypeListParams = TransactionTypeListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<TransactionTypeListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: TransactionTypeListParams = TransactionTypeListParams.none()
         ): CompletableFuture<HttpResponseFor<TransactionTypeListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<TransactionTypeListPageAsync>> =
@@ -298,7 +298,7 @@ interface TransactionTypeServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
             delete(id, TransactionTypeDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: TransactionTypeDeleteParams = TransactionTypeDeleteParams.none(),
@@ -306,26 +306,26 @@ interface TransactionTypeServiceAsync {
         ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: TransactionTypeDeleteParams = TransactionTypeDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: TransactionTypeDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: TransactionTypeDeleteParams
         ): CompletableFuture<HttpResponseFor<TransactionTypeResponse>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,

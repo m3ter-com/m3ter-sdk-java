@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [PlanTemplateService.list] */
+/** @see PlanTemplateService.list */
 class PlanTemplateListPage
 private constructor(
     private val service: PlanTemplateService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [PlanTemplateListPageResponse], but gracefully handles missing data.
      *
-     * @see [PlanTemplateListPageResponse.data]
+     * @see PlanTemplateListPageResponse.data
      */
     fun data(): List<PlanTemplateResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [PlanTemplateListPageResponse], but gracefully handles missing data.
      *
-     * @see [PlanTemplateListPageResponse.nextToken]
+     * @see PlanTemplateListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

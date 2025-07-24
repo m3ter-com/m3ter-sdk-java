@@ -56,19 +56,19 @@ interface UsageService {
     fun getFailedIngestDownloadUrl(): DownloadUrlResponse =
         getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none())
 
-    /** @see [getFailedIngestDownloadUrl] */
+    /** @see getFailedIngestDownloadUrl */
     fun getFailedIngestDownloadUrl(
         params: UsageGetFailedIngestDownloadUrlParams =
             UsageGetFailedIngestDownloadUrlParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DownloadUrlResponse
 
-    /** @see [getFailedIngestDownloadUrl] */
+    /** @see getFailedIngestDownloadUrl */
     fun getFailedIngestDownloadUrl(
         params: UsageGetFailedIngestDownloadUrlParams = UsageGetFailedIngestDownloadUrlParams.none()
     ): DownloadUrlResponse = getFailedIngestDownloadUrl(params, RequestOptions.none())
 
-    /** @see [getFailedIngestDownloadUrl] */
+    /** @see getFailedIngestDownloadUrl */
     fun getFailedIngestDownloadUrl(requestOptions: RequestOptions): DownloadUrlResponse =
         getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none(), requestOptions)
 
@@ -93,17 +93,17 @@ interface UsageService {
      */
     fun query(): UsageQueryResponse = query(UsageQueryParams.none())
 
-    /** @see [query] */
+    /** @see query */
     fun query(
         params: UsageQueryParams = UsageQueryParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UsageQueryResponse
 
-    /** @see [query] */
+    /** @see query */
     fun query(params: UsageQueryParams = UsageQueryParams.none()): UsageQueryResponse =
         query(params, RequestOptions.none())
 
-    /** @see [query] */
+    /** @see query */
     fun query(requestOptions: RequestOptions): UsageQueryResponse =
         query(UsageQueryParams.none(), requestOptions)
 
@@ -144,7 +144,7 @@ interface UsageService {
     fun submit(params: UsageSubmitParams): SubmitMeasurementsResponse =
         submit(params, RequestOptions.none())
 
-    /** @see [submit] */
+    /** @see submit */
     fun submit(
         params: UsageSubmitParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -171,7 +171,7 @@ interface UsageService {
         fun getFailedIngestDownloadUrl(): HttpResponseFor<DownloadUrlResponse> =
             getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none())
 
-        /** @see [getFailedIngestDownloadUrl] */
+        /** @see getFailedIngestDownloadUrl */
         @MustBeClosed
         fun getFailedIngestDownloadUrl(
             params: UsageGetFailedIngestDownloadUrlParams =
@@ -179,7 +179,7 @@ interface UsageService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DownloadUrlResponse>
 
-        /** @see [getFailedIngestDownloadUrl] */
+        /** @see getFailedIngestDownloadUrl */
         @MustBeClosed
         fun getFailedIngestDownloadUrl(
             params: UsageGetFailedIngestDownloadUrlParams =
@@ -187,7 +187,7 @@ interface UsageService {
         ): HttpResponseFor<DownloadUrlResponse> =
             getFailedIngestDownloadUrl(params, RequestOptions.none())
 
-        /** @see [getFailedIngestDownloadUrl] */
+        /** @see getFailedIngestDownloadUrl */
         @MustBeClosed
         fun getFailedIngestDownloadUrl(
             requestOptions: RequestOptions
@@ -201,20 +201,20 @@ interface UsageService {
         @MustBeClosed
         fun query(): HttpResponseFor<UsageQueryResponse> = query(UsageQueryParams.none())
 
-        /** @see [query] */
+        /** @see query */
         @MustBeClosed
         fun query(
             params: UsageQueryParams = UsageQueryParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<UsageQueryResponse>
 
-        /** @see [query] */
+        /** @see query */
         @MustBeClosed
         fun query(
             params: UsageQueryParams = UsageQueryParams.none()
         ): HttpResponseFor<UsageQueryResponse> = query(params, RequestOptions.none())
 
-        /** @see [query] */
+        /** @see query */
         @MustBeClosed
         fun query(requestOptions: RequestOptions): HttpResponseFor<UsageQueryResponse> =
             query(UsageQueryParams.none(), requestOptions)
@@ -227,7 +227,7 @@ interface UsageService {
         fun submit(params: UsageSubmitParams): HttpResponseFor<SubmitMeasurementsResponse> =
             submit(params, RequestOptions.none())
 
-        /** @see [submit] */
+        /** @see submit */
         @MustBeClosed
         fun submit(
             params: UsageSubmitParams,

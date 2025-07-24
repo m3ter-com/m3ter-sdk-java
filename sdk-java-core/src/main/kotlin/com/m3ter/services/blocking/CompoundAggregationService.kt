@@ -39,7 +39,7 @@ interface CompoundAggregationService {
     fun create(params: CompoundAggregationCreateParams): AggregationResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: CompoundAggregationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -54,30 +54,30 @@ interface CompoundAggregationService {
     fun retrieve(id: String): CompoundAggregationResponse =
         retrieve(id, CompoundAggregationRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CompoundAggregationRetrieveParams = CompoundAggregationRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompoundAggregationResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CompoundAggregationRetrieveParams = CompoundAggregationRetrieveParams.none(),
     ): CompoundAggregationResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CompoundAggregationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompoundAggregationResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: CompoundAggregationRetrieveParams): CompoundAggregationResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompoundAggregationResponse =
         retrieve(id, CompoundAggregationRetrieveParams.none(), requestOptions)
 
@@ -95,18 +95,18 @@ interface CompoundAggregationService {
     fun update(id: String, params: CompoundAggregationUpdateParams): AggregationResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: CompoundAggregationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AggregationResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: CompoundAggregationUpdateParams): AggregationResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CompoundAggregationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -122,18 +122,18 @@ interface CompoundAggregationService {
      */
     fun list(): CompoundAggregationListPage = list(CompoundAggregationListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CompoundAggregationListParams = CompoundAggregationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompoundAggregationListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CompoundAggregationListParams = CompoundAggregationListParams.none()
     ): CompoundAggregationListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompoundAggregationListPage =
         list(CompoundAggregationListParams.none(), requestOptions)
 
@@ -147,30 +147,30 @@ interface CompoundAggregationService {
     fun delete(id: String): CompoundAggregationResponse =
         delete(id, CompoundAggregationDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CompoundAggregationDeleteParams = CompoundAggregationDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompoundAggregationResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CompoundAggregationDeleteParams = CompoundAggregationDeleteParams.none(),
     ): CompoundAggregationResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: CompoundAggregationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompoundAggregationResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: CompoundAggregationDeleteParams): CompoundAggregationResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CompoundAggregationResponse =
         delete(id, CompoundAggregationDeleteParams.none(), requestOptions)
 
@@ -197,7 +197,7 @@ interface CompoundAggregationService {
         fun create(params: CompoundAggregationCreateParams): HttpResponseFor<AggregationResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: CompoundAggregationCreateParams,
@@ -212,7 +212,7 @@ interface CompoundAggregationService {
         fun retrieve(id: String): HttpResponseFor<CompoundAggregationResponse> =
             retrieve(id, CompoundAggregationRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -221,7 +221,7 @@ interface CompoundAggregationService {
         ): HttpResponseFor<CompoundAggregationResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -229,20 +229,20 @@ interface CompoundAggregationService {
         ): HttpResponseFor<CompoundAggregationResponse> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CompoundAggregationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CompoundAggregationResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CompoundAggregationRetrieveParams
         ): HttpResponseFor<CompoundAggregationResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -260,7 +260,7 @@ interface CompoundAggregationService {
             params: CompoundAggregationUpdateParams,
         ): HttpResponseFor<AggregationResponse> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -269,12 +269,12 @@ interface CompoundAggregationService {
         ): HttpResponseFor<AggregationResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: CompoundAggregationUpdateParams): HttpResponseFor<AggregationResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: CompoundAggregationUpdateParams,
@@ -289,20 +289,20 @@ interface CompoundAggregationService {
         fun list(): HttpResponseFor<CompoundAggregationListPage> =
             list(CompoundAggregationListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CompoundAggregationListParams = CompoundAggregationListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CompoundAggregationListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CompoundAggregationListParams = CompoundAggregationListParams.none()
         ): HttpResponseFor<CompoundAggregationListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<CompoundAggregationListPage> =
             list(CompoundAggregationListParams.none(), requestOptions)
@@ -316,7 +316,7 @@ interface CompoundAggregationService {
         fun delete(id: String): HttpResponseFor<CompoundAggregationResponse> =
             delete(id, CompoundAggregationDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -325,27 +325,27 @@ interface CompoundAggregationService {
         ): HttpResponseFor<CompoundAggregationResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: CompoundAggregationDeleteParams = CompoundAggregationDeleteParams.none(),
         ): HttpResponseFor<CompoundAggregationResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: CompoundAggregationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CompoundAggregationResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: CompoundAggregationDeleteParams
         ): HttpResponseFor<CompoundAggregationResponse> = delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,

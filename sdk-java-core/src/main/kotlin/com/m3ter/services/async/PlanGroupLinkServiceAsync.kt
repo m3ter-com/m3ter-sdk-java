@@ -33,7 +33,7 @@ interface PlanGroupLinkServiceAsync {
     fun create(params: PlanGroupLinkCreateParams): CompletableFuture<PlanGroupLinkResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: PlanGroupLinkCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,7 +43,7 @@ interface PlanGroupLinkServiceAsync {
     fun retrieve(id: String): CompletableFuture<PlanGroupLinkResponse> =
         retrieve(id, PlanGroupLinkRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PlanGroupLinkRetrieveParams = PlanGroupLinkRetrieveParams.none(),
@@ -51,23 +51,23 @@ interface PlanGroupLinkServiceAsync {
     ): CompletableFuture<PlanGroupLinkResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PlanGroupLinkRetrieveParams = PlanGroupLinkRetrieveParams.none(),
     ): CompletableFuture<PlanGroupLinkResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PlanGroupLinkRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupLinkResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PlanGroupLinkRetrieveParams): CompletableFuture<PlanGroupLinkResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -80,7 +80,7 @@ interface PlanGroupLinkServiceAsync {
         params: PlanGroupLinkUpdateParams,
     ): CompletableFuture<PlanGroupLinkResponse> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: PlanGroupLinkUpdateParams,
@@ -88,11 +88,11 @@ interface PlanGroupLinkServiceAsync {
     ): CompletableFuture<PlanGroupLinkResponse> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: PlanGroupLinkUpdateParams): CompletableFuture<PlanGroupLinkResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PlanGroupLinkUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -101,18 +101,18 @@ interface PlanGroupLinkServiceAsync {
     /** Retrieve a list of PlanGroupLink entities */
     fun list(): CompletableFuture<PlanGroupLinkListPageAsync> = list(PlanGroupLinkListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PlanGroupLinkListParams = PlanGroupLinkListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupLinkListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PlanGroupLinkListParams = PlanGroupLinkListParams.none()
     ): CompletableFuture<PlanGroupLinkListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<PlanGroupLinkListPageAsync> =
         list(PlanGroupLinkListParams.none(), requestOptions)
 
@@ -120,7 +120,7 @@ interface PlanGroupLinkServiceAsync {
     fun delete(id: String): CompletableFuture<PlanGroupLinkResponse> =
         delete(id, PlanGroupLinkDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PlanGroupLinkDeleteParams = PlanGroupLinkDeleteParams.none(),
@@ -128,23 +128,23 @@ interface PlanGroupLinkServiceAsync {
     ): CompletableFuture<PlanGroupLinkResponse> =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PlanGroupLinkDeleteParams = PlanGroupLinkDeleteParams.none(),
     ): CompletableFuture<PlanGroupLinkResponse> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: PlanGroupLinkDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanGroupLinkResponse>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: PlanGroupLinkDeleteParams): CompletableFuture<PlanGroupLinkResponse> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         requestOptions: RequestOptions,
@@ -175,7 +175,7 @@ interface PlanGroupLinkServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: PlanGroupLinkCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -188,7 +188,7 @@ interface PlanGroupLinkServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
             retrieve(id, PlanGroupLinkRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PlanGroupLinkRetrieveParams = PlanGroupLinkRetrieveParams.none(),
@@ -196,26 +196,26 @@ interface PlanGroupLinkServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PlanGroupLinkRetrieveParams = PlanGroupLinkRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PlanGroupLinkRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PlanGroupLinkRetrieveParams
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -232,7 +232,7 @@ interface PlanGroupLinkServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: PlanGroupLinkUpdateParams,
@@ -240,13 +240,13 @@ interface PlanGroupLinkServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: PlanGroupLinkUpdateParams
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: PlanGroupLinkUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -259,19 +259,19 @@ interface PlanGroupLinkServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<PlanGroupLinkListPageAsync>> =
             list(PlanGroupLinkListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PlanGroupLinkListParams = PlanGroupLinkListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PlanGroupLinkListParams = PlanGroupLinkListParams.none()
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkListPageAsync>> =
@@ -284,7 +284,7 @@ interface PlanGroupLinkServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
             delete(id, PlanGroupLinkDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: PlanGroupLinkDeleteParams = PlanGroupLinkDeleteParams.none(),
@@ -292,26 +292,26 @@ interface PlanGroupLinkServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: PlanGroupLinkDeleteParams = PlanGroupLinkDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: PlanGroupLinkDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: PlanGroupLinkDeleteParams
         ): CompletableFuture<HttpResponseFor<PlanGroupLinkResponse>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,

@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [CompoundAggregationService.list] */
+/** @see CompoundAggregationService.list */
 class CompoundAggregationListPage
 private constructor(
     private val service: CompoundAggregationService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [CompoundAggregationListPageResponse], but gracefully handles missing data.
      *
-     * @see [CompoundAggregationListPageResponse.data]
+     * @see CompoundAggregationListPageResponse.data
      */
     fun data(): List<CompoundAggregationResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [CompoundAggregationListPageResponse], but gracefully handles missing data.
      *
-     * @see [CompoundAggregationListPageResponse.nextToken]
+     * @see CompoundAggregationListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

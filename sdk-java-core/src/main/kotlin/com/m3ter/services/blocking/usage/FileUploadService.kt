@@ -46,7 +46,7 @@ interface FileUploadService {
         params: UsageFileUploadGenerateUploadUrlParams
     ): UsageFileUploadGenerateUploadUrlResponse = generateUploadUrl(params, RequestOptions.none())
 
-    /** @see [generateUploadUrl] */
+    /** @see generateUploadUrl */
     fun generateUploadUrl(
         params: UsageFileUploadGenerateUploadUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -77,7 +77,7 @@ interface FileUploadService {
         ): HttpResponseFor<UsageFileUploadGenerateUploadUrlResponse> =
             generateUploadUrl(params, RequestOptions.none())
 
-        /** @see [generateUploadUrl] */
+        /** @see generateUploadUrl */
         @MustBeClosed
         fun generateUploadUrl(
             params: UsageFileUploadGenerateUploadUrlParams,

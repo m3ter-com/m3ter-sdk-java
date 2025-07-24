@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ExternalMappingService.listByM3terEntity] */
+/** @see ExternalMappingService.listByM3terEntity */
 class ExternalMappingListByM3terEntityPage
 private constructor(
     private val service: ExternalMappingService,
@@ -22,7 +22,7 @@ private constructor(
      * Delegates to [ExternalMappingListByM3terEntityPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [ExternalMappingListByM3terEntityPageResponse.data]
+     * @see ExternalMappingListByM3terEntityPageResponse.data
      */
     fun data(): List<ExternalMappingResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -31,7 +31,7 @@ private constructor(
      * Delegates to [ExternalMappingListByM3terEntityPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [ExternalMappingListByM3terEntityPageResponse.nextToken]
+     * @see ExternalMappingListByM3terEntityPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

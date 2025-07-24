@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [CounterPricingService.list] */
+/** @see CounterPricingService.list */
 class CounterPricingListPage
 private constructor(
     private val service: CounterPricingService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [CounterPricingListPageResponse], but gracefully handles missing data.
      *
-     * @see [CounterPricingListPageResponse.data]
+     * @see CounterPricingListPageResponse.data
      */
     fun data(): List<CounterPricingResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [CounterPricingListPageResponse], but gracefully handles missing data.
      *
-     * @see [CounterPricingListPageResponse.nextToken]
+     * @see CounterPricingListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

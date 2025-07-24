@@ -37,7 +37,7 @@ interface LineItemServiceAsync {
         params: BillLineItemRetrieveParams,
     ): CompletableFuture<LineItemResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BillLineItemRetrieveParams,
@@ -45,11 +45,11 @@ interface LineItemServiceAsync {
     ): CompletableFuture<LineItemResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: BillLineItemRetrieveParams): CompletableFuture<LineItemResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -65,7 +65,7 @@ interface LineItemServiceAsync {
     fun list(billId: String): CompletableFuture<BillLineItemListPageAsync> =
         list(billId, BillLineItemListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         billId: String,
         params: BillLineItemListParams = BillLineItemListParams.none(),
@@ -73,23 +73,23 @@ interface LineItemServiceAsync {
     ): CompletableFuture<BillLineItemListPageAsync> =
         list(params.toBuilder().billId(billId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         billId: String,
         params: BillLineItemListParams = BillLineItemListParams.none(),
     ): CompletableFuture<BillLineItemListPageAsync> = list(billId, params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BillLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillLineItemListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: BillLineItemListParams): CompletableFuture<BillLineItemListPageAsync> =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         billId: String,
         requestOptions: RequestOptions,
@@ -121,7 +121,7 @@ interface LineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<LineItemResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: BillLineItemRetrieveParams,
@@ -129,13 +129,13 @@ interface LineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<LineItemResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: BillLineItemRetrieveParams
         ): CompletableFuture<HttpResponseFor<LineItemResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: BillLineItemRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -148,7 +148,7 @@ interface LineItemServiceAsync {
         fun list(billId: String): CompletableFuture<HttpResponseFor<BillLineItemListPageAsync>> =
             list(billId, BillLineItemListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             billId: String,
             params: BillLineItemListParams = BillLineItemListParams.none(),
@@ -156,26 +156,26 @@ interface LineItemServiceAsync {
         ): CompletableFuture<HttpResponseFor<BillLineItemListPageAsync>> =
             list(params.toBuilder().billId(billId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             billId: String,
             params: BillLineItemListParams = BillLineItemListParams.none(),
         ): CompletableFuture<HttpResponseFor<BillLineItemListPageAsync>> =
             list(billId, params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: BillLineItemListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillLineItemListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: BillLineItemListParams
         ): CompletableFuture<HttpResponseFor<BillLineItemListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             billId: String,
             requestOptions: RequestOptions,

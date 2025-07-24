@@ -38,7 +38,7 @@ interface PricingServiceAsync {
     fun create(params: PricingCreateParams): CompletableFuture<PricingResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: PricingCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -48,7 +48,7 @@ interface PricingServiceAsync {
     fun retrieve(id: String): CompletableFuture<PricingResponse> =
         retrieve(id, PricingRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PricingRetrieveParams = PricingRetrieveParams.none(),
@@ -56,23 +56,23 @@ interface PricingServiceAsync {
     ): CompletableFuture<PricingResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PricingRetrieveParams = PricingRetrieveParams.none(),
     ): CompletableFuture<PricingResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PricingRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PricingResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PricingRetrieveParams): CompletableFuture<PricingResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<PricingResponse> =
         retrieve(id, PricingRetrieveParams.none(), requestOptions)
 
@@ -85,7 +85,7 @@ interface PricingServiceAsync {
     fun update(id: String, params: PricingUpdateParams): CompletableFuture<PricingResponse> =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: PricingUpdateParams,
@@ -93,11 +93,11 @@ interface PricingServiceAsync {
     ): CompletableFuture<PricingResponse> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: PricingUpdateParams): CompletableFuture<PricingResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PricingUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -106,18 +106,18 @@ interface PricingServiceAsync {
     /** Retrieve a list of Pricings filtered by date, Plan ID, PlanTemplate ID, or Pricing ID. */
     fun list(): CompletableFuture<PricingListPageAsync> = list(PricingListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PricingListParams = PricingListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PricingListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PricingListParams = PricingListParams.none()
     ): CompletableFuture<PricingListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<PricingListPageAsync> =
         list(PricingListParams.none(), requestOptions)
 
@@ -125,7 +125,7 @@ interface PricingServiceAsync {
     fun delete(id: String): CompletableFuture<PricingResponse> =
         delete(id, PricingDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PricingDeleteParams = PricingDeleteParams.none(),
@@ -133,23 +133,23 @@ interface PricingServiceAsync {
     ): CompletableFuture<PricingResponse> =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PricingDeleteParams = PricingDeleteParams.none(),
     ): CompletableFuture<PricingResponse> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: PricingDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PricingResponse>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: PricingDeleteParams): CompletableFuture<PricingResponse> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<PricingResponse> =
         delete(id, PricingDeleteParams.none(), requestOptions)
 
@@ -176,7 +176,7 @@ interface PricingServiceAsync {
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: PricingCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -189,7 +189,7 @@ interface PricingServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<PricingResponse>> =
             retrieve(id, PricingRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PricingRetrieveParams = PricingRetrieveParams.none(),
@@ -197,26 +197,26 @@ interface PricingServiceAsync {
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PricingRetrieveParams = PricingRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PricingRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PricingResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PricingRetrieveParams
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -233,7 +233,7 @@ interface PricingServiceAsync {
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: PricingUpdateParams,
@@ -241,13 +241,13 @@ interface PricingServiceAsync {
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: PricingUpdateParams
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: PricingUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -260,19 +260,19 @@ interface PricingServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<PricingListPageAsync>> =
             list(PricingListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PricingListParams = PricingListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PricingListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PricingListParams = PricingListParams.none()
         ): CompletableFuture<HttpResponseFor<PricingListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<PricingListPageAsync>> =
@@ -285,7 +285,7 @@ interface PricingServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<PricingResponse>> =
             delete(id, PricingDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: PricingDeleteParams = PricingDeleteParams.none(),
@@ -293,26 +293,26 @@ interface PricingServiceAsync {
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: PricingDeleteParams = PricingDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: PricingDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PricingResponse>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: PricingDeleteParams
         ): CompletableFuture<HttpResponseFor<PricingResponse>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,

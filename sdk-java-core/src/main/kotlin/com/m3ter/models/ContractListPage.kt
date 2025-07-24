@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ContractService.list] */
+/** @see ContractService.list */
 class ContractListPage
 private constructor(
     private val service: ContractService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [ContractListPageResponse], but gracefully handles missing data.
      *
-     * @see [ContractListPageResponse.data]
+     * @see ContractListPageResponse.data
      */
     fun data(): List<ContractResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [ContractListPageResponse], but gracefully handles missing data.
      *
-     * @see [ContractListPageResponse.nextToken]
+     * @see ContractListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

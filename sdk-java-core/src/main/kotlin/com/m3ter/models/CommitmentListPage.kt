@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [CommitmentService.list] */
+/** @see CommitmentService.list */
 class CommitmentListPage
 private constructor(
     private val service: CommitmentService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [CommitmentListPageResponse], but gracefully handles missing data.
      *
-     * @see [CommitmentListPageResponse.data]
+     * @see CommitmentListPageResponse.data
      */
     fun data(): List<CommitmentResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [CommitmentListPageResponse], but gracefully handles missing data.
      *
-     * @see [CommitmentListPageResponse.nextToken]
+     * @see CommitmentListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

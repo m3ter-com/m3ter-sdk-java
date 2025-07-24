@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [StatementJobServiceAsync.list] */
+/** @see StatementJobServiceAsync.list */
 class StatementStatementJobListPageAsync
 private constructor(
     private val service: StatementJobServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [StatementStatementJobListPageResponse], but gracefully handles missing data.
      *
-     * @see [StatementStatementJobListPageResponse.data]
+     * @see StatementStatementJobListPageResponse.data
      */
     fun data(): List<StatementJobResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [StatementStatementJobListPageResponse], but gracefully handles missing data.
      *
-     * @see [StatementStatementJobListPageResponse.nextToken]
+     * @see StatementStatementJobListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

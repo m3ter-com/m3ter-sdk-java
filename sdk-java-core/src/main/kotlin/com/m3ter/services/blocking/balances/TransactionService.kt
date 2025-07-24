@@ -48,18 +48,18 @@ interface TransactionService {
     fun create(balanceId: String, params: BalanceTransactionCreateParams): TransactionResponse =
         create(balanceId, params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         balanceId: String,
         params: BalanceTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionResponse = create(params.toBuilder().balanceId(balanceId).build(), requestOptions)
 
-    /** @see [create] */
+    /** @see create */
     fun create(params: BalanceTransactionCreateParams): TransactionResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: BalanceTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -74,7 +74,7 @@ interface TransactionService {
     fun list(balanceId: String): BalanceTransactionListPage =
         list(balanceId, BalanceTransactionListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         balanceId: String,
         params: BalanceTransactionListParams = BalanceTransactionListParams.none(),
@@ -82,23 +82,23 @@ interface TransactionService {
     ): BalanceTransactionListPage =
         list(params.toBuilder().balanceId(balanceId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         balanceId: String,
         params: BalanceTransactionListParams = BalanceTransactionListParams.none(),
     ): BalanceTransactionListPage = list(balanceId, params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BalanceTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceTransactionListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: BalanceTransactionListParams): BalanceTransactionListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(balanceId: String, requestOptions: RequestOptions): BalanceTransactionListPage =
         list(balanceId, BalanceTransactionListParams.none(), requestOptions)
 
@@ -126,7 +126,7 @@ interface TransactionService {
     fun summary(balanceId: String): BalanceTransactionSummaryResponse =
         summary(balanceId, BalanceTransactionSummaryParams.none())
 
-    /** @see [summary] */
+    /** @see summary */
     fun summary(
         balanceId: String,
         params: BalanceTransactionSummaryParams = BalanceTransactionSummaryParams.none(),
@@ -134,23 +134,23 @@ interface TransactionService {
     ): BalanceTransactionSummaryResponse =
         summary(params.toBuilder().balanceId(balanceId).build(), requestOptions)
 
-    /** @see [summary] */
+    /** @see summary */
     fun summary(
         balanceId: String,
         params: BalanceTransactionSummaryParams = BalanceTransactionSummaryParams.none(),
     ): BalanceTransactionSummaryResponse = summary(balanceId, params, RequestOptions.none())
 
-    /** @see [summary] */
+    /** @see summary */
     fun summary(
         params: BalanceTransactionSummaryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceTransactionSummaryResponse
 
-    /** @see [summary] */
+    /** @see summary */
     fun summary(params: BalanceTransactionSummaryParams): BalanceTransactionSummaryResponse =
         summary(params, RequestOptions.none())
 
-    /** @see [summary] */
+    /** @see summary */
     fun summary(
         balanceId: String,
         requestOptions: RequestOptions,
@@ -182,7 +182,7 @@ interface TransactionService {
             params: BalanceTransactionCreateParams,
         ): HttpResponseFor<TransactionResponse> = create(balanceId, params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             balanceId: String,
@@ -191,12 +191,12 @@ interface TransactionService {
         ): HttpResponseFor<TransactionResponse> =
             create(params.toBuilder().balanceId(balanceId).build(), requestOptions)
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(params: BalanceTransactionCreateParams): HttpResponseFor<TransactionResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: BalanceTransactionCreateParams,
@@ -212,7 +212,7 @@ interface TransactionService {
         fun list(balanceId: String): HttpResponseFor<BalanceTransactionListPage> =
             list(balanceId, BalanceTransactionListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             balanceId: String,
@@ -221,7 +221,7 @@ interface TransactionService {
         ): HttpResponseFor<BalanceTransactionListPage> =
             list(params.toBuilder().balanceId(balanceId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             balanceId: String,
@@ -229,20 +229,20 @@ interface TransactionService {
         ): HttpResponseFor<BalanceTransactionListPage> =
             list(balanceId, params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BalanceTransactionListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BalanceTransactionListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BalanceTransactionListParams
         ): HttpResponseFor<BalanceTransactionListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             balanceId: String,
@@ -259,7 +259,7 @@ interface TransactionService {
         fun summary(balanceId: String): HttpResponseFor<BalanceTransactionSummaryResponse> =
             summary(balanceId, BalanceTransactionSummaryParams.none())
 
-        /** @see [summary] */
+        /** @see summary */
         @MustBeClosed
         fun summary(
             balanceId: String,
@@ -268,7 +268,7 @@ interface TransactionService {
         ): HttpResponseFor<BalanceTransactionSummaryResponse> =
             summary(params.toBuilder().balanceId(balanceId).build(), requestOptions)
 
-        /** @see [summary] */
+        /** @see summary */
         @MustBeClosed
         fun summary(
             balanceId: String,
@@ -276,21 +276,21 @@ interface TransactionService {
         ): HttpResponseFor<BalanceTransactionSummaryResponse> =
             summary(balanceId, params, RequestOptions.none())
 
-        /** @see [summary] */
+        /** @see summary */
         @MustBeClosed
         fun summary(
             params: BalanceTransactionSummaryParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BalanceTransactionSummaryResponse>
 
-        /** @see [summary] */
+        /** @see summary */
         @MustBeClosed
         fun summary(
             params: BalanceTransactionSummaryParams
         ): HttpResponseFor<BalanceTransactionSummaryResponse> =
             summary(params, RequestOptions.none())
 
-        /** @see [summary] */
+        /** @see summary */
         @MustBeClosed
         fun summary(
             balanceId: String,

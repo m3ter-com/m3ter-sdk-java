@@ -40,7 +40,7 @@ interface ContractServiceAsync {
     fun create(params: ContractCreateParams): CompletableFuture<ContractResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: ContractCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -50,7 +50,7 @@ interface ContractServiceAsync {
     fun retrieve(id: String): CompletableFuture<ContractResponse> =
         retrieve(id, ContractRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ContractRetrieveParams = ContractRetrieveParams.none(),
@@ -58,23 +58,23 @@ interface ContractServiceAsync {
     ): CompletableFuture<ContractResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ContractRetrieveParams = ContractRetrieveParams.none(),
     ): CompletableFuture<ContractResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: ContractRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ContractResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: ContractRetrieveParams): CompletableFuture<ContractResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<ContractResponse> =
         retrieve(id, ContractRetrieveParams.none(), requestOptions)
 
@@ -91,7 +91,7 @@ interface ContractServiceAsync {
     fun update(id: String, params: ContractUpdateParams): CompletableFuture<ContractResponse> =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: ContractUpdateParams,
@@ -99,11 +99,11 @@ interface ContractServiceAsync {
     ): CompletableFuture<ContractResponse> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: ContractUpdateParams): CompletableFuture<ContractResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: ContractUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -115,18 +115,18 @@ interface ContractServiceAsync {
      */
     fun list(): CompletableFuture<ContractListPageAsync> = list(ContractListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ContractListParams = ContractListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ContractListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ContractListParams = ContractListParams.none()
     ): CompletableFuture<ContractListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<ContractListPageAsync> =
         list(ContractListParams.none(), requestOptions)
 
@@ -140,7 +140,7 @@ interface ContractServiceAsync {
     fun delete(id: String): CompletableFuture<ContractResponse> =
         delete(id, ContractDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: ContractDeleteParams = ContractDeleteParams.none(),
@@ -148,23 +148,23 @@ interface ContractServiceAsync {
     ): CompletableFuture<ContractResponse> =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: ContractDeleteParams = ContractDeleteParams.none(),
     ): CompletableFuture<ContractResponse> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: ContractDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ContractResponse>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: ContractDeleteParams): CompletableFuture<ContractResponse> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<ContractResponse> =
         delete(id, ContractDeleteParams.none(), requestOptions)
 
@@ -187,7 +187,7 @@ interface ContractServiceAsync {
     ): CompletableFuture<ContractEndDateBillingEntitiesResponse> =
         endDateBillingEntities(id, params, RequestOptions.none())
 
-    /** @see [endDateBillingEntities] */
+    /** @see endDateBillingEntities */
     fun endDateBillingEntities(
         id: String,
         params: ContractEndDateBillingEntitiesParams,
@@ -195,13 +195,13 @@ interface ContractServiceAsync {
     ): CompletableFuture<ContractEndDateBillingEntitiesResponse> =
         endDateBillingEntities(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [endDateBillingEntities] */
+    /** @see endDateBillingEntities */
     fun endDateBillingEntities(
         params: ContractEndDateBillingEntitiesParams
     ): CompletableFuture<ContractEndDateBillingEntitiesResponse> =
         endDateBillingEntities(params, RequestOptions.none())
 
-    /** @see [endDateBillingEntities] */
+    /** @see endDateBillingEntities */
     fun endDateBillingEntities(
         params: ContractEndDateBillingEntitiesParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -230,7 +230,7 @@ interface ContractServiceAsync {
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: ContractCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -243,7 +243,7 @@ interface ContractServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<ContractResponse>> =
             retrieve(id, ContractRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: ContractRetrieveParams = ContractRetrieveParams.none(),
@@ -251,26 +251,26 @@ interface ContractServiceAsync {
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: ContractRetrieveParams = ContractRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: ContractRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ContractResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: ContractRetrieveParams
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -287,7 +287,7 @@ interface ContractServiceAsync {
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: ContractUpdateParams,
@@ -295,13 +295,13 @@ interface ContractServiceAsync {
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: ContractUpdateParams
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: ContractUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -314,19 +314,19 @@ interface ContractServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<ContractListPageAsync>> =
             list(ContractListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ContractListParams = ContractListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ContractListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: ContractListParams = ContractListParams.none()
         ): CompletableFuture<HttpResponseFor<ContractListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ContractListPageAsync>> =
@@ -339,7 +339,7 @@ interface ContractServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<ContractResponse>> =
             delete(id, ContractDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: ContractDeleteParams = ContractDeleteParams.none(),
@@ -347,26 +347,26 @@ interface ContractServiceAsync {
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: ContractDeleteParams = ContractDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: ContractDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ContractResponse>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: ContractDeleteParams
         ): CompletableFuture<HttpResponseFor<ContractResponse>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,
@@ -384,7 +384,7 @@ interface ContractServiceAsync {
         ): CompletableFuture<HttpResponseFor<ContractEndDateBillingEntitiesResponse>> =
             endDateBillingEntities(id, params, RequestOptions.none())
 
-        /** @see [endDateBillingEntities] */
+        /** @see endDateBillingEntities */
         fun endDateBillingEntities(
             id: String,
             params: ContractEndDateBillingEntitiesParams,
@@ -392,13 +392,13 @@ interface ContractServiceAsync {
         ): CompletableFuture<HttpResponseFor<ContractEndDateBillingEntitiesResponse>> =
             endDateBillingEntities(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [endDateBillingEntities] */
+        /** @see endDateBillingEntities */
         fun endDateBillingEntities(
             params: ContractEndDateBillingEntitiesParams
         ): CompletableFuture<HttpResponseFor<ContractEndDateBillingEntitiesResponse>> =
             endDateBillingEntities(params, RequestOptions.none())
 
-        /** @see [endDateBillingEntities] */
+        /** @see endDateBillingEntities */
         fun endDateBillingEntities(
             params: ContractEndDateBillingEntitiesParams,
             requestOptions: RequestOptions = RequestOptions.none(),

@@ -39,7 +39,7 @@ interface PlanTemplateServiceAsync {
     fun create(params: PlanTemplateCreateParams): CompletableFuture<PlanTemplateResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: PlanTemplateCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -54,7 +54,7 @@ interface PlanTemplateServiceAsync {
     fun retrieve(id: String): CompletableFuture<PlanTemplateResponse> =
         retrieve(id, PlanTemplateRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PlanTemplateRetrieveParams = PlanTemplateRetrieveParams.none(),
@@ -62,23 +62,23 @@ interface PlanTemplateServiceAsync {
     ): CompletableFuture<PlanTemplateResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PlanTemplateRetrieveParams = PlanTemplateRetrieveParams.none(),
     ): CompletableFuture<PlanTemplateResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PlanTemplateRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanTemplateResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PlanTemplateRetrieveParams): CompletableFuture<PlanTemplateResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -101,7 +101,7 @@ interface PlanTemplateServiceAsync {
         params: PlanTemplateUpdateParams,
     ): CompletableFuture<PlanTemplateResponse> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: PlanTemplateUpdateParams,
@@ -109,11 +109,11 @@ interface PlanTemplateServiceAsync {
     ): CompletableFuture<PlanTemplateResponse> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: PlanTemplateUpdateParams): CompletableFuture<PlanTemplateResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PlanTemplateUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -128,18 +128,18 @@ interface PlanTemplateServiceAsync {
      */
     fun list(): CompletableFuture<PlanTemplateListPageAsync> = list(PlanTemplateListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PlanTemplateListParams = PlanTemplateListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanTemplateListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PlanTemplateListParams = PlanTemplateListParams.none()
     ): CompletableFuture<PlanTemplateListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<PlanTemplateListPageAsync> =
         list(PlanTemplateListParams.none(), requestOptions)
 
@@ -152,7 +152,7 @@ interface PlanTemplateServiceAsync {
     fun delete(id: String): CompletableFuture<PlanTemplateResponse> =
         delete(id, PlanTemplateDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PlanTemplateDeleteParams = PlanTemplateDeleteParams.none(),
@@ -160,23 +160,23 @@ interface PlanTemplateServiceAsync {
     ): CompletableFuture<PlanTemplateResponse> =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PlanTemplateDeleteParams = PlanTemplateDeleteParams.none(),
     ): CompletableFuture<PlanTemplateResponse> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: PlanTemplateDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PlanTemplateResponse>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: PlanTemplateDeleteParams): CompletableFuture<PlanTemplateResponse> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         requestOptions: RequestOptions,
@@ -207,7 +207,7 @@ interface PlanTemplateServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         fun create(
             params: PlanTemplateCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -220,7 +220,7 @@ interface PlanTemplateServiceAsync {
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> =
             retrieve(id, PlanTemplateRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PlanTemplateRetrieveParams = PlanTemplateRetrieveParams.none(),
@@ -228,26 +228,26 @@ interface PlanTemplateServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: PlanTemplateRetrieveParams = PlanTemplateRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PlanTemplateRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             params: PlanTemplateRetrieveParams
         ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -264,7 +264,7 @@ interface PlanTemplateServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             id: String,
             params: PlanTemplateUpdateParams,
@@ -272,13 +272,13 @@ interface PlanTemplateServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: PlanTemplateUpdateParams
         ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         fun update(
             params: PlanTemplateUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -291,19 +291,19 @@ interface PlanTemplateServiceAsync {
         fun list(): CompletableFuture<HttpResponseFor<PlanTemplateListPageAsync>> =
             list(PlanTemplateListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PlanTemplateListParams = PlanTemplateListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanTemplateListPageAsync>>
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             params: PlanTemplateListParams = PlanTemplateListParams.none()
         ): CompletableFuture<HttpResponseFor<PlanTemplateListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<PlanTemplateListPageAsync>> =
@@ -316,7 +316,7 @@ interface PlanTemplateServiceAsync {
         fun delete(id: String): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> =
             delete(id, PlanTemplateDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: PlanTemplateDeleteParams = PlanTemplateDeleteParams.none(),
@@ -324,26 +324,26 @@ interface PlanTemplateServiceAsync {
         ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             params: PlanTemplateDeleteParams = PlanTemplateDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: PlanTemplateDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>>
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             params: PlanTemplateDeleteParams
         ): CompletableFuture<HttpResponseFor<PlanTemplateResponse>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,
