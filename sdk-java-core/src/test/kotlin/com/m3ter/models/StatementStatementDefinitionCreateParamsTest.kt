@@ -12,13 +12,13 @@ internal class StatementStatementDefinitionCreateParamsTest {
     fun create() {
         StatementStatementDefinitionCreateParams.builder()
             .orgId("orgId")
-            .aggregationFrequency(StatementStatementDefinitionCreateParams.AggregationFrequency.DAY)
+            .aggregationFrequency(
+                StatementStatementDefinitionCreateParams.AggregationFrequency.ORIGINAL
+            )
             .addDimension(
                 StatementStatementDefinitionCreateParams.Dimension.builder()
-                    .addFilter("string")
-                    .name("x")
-                    .addAttribute("string")
-                    .meterId("meterId")
+                    .addDimensionAttribute("string")
+                    .dimensionName("dimensionName")
                     .build()
             )
             .generateSlimStatements(true)
@@ -42,7 +42,7 @@ internal class StatementStatementDefinitionCreateParamsTest {
         val params =
             StatementStatementDefinitionCreateParams.builder()
                 .aggregationFrequency(
-                    StatementStatementDefinitionCreateParams.AggregationFrequency.DAY
+                    StatementStatementDefinitionCreateParams.AggregationFrequency.ORIGINAL
                 )
                 .build()
 
@@ -57,14 +57,12 @@ internal class StatementStatementDefinitionCreateParamsTest {
             StatementStatementDefinitionCreateParams.builder()
                 .orgId("orgId")
                 .aggregationFrequency(
-                    StatementStatementDefinitionCreateParams.AggregationFrequency.DAY
+                    StatementStatementDefinitionCreateParams.AggregationFrequency.ORIGINAL
                 )
                 .addDimension(
                     StatementStatementDefinitionCreateParams.Dimension.builder()
-                        .addFilter("string")
-                        .name("x")
-                        .addAttribute("string")
-                        .meterId("meterId")
+                        .addDimensionAttribute("string")
+                        .dimensionName("dimensionName")
                         .build()
                 )
                 .generateSlimStatements(true)
@@ -85,14 +83,12 @@ internal class StatementStatementDefinitionCreateParamsTest {
         val body = params._body()
 
         assertThat(body.aggregationFrequency())
-            .isEqualTo(StatementStatementDefinitionCreateParams.AggregationFrequency.DAY)
+            .isEqualTo(StatementStatementDefinitionCreateParams.AggregationFrequency.ORIGINAL)
         assertThat(body.dimensions().getOrNull())
             .containsExactly(
                 StatementStatementDefinitionCreateParams.Dimension.builder()
-                    .addFilter("string")
-                    .name("x")
-                    .addAttribute("string")
-                    .meterId("meterId")
+                    .addDimensionAttribute("string")
+                    .dimensionName("dimensionName")
                     .build()
             )
         assertThat(body.generateSlimStatements()).contains(true)
@@ -116,13 +112,13 @@ internal class StatementStatementDefinitionCreateParamsTest {
         val params =
             StatementStatementDefinitionCreateParams.builder()
                 .aggregationFrequency(
-                    StatementStatementDefinitionCreateParams.AggregationFrequency.DAY
+                    StatementStatementDefinitionCreateParams.AggregationFrequency.ORIGINAL
                 )
                 .build()
 
         val body = params._body()
 
         assertThat(body.aggregationFrequency())
-            .isEqualTo(StatementStatementDefinitionCreateParams.AggregationFrequency.DAY)
+            .isEqualTo(StatementStatementDefinitionCreateParams.AggregationFrequency.ORIGINAL)
     }
 }
