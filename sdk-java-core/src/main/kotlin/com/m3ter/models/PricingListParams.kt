@@ -14,6 +14,7 @@ import kotlin.jvm.optionals.getOrNull
 class PricingListParams
 private constructor(
     private val orgId: String?,
+    private val aggregationId: String?,
     private val date: String?,
     private val ids: List<String>?,
     private val nextToken: String?,
@@ -26,6 +27,9 @@ private constructor(
 
     @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
+
+    /** UUID of the Aggregation to retrieve pricings for */
+    fun aggregationId(): Optional<String> = Optional.ofNullable(aggregationId)
 
     /** Date on which to retrieve active Pricings. */
     fun date(): Optional<String> = Optional.ofNullable(date)
@@ -65,6 +69,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
+        private var aggregationId: String? = null
         private var date: String? = null
         private var ids: MutableList<String>? = null
         private var nextToken: String? = null
@@ -77,6 +82,7 @@ private constructor(
         @JvmSynthetic
         internal fun from(pricingListParams: PricingListParams) = apply {
             orgId = pricingListParams.orgId
+            aggregationId = pricingListParams.aggregationId
             date = pricingListParams.date
             ids = pricingListParams.ids?.toMutableList()
             nextToken = pricingListParams.nextToken
@@ -93,6 +99,13 @@ private constructor(
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
         @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
+
+        /** UUID of the Aggregation to retrieve pricings for */
+        fun aggregationId(aggregationId: String?) = apply { this.aggregationId = aggregationId }
+
+        /** Alias for calling [Builder.aggregationId] with `aggregationId.orElse(null)`. */
+        fun aggregationId(aggregationId: Optional<String>) =
+            aggregationId(aggregationId.getOrNull())
 
         /** Date on which to retrieve active Pricings. */
         fun date(date: String?) = apply { this.date = date }
@@ -251,6 +264,7 @@ private constructor(
         fun build(): PricingListParams =
             PricingListParams(
                 orgId,
+                aggregationId,
                 date,
                 ids?.toImmutable(),
                 nextToken,
@@ -273,6 +287,7 @@ private constructor(
     override fun _queryParams(): QueryParams =
         QueryParams.builder()
             .apply {
+                aggregationId?.let { put("aggregationId", it) }
                 date?.let { put("date", it) }
                 ids?.let { put("ids", it.joinToString(",")) }
                 nextToken?.let { put("nextToken", it) }
@@ -288,11 +303,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PricingListParams && orgId == other.orgId && date == other.date && ids == other.ids && nextToken == other.nextToken && pageSize == other.pageSize && planId == other.planId && planTemplateId == other.planTemplateId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is PricingListParams && orgId == other.orgId && aggregationId == other.aggregationId && date == other.date && ids == other.ids && nextToken == other.nextToken && pageSize == other.pageSize && planId == other.planId && planTemplateId == other.planTemplateId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, date, ids, nextToken, pageSize, planId, planTemplateId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, aggregationId, date, ids, nextToken, pageSize, planId, planTemplateId, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "PricingListParams{orgId=$orgId, date=$date, ids=$ids, nextToken=$nextToken, pageSize=$pageSize, planId=$planId, planTemplateId=$planTemplateId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "PricingListParams{orgId=$orgId, aggregationId=$aggregationId, date=$date, ids=$ids, nextToken=$nextToken, pageSize=$pageSize, planId=$planId, planTemplateId=$planTemplateId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

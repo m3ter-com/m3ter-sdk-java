@@ -12,6 +12,7 @@ internal class PricingListParamsTest {
     fun create() {
         PricingListParams.builder()
             .orgId("orgId")
+            .aggregationId("aggregationId")
             .date("date")
             .addId("string")
             .nextToken("nextToken")
@@ -35,6 +36,7 @@ internal class PricingListParamsTest {
         val params =
             PricingListParams.builder()
                 .orgId("orgId")
+                .aggregationId("aggregationId")
                 .date("date")
                 .addId("string")
                 .nextToken("nextToken")
@@ -48,6 +50,7 @@ internal class PricingListParamsTest {
         assertThat(queryParams)
             .isEqualTo(
                 QueryParams.builder()
+                    .put("aggregationId", "aggregationId")
                     .put("date", "date")
                     .put("ids", listOf("string").joinToString(","))
                     .put("nextToken", "nextToken")
