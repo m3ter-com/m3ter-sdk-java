@@ -237,6 +237,8 @@ The SDK throws custom unchecked exception types:
 
 - [`M3terIoException`](sdk-java-core/src/main/kotlin/com/m3ter/errors/M3terIoException.kt): I/O networking errors.
 
+- [`M3terRetryableException`](sdk-java-core/src/main/kotlin/com/m3ter/errors/M3terRetryableException.kt): Generic error indicating a failure that could be retried by the client.
+
 - [`M3terInvalidDataException`](sdk-java-core/src/main/kotlin/com/m3ter/errors/M3terInvalidDataException.kt): Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
 
 - [`M3terException`](sdk-java-core/src/main/kotlin/com/m3ter/errors/M3terException.kt): Base class for all exceptions. Most errors will result in one of the previously mentioned ones, but completely generic errors may be thrown using the base class.
