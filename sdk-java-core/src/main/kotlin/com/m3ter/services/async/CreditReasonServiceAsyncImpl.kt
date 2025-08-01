@@ -3,14 +3,14 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -25,6 +25,7 @@ import com.m3ter.models.CreditReasonResponse
 import com.m3ter.models.CreditReasonRetrieveParams
 import com.m3ter.models.CreditReasonUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CreditReasonServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
     }
 
     override fun withRawResponse(): CreditReasonServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): CreditReasonServiceAsync =
+        CreditReasonServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: CreditReasonCreateParams,
@@ -74,11 +78,18 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         CreditReasonServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CreditReasonServiceAsync.WithRawResponse =
+            CreditReasonServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<CreditReasonResponse> =
             jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: CreditReasonCreateParams,
@@ -87,6 +98,7 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -100,7 +112,7 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -114,7 +126,6 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
 
         private val retrieveHandler: Handler<CreditReasonResponse> =
             jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CreditReasonRetrieveParams,
@@ -126,6 +137,7 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -139,7 +151,7 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -153,7 +165,6 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
 
         private val updateHandler: Handler<CreditReasonResponse> =
             jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: CreditReasonUpdateParams,
@@ -165,6 +176,7 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -179,7 +191,7 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -193,7 +205,6 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
 
         private val listHandler: Handler<CreditReasonListPageResponse> =
             jsonHandler<CreditReasonListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: CreditReasonListParams,
@@ -202,6 +213,7 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -214,7 +226,7 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -236,7 +248,6 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
 
         private val deleteHandler: Handler<CreditReasonResponse> =
             jsonHandler<CreditReasonResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: CreditReasonDeleteParams,
@@ -248,6 +259,7 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -262,7 +274,7 @@ class CreditReasonServiceAsyncImpl internal constructor(private val clientOption
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {

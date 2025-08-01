@@ -17,7 +17,6 @@ internal class BillJobResponseTest {
         val billJobResponse =
             BillJobResponse.builder()
                 .id("id")
-                .version(0L)
                 .addAccountId("string")
                 .billDate(LocalDate.parse("2019-12-27"))
                 .billFrequencyInterval(0)
@@ -41,12 +40,12 @@ internal class BillJobResponseTest {
                 .timezone("UTC")
                 .total(0L)
                 .type(BillJobResponse.Type.CREATE)
+                .version(0L)
                 .weekEpoch(LocalDate.parse("2019-12-27"))
                 .yearEpoch(LocalDate.parse("2019-12-27"))
                 .build()
 
         assertThat(billJobResponse.id()).isEqualTo("id")
-        assertThat(billJobResponse.version()).isEqualTo(0L)
         assertThat(billJobResponse.accountIds().getOrNull()).containsExactly("string")
         assertThat(billJobResponse.billDate()).contains(LocalDate.parse("2019-12-27"))
         assertThat(billJobResponse.billFrequencyInterval()).contains(0)
@@ -75,6 +74,7 @@ internal class BillJobResponseTest {
         assertThat(billJobResponse.timezone()).contains("UTC")
         assertThat(billJobResponse.total()).contains(0L)
         assertThat(billJobResponse.type()).contains(BillJobResponse.Type.CREATE)
+        assertThat(billJobResponse.version()).contains(0L)
         assertThat(billJobResponse.weekEpoch()).contains(LocalDate.parse("2019-12-27"))
         assertThat(billJobResponse.yearEpoch()).contains(LocalDate.parse("2019-12-27"))
     }
@@ -85,7 +85,6 @@ internal class BillJobResponseTest {
         val billJobResponse =
             BillJobResponse.builder()
                 .id("id")
-                .version(0L)
                 .addAccountId("string")
                 .billDate(LocalDate.parse("2019-12-27"))
                 .billFrequencyInterval(0)
@@ -109,6 +108,7 @@ internal class BillJobResponseTest {
                 .timezone("UTC")
                 .total(0L)
                 .type(BillJobResponse.Type.CREATE)
+                .version(0L)
                 .weekEpoch(LocalDate.parse("2019-12-27"))
                 .yearEpoch(LocalDate.parse("2019-12-27"))
                 .build()

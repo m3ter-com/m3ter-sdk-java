@@ -3,6 +3,7 @@ package com.m3ter.core.http
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
 import com.m3ter.errors.M3terIoException
+import com.m3ter.errors.M3terRetryableException
 import java.io.IOException
 import java.time.Clock
 import java.time.Duration
@@ -176,9 +177,10 @@ private constructor(
     }
 
     private fun shouldRetry(throwable: Throwable): Boolean =
-        // Only retry IOException and M3terIoException, other exceptions are not intended to be
-        // retried.
-        throwable is IOException || throwable is M3terIoException
+        // Only retry known retryable exceptions, other exceptions are not intended to be retried.
+        throwable is IOException ||
+            throwable is M3terIoException ||
+            throwable is M3terRetryableException
 
     private fun getRetryBackoffDuration(retries: Int, response: HttpResponse?): Duration {
         // About the Retry-After header:

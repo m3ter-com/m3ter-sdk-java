@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CounterAdjustmentCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.CounterAdjustmentListParams
 import com.m3ter.models.CounterAdjustmentResponse
 import com.m3ter.models.CounterAdjustmentRetrieveParams
 import com.m3ter.models.CounterAdjustmentUpdateParams
+import java.util.function.Consumer
 
 interface CounterAdjustmentService {
 
@@ -19,6 +21,13 @@ interface CounterAdjustmentService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): CounterAdjustmentService
 
     /**
      * Create a new CounterAdjustment for an Account using a Counter.
@@ -34,7 +43,7 @@ interface CounterAdjustmentService {
     fun create(params: CounterAdjustmentCreateParams): CounterAdjustmentResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: CounterAdjustmentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -44,30 +53,30 @@ interface CounterAdjustmentService {
     fun retrieve(id: String): CounterAdjustmentResponse =
         retrieve(id, CounterAdjustmentRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CounterAdjustmentRetrieveParams = CounterAdjustmentRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustmentResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CounterAdjustmentRetrieveParams = CounterAdjustmentRetrieveParams.none(),
     ): CounterAdjustmentResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CounterAdjustmentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustmentResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: CounterAdjustmentRetrieveParams): CounterAdjustmentResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CounterAdjustmentResponse =
         retrieve(id, CounterAdjustmentRetrieveParams.none(), requestOptions)
 
@@ -75,18 +84,18 @@ interface CounterAdjustmentService {
     fun update(id: String, params: CounterAdjustmentUpdateParams): CounterAdjustmentResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: CounterAdjustmentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustmentResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: CounterAdjustmentUpdateParams): CounterAdjustmentResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CounterAdjustmentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -104,18 +113,18 @@ interface CounterAdjustmentService {
      */
     fun list(): CounterAdjustmentListPage = list(CounterAdjustmentListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CounterAdjustmentListParams = CounterAdjustmentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustmentListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CounterAdjustmentListParams = CounterAdjustmentListParams.none()
     ): CounterAdjustmentListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CounterAdjustmentListPage =
         list(CounterAdjustmentListParams.none(), requestOptions)
 
@@ -123,30 +132,30 @@ interface CounterAdjustmentService {
     fun delete(id: String): CounterAdjustmentResponse =
         delete(id, CounterAdjustmentDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CounterAdjustmentDeleteParams = CounterAdjustmentDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustmentResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CounterAdjustmentDeleteParams = CounterAdjustmentDeleteParams.none(),
     ): CounterAdjustmentResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: CounterAdjustmentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterAdjustmentResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: CounterAdjustmentDeleteParams): CounterAdjustmentResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CounterAdjustmentResponse =
         delete(id, CounterAdjustmentDeleteParams.none(), requestOptions)
 
@@ -157,6 +166,15 @@ interface CounterAdjustmentService {
     interface WithRawResponse {
 
         /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CounterAdjustmentService.WithRawResponse
+
+        /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/counteradjustments`, but is
          * otherwise the same as [CounterAdjustmentService.create].
          */
@@ -165,7 +183,7 @@ interface CounterAdjustmentService {
             params: CounterAdjustmentCreateParams
         ): HttpResponseFor<CounterAdjustmentResponse> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: CounterAdjustmentCreateParams,
@@ -180,7 +198,7 @@ interface CounterAdjustmentService {
         fun retrieve(id: String): HttpResponseFor<CounterAdjustmentResponse> =
             retrieve(id, CounterAdjustmentRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -189,27 +207,27 @@ interface CounterAdjustmentService {
         ): HttpResponseFor<CounterAdjustmentResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: CounterAdjustmentRetrieveParams = CounterAdjustmentRetrieveParams.none(),
         ): HttpResponseFor<CounterAdjustmentResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CounterAdjustmentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterAdjustmentResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CounterAdjustmentRetrieveParams
         ): HttpResponseFor<CounterAdjustmentResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -227,7 +245,7 @@ interface CounterAdjustmentService {
             params: CounterAdjustmentUpdateParams,
         ): HttpResponseFor<CounterAdjustmentResponse> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -236,13 +254,13 @@ interface CounterAdjustmentService {
         ): HttpResponseFor<CounterAdjustmentResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: CounterAdjustmentUpdateParams
         ): HttpResponseFor<CounterAdjustmentResponse> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: CounterAdjustmentUpdateParams,
@@ -257,20 +275,20 @@ interface CounterAdjustmentService {
         fun list(): HttpResponseFor<CounterAdjustmentListPage> =
             list(CounterAdjustmentListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CounterAdjustmentListParams = CounterAdjustmentListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterAdjustmentListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CounterAdjustmentListParams = CounterAdjustmentListParams.none()
         ): HttpResponseFor<CounterAdjustmentListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<CounterAdjustmentListPage> =
             list(CounterAdjustmentListParams.none(), requestOptions)
@@ -283,7 +301,7 @@ interface CounterAdjustmentService {
         fun delete(id: String): HttpResponseFor<CounterAdjustmentResponse> =
             delete(id, CounterAdjustmentDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -292,27 +310,27 @@ interface CounterAdjustmentService {
         ): HttpResponseFor<CounterAdjustmentResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: CounterAdjustmentDeleteParams = CounterAdjustmentDeleteParams.none(),
         ): HttpResponseFor<CounterAdjustmentResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: CounterAdjustmentDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterAdjustmentResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: CounterAdjustmentDeleteParams
         ): HttpResponseFor<CounterAdjustmentResponse> = delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,

@@ -14,7 +14,7 @@ internal class CounterUpdateParamsTest {
             .id("id")
             .name("x")
             .unit("x")
-            .code("JS!?Q0]r] ]\$]")
+            .code("S?oC\"\$]C] ]]]]]5]")
             .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
             .version(0L)
             .build()
@@ -38,7 +38,7 @@ internal class CounterUpdateParamsTest {
                 .id("id")
                 .name("x")
                 .unit("x")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .productId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 .version(0L)
                 .build()
@@ -47,7 +47,7 @@ internal class CounterUpdateParamsTest {
 
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.unit()).isEqualTo("x")
-        assertThat(body.code()).contains("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).contains("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.productId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
         assertThat(body.version()).contains(0L)
     }

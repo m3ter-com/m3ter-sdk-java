@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -35,6 +35,7 @@ import com.m3ter.services.blocking.bills.DebitLineItemService
 import com.m3ter.services.blocking.bills.DebitLineItemServiceImpl
 import com.m3ter.services.blocking.bills.LineItemService
 import com.m3ter.services.blocking.bills.LineItemServiceImpl
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class BillServiceImpl internal constructor(private val clientOptions: ClientOptions) : BillService {
@@ -54,6 +55,9 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
     private val lineItems: LineItemService by lazy { LineItemServiceImpl(clientOptions) }
 
     override fun withRawResponse(): BillService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BillService =
+        BillServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun creditLineItems(): CreditLineItemService = creditLineItems
 
@@ -111,7 +115,8 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         BillService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val creditLineItems: CreditLineItemService.WithRawResponse by lazy {
             CreditLineItemServiceImpl.WithRawResponseImpl(clientOptions)
@@ -125,6 +130,13 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             LineItemServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BillService.WithRawResponse =
+            BillServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
+
         override fun creditLineItems(): CreditLineItemService.WithRawResponse = creditLineItems
 
         override fun debitLineItems(): DebitLineItemService.WithRawResponse = debitLineItems
@@ -132,7 +144,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
         override fun lineItems(): LineItemService.WithRawResponse = lineItems
 
         private val retrieveHandler: Handler<BillResponse> =
-            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: BillRetrieveParams,
@@ -144,6 +156,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -154,7 +167,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -167,7 +180,6 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         private val listHandler: Handler<BillListPageResponse> =
             jsonHandler<BillListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: BillListParams,
@@ -176,6 +188,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -185,7 +198,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -204,7 +217,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
         }
 
         private val deleteHandler: Handler<BillResponse> =
-            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillResponse>(clientOptions.jsonMapper)
 
         override fun delete(
             params: BillDeleteParams,
@@ -216,6 +229,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -227,7 +241,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {
@@ -240,7 +254,6 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
 
         private val approveHandler: Handler<BillApproveResponse> =
             jsonHandler<BillApproveResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun approve(
             params: BillApproveParams,
@@ -249,6 +262,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -260,7 +274,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { approveHandler.handle(it) }
                     .also {
@@ -272,7 +286,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
         }
 
         private val latestByAccountHandler: Handler<BillResponse> =
-            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillResponse>(clientOptions.jsonMapper)
 
         override fun latestByAccount(
             params: BillLatestByAccountParams,
@@ -284,6 +298,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -295,7 +310,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { latestByAccountHandler.handle(it) }
                     .also {
@@ -307,7 +322,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
         }
 
         private val lockHandler: Handler<BillResponse> =
-            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillResponse>(clientOptions.jsonMapper)
 
         override fun lock(
             params: BillLockParams,
@@ -319,6 +334,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -331,7 +347,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { lockHandler.handle(it) }
                     .also {
@@ -343,7 +359,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
         }
 
         private val searchHandler: Handler<BillSearchResponse> =
-            jsonHandler<BillSearchResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillSearchResponse>(clientOptions.jsonMapper)
 
         override fun search(
             params: BillSearchParams,
@@ -352,6 +368,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -362,7 +379,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { searchHandler.handle(it) }
                     .also {
@@ -374,7 +391,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
         }
 
         private val updateStatusHandler: Handler<BillResponse> =
-            jsonHandler<BillResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillResponse>(clientOptions.jsonMapper)
 
         override fun updateStatus(
             params: BillUpdateStatusParams,
@@ -386,6 +403,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -398,7 +416,7 @@ class BillServiceImpl internal constructor(private val clientOptions: ClientOpti
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateStatusHandler.handle(it) }
                     .also {

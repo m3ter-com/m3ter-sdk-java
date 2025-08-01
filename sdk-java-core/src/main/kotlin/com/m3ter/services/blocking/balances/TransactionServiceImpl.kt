@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking.balances
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -23,6 +23,7 @@ import com.m3ter.models.BalanceTransactionListParams
 import com.m3ter.models.BalanceTransactionSummaryParams
 import com.m3ter.models.BalanceTransactionSummaryResponse
 import com.m3ter.models.TransactionResponse
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class TransactionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -33,6 +34,9 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
     }
 
     override fun withRawResponse(): TransactionService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): TransactionService =
+        TransactionServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: BalanceTransactionCreateParams,
@@ -58,11 +62,18 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         TransactionService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): TransactionService.WithRawResponse =
+            TransactionServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<TransactionResponse> =
             jsonHandler<TransactionResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: BalanceTransactionCreateParams,
@@ -74,6 +85,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -86,7 +98,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -99,7 +111,6 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
 
         private val listHandler: Handler<BalanceTransactionListPageResponse> =
             jsonHandler<BalanceTransactionListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: BalanceTransactionListParams,
@@ -111,6 +122,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -122,7 +134,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -142,7 +154,6 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
 
         private val summaryHandler: Handler<BalanceTransactionSummaryResponse> =
             jsonHandler<BalanceTransactionSummaryResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun summary(
             params: BalanceTransactionSummaryParams,
@@ -154,6 +165,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -166,7 +178,7 @@ class TransactionServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { summaryHandler.handle(it) }
                     .also {

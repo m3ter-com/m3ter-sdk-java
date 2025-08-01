@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [LineItemServiceAsync.list] */
+/** @see LineItemServiceAsync.list */
 class BillLineItemListPageAsync
 private constructor(
     private val service: LineItemServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [BillLineItemListPageResponse], but gracefully handles missing data.
      *
-     * @see [BillLineItemListPageResponse.data]
+     * @see BillLineItemListPageResponse.data
      */
     fun data(): List<LineItemResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [BillLineItemListPageResponse], but gracefully handles missing data.
      *
-     * @see [BillLineItemListPageResponse.nextToken]
+     * @see BillLineItemListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

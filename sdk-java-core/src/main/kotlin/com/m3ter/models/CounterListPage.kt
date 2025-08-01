@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [CounterService.list] */
+/** @see CounterService.list */
 class CounterListPage
 private constructor(
     private val service: CounterService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [CounterListPageResponse], but gracefully handles missing data.
      *
-     * @see [CounterListPageResponse.data]
+     * @see CounterListPageResponse.data
      */
     fun data(): List<CounterResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [CounterListPageResponse], but gracefully handles missing data.
      *
-     * @see [CounterListPageResponse.nextToken]
+     * @see CounterListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

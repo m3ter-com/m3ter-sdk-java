@@ -16,7 +16,6 @@ internal class DataExportScheduleListResponseTest {
         val dataExportScheduleListResponse =
             DataExportScheduleListResponse.builder()
                 .id("id")
-                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .addDestinationId("string")
@@ -26,12 +25,12 @@ internal class DataExportScheduleListResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .period(0)
-                .scheduleType(DataExportScheduleListResponse.ScheduleType.HOURLY)
+                .scheduleType(DataExportScheduleListResponse.ScheduleType.HOUR)
                 .sourceType(DataExportScheduleListResponse.SourceType.USAGE)
+                .version(0L)
                 .build()
 
         assertThat(dataExportScheduleListResponse.id()).isEqualTo("id")
-        assertThat(dataExportScheduleListResponse.version()).isEqualTo(0L)
         assertThat(dataExportScheduleListResponse.code()).contains("code")
         assertThat(dataExportScheduleListResponse.createdBy()).contains("createdBy")
         assertThat(dataExportScheduleListResponse.destinationIds().getOrNull())
@@ -46,9 +45,10 @@ internal class DataExportScheduleListResponseTest {
         assertThat(dataExportScheduleListResponse.name()).contains("name")
         assertThat(dataExportScheduleListResponse.period()).contains(0)
         assertThat(dataExportScheduleListResponse.scheduleType())
-            .contains(DataExportScheduleListResponse.ScheduleType.HOURLY)
+            .contains(DataExportScheduleListResponse.ScheduleType.HOUR)
         assertThat(dataExportScheduleListResponse.sourceType())
             .contains(DataExportScheduleListResponse.SourceType.USAGE)
+        assertThat(dataExportScheduleListResponse.version()).contains(0L)
     }
 
     @Test
@@ -57,7 +57,6 @@ internal class DataExportScheduleListResponseTest {
         val dataExportScheduleListResponse =
             DataExportScheduleListResponse.builder()
                 .id("id")
-                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .addDestinationId("string")
@@ -67,8 +66,9 @@ internal class DataExportScheduleListResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .period(0)
-                .scheduleType(DataExportScheduleListResponse.ScheduleType.HOURLY)
+                .scheduleType(DataExportScheduleListResponse.ScheduleType.HOUR)
                 .sourceType(DataExportScheduleListResponse.SourceType.USAGE)
+                .version(0L)
                 .build()
 
         val roundtrippedDataExportScheduleListResponse =

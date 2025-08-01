@@ -2,7 +2,7 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponseFor
@@ -20,6 +20,7 @@ import com.m3ter.models.UserRetrieveParams
 import com.m3ter.models.UserUpdateParams
 import com.m3ter.services.async.users.InvitationServiceAsync
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface UserServiceAsync {
 
@@ -27,6 +28,13 @@ interface UserServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): UserServiceAsync
 
     fun invitations(): InvitationServiceAsync
 
@@ -39,30 +47,30 @@ interface UserServiceAsync {
     fun retrieve(id: String): CompletableFuture<UserResponse> =
         retrieve(id, UserRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UserRetrieveParams = UserRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserResponse> = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UserRetrieveParams = UserRetrieveParams.none(),
     ): CompletableFuture<UserResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: UserRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: UserRetrieveParams): CompletableFuture<UserResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<UserResponse> =
         retrieve(id, UserRetrieveParams.none(), requestOptions)
 
@@ -75,30 +83,30 @@ interface UserServiceAsync {
      */
     fun update(id: String): CompletableFuture<UserResponse> = update(id, UserUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: UserUpdateParams = UserUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserResponse> = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: UserUpdateParams = UserUpdateParams.none(),
     ): CompletableFuture<UserResponse> = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: UserUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserResponse>
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: UserUpdateParams): CompletableFuture<UserResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(id: String, requestOptions: RequestOptions): CompletableFuture<UserResponse> =
         update(id, UserUpdateParams.none(), requestOptions)
 
@@ -111,17 +119,17 @@ interface UserServiceAsync {
      */
     fun list(): CompletableFuture<UserListPageAsync> = list(UserListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: UserListParams = UserListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: UserListParams = UserListParams.none()): CompletableFuture<UserListPageAsync> =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<UserListPageAsync> =
         list(UserListParams.none(), requestOptions)
 
@@ -134,7 +142,7 @@ interface UserServiceAsync {
     fun getPermissions(id: String): CompletableFuture<PermissionPolicyResponse> =
         getPermissions(id, UserGetPermissionsParams.none())
 
-    /** @see [getPermissions] */
+    /** @see getPermissions */
     fun getPermissions(
         id: String,
         params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
@@ -142,25 +150,25 @@ interface UserServiceAsync {
     ): CompletableFuture<PermissionPolicyResponse> =
         getPermissions(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [getPermissions] */
+    /** @see getPermissions */
     fun getPermissions(
         id: String,
         params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
     ): CompletableFuture<PermissionPolicyResponse> =
         getPermissions(id, params, RequestOptions.none())
 
-    /** @see [getPermissions] */
+    /** @see getPermissions */
     fun getPermissions(
         params: UserGetPermissionsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<PermissionPolicyResponse>
 
-    /** @see [getPermissions] */
+    /** @see getPermissions */
     fun getPermissions(
         params: UserGetPermissionsParams
     ): CompletableFuture<PermissionPolicyResponse> = getPermissions(params, RequestOptions.none())
 
-    /** @see [getPermissions] */
+    /** @see getPermissions */
     fun getPermissions(
         id: String,
         requestOptions: RequestOptions,
@@ -193,7 +201,7 @@ interface UserServiceAsync {
     fun getUserGroups(id: String): CompletableFuture<ResourceGroupResponse> =
         getUserGroups(id, UserGetUserGroupsParams.none())
 
-    /** @see [getUserGroups] */
+    /** @see getUserGroups */
     fun getUserGroups(
         id: String,
         params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
@@ -201,23 +209,23 @@ interface UserServiceAsync {
     ): CompletableFuture<ResourceGroupResponse> =
         getUserGroups(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [getUserGroups] */
+    /** @see getUserGroups */
     fun getUserGroups(
         id: String,
         params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
     ): CompletableFuture<ResourceGroupResponse> = getUserGroups(id, params, RequestOptions.none())
 
-    /** @see [getUserGroups] */
+    /** @see getUserGroups */
     fun getUserGroups(
         params: UserGetUserGroupsParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ResourceGroupResponse>
 
-    /** @see [getUserGroups] */
+    /** @see getUserGroups */
     fun getUserGroups(params: UserGetUserGroupsParams): CompletableFuture<ResourceGroupResponse> =
         getUserGroups(params, RequestOptions.none())
 
-    /** @see [getUserGroups] */
+    /** @see getUserGroups */
     fun getUserGroups(
         id: String,
         requestOptions: RequestOptions,
@@ -227,17 +235,17 @@ interface UserServiceAsync {
     /** Retrieve information about the current user */
     fun me(): CompletableFuture<UserMeResponse> = me(UserMeParams.none())
 
-    /** @see [me] */
+    /** @see me */
     fun me(
         params: UserMeParams = UserMeParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserMeResponse>
 
-    /** @see [me] */
+    /** @see me */
     fun me(params: UserMeParams = UserMeParams.none()): CompletableFuture<UserMeResponse> =
         me(params, RequestOptions.none())
 
-    /** @see [me] */
+    /** @see me */
     fun me(requestOptions: RequestOptions): CompletableFuture<UserMeResponse> =
         me(UserMeParams.none(), requestOptions)
 
@@ -245,35 +253,42 @@ interface UserServiceAsync {
     fun resendPassword(id: String): CompletableFuture<Void?> =
         resendPassword(id, UserResendPasswordParams.none())
 
-    /** @see [resendPassword] */
+    /** @see resendPassword */
     fun resendPassword(
         id: String,
         params: UserResendPasswordParams = UserResendPasswordParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?> = resendPassword(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [resendPassword] */
+    /** @see resendPassword */
     fun resendPassword(
         id: String,
         params: UserResendPasswordParams = UserResendPasswordParams.none(),
     ): CompletableFuture<Void?> = resendPassword(id, params, RequestOptions.none())
 
-    /** @see [resendPassword] */
+    /** @see resendPassword */
     fun resendPassword(
         params: UserResendPasswordParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<Void?>
 
-    /** @see [resendPassword] */
+    /** @see resendPassword */
     fun resendPassword(params: UserResendPasswordParams): CompletableFuture<Void?> =
         resendPassword(params, RequestOptions.none())
 
-    /** @see [resendPassword] */
+    /** @see resendPassword */
     fun resendPassword(id: String, requestOptions: RequestOptions): CompletableFuture<Void?> =
         resendPassword(id, UserResendPasswordParams.none(), requestOptions)
 
     /** A view of [UserServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): UserServiceAsync.WithRawResponse
 
         fun invitations(): InvitationServiceAsync.WithRawResponse
 
@@ -281,12 +296,10 @@ interface UserServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}`, but is otherwise
          * the same as [UserServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<UserResponse>> =
             retrieve(id, UserRetrieveParams.none())
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: UserRetrieveParams = UserRetrieveParams.none(),
@@ -294,28 +307,24 @@ interface UserServiceAsync {
         ): CompletableFuture<HttpResponseFor<UserResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: UserRetrieveParams = UserRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<UserResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             params: UserRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UserResponse>>
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(params: UserRetrieveParams): CompletableFuture<HttpResponseFor<UserResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -326,12 +335,10 @@ interface UserServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}`, but is otherwise
          * the same as [UserServiceAsync.update].
          */
-        @MustBeClosed
         fun update(id: String): CompletableFuture<HttpResponseFor<UserResponse>> =
             update(id, UserUpdateParams.none())
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(
             id: String,
             params: UserUpdateParams = UserUpdateParams.none(),
@@ -339,28 +346,24 @@ interface UserServiceAsync {
         ): CompletableFuture<HttpResponseFor<UserResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(
             id: String,
             params: UserUpdateParams = UserUpdateParams.none(),
         ): CompletableFuture<HttpResponseFor<UserResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(
             params: UserUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UserResponse>>
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(params: UserUpdateParams): CompletableFuture<HttpResponseFor<UserResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(
             id: String,
             requestOptions: RequestOptions,
@@ -371,26 +374,22 @@ interface UserServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/users`, but is otherwise the
          * same as [UserServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<UserListPageAsync>> =
             list(UserListParams.none())
 
-        /** @see [list] */
-        @MustBeClosed
+        /** @see list */
         fun list(
             params: UserListParams = UserListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UserListPageAsync>>
 
-        /** @see [list] */
-        @MustBeClosed
+        /** @see list */
         fun list(
             params: UserListParams = UserListParams.none()
         ): CompletableFuture<HttpResponseFor<UserListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
-        @MustBeClosed
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<UserListPageAsync>> =
@@ -400,14 +399,12 @@ interface UserServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/permissions`, but
          * is otherwise the same as [UserServiceAsync.getPermissions].
          */
-        @MustBeClosed
         fun getPermissions(
             id: String
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
             getPermissions(id, UserGetPermissionsParams.none())
 
-        /** @see [getPermissions] */
-        @MustBeClosed
+        /** @see getPermissions */
         fun getPermissions(
             id: String,
             params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
@@ -415,30 +412,26 @@ interface UserServiceAsync {
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
             getPermissions(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [getPermissions] */
-        @MustBeClosed
+        /** @see getPermissions */
         fun getPermissions(
             id: String,
             params: UserGetPermissionsParams = UserGetPermissionsParams.none(),
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
             getPermissions(id, params, RequestOptions.none())
 
-        /** @see [getPermissions] */
-        @MustBeClosed
+        /** @see getPermissions */
         fun getPermissions(
             params: UserGetPermissionsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>>
 
-        /** @see [getPermissions] */
-        @MustBeClosed
+        /** @see getPermissions */
         fun getPermissions(
             params: UserGetPermissionsParams
         ): CompletableFuture<HttpResponseFor<PermissionPolicyResponse>> =
             getPermissions(params, RequestOptions.none())
 
-        /** @see [getPermissions] */
-        @MustBeClosed
+        /** @see getPermissions */
         fun getPermissions(
             id: String,
             requestOptions: RequestOptions,
@@ -449,12 +442,10 @@ interface UserServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/{id}/usergroups`, but
          * is otherwise the same as [UserServiceAsync.getUserGroups].
          */
-        @MustBeClosed
         fun getUserGroups(id: String): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             getUserGroups(id, UserGetUserGroupsParams.none())
 
-        /** @see [getUserGroups] */
-        @MustBeClosed
+        /** @see getUserGroups */
         fun getUserGroups(
             id: String,
             params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
@@ -462,30 +453,26 @@ interface UserServiceAsync {
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             getUserGroups(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [getUserGroups] */
-        @MustBeClosed
+        /** @see getUserGroups */
         fun getUserGroups(
             id: String,
             params: UserGetUserGroupsParams = UserGetUserGroupsParams.none(),
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             getUserGroups(id, params, RequestOptions.none())
 
-        /** @see [getUserGroups] */
-        @MustBeClosed
+        /** @see getUserGroups */
         fun getUserGroups(
             params: UserGetUserGroupsParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>>
 
-        /** @see [getUserGroups] */
-        @MustBeClosed
+        /** @see getUserGroups */
         fun getUserGroups(
             params: UserGetUserGroupsParams
         ): CompletableFuture<HttpResponseFor<ResourceGroupResponse>> =
             getUserGroups(params, RequestOptions.none())
 
-        /** @see [getUserGroups] */
-        @MustBeClosed
+        /** @see getUserGroups */
         fun getUserGroups(
             id: String,
             requestOptions: RequestOptions,
@@ -496,24 +483,20 @@ interface UserServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/users/me`, but is otherwise
          * the same as [UserServiceAsync.me].
          */
-        @MustBeClosed
         fun me(): CompletableFuture<HttpResponseFor<UserMeResponse>> = me(UserMeParams.none())
 
-        /** @see [me] */
-        @MustBeClosed
+        /** @see me */
         fun me(
             params: UserMeParams = UserMeParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UserMeResponse>>
 
-        /** @see [me] */
-        @MustBeClosed
+        /** @see me */
         fun me(
             params: UserMeParams = UserMeParams.none()
         ): CompletableFuture<HttpResponseFor<UserMeResponse>> = me(params, RequestOptions.none())
 
-        /** @see [me] */
-        @MustBeClosed
+        /** @see me */
         fun me(requestOptions: RequestOptions): CompletableFuture<HttpResponseFor<UserMeResponse>> =
             me(UserMeParams.none(), requestOptions)
 
@@ -521,12 +504,10 @@ interface UserServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/users/{id}/password/resend`,
          * but is otherwise the same as [UserServiceAsync.resendPassword].
          */
-        @MustBeClosed
         fun resendPassword(id: String): CompletableFuture<HttpResponse> =
             resendPassword(id, UserResendPasswordParams.none())
 
-        /** @see [resendPassword] */
-        @MustBeClosed
+        /** @see resendPassword */
         fun resendPassword(
             id: String,
             params: UserResendPasswordParams = UserResendPasswordParams.none(),
@@ -534,27 +515,23 @@ interface UserServiceAsync {
         ): CompletableFuture<HttpResponse> =
             resendPassword(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [resendPassword] */
-        @MustBeClosed
+        /** @see resendPassword */
         fun resendPassword(
             id: String,
             params: UserResendPasswordParams = UserResendPasswordParams.none(),
         ): CompletableFuture<HttpResponse> = resendPassword(id, params, RequestOptions.none())
 
-        /** @see [resendPassword] */
-        @MustBeClosed
+        /** @see resendPassword */
         fun resendPassword(
             params: UserResendPasswordParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponse>
 
-        /** @see [resendPassword] */
-        @MustBeClosed
+        /** @see resendPassword */
         fun resendPassword(params: UserResendPasswordParams): CompletableFuture<HttpResponse> =
             resendPassword(params, RequestOptions.none())
 
-        /** @see [resendPassword] */
-        @MustBeClosed
+        /** @see resendPassword */
         fun resendPassword(
             id: String,
             requestOptions: RequestOptions,

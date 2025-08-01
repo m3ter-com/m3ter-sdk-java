@@ -3,11 +3,13 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CustomFieldRetrieveParams
 import com.m3ter.models.CustomFieldUpdateParams
 import com.m3ter.models.CustomFieldsResponse
+import java.util.function.Consumer
 
 interface CustomFieldService {
 
@@ -17,40 +19,47 @@ interface CustomFieldService {
     fun withRawResponse(): WithRawResponse
 
     /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): CustomFieldService
+
+    /**
      * Retrieve all Custom Fields added at Organizational level for the entities that support them.
      */
     fun retrieve(): CustomFieldsResponse = retrieve(CustomFieldRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomFieldsResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none()
     ): CustomFieldsResponse = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(requestOptions: RequestOptions): CustomFieldsResponse =
         retrieve(CustomFieldRetrieveParams.none(), requestOptions)
 
     /** Update Custom Fields added at Organization level to entities that support them. */
     fun update(): CustomFieldsResponse = update(CustomFieldUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CustomFieldUpdateParams = CustomFieldUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomFieldsResponse
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CustomFieldUpdateParams = CustomFieldUpdateParams.none()
     ): CustomFieldsResponse = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(requestOptions: RequestOptions): CustomFieldsResponse =
         update(CustomFieldUpdateParams.none(), requestOptions)
 
@@ -60,6 +69,15 @@ interface CustomFieldService {
     interface WithRawResponse {
 
         /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CustomFieldService.WithRawResponse
+
+        /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/customfields`, but is
          * otherwise the same as [CustomFieldService.retrieve].
          */
@@ -67,20 +85,20 @@ interface CustomFieldService {
         fun retrieve(): HttpResponseFor<CustomFieldsResponse> =
             retrieve(CustomFieldRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomFieldsResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none()
         ): HttpResponseFor<CustomFieldsResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(requestOptions: RequestOptions): HttpResponseFor<CustomFieldsResponse> =
             retrieve(CustomFieldRetrieveParams.none(), requestOptions)
@@ -92,20 +110,20 @@ interface CustomFieldService {
         @MustBeClosed
         fun update(): HttpResponseFor<CustomFieldsResponse> = update(CustomFieldUpdateParams.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: CustomFieldUpdateParams = CustomFieldUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CustomFieldsResponse>
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: CustomFieldUpdateParams = CustomFieldUpdateParams.none()
         ): HttpResponseFor<CustomFieldsResponse> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(requestOptions: RequestOptions): HttpResponseFor<CustomFieldsResponse> =
             update(CustomFieldUpdateParams.none(), requestOptions)

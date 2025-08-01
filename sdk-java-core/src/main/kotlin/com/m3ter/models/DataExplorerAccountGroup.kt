@@ -20,7 +20,7 @@ import kotlin.jvm.optionals.getOrNull
 /** Group by account */
 class DataExplorerAccountGroup
 private constructor(
-    private val groupType: JsonField<GroupType>,
+    private val groupType: JsonField<DataExplorerGroup.GroupType>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -28,21 +28,26 @@ private constructor(
     private constructor(
         @JsonProperty("groupType")
         @ExcludeMissing
-        groupType: JsonField<GroupType> = JsonMissing.of()
+        groupType: JsonField<DataExplorerGroup.GroupType> = JsonMissing.of()
     ) : this(groupType, mutableMapOf())
+
+    fun toDataExplorerGroup(): DataExplorerGroup =
+        DataExplorerGroup.builder().groupType(groupType).build()
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun groupType(): Optional<GroupType> = groupType.getOptional("groupType")
+    fun groupType(): Optional<DataExplorerGroup.GroupType> = groupType.getOptional("groupType")
 
     /**
      * Returns the raw JSON value of [groupType].
      *
      * Unlike [groupType], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("groupType") @ExcludeMissing fun _groupType(): JsonField<GroupType> = groupType
+    @JsonProperty("groupType")
+    @ExcludeMissing
+    fun _groupType(): JsonField<DataExplorerGroup.GroupType> = groupType
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -65,7 +70,7 @@ private constructor(
     /** A builder for [DataExplorerAccountGroup]. */
     class Builder internal constructor() {
 
-        private var groupType: JsonField<GroupType> = JsonMissing.of()
+        private var groupType: JsonField<DataExplorerGroup.GroupType> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -74,16 +79,18 @@ private constructor(
             additionalProperties = dataExplorerAccountGroup.additionalProperties.toMutableMap()
         }
 
-        fun groupType(groupType: GroupType) = groupType(JsonField.of(groupType))
+        fun groupType(groupType: DataExplorerGroup.GroupType) = groupType(JsonField.of(groupType))
 
         /**
          * Sets [Builder.groupType] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.groupType] with a well-typed [GroupType] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.groupType] with a well-typed
+         * [DataExplorerGroup.GroupType] value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
          */
-        fun groupType(groupType: JsonField<GroupType>) = apply { this.groupType = groupType }
+        fun groupType(groupType: JsonField<DataExplorerGroup.GroupType>) = apply {
+            this.groupType = groupType
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()

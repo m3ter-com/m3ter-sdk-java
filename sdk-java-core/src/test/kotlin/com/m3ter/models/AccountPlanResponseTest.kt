@@ -17,7 +17,6 @@ internal class AccountPlanResponseTest {
         val accountPlanResponse =
             AccountPlanResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountId("accountId")
                 .billEpoch(LocalDate.parse("2019-12-27"))
                 .childBillingMode(AccountPlanResponse.ChildBillingMode.PARENT_SUMMARY)
@@ -37,10 +36,10 @@ internal class AccountPlanResponseTest {
                 .planId("planId")
                 .productId("productId")
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .version(0L)
                 .build()
 
         assertThat(accountPlanResponse.id()).isEqualTo("id")
-        assertThat(accountPlanResponse.version()).isEqualTo(0L)
         assertThat(accountPlanResponse.accountId()).contains("accountId")
         assertThat(accountPlanResponse.billEpoch()).contains(LocalDate.parse("2019-12-27"))
         assertThat(accountPlanResponse.childBillingMode())
@@ -66,6 +65,7 @@ internal class AccountPlanResponseTest {
         assertThat(accountPlanResponse.productId()).contains("productId")
         assertThat(accountPlanResponse.startDate())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(accountPlanResponse.version()).contains(0L)
     }
 
     @Test
@@ -74,7 +74,6 @@ internal class AccountPlanResponseTest {
         val accountPlanResponse =
             AccountPlanResponse.builder()
                 .id("id")
-                .version(0L)
                 .accountId("accountId")
                 .billEpoch(LocalDate.parse("2019-12-27"))
                 .childBillingMode(AccountPlanResponse.ChildBillingMode.PARENT_SUMMARY)
@@ -94,6 +93,7 @@ internal class AccountPlanResponseTest {
                 .planId("planId")
                 .productId("productId")
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .version(0L)
                 .build()
 
         val roundtrippedAccountPlanResponse =

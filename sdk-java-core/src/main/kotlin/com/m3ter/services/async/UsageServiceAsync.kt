@@ -2,7 +2,7 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.DownloadUrlResponse
@@ -13,6 +13,7 @@ import com.m3ter.models.UsageQueryResponse
 import com.m3ter.models.UsageSubmitParams
 import com.m3ter.services.async.usage.FileUploadServiceAsync
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface UsageServiceAsync {
 
@@ -20,6 +21,13 @@ interface UsageServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): UsageServiceAsync
 
     fun fileUploads(): FileUploadServiceAsync
 
@@ -48,20 +56,20 @@ interface UsageServiceAsync {
     fun getFailedIngestDownloadUrl(): CompletableFuture<DownloadUrlResponse> =
         getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none())
 
-    /** @see [getFailedIngestDownloadUrl] */
+    /** @see getFailedIngestDownloadUrl */
     fun getFailedIngestDownloadUrl(
         params: UsageGetFailedIngestDownloadUrlParams =
             UsageGetFailedIngestDownloadUrlParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<DownloadUrlResponse>
 
-    /** @see [getFailedIngestDownloadUrl] */
+    /** @see getFailedIngestDownloadUrl */
     fun getFailedIngestDownloadUrl(
         params: UsageGetFailedIngestDownloadUrlParams = UsageGetFailedIngestDownloadUrlParams.none()
     ): CompletableFuture<DownloadUrlResponse> =
         getFailedIngestDownloadUrl(params, RequestOptions.none())
 
-    /** @see [getFailedIngestDownloadUrl] */
+    /** @see getFailedIngestDownloadUrl */
     fun getFailedIngestDownloadUrl(
         requestOptions: RequestOptions
     ): CompletableFuture<DownloadUrlResponse> =
@@ -88,18 +96,18 @@ interface UsageServiceAsync {
      */
     fun query(): CompletableFuture<UsageQueryResponse> = query(UsageQueryParams.none())
 
-    /** @see [query] */
+    /** @see query */
     fun query(
         params: UsageQueryParams = UsageQueryParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UsageQueryResponse>
 
-    /** @see [query] */
+    /** @see query */
     fun query(
         params: UsageQueryParams = UsageQueryParams.none()
     ): CompletableFuture<UsageQueryResponse> = query(params, RequestOptions.none())
 
-    /** @see [query] */
+    /** @see query */
     fun query(requestOptions: RequestOptions): CompletableFuture<UsageQueryResponse> =
         query(UsageQueryParams.none(), requestOptions)
 
@@ -140,7 +148,7 @@ interface UsageServiceAsync {
     fun submit(params: UsageSubmitParams): CompletableFuture<SubmitMeasurementsResponse> =
         submit(params, RequestOptions.none())
 
-    /** @see [submit] */
+    /** @see submit */
     fun submit(
         params: UsageSubmitParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -149,6 +157,15 @@ interface UsageServiceAsync {
     /** A view of [UsageServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): UsageServiceAsync.WithRawResponse
+
         fun fileUploads(): FileUploadServiceAsync.WithRawResponse
 
         /**
@@ -156,28 +173,24 @@ interface UsageServiceAsync {
          * /organizations/{orgId}/measurements/failedIngest/getDownloadUrl`, but is otherwise the
          * same as [UsageServiceAsync.getFailedIngestDownloadUrl].
          */
-        @MustBeClosed
         fun getFailedIngestDownloadUrl(): CompletableFuture<HttpResponseFor<DownloadUrlResponse>> =
             getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none())
 
-        /** @see [getFailedIngestDownloadUrl] */
-        @MustBeClosed
+        /** @see getFailedIngestDownloadUrl */
         fun getFailedIngestDownloadUrl(
             params: UsageGetFailedIngestDownloadUrlParams =
                 UsageGetFailedIngestDownloadUrlParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<DownloadUrlResponse>>
 
-        /** @see [getFailedIngestDownloadUrl] */
-        @MustBeClosed
+        /** @see getFailedIngestDownloadUrl */
         fun getFailedIngestDownloadUrl(
             params: UsageGetFailedIngestDownloadUrlParams =
                 UsageGetFailedIngestDownloadUrlParams.none()
         ): CompletableFuture<HttpResponseFor<DownloadUrlResponse>> =
             getFailedIngestDownloadUrl(params, RequestOptions.none())
 
-        /** @see [getFailedIngestDownloadUrl] */
-        @MustBeClosed
+        /** @see getFailedIngestDownloadUrl */
         fun getFailedIngestDownloadUrl(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<DownloadUrlResponse>> =
@@ -187,26 +200,22 @@ interface UsageServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/usage/query`, but is
          * otherwise the same as [UsageServiceAsync.query].
          */
-        @MustBeClosed
         fun query(): CompletableFuture<HttpResponseFor<UsageQueryResponse>> =
             query(UsageQueryParams.none())
 
-        /** @see [query] */
-        @MustBeClosed
+        /** @see query */
         fun query(
             params: UsageQueryParams = UsageQueryParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UsageQueryResponse>>
 
-        /** @see [query] */
-        @MustBeClosed
+        /** @see query */
         fun query(
             params: UsageQueryParams = UsageQueryParams.none()
         ): CompletableFuture<HttpResponseFor<UsageQueryResponse>> =
             query(params, RequestOptions.none())
 
-        /** @see [query] */
-        @MustBeClosed
+        /** @see query */
         fun query(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<UsageQueryResponse>> =
@@ -216,14 +225,12 @@ interface UsageServiceAsync {
          * Returns a raw HTTP response for `post /organizations/{orgId}/measurements`, but is
          * otherwise the same as [UsageServiceAsync.submit].
          */
-        @MustBeClosed
         fun submit(
             params: UsageSubmitParams
         ): CompletableFuture<HttpResponseFor<SubmitMeasurementsResponse>> =
             submit(params, RequestOptions.none())
 
-        /** @see [submit] */
-        @MustBeClosed
+        /** @see submit */
         fun submit(
             params: UsageSubmitParams,
             requestOptions: RequestOptions = RequestOptions.none(),

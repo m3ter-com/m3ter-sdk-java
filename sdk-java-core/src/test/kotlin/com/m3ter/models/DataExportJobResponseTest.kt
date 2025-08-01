@@ -15,16 +15,15 @@ internal class DataExportJobResponseTest {
         val dataExportJobResponse =
             DataExportJobResponse.builder()
                 .id("id")
-                .version(0L)
                 .dateCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .scheduleId("scheduleId")
                 .sourceType(DataExportJobResponse.SourceType.USAGE)
                 .startedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(DataExportJobResponse.Status.PENDING)
+                .version(0L)
                 .build()
 
         assertThat(dataExportJobResponse.id()).isEqualTo("id")
-        assertThat(dataExportJobResponse.version()).isEqualTo(0L)
         assertThat(dataExportJobResponse.dateCreated())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(dataExportJobResponse.scheduleId()).contains("scheduleId")
@@ -33,6 +32,7 @@ internal class DataExportJobResponseTest {
         assertThat(dataExportJobResponse.startedAt())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(dataExportJobResponse.status()).contains(DataExportJobResponse.Status.PENDING)
+        assertThat(dataExportJobResponse.version()).contains(0L)
     }
 
     @Test
@@ -41,12 +41,12 @@ internal class DataExportJobResponseTest {
         val dataExportJobResponse =
             DataExportJobResponse.builder()
                 .id("id")
-                .version(0L)
                 .dateCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .scheduleId("scheduleId")
                 .sourceType(DataExportJobResponse.SourceType.USAGE)
                 .startedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(DataExportJobResponse.Status.PENDING)
+                .version(0L)
                 .build()
 
         val roundtrippedDataExportJobResponse =

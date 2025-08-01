@@ -6,6 +6,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.github.tomakehurst.wiremock.stubbing.Scenario
 import com.m3ter.client.okhttp.OkHttpClient
 import com.m3ter.core.RequestOptions
+import com.m3ter.errors.M3terRetryableException
 import java.io.InputStream
 import java.time.Duration
 import java.util.concurrent.CompletableFuture
@@ -20,11 +21,13 @@ import org.junit.jupiter.params.provider.ValueSource
 internal class RetryingHttpClientTest {
 
     private var openResponseCount = 0
+    private lateinit var baseUrl: String
     private lateinit var httpClient: HttpClient
 
     @BeforeEach
     fun beforeEach(wmRuntimeInfo: WireMockRuntimeInfo) {
-        val okHttpClient = OkHttpClient.builder().baseUrl(wmRuntimeInfo.httpBaseUrl).build()
+        baseUrl = wmRuntimeInfo.httpBaseUrl
+        val okHttpClient = OkHttpClient.builder().build()
         httpClient =
             object : HttpClient {
 
@@ -75,7 +78,11 @@ internal class RetryingHttpClientTest {
 
         val response =
             retryingClient.execute(
-                HttpRequest.builder().method(HttpMethod.POST).addPathSegment("something").build(),
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(baseUrl)
+                    .addPathSegment("something")
+                    .build(),
                 async,
             )
 
@@ -97,7 +104,11 @@ internal class RetryingHttpClientTest {
 
         val response =
             retryingClient.execute(
-                HttpRequest.builder().method(HttpMethod.POST).addPathSegment("something").build(),
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(baseUrl)
+                    .addPathSegment("something")
+                    .build(),
                 async,
             )
 
@@ -139,7 +150,11 @@ internal class RetryingHttpClientTest {
 
         val response =
             retryingClient.execute(
-                HttpRequest.builder().method(HttpMethod.POST).addPathSegment("something").build(),
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(baseUrl)
+                    .addPathSegment("something")
+                    .build(),
                 async,
             )
 
@@ -187,6 +202,7 @@ internal class RetryingHttpClientTest {
             retryingClient.execute(
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(baseUrl)
                     .addPathSegment("something")
                     .putHeader("x-stainless-retry-count", "42")
                     .build(),
@@ -223,12 +239,92 @@ internal class RetryingHttpClientTest {
 
         val response =
             retryingClient.execute(
-                HttpRequest.builder().method(HttpMethod.POST).addPathSegment("something").build(),
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(baseUrl)
+                    .addPathSegment("something")
+                    .build(),
                 async,
             )
 
         assertThat(response.statusCode()).isEqualTo(200)
         verify(2, postRequestedFor(urlPathEqualTo("/something")))
+        assertNoResponseLeaks()
+    }
+
+    @ParameterizedTest
+    @ValueSource(booleans = [false, true])
+    fun execute_withRetryableException(async: Boolean) {
+        stubFor(post(urlPathEqualTo("/something")).willReturn(ok()))
+
+        var callCount = 0
+        val failingHttpClient =
+            object : HttpClient {
+                override fun execute(
+                    request: HttpRequest,
+                    requestOptions: RequestOptions,
+                ): HttpResponse {
+                    callCount++
+                    if (callCount == 1) {
+                        throw M3terRetryableException("Simulated retryable failure")
+                    }
+                    return httpClient.execute(request, requestOptions)
+                }
+
+                override fun executeAsync(
+                    request: HttpRequest,
+                    requestOptions: RequestOptions,
+                ): CompletableFuture<HttpResponse> {
+                    callCount++
+                    if (callCount == 1) {
+                        val future = CompletableFuture<HttpResponse>()
+                        future.completeExceptionally(
+                            M3terRetryableException("Simulated retryable failure")
+                        )
+                        return future
+                    }
+                    return httpClient.executeAsync(request, requestOptions)
+                }
+
+                override fun close() = httpClient.close()
+            }
+
+        val retryingClient =
+            RetryingHttpClient.builder()
+                .httpClient(failingHttpClient)
+                .maxRetries(2)
+                .sleeper(
+                    object : RetryingHttpClient.Sleeper {
+
+                        override fun sleep(duration: Duration) {}
+
+                        override fun sleepAsync(duration: Duration): CompletableFuture<Void> =
+                            CompletableFuture.completedFuture(null)
+                    }
+                )
+                .build()
+
+        val response =
+            retryingClient.execute(
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .baseUrl(baseUrl)
+                    .addPathSegment("something")
+                    .build(),
+                async,
+            )
+
+        assertThat(response.statusCode()).isEqualTo(200)
+        verify(
+            1,
+            postRequestedFor(urlPathEqualTo("/something"))
+                .withHeader("x-stainless-retry-count", equalTo("1")),
+        )
+        verify(
+            0,
+            postRequestedFor(urlPathEqualTo("/something"))
+                .withHeader("x-stainless-retry-count", equalTo("0")),
+        )
         assertNoResponseLeaks()
     }
 

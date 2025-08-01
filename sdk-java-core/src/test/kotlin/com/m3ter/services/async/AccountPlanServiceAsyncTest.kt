@@ -37,7 +37,7 @@ internal class AccountPlanServiceAsyncTest {
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .billEpoch(LocalDate.parse("2019-12-27"))
                     .childBillingMode(AccountPlanCreateParams.ChildBillingMode.PARENT_SUMMARY)
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .contractId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .customFields(
                         AccountPlanCreateParams.CustomFields.builder()
@@ -97,7 +97,7 @@ internal class AccountPlanServiceAsyncTest {
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .billEpoch(LocalDate.parse("2019-12-27"))
                     .childBillingMode(AccountPlanUpdateParams.ChildBillingMode.PARENT_SUMMARY)
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .contractId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .customFields(
                         AccountPlanUpdateParams.CustomFields.builder()

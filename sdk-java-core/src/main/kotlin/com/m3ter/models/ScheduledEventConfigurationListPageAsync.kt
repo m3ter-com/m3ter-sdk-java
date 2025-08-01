@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ScheduledEventConfigurationServiceAsync.list] */
+/** @see ScheduledEventConfigurationServiceAsync.list */
 class ScheduledEventConfigurationListPageAsync
 private constructor(
     private val service: ScheduledEventConfigurationServiceAsync,
@@ -25,7 +25,7 @@ private constructor(
      * Delegates to [ScheduledEventConfigurationListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [ScheduledEventConfigurationListPageResponse.data]
+     * @see ScheduledEventConfigurationListPageResponse.data
      */
     fun data(): List<ScheduledEventConfigurationResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -34,7 +34,7 @@ private constructor(
      * Delegates to [ScheduledEventConfigurationListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [ScheduledEventConfigurationListPageResponse.nextToken]
+     * @see ScheduledEventConfigurationListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

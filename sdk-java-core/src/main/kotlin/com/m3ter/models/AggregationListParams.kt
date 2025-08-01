@@ -44,8 +44,10 @@ private constructor(
     /** The UUIDs of the Products to retrieve Aggregations for. */
     fun productId(): Optional<List<String>> = Optional.ofNullable(productId)
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)

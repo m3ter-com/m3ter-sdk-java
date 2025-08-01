@@ -3,14 +3,14 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -25,6 +25,7 @@ import com.m3ter.models.MeterResponse
 import com.m3ter.models.MeterRetrieveParams
 import com.m3ter.models.MeterUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class MeterServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
     }
 
     override fun withRawResponse(): MeterServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): MeterServiceAsync =
+        MeterServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: MeterCreateParams,
@@ -74,10 +78,18 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         MeterServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): MeterServiceAsync.WithRawResponse =
+            MeterServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<MeterResponse> =
-            jsonHandler<MeterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<MeterResponse>(clientOptions.jsonMapper)
 
         override fun create(
             params: MeterCreateParams,
@@ -86,6 +98,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -98,7 +111,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -111,7 +124,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
         }
 
         private val retrieveHandler: Handler<MeterResponse> =
-            jsonHandler<MeterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<MeterResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: MeterRetrieveParams,
@@ -123,6 +136,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -135,7 +149,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -148,7 +162,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
         }
 
         private val updateHandler: Handler<MeterResponse> =
-            jsonHandler<MeterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<MeterResponse>(clientOptions.jsonMapper)
 
         override fun update(
             params: MeterUpdateParams,
@@ -160,6 +174,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -173,7 +188,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -187,7 +202,6 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
         private val listHandler: Handler<MeterListPageResponse> =
             jsonHandler<MeterListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: MeterListParams,
@@ -196,6 +210,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -207,7 +222,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -228,7 +243,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
         }
 
         private val deleteHandler: Handler<MeterResponse> =
-            jsonHandler<MeterResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<MeterResponse>(clientOptions.jsonMapper)
 
         override fun delete(
             params: MeterDeleteParams,
@@ -240,6 +255,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -253,7 +269,7 @@ class MeterServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {

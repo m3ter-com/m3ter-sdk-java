@@ -260,7 +260,6 @@ private constructor(
     class ExportDestinationS3Response
     private constructor(
         private val id: JsonField<String>,
-        private val version: JsonField<Long>,
         private val code: JsonField<String>,
         private val createdBy: JsonField<String>,
         private val destinationType: JsonField<DataExportDestinationResponse.DestinationType>,
@@ -268,6 +267,7 @@ private constructor(
         private val dtLastModified: JsonField<OffsetDateTime>,
         private val lastModifiedBy: JsonField<String>,
         private val name: JsonField<String>,
+        private val version: JsonField<Long>,
         private val bucketName: JsonField<String>,
         private val iamRoleArn: JsonField<String>,
         private val partitionOrder: JsonField<PartitionOrder>,
@@ -278,7 +278,6 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
             @JsonProperty("createdBy")
             @ExcludeMissing
@@ -297,6 +296,7 @@ private constructor(
             @ExcludeMissing
             lastModifiedBy: JsonField<String> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("bucketName")
             @ExcludeMissing
             bucketName: JsonField<String> = JsonMissing.of(),
@@ -309,7 +309,6 @@ private constructor(
             @JsonProperty("prefix") @ExcludeMissing prefix: JsonField<String> = JsonMissing.of(),
         ) : this(
             id,
-            version,
             code,
             createdBy,
             destinationType,
@@ -317,6 +316,7 @@ private constructor(
             dtLastModified,
             lastModifiedBy,
             name,
+            version,
             bucketName,
             iamRoleArn,
             partitionOrder,
@@ -327,7 +327,6 @@ private constructor(
         fun toDataExportDestinationResponse(): DataExportDestinationResponse =
             DataExportDestinationResponse.builder()
                 .id(id)
-                .version(version)
                 .code(code)
                 .createdBy(createdBy)
                 .destinationType(destinationType)
@@ -335,6 +334,7 @@ private constructor(
                 .dtLastModified(dtLastModified)
                 .lastModifiedBy(lastModifiedBy)
                 .name(name)
+                .version(version)
                 .build()
 
         /**
@@ -344,17 +344,6 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun id(): String = id.getRequired("id")
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun version(): Long = version.getRequired("version")
 
         /**
          * The code of the data Export Destination.
@@ -413,6 +402,17 @@ private constructor(
         fun name(): Optional<String> = name.getOptional("name")
 
         /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun version(): Optional<Long> = version.getOptional("version")
+
+        /**
          * Name of the S3 bucket for the Export Destination.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -465,13 +465,6 @@ private constructor(
          * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-        /**
-         * Returns the raw JSON value of [version].
-         *
-         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
         /**
          * Returns the raw JSON value of [code].
@@ -535,6 +528,13 @@ private constructor(
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         /**
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
+        /**
          * Returns the raw JSON value of [bucketName].
          *
          * Unlike [bucketName], this method doesn't throw if the JSON field has an unexpected type.
@@ -590,7 +590,6 @@ private constructor(
              * The following fields are required:
              * ```java
              * .id()
-             * .version()
              * ```
              */
             @JvmStatic fun builder() = Builder()
@@ -600,7 +599,6 @@ private constructor(
         class Builder internal constructor() {
 
             private var id: JsonField<String>? = null
-            private var version: JsonField<Long>? = null
             private var code: JsonField<String> = JsonMissing.of()
             private var createdBy: JsonField<String> = JsonMissing.of()
             private var destinationType: JsonField<DataExportDestinationResponse.DestinationType> =
@@ -609,6 +607,7 @@ private constructor(
             private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
             private var lastModifiedBy: JsonField<String> = JsonMissing.of()
             private var name: JsonField<String> = JsonMissing.of()
+            private var version: JsonField<Long> = JsonMissing.of()
             private var bucketName: JsonField<String> = JsonMissing.of()
             private var iamRoleArn: JsonField<String> = JsonMissing.of()
             private var partitionOrder: JsonField<PartitionOrder> = JsonMissing.of()
@@ -618,7 +617,6 @@ private constructor(
             @JvmSynthetic
             internal fun from(exportDestinationS3Response: ExportDestinationS3Response) = apply {
                 id = exportDestinationS3Response.id
-                version = exportDestinationS3Response.version
                 code = exportDestinationS3Response.code
                 createdBy = exportDestinationS3Response.createdBy
                 destinationType = exportDestinationS3Response.destinationType
@@ -626,6 +624,7 @@ private constructor(
                 dtLastModified = exportDestinationS3Response.dtLastModified
                 lastModifiedBy = exportDestinationS3Response.lastModifiedBy
                 name = exportDestinationS3Response.name
+                version = exportDestinationS3Response.version
                 bucketName = exportDestinationS3Response.bucketName
                 iamRoleArn = exportDestinationS3Response.iamRoleArn
                 partitionOrder = exportDestinationS3Response.partitionOrder
@@ -645,23 +644,6 @@ private constructor(
              * value.
              */
             fun id(id: JsonField<String>) = apply { this.id = id }
-
-            /**
-             * The version number:
-             * - **Create:** On initial Create to insert a new entity, the version is set at 1 in
-             *   the response.
-             * - **Update:** On successful Update, the version is incremented by 1 in the response.
-             */
-            fun version(version: Long) = version(JsonField.of(version))
-
-            /**
-             * Sets [Builder.version] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.version] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun version(version: JsonField<Long>) = apply { this.version = version }
 
             /** The code of the data Export Destination. */
             fun code(code: String) = code(JsonField.of(code))
@@ -756,6 +738,23 @@ private constructor(
              * value.
              */
             fun name(name: JsonField<String>) = apply { this.name = name }
+
+            /**
+             * The version number:
+             * - **Create:** On initial Create to insert a new entity, the version is set at 1 in
+             *   the response.
+             * - **Update:** On successful Update, the version is incremented by 1 in the response.
+             */
+            fun version(version: Long) = version(JsonField.of(version))
+
+            /**
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun version(version: JsonField<Long>) = apply { this.version = version }
 
             /** Name of the S3 bucket for the Export Destination. */
             fun bucketName(bucketName: String) = bucketName(JsonField.of(bucketName))
@@ -855,7 +854,6 @@ private constructor(
              * The following fields are required:
              * ```java
              * .id()
-             * .version()
              * ```
              *
              * @throws IllegalStateException if any required field is unset.
@@ -863,7 +861,6 @@ private constructor(
             fun build(): ExportDestinationS3Response =
                 ExportDestinationS3Response(
                     checkRequired("id", id),
-                    checkRequired("version", version),
                     code,
                     createdBy,
                     destinationType,
@@ -871,6 +868,7 @@ private constructor(
                     dtLastModified,
                     lastModifiedBy,
                     name,
+                    version,
                     bucketName,
                     iamRoleArn,
                     partitionOrder,
@@ -887,7 +885,6 @@ private constructor(
             }
 
             id()
-            version()
             code()
             createdBy()
             destinationType().ifPresent { it.validate() }
@@ -895,6 +892,7 @@ private constructor(
             dtLastModified()
             lastModifiedBy()
             name()
+            version()
             bucketName()
             iamRoleArn()
             partitionOrder().ifPresent { it.validate() }
@@ -919,7 +917,6 @@ private constructor(
         @JvmSynthetic
         internal fun validity(): Int =
             (if (id.asKnown().isPresent) 1 else 0) +
-                (if (version.asKnown().isPresent) 1 else 0) +
                 (if (code.asKnown().isPresent) 1 else 0) +
                 (if (createdBy.asKnown().isPresent) 1 else 0) +
                 (destinationType.asKnown().getOrNull()?.validity() ?: 0) +
@@ -927,6 +924,7 @@ private constructor(
                 (if (dtLastModified.asKnown().isPresent) 1 else 0) +
                 (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
                 (if (name.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0) +
                 (if (bucketName.asKnown().isPresent) 1 else 0) +
                 (if (iamRoleArn.asKnown().isPresent) 1 else 0) +
                 (partitionOrder.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1084,24 +1082,23 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExportDestinationS3Response && id == other.id && version == other.version && code == other.code && createdBy == other.createdBy && destinationType == other.destinationType && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && bucketName == other.bucketName && iamRoleArn == other.iamRoleArn && partitionOrder == other.partitionOrder && prefix == other.prefix && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ExportDestinationS3Response && id == other.id && code == other.code && createdBy == other.createdBy && destinationType == other.destinationType && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && version == other.version && bucketName == other.bucketName && iamRoleArn == other.iamRoleArn && partitionOrder == other.partitionOrder && prefix == other.prefix && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, version, code, createdBy, destinationType, dtCreated, dtLastModified, lastModifiedBy, name, bucketName, iamRoleArn, partitionOrder, prefix, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, code, createdBy, destinationType, dtCreated, dtLastModified, lastModifiedBy, name, version, bucketName, iamRoleArn, partitionOrder, prefix, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ExportDestinationS3Response{id=$id, version=$version, code=$code, createdBy=$createdBy, destinationType=$destinationType, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, bucketName=$bucketName, iamRoleArn=$iamRoleArn, partitionOrder=$partitionOrder, prefix=$prefix, additionalProperties=$additionalProperties}"
+            "ExportDestinationS3Response{id=$id, code=$code, createdBy=$createdBy, destinationType=$destinationType, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, version=$version, bucketName=$bucketName, iamRoleArn=$iamRoleArn, partitionOrder=$partitionOrder, prefix=$prefix, additionalProperties=$additionalProperties}"
     }
 
     /** The response containing the details of an Google Cloud Storage export destination. */
     class ExportDestinationGoogleCloudStorageResponse
     private constructor(
         private val id: JsonField<String>,
-        private val version: JsonField<Long>,
         private val code: JsonField<String>,
         private val createdBy: JsonField<String>,
         private val destinationType: JsonField<DataExportDestinationResponse.DestinationType>,
@@ -1109,6 +1106,7 @@ private constructor(
         private val dtLastModified: JsonField<OffsetDateTime>,
         private val lastModifiedBy: JsonField<String>,
         private val name: JsonField<String>,
+        private val version: JsonField<Long>,
         private val bucketName: JsonField<String>,
         private val partitionOrder: JsonField<PartitionOrder>,
         private val poolId: JsonField<String>,
@@ -1122,7 +1120,6 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
             @JsonProperty("createdBy")
             @ExcludeMissing
@@ -1141,6 +1138,7 @@ private constructor(
             @ExcludeMissing
             lastModifiedBy: JsonField<String> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
             @JsonProperty("bucketName")
             @ExcludeMissing
             bucketName: JsonField<String> = JsonMissing.of(),
@@ -1160,7 +1158,6 @@ private constructor(
             serviceAccountEmail: JsonField<String> = JsonMissing.of(),
         ) : this(
             id,
-            version,
             code,
             createdBy,
             destinationType,
@@ -1168,6 +1165,7 @@ private constructor(
             dtLastModified,
             lastModifiedBy,
             name,
+            version,
             bucketName,
             partitionOrder,
             poolId,
@@ -1181,7 +1179,6 @@ private constructor(
         fun toDataExportDestinationResponse(): DataExportDestinationResponse =
             DataExportDestinationResponse.builder()
                 .id(id)
-                .version(version)
                 .code(code)
                 .createdBy(createdBy)
                 .destinationType(destinationType)
@@ -1189,6 +1186,7 @@ private constructor(
                 .dtLastModified(dtLastModified)
                 .lastModifiedBy(lastModifiedBy)
                 .name(name)
+                .version(version)
                 .build()
 
         /**
@@ -1198,17 +1196,6 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun id(): String = id.getRequired("id")
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun version(): Long = version.getRequired("version")
 
         /**
          * The code of the data Export Destination.
@@ -1265,6 +1252,17 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun name(): Optional<String> = name.getOptional("name")
+
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun version(): Optional<Long> = version.getOptional("version")
 
         /**
          * The bucket name.
@@ -1344,13 +1342,6 @@ private constructor(
         @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         /**
-         * Returns the raw JSON value of [version].
-         *
-         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
-        /**
          * Returns the raw JSON value of [code].
          *
          * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
@@ -1410,6 +1401,13 @@ private constructor(
          * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+        /**
+         * Returns the raw JSON value of [version].
+         *
+         * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
         /**
          * Returns the raw JSON value of [bucketName].
@@ -1494,7 +1492,6 @@ private constructor(
              * The following fields are required:
              * ```java
              * .id()
-             * .version()
              * ```
              */
             @JvmStatic fun builder() = Builder()
@@ -1504,7 +1501,6 @@ private constructor(
         class Builder internal constructor() {
 
             private var id: JsonField<String>? = null
-            private var version: JsonField<Long>? = null
             private var code: JsonField<String> = JsonMissing.of()
             private var createdBy: JsonField<String> = JsonMissing.of()
             private var destinationType: JsonField<DataExportDestinationResponse.DestinationType> =
@@ -1513,6 +1509,7 @@ private constructor(
             private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
             private var lastModifiedBy: JsonField<String> = JsonMissing.of()
             private var name: JsonField<String> = JsonMissing.of()
+            private var version: JsonField<Long> = JsonMissing.of()
             private var bucketName: JsonField<String> = JsonMissing.of()
             private var partitionOrder: JsonField<PartitionOrder> = JsonMissing.of()
             private var poolId: JsonField<String> = JsonMissing.of()
@@ -1528,7 +1525,6 @@ private constructor(
                     ExportDestinationGoogleCloudStorageResponse
             ) = apply {
                 id = exportDestinationGoogleCloudStorageResponse.id
-                version = exportDestinationGoogleCloudStorageResponse.version
                 code = exportDestinationGoogleCloudStorageResponse.code
                 createdBy = exportDestinationGoogleCloudStorageResponse.createdBy
                 destinationType = exportDestinationGoogleCloudStorageResponse.destinationType
@@ -1536,6 +1532,7 @@ private constructor(
                 dtLastModified = exportDestinationGoogleCloudStorageResponse.dtLastModified
                 lastModifiedBy = exportDestinationGoogleCloudStorageResponse.lastModifiedBy
                 name = exportDestinationGoogleCloudStorageResponse.name
+                version = exportDestinationGoogleCloudStorageResponse.version
                 bucketName = exportDestinationGoogleCloudStorageResponse.bucketName
                 partitionOrder = exportDestinationGoogleCloudStorageResponse.partitionOrder
                 poolId = exportDestinationGoogleCloudStorageResponse.poolId
@@ -1559,23 +1556,6 @@ private constructor(
              * value.
              */
             fun id(id: JsonField<String>) = apply { this.id = id }
-
-            /**
-             * The version number:
-             * - **Create:** On initial Create to insert a new entity, the version is set at 1 in
-             *   the response.
-             * - **Update:** On successful Update, the version is incremented by 1 in the response.
-             */
-            fun version(version: Long) = version(JsonField.of(version))
-
-            /**
-             * Sets [Builder.version] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.version] with a well-typed [Long] value instead.
-             * This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun version(version: JsonField<Long>) = apply { this.version = version }
 
             /** The code of the data Export Destination. */
             fun code(code: String) = code(JsonField.of(code))
@@ -1670,6 +1650,23 @@ private constructor(
              * value.
              */
             fun name(name: JsonField<String>) = apply { this.name = name }
+
+            /**
+             * The version number:
+             * - **Create:** On initial Create to insert a new entity, the version is set at 1 in
+             *   the response.
+             * - **Update:** On successful Update, the version is incremented by 1 in the response.
+             */
+            fun version(version: Long) = version(JsonField.of(version))
+
+            /**
+             * Sets [Builder.version] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.version] with a well-typed [Long] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun version(version: JsonField<Long>) = apply { this.version = version }
 
             /** The bucket name. */
             fun bucketName(bucketName: String) = bucketName(JsonField.of(bucketName))
@@ -1804,7 +1801,6 @@ private constructor(
              * The following fields are required:
              * ```java
              * .id()
-             * .version()
              * ```
              *
              * @throws IllegalStateException if any required field is unset.
@@ -1812,7 +1808,6 @@ private constructor(
             fun build(): ExportDestinationGoogleCloudStorageResponse =
                 ExportDestinationGoogleCloudStorageResponse(
                     checkRequired("id", id),
-                    checkRequired("version", version),
                     code,
                     createdBy,
                     destinationType,
@@ -1820,6 +1815,7 @@ private constructor(
                     dtLastModified,
                     lastModifiedBy,
                     name,
+                    version,
                     bucketName,
                     partitionOrder,
                     poolId,
@@ -1839,7 +1835,6 @@ private constructor(
             }
 
             id()
-            version()
             code()
             createdBy()
             destinationType().ifPresent { it.validate() }
@@ -1847,6 +1842,7 @@ private constructor(
             dtLastModified()
             lastModifiedBy()
             name()
+            version()
             bucketName()
             partitionOrder().ifPresent { it.validate() }
             poolId()
@@ -1874,7 +1870,6 @@ private constructor(
         @JvmSynthetic
         internal fun validity(): Int =
             (if (id.asKnown().isPresent) 1 else 0) +
-                (if (version.asKnown().isPresent) 1 else 0) +
                 (if (code.asKnown().isPresent) 1 else 0) +
                 (if (createdBy.asKnown().isPresent) 1 else 0) +
                 (destinationType.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1882,6 +1877,7 @@ private constructor(
                 (if (dtLastModified.asKnown().isPresent) 1 else 0) +
                 (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
                 (if (name.asKnown().isPresent) 1 else 0) +
+                (if (version.asKnown().isPresent) 1 else 0) +
                 (if (bucketName.asKnown().isPresent) 1 else 0) +
                 (partitionOrder.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (poolId.asKnown().isPresent) 1 else 0) +
@@ -2042,16 +2038,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExportDestinationGoogleCloudStorageResponse && id == other.id && version == other.version && code == other.code && createdBy == other.createdBy && destinationType == other.destinationType && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && bucketName == other.bucketName && partitionOrder == other.partitionOrder && poolId == other.poolId && prefix == other.prefix && projectNumber == other.projectNumber && providerId == other.providerId && serviceAccountEmail == other.serviceAccountEmail && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ExportDestinationGoogleCloudStorageResponse && id == other.id && code == other.code && createdBy == other.createdBy && destinationType == other.destinationType && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && version == other.version && bucketName == other.bucketName && partitionOrder == other.partitionOrder && poolId == other.poolId && prefix == other.prefix && projectNumber == other.projectNumber && providerId == other.providerId && serviceAccountEmail == other.serviceAccountEmail && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, version, code, createdBy, destinationType, dtCreated, dtLastModified, lastModifiedBy, name, bucketName, partitionOrder, poolId, prefix, projectNumber, providerId, serviceAccountEmail, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, code, createdBy, destinationType, dtCreated, dtLastModified, lastModifiedBy, name, version, bucketName, partitionOrder, poolId, prefix, projectNumber, providerId, serviceAccountEmail, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ExportDestinationGoogleCloudStorageResponse{id=$id, version=$version, code=$code, createdBy=$createdBy, destinationType=$destinationType, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, bucketName=$bucketName, partitionOrder=$partitionOrder, poolId=$poolId, prefix=$prefix, projectNumber=$projectNumber, providerId=$providerId, serviceAccountEmail=$serviceAccountEmail, additionalProperties=$additionalProperties}"
+            "ExportDestinationGoogleCloudStorageResponse{id=$id, code=$code, createdBy=$createdBy, destinationType=$destinationType, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, version=$version, bucketName=$bucketName, partitionOrder=$partitionOrder, poolId=$poolId, prefix=$prefix, projectNumber=$projectNumber, providerId=$providerId, serviceAccountEmail=$serviceAccountEmail, additionalProperties=$additionalProperties}"
     }
 }

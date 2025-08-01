@@ -25,6 +25,7 @@ class BillListParams
 private constructor(
     private val orgId: String?,
     private val accountId: String?,
+    private val additional: List<String>?,
     private val billDate: String?,
     private val billDateEnd: String?,
     private val billDateStart: String?,
@@ -47,6 +48,9 @@ private constructor(
 
     /** Optional filter. An Account ID - returns the Bills for the single specified Account. */
     fun accountId(): Optional<String> = Optional.ofNullable(accountId)
+
+    /** Comma separated list of additional fields. */
+    fun additional(): Optional<List<String>> = Optional.ofNullable(additional)
 
     /** The specific date in ISO 8601 format for which you want to retrieve Bills. */
     fun billDate(): Optional<String> = Optional.ofNullable(billDate)
@@ -93,8 +97,10 @@ private constructor(
     /** Only include Bills having the given status */
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
@@ -112,6 +118,7 @@ private constructor(
 
         private var orgId: String? = null
         private var accountId: String? = null
+        private var additional: MutableList<String>? = null
         private var billDate: String? = null
         private var billDateEnd: String? = null
         private var billDateStart: String? = null
@@ -132,6 +139,7 @@ private constructor(
         internal fun from(billListParams: BillListParams) = apply {
             orgId = billListParams.orgId
             accountId = billListParams.accountId
+            additional = billListParams.additional?.toMutableList()
             billDate = billListParams.billDate
             billDateEnd = billListParams.billDateEnd
             billDateStart = billListParams.billDateStart
@@ -161,6 +169,23 @@ private constructor(
 
         /** Alias for calling [Builder.accountId] with `accountId.orElse(null)`. */
         fun accountId(accountId: Optional<String>) = accountId(accountId.getOrNull())
+
+        /** Comma separated list of additional fields. */
+        fun additional(additional: List<String>?) = apply {
+            this.additional = additional?.toMutableList()
+        }
+
+        /** Alias for calling [Builder.additional] with `additional.orElse(null)`. */
+        fun additional(additional: Optional<List<String>>) = additional(additional.getOrNull())
+
+        /**
+         * Adds a single [String] to [Builder.additional].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addAdditional(additional: String) = apply {
+            this.additional = (this.additional ?: mutableListOf()).apply { add(additional) }
+        }
 
         /** The specific date in ISO 8601 format for which you want to retrieve Bills. */
         fun billDate(billDate: String?) = apply { this.billDate = billDate }
@@ -412,6 +437,7 @@ private constructor(
             BillListParams(
                 orgId,
                 accountId,
+                additional?.toImmutable(),
                 billDate,
                 billDateEnd,
                 billDateStart,
@@ -442,6 +468,7 @@ private constructor(
         QueryParams.builder()
             .apply {
                 accountId?.let { put("accountId", it) }
+                additional?.let { put("additional", it.joinToString(",")) }
                 billDate?.let { put("billDate", it) }
                 billDateEnd?.let { put("billDateEnd", it) }
                 billDateStart?.let { put("billDateStart", it) }
@@ -589,11 +616,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillListParams && orgId == other.orgId && accountId == other.accountId && billDate == other.billDate && billDateEnd == other.billDateEnd && billDateStart == other.billDateStart && billingFrequency == other.billingFrequency && excludeLineItems == other.excludeLineItems && externalInvoiceDateEnd == other.externalInvoiceDateEnd && externalInvoiceDateStart == other.externalInvoiceDateStart && ids == other.ids && includeBillTotal == other.includeBillTotal && locked == other.locked && nextToken == other.nextToken && pageSize == other.pageSize && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is BillListParams && orgId == other.orgId && accountId == other.accountId && additional == other.additional && billDate == other.billDate && billDateEnd == other.billDateEnd && billDateStart == other.billDateStart && billingFrequency == other.billingFrequency && excludeLineItems == other.excludeLineItems && externalInvoiceDateEnd == other.externalInvoiceDateEnd && externalInvoiceDateStart == other.externalInvoiceDateStart && ids == other.ids && includeBillTotal == other.includeBillTotal && locked == other.locked && nextToken == other.nextToken && pageSize == other.pageSize && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, billDate, billDateEnd, billDateStart, billingFrequency, excludeLineItems, externalInvoiceDateEnd, externalInvoiceDateStart, ids, includeBillTotal, locked, nextToken, pageSize, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, additional, billDate, billDateEnd, billDateStart, billingFrequency, excludeLineItems, externalInvoiceDateEnd, externalInvoiceDateStart, ids, includeBillTotal, locked, nextToken, pageSize, status, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "BillListParams{orgId=$orgId, accountId=$accountId, billDate=$billDate, billDateEnd=$billDateEnd, billDateStart=$billDateStart, billingFrequency=$billingFrequency, excludeLineItems=$excludeLineItems, externalInvoiceDateEnd=$externalInvoiceDateEnd, externalInvoiceDateStart=$externalInvoiceDateStart, ids=$ids, includeBillTotal=$includeBillTotal, locked=$locked, nextToken=$nextToken, pageSize=$pageSize, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "BillListParams{orgId=$orgId, accountId=$accountId, additional=$additional, billDate=$billDate, billDateEnd=$billDateEnd, billDateStart=$billDateStart, billingFrequency=$billingFrequency, excludeLineItems=$excludeLineItems, externalInvoiceDateEnd=$externalInvoiceDateEnd, externalInvoiceDateStart=$externalInvoiceDateStart, ids=$ids, includeBillTotal=$includeBillTotal, locked=$locked, nextToken=$nextToken, pageSize=$pageSize, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -31,9 +31,7 @@ internal class UsageQueryParamsTest {
             )
             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .addGroup(
-                UsageQueryParams.Group.DataExportsDataExplorerAccountGroup.builder()
-                    .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
-                    .build()
+                DataExplorerGroup.builder().groupType(DataExplorerGroup.GroupType.ACCOUNT).build()
             )
             .limit(1)
             .addMeterId("string")
@@ -73,8 +71,8 @@ internal class UsageQueryParamsTest {
                 )
                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addGroup(
-                    UsageQueryParams.Group.DataExportsDataExplorerAccountGroup.builder()
-                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                    DataExplorerGroup.builder()
+                        .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                         .build()
                 )
                 .limit(1)
@@ -105,11 +103,7 @@ internal class UsageQueryParamsTest {
         assertThat(body.endDate()).contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.groups().getOrNull())
             .containsExactly(
-                UsageQueryParams.Group.ofDataExportsDataExplorerAccount(
-                    UsageQueryParams.Group.DataExportsDataExplorerAccountGroup.builder()
-                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
-                        .build()
-                )
+                DataExplorerGroup.builder().groupType(DataExplorerGroup.GroupType.ACCOUNT).build()
             )
         assertThat(body.limit()).contains(1)
         assertThat(body.meterIds().getOrNull()).containsExactly("string")

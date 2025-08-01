@@ -11,13 +11,9 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /**
- * Retrieve a list of AccountPlan and AccountPlanGroup entities for the specified Organization.
- *
- * This endpoint retrieves a list of AccountPlans and AccountPlanGroups for a specific Organization.
- * The list can be paginated for easier management, and supports filtering with various parameters.
- *
- * **NOTE:** You cannot use the `product` query parameter as a single filter condition, but must
- * always use it in combination with the `account` query parameter.
+ * Retrieves a list of AccountPlan and AccountPlanGroup entities for the specified Organization. The
+ * list can be paginated for easier management, and supports filtering with various query
+ * parameters.
  */
 class AccountPlanListParams
 private constructor(
@@ -41,13 +37,26 @@ private constructor(
     /**
      * The unique identifier (UUID) for the Account whose AccountPlans and AccountPlanGroups you
      * want to retrieve.
+     *
+     * **NOTE:** Only returns the currently active AccountPlans and AccountPlanGroups for the
+     * specified Account. Use in combination with the `includeall` query parameter to return both
+     * active and inactive.
      */
     fun account(): Optional<String> = Optional.ofNullable(account)
 
+    /**
+     * The unique identifier (UUID) of the Contract which the AccountPlans you want to retrieve have
+     * been linked to.
+     *
+     * **NOTE:** Does not return AccountPlanGroups that have been linked to the Contract.
+     */
     fun contract(): Optional<String> = Optional.ofNullable(contract)
 
     /**
-     * The specific date for which you want to retrieve active AccountPlans and AccountPlanGroups.
+     * The specific date for which you want to retrieve AccountPlans and AccountPlanGroups.
+     *
+     * **NOTE:** Returns both active and inactive AccountPlans and AccountPlanGroups for the
+     * specified date.
      */
     fun date(): Optional<String> = Optional.ofNullable(date)
 
@@ -76,8 +85,9 @@ private constructor(
     fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
     /**
-     * The unique identifier (UUID) for the Plan or Plan Group whose associated AccountPlans or
-     * AccountPlanGroups you want to retrieve.
+     * The unique identifier (UUID) for the Plan whose associated AccountPlans you want to retrieve.
+     *
+     * **NOTE:** Does not return AccountPlanGroups if you use a `planGroupId`.
      */
     fun plan(): Optional<String> = Optional.ofNullable(plan)
 
@@ -90,8 +100,10 @@ private constructor(
      */
     fun product(): Optional<String> = Optional.ofNullable(product)
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
@@ -146,20 +158,32 @@ private constructor(
         /**
          * The unique identifier (UUID) for the Account whose AccountPlans and AccountPlanGroups you
          * want to retrieve.
+         *
+         * **NOTE:** Only returns the currently active AccountPlans and AccountPlanGroups for the
+         * specified Account. Use in combination with the `includeall` query parameter to return
+         * both active and inactive.
          */
         fun account(account: String?) = apply { this.account = account }
 
         /** Alias for calling [Builder.account] with `account.orElse(null)`. */
         fun account(account: Optional<String>) = account(account.getOrNull())
 
+        /**
+         * The unique identifier (UUID) of the Contract which the AccountPlans you want to retrieve
+         * have been linked to.
+         *
+         * **NOTE:** Does not return AccountPlanGroups that have been linked to the Contract.
+         */
         fun contract(contract: String?) = apply { this.contract = contract }
 
         /** Alias for calling [Builder.contract] with `contract.orElse(null)`. */
         fun contract(contract: Optional<String>) = contract(contract.getOrNull())
 
         /**
-         * The specific date for which you want to retrieve active AccountPlans and
-         * AccountPlanGroups.
+         * The specific date for which you want to retrieve AccountPlans and AccountPlanGroups.
+         *
+         * **NOTE:** Returns both active and inactive AccountPlans and AccountPlanGroups for the
+         * specified date.
          */
         fun date(date: String?) = apply { this.date = date }
 
@@ -224,8 +248,10 @@ private constructor(
         fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
 
         /**
-         * The unique identifier (UUID) for the Plan or Plan Group whose associated AccountPlans or
-         * AccountPlanGroups you want to retrieve.
+         * The unique identifier (UUID) for the Plan whose associated AccountPlans you want to
+         * retrieve.
+         *
+         * **NOTE:** Does not return AccountPlanGroups if you use a `planGroupId`.
          */
         fun plan(plan: String?) = apply { this.plan = plan }
 

@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.3.0-alpha)
-[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.3.0-alpha/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.3.0-alpha)
+[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.4.0)
+[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.4.0/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.4.0)
 
 <!-- x-release-please-end -->
 
@@ -13,7 +13,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.3.0-alpha).
+The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.4.0).
 
 <!-- x-release-please-end -->
 
@@ -24,7 +24,7 @@ The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com
 ### Gradle
 
 ```kotlin
-implementation("com.m3ter:sdk-java:0.3.0-alpha")
+implementation("com.m3ter:sdk-java:0.4.0")
 ```
 
 ### Maven
@@ -33,7 +33,7 @@ implementation("com.m3ter:sdk-java:0.3.0-alpha")
 <dependency>
   <groupId>com.m3ter</groupId>
   <artifactId>sdk-java</artifactId>
-  <version>0.3.0-alpha</version>
+  <version>0.4.0</version>
 </dependency>
 ```
 
@@ -51,7 +51,8 @@ import com.m3ter.client.okhttp.M3terOkHttpClient;
 import com.m3ter.models.ProductListPage;
 import com.m3ter.models.ProductListParams;
 
-// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
+// Configures using the `m3ter.apiKey`, `m3ter.apiSecret`, `m3ter.apiToken`, `m3ter.orgId` and `m3ter.baseUrl` system properties
+// Or configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
 M3terClient client = M3terOkHttpClient.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
@@ -62,13 +63,14 @@ ProductListPage page = client.products().list(params);
 
 ## Client configuration
 
-Configure the client using environment variables:
+Configure the client using system properties or environment variables:
 
 ```java
 import com.m3ter.client.M3terClient;
 import com.m3ter.client.okhttp.M3terOkHttpClient;
 
-// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
+// Configures using the `m3ter.apiKey`, `m3ter.apiSecret`, `m3ter.apiToken`, `m3ter.orgId` and `m3ter.baseUrl` system properties
+// Or configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
 M3terClient client = M3terOkHttpClient.fromEnv();
 ```
 
@@ -92,7 +94,8 @@ import com.m3ter.client.M3terClient;
 import com.m3ter.client.okhttp.M3terOkHttpClient;
 
 M3terClient client = M3terOkHttpClient.builder()
-    // Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
+    // Configures using the `m3ter.apiKey`, `m3ter.apiSecret`, `m3ter.apiToken`, `m3ter.orgId` and `m3ter.baseUrl` system properties
+    // Or configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
     .fromEnv()
     .apiKey("My API Key")
     .build();
@@ -100,16 +103,34 @@ M3terClient client = M3terOkHttpClient.builder()
 
 See this table for the available options:
 
-| Setter      | Environment variable | Required | Default value             |
-| ----------- | -------------------- | -------- | ------------------------- |
-| `apiKey`    | `M3TER_API_KEY`      | true     | -                         |
-| `apiSecret` | `M3TER_API_SECRET`   | true     | -                         |
-| `orgId`     | `M3TER_ORG_ID`       | true     | -                         |
-| `baseUrl`   | `M3TER_BASE_URL`     | true     | `"https://api.m3ter.com"` |
+| Setter      | System property   | Environment variable | Required | Default value             |
+| ----------- | ----------------- | -------------------- | -------- | ------------------------- |
+| `apiKey`    | `m3ter.apiKey`    | `M3TER_API_KEY`      | true     | -                         |
+| `apiSecret` | `m3ter.apiSecret` | `M3TER_API_SECRET`   | true     | -                         |
+| `token`     | `m3ter.apiToken`  | `M3TER_API_TOKEN`    | false    | -                         |
+| `orgId`     | `m3ter.orgId`     | `M3TER_ORG_ID`       | true     | -                         |
+| `baseUrl`   | `m3ter.baseUrl`   | `M3TER_BASE_URL`     | true     | `"https://api.m3ter.com"` |
+
+System properties take precedence over environment variables.
 
 > [!TIP]
 > Don't create more than one client in the same application. Each client has a connection pool and
 > thread pools, which are more efficient to share between requests.
+
+### Modifying configuration
+
+To temporarily use a modified client configuration, while reusing the same connection and thread pools, call `withOptions()` on any client or service:
+
+```java
+import com.m3ter.client.M3terClient;
+
+M3terClient clientWithOptions = client.withOptions(optionsBuilder -> {
+    optionsBuilder.baseUrl("https://example.com");
+    optionsBuilder.maxRetries(42);
+});
+```
+
+The `withOptions()` method does not affect the original client or service.
 
 ## Requests and responses
 
@@ -136,7 +157,8 @@ import com.m3ter.models.ProductListPageAsync;
 import com.m3ter.models.ProductListParams;
 import java.util.concurrent.CompletableFuture;
 
-// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
+// Configures using the `m3ter.apiKey`, `m3ter.apiSecret`, `m3ter.apiToken`, `m3ter.orgId` and `m3ter.baseUrl` system properties
+// Or configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
 M3terClient client = M3terOkHttpClient.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
@@ -154,7 +176,8 @@ import com.m3ter.models.ProductListPageAsync;
 import com.m3ter.models.ProductListParams;
 import java.util.concurrent.CompletableFuture;
 
-// Configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
+// Configures using the `m3ter.apiKey`, `m3ter.apiSecret`, `m3ter.apiToken`, `m3ter.orgId` and `m3ter.baseUrl` system properties
+// Or configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
 M3terClientAsync client = M3terOkHttpClientAsync.fromEnv();
 
 ProductListParams params = ProductListParams.builder()
@@ -212,6 +235,8 @@ The SDK throws custom unchecked exception types:
   | others | [`UnexpectedStatusCodeException`](sdk-java-core/src/main/kotlin/com/m3ter/errors/UnexpectedStatusCodeException.kt) |
 
 - [`M3terIoException`](sdk-java-core/src/main/kotlin/com/m3ter/errors/M3terIoException.kt): I/O networking errors.
+
+- [`M3terRetryableException`](sdk-java-core/src/main/kotlin/com/m3ter/errors/M3terRetryableException.kt): Generic error indicating a failure that could be retried by the client.
 
 - [`M3terInvalidDataException`](sdk-java-core/src/main/kotlin/com/m3ter/errors/M3terInvalidDataException.kt): Failure to interpret successfully parsed data. For example, when accessing a property that's supposed to be required, but the API unexpectedly omitted it from the response.
 
@@ -333,6 +358,12 @@ Or to `debug` for more verbose logging:
 $ export M3TER_LOG=debug
 ```
 
+## ProGuard and R8
+
+Although the SDK uses reflection, it is still usable with [ProGuard](https://github.com/Guardsquare/proguard) and [R8](https://developer.android.com/topic/performance/app-optimization/enable-app-optimization) because `sdk-java-core` is published with a [configuration file](sdk-java-core/src/main/resources/META-INF/proguard/sdk-java-core.pro) containing [keep rules](https://www.guardsquare.com/manual/configuration/usage).
+
+ProGuard and R8 should automatically detect and use the published rules, but you can also manually copy the keep rules if necessary.
+
 ## Jackson
 
 The SDK depends on [Jackson](https://github.com/FasterXML/jackson) for JSON serialization/deserialization. It is compatible with version 2.13.4 or higher, but depends on version 2.18.2 by default.
@@ -348,7 +379,7 @@ If the SDK threw an exception, but you're _certain_ the version is compatible, t
 
 ### Retries
 
-The SDK automatically retries 2 times by default, with a short exponential backoff.
+The SDK automatically retries 2 times by default, with a short exponential backoff between requests.
 
 Only the following error types are retried:
 
@@ -358,7 +389,7 @@ Only the following error types are retried:
 - 429 Rate Limit
 - 5xx Internal
 
-The API may also explicitly instruct the SDK to retry or not retry a response.
+The API may also explicitly instruct the SDK to retry or not retry a request.
 
 To set a custom number of retries, configure the client using the `maxRetries` method:
 
@@ -414,6 +445,27 @@ M3terClient client = M3terOkHttpClient.builder()
         "https://example.com", 8080
       )
     ))
+    .build();
+```
+
+### HTTPS
+
+> [!NOTE]
+> Most applications should not call these methods, and instead use the system defaults. The defaults include
+> special optimizations that can be lost if the implementations are modified.
+
+To configure how HTTPS connections are secured, configure the client using the `sslSocketFactory`, `trustManager`, and `hostnameVerifier` methods:
+
+```java
+import com.m3ter.client.M3terClient;
+import com.m3ter.client.okhttp.M3terOkHttpClient;
+
+M3terClient client = M3terOkHttpClient.builder()
+    .fromEnv()
+    // If `sslSocketFactory` is set, then `trustManager` must be set, and vice versa.
+    .sslSocketFactory(yourSSLSocketFactory)
+    .trustManager(yourTrustManager)
+    .hostnameVerifier(yourHostnameVerifier)
     .build();
 ```
 

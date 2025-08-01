@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.PermissionPolicyAddToServiceUserParams
@@ -28,6 +29,7 @@ import com.m3ter.models.PermissionPolicyRemoveFromUserResponse
 import com.m3ter.models.PermissionPolicyResponse
 import com.m3ter.models.PermissionPolicyRetrieveParams
 import com.m3ter.models.PermissionPolicyUpdateParams
+import java.util.function.Consumer
 
 interface PermissionPolicyService {
 
@@ -35,6 +37,13 @@ interface PermissionPolicyService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): PermissionPolicyService
 
     /**
      * Create a new Permission Policy
@@ -67,7 +76,7 @@ interface PermissionPolicyService {
     fun create(params: PermissionPolicyCreateParams): PermissionPolicyResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: PermissionPolicyCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -77,30 +86,30 @@ interface PermissionPolicyService {
     fun retrieve(id: String): PermissionPolicyResponse =
         retrieve(id, PermissionPolicyRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PermissionPolicyRetrieveParams = PermissionPolicyRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PermissionPolicyResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: PermissionPolicyRetrieveParams = PermissionPolicyRetrieveParams.none(),
     ): PermissionPolicyResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: PermissionPolicyRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PermissionPolicyResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: PermissionPolicyRetrieveParams): PermissionPolicyResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): PermissionPolicyResponse =
         retrieve(id, PermissionPolicyRetrieveParams.none(), requestOptions)
 
@@ -134,18 +143,18 @@ interface PermissionPolicyService {
     fun update(id: String, params: PermissionPolicyUpdateParams): PermissionPolicyResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: PermissionPolicyUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PermissionPolicyResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: PermissionPolicyUpdateParams): PermissionPolicyResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: PermissionPolicyUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -154,18 +163,18 @@ interface PermissionPolicyService {
     /** Retrieve a list of PermissionPolicy entities */
     fun list(): PermissionPolicyListPage = list(PermissionPolicyListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PermissionPolicyListParams = PermissionPolicyListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PermissionPolicyListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: PermissionPolicyListParams = PermissionPolicyListParams.none()
     ): PermissionPolicyListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): PermissionPolicyListPage =
         list(PermissionPolicyListParams.none(), requestOptions)
 
@@ -173,30 +182,30 @@ interface PermissionPolicyService {
     fun delete(id: String): PermissionPolicyResponse =
         delete(id, PermissionPolicyDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PermissionPolicyDeleteParams = PermissionPolicyDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PermissionPolicyResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: PermissionPolicyDeleteParams = PermissionPolicyDeleteParams.none(),
     ): PermissionPolicyResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: PermissionPolicyDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PermissionPolicyResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: PermissionPolicyDeleteParams): PermissionPolicyResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): PermissionPolicyResponse =
         delete(id, PermissionPolicyDeleteParams.none(), requestOptions)
 
@@ -207,7 +216,7 @@ interface PermissionPolicyService {
     ): PermissionPolicyAddToServiceUserResponse =
         addToServiceUser(permissionPolicyId, params, RequestOptions.none())
 
-    /** @see [addToServiceUser] */
+    /** @see addToServiceUser */
     fun addToServiceUser(
         permissionPolicyId: String,
         params: PermissionPolicyAddToServiceUserParams,
@@ -218,12 +227,12 @@ interface PermissionPolicyService {
             requestOptions,
         )
 
-    /** @see [addToServiceUser] */
+    /** @see addToServiceUser */
     fun addToServiceUser(
         params: PermissionPolicyAddToServiceUserParams
     ): PermissionPolicyAddToServiceUserResponse = addToServiceUser(params, RequestOptions.none())
 
-    /** @see [addToServiceUser] */
+    /** @see addToServiceUser */
     fun addToServiceUser(
         params: PermissionPolicyAddToServiceUserParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -233,7 +242,7 @@ interface PermissionPolicyService {
     fun addToSupportUser(permissionPolicyId: String): PermissionPolicyAddToSupportUserResponse =
         addToSupportUser(permissionPolicyId, PermissionPolicyAddToSupportUserParams.none())
 
-    /** @see [addToSupportUser] */
+    /** @see addToSupportUser */
     fun addToSupportUser(
         permissionPolicyId: String,
         params: PermissionPolicyAddToSupportUserParams =
@@ -245,7 +254,7 @@ interface PermissionPolicyService {
             requestOptions,
         )
 
-    /** @see [addToSupportUser] */
+    /** @see addToSupportUser */
     fun addToSupportUser(
         permissionPolicyId: String,
         params: PermissionPolicyAddToSupportUserParams =
@@ -253,18 +262,18 @@ interface PermissionPolicyService {
     ): PermissionPolicyAddToSupportUserResponse =
         addToSupportUser(permissionPolicyId, params, RequestOptions.none())
 
-    /** @see [addToSupportUser] */
+    /** @see addToSupportUser */
     fun addToSupportUser(
         params: PermissionPolicyAddToSupportUserParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PermissionPolicyAddToSupportUserResponse
 
-    /** @see [addToSupportUser] */
+    /** @see addToSupportUser */
     fun addToSupportUser(
         params: PermissionPolicyAddToSupportUserParams
     ): PermissionPolicyAddToSupportUserResponse = addToSupportUser(params, RequestOptions.none())
 
-    /** @see [addToSupportUser] */
+    /** @see addToSupportUser */
     fun addToSupportUser(
         permissionPolicyId: String,
         requestOptions: RequestOptions,
@@ -282,7 +291,7 @@ interface PermissionPolicyService {
     ): PermissionPolicyAddToUserResponse =
         addToUser(permissionPolicyId, params, RequestOptions.none())
 
-    /** @see [addToUser] */
+    /** @see addToUser */
     fun addToUser(
         permissionPolicyId: String,
         params: PermissionPolicyAddToUserParams,
@@ -290,11 +299,11 @@ interface PermissionPolicyService {
     ): PermissionPolicyAddToUserResponse =
         addToUser(params.toBuilder().permissionPolicyId(permissionPolicyId).build(), requestOptions)
 
-    /** @see [addToUser] */
+    /** @see addToUser */
     fun addToUser(params: PermissionPolicyAddToUserParams): PermissionPolicyAddToUserResponse =
         addToUser(params, RequestOptions.none())
 
-    /** @see [addToUser] */
+    /** @see addToUser */
     fun addToUser(
         params: PermissionPolicyAddToUserParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -307,7 +316,7 @@ interface PermissionPolicyService {
     ): PermissionPolicyAddToUserGroupResponse =
         addToUserGroup(permissionPolicyId, params, RequestOptions.none())
 
-    /** @see [addToUserGroup] */
+    /** @see addToUserGroup */
     fun addToUserGroup(
         permissionPolicyId: String,
         params: PermissionPolicyAddToUserGroupParams,
@@ -318,12 +327,12 @@ interface PermissionPolicyService {
             requestOptions,
         )
 
-    /** @see [addToUserGroup] */
+    /** @see addToUserGroup */
     fun addToUserGroup(
         params: PermissionPolicyAddToUserGroupParams
     ): PermissionPolicyAddToUserGroupResponse = addToUserGroup(params, RequestOptions.none())
 
-    /** @see [addToUserGroup] */
+    /** @see addToUserGroup */
     fun addToUserGroup(
         params: PermissionPolicyAddToUserGroupParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -336,7 +345,7 @@ interface PermissionPolicyService {
     ): PermissionPolicyRemoveFromServiceUserResponse =
         removeFromServiceUser(permissionPolicyId, params, RequestOptions.none())
 
-    /** @see [removeFromServiceUser] */
+    /** @see removeFromServiceUser */
     fun removeFromServiceUser(
         permissionPolicyId: String,
         params: PermissionPolicyRemoveFromServiceUserParams,
@@ -347,13 +356,13 @@ interface PermissionPolicyService {
             requestOptions,
         )
 
-    /** @see [removeFromServiceUser] */
+    /** @see removeFromServiceUser */
     fun removeFromServiceUser(
         params: PermissionPolicyRemoveFromServiceUserParams
     ): PermissionPolicyRemoveFromServiceUserResponse =
         removeFromServiceUser(params, RequestOptions.none())
 
-    /** @see [removeFromServiceUser] */
+    /** @see removeFromServiceUser */
     fun removeFromServiceUser(
         params: PermissionPolicyRemoveFromServiceUserParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -368,7 +377,7 @@ interface PermissionPolicyService {
             PermissionPolicyRemoveFromSupportUserParams.none(),
         )
 
-    /** @see [removeFromSupportUser] */
+    /** @see removeFromSupportUser */
     fun removeFromSupportUser(
         permissionPolicyId: String,
         params: PermissionPolicyRemoveFromSupportUserParams =
@@ -380,7 +389,7 @@ interface PermissionPolicyService {
             requestOptions,
         )
 
-    /** @see [removeFromSupportUser] */
+    /** @see removeFromSupportUser */
     fun removeFromSupportUser(
         permissionPolicyId: String,
         params: PermissionPolicyRemoveFromSupportUserParams =
@@ -388,19 +397,19 @@ interface PermissionPolicyService {
     ): PermissionPolicyRemoveFromSupportUserResponse =
         removeFromSupportUser(permissionPolicyId, params, RequestOptions.none())
 
-    /** @see [removeFromSupportUser] */
+    /** @see removeFromSupportUser */
     fun removeFromSupportUser(
         params: PermissionPolicyRemoveFromSupportUserParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PermissionPolicyRemoveFromSupportUserResponse
 
-    /** @see [removeFromSupportUser] */
+    /** @see removeFromSupportUser */
     fun removeFromSupportUser(
         params: PermissionPolicyRemoveFromSupportUserParams
     ): PermissionPolicyRemoveFromSupportUserResponse =
         removeFromSupportUser(params, RequestOptions.none())
 
-    /** @see [removeFromSupportUser] */
+    /** @see removeFromSupportUser */
     fun removeFromSupportUser(
         permissionPolicyId: String,
         requestOptions: RequestOptions,
@@ -418,7 +427,7 @@ interface PermissionPolicyService {
     ): PermissionPolicyRemoveFromUserResponse =
         removeFromUser(permissionPolicyId, params, RequestOptions.none())
 
-    /** @see [removeFromUser] */
+    /** @see removeFromUser */
     fun removeFromUser(
         permissionPolicyId: String,
         params: PermissionPolicyRemoveFromUserParams,
@@ -429,12 +438,12 @@ interface PermissionPolicyService {
             requestOptions,
         )
 
-    /** @see [removeFromUser] */
+    /** @see removeFromUser */
     fun removeFromUser(
         params: PermissionPolicyRemoveFromUserParams
     ): PermissionPolicyRemoveFromUserResponse = removeFromUser(params, RequestOptions.none())
 
-    /** @see [removeFromUser] */
+    /** @see removeFromUser */
     fun removeFromUser(
         params: PermissionPolicyRemoveFromUserParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -447,7 +456,7 @@ interface PermissionPolicyService {
     ): PermissionPolicyRemoveFromUserGroupResponse =
         removeFromUserGroup(permissionPolicyId, params, RequestOptions.none())
 
-    /** @see [removeFromUserGroup] */
+    /** @see removeFromUserGroup */
     fun removeFromUserGroup(
         permissionPolicyId: String,
         params: PermissionPolicyRemoveFromUserGroupParams,
@@ -458,13 +467,13 @@ interface PermissionPolicyService {
             requestOptions,
         )
 
-    /** @see [removeFromUserGroup] */
+    /** @see removeFromUserGroup */
     fun removeFromUserGroup(
         params: PermissionPolicyRemoveFromUserGroupParams
     ): PermissionPolicyRemoveFromUserGroupResponse =
         removeFromUserGroup(params, RequestOptions.none())
 
-    /** @see [removeFromUserGroup] */
+    /** @see removeFromUserGroup */
     fun removeFromUserGroup(
         params: PermissionPolicyRemoveFromUserGroupParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -477,6 +486,15 @@ interface PermissionPolicyService {
     interface WithRawResponse {
 
         /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PermissionPolicyService.WithRawResponse
+
+        /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/permissionpolicies`, but is
          * otherwise the same as [PermissionPolicyService.create].
          */
@@ -485,7 +503,7 @@ interface PermissionPolicyService {
             params: PermissionPolicyCreateParams
         ): HttpResponseFor<PermissionPolicyResponse> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: PermissionPolicyCreateParams,
@@ -500,7 +518,7 @@ interface PermissionPolicyService {
         fun retrieve(id: String): HttpResponseFor<PermissionPolicyResponse> =
             retrieve(id, PermissionPolicyRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -509,27 +527,27 @@ interface PermissionPolicyService {
         ): HttpResponseFor<PermissionPolicyResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: PermissionPolicyRetrieveParams = PermissionPolicyRetrieveParams.none(),
         ): HttpResponseFor<PermissionPolicyResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: PermissionPolicyRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PermissionPolicyResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: PermissionPolicyRetrieveParams
         ): HttpResponseFor<PermissionPolicyResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -547,7 +565,7 @@ interface PermissionPolicyService {
             params: PermissionPolicyUpdateParams,
         ): HttpResponseFor<PermissionPolicyResponse> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -556,13 +574,13 @@ interface PermissionPolicyService {
         ): HttpResponseFor<PermissionPolicyResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: PermissionPolicyUpdateParams
         ): HttpResponseFor<PermissionPolicyResponse> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: PermissionPolicyUpdateParams,
@@ -577,20 +595,20 @@ interface PermissionPolicyService {
         fun list(): HttpResponseFor<PermissionPolicyListPage> =
             list(PermissionPolicyListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PermissionPolicyListParams = PermissionPolicyListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PermissionPolicyListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: PermissionPolicyListParams = PermissionPolicyListParams.none()
         ): HttpResponseFor<PermissionPolicyListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<PermissionPolicyListPage> =
             list(PermissionPolicyListParams.none(), requestOptions)
@@ -603,7 +621,7 @@ interface PermissionPolicyService {
         fun delete(id: String): HttpResponseFor<PermissionPolicyResponse> =
             delete(id, PermissionPolicyDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -612,27 +630,27 @@ interface PermissionPolicyService {
         ): HttpResponseFor<PermissionPolicyResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: PermissionPolicyDeleteParams = PermissionPolicyDeleteParams.none(),
         ): HttpResponseFor<PermissionPolicyResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: PermissionPolicyDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PermissionPolicyResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: PermissionPolicyDeleteParams
         ): HttpResponseFor<PermissionPolicyResponse> = delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -652,7 +670,7 @@ interface PermissionPolicyService {
         ): HttpResponseFor<PermissionPolicyAddToServiceUserResponse> =
             addToServiceUser(permissionPolicyId, params, RequestOptions.none())
 
-        /** @see [addToServiceUser] */
+        /** @see addToServiceUser */
         @MustBeClosed
         fun addToServiceUser(
             permissionPolicyId: String,
@@ -664,14 +682,14 @@ interface PermissionPolicyService {
                 requestOptions,
             )
 
-        /** @see [addToServiceUser] */
+        /** @see addToServiceUser */
         @MustBeClosed
         fun addToServiceUser(
             params: PermissionPolicyAddToServiceUserParams
         ): HttpResponseFor<PermissionPolicyAddToServiceUserResponse> =
             addToServiceUser(params, RequestOptions.none())
 
-        /** @see [addToServiceUser] */
+        /** @see addToServiceUser */
         @MustBeClosed
         fun addToServiceUser(
             params: PermissionPolicyAddToServiceUserParams,
@@ -689,7 +707,7 @@ interface PermissionPolicyService {
         ): HttpResponseFor<PermissionPolicyAddToSupportUserResponse> =
             addToSupportUser(permissionPolicyId, PermissionPolicyAddToSupportUserParams.none())
 
-        /** @see [addToSupportUser] */
+        /** @see addToSupportUser */
         @MustBeClosed
         fun addToSupportUser(
             permissionPolicyId: String,
@@ -702,7 +720,7 @@ interface PermissionPolicyService {
                 requestOptions,
             )
 
-        /** @see [addToSupportUser] */
+        /** @see addToSupportUser */
         @MustBeClosed
         fun addToSupportUser(
             permissionPolicyId: String,
@@ -711,21 +729,21 @@ interface PermissionPolicyService {
         ): HttpResponseFor<PermissionPolicyAddToSupportUserResponse> =
             addToSupportUser(permissionPolicyId, params, RequestOptions.none())
 
-        /** @see [addToSupportUser] */
+        /** @see addToSupportUser */
         @MustBeClosed
         fun addToSupportUser(
             params: PermissionPolicyAddToSupportUserParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PermissionPolicyAddToSupportUserResponse>
 
-        /** @see [addToSupportUser] */
+        /** @see addToSupportUser */
         @MustBeClosed
         fun addToSupportUser(
             params: PermissionPolicyAddToSupportUserParams
         ): HttpResponseFor<PermissionPolicyAddToSupportUserResponse> =
             addToSupportUser(params, RequestOptions.none())
 
-        /** @see [addToSupportUser] */
+        /** @see addToSupportUser */
         @MustBeClosed
         fun addToSupportUser(
             permissionPolicyId: String,
@@ -749,7 +767,7 @@ interface PermissionPolicyService {
         ): HttpResponseFor<PermissionPolicyAddToUserResponse> =
             addToUser(permissionPolicyId, params, RequestOptions.none())
 
-        /** @see [addToUser] */
+        /** @see addToUser */
         @MustBeClosed
         fun addToUser(
             permissionPolicyId: String,
@@ -761,14 +779,14 @@ interface PermissionPolicyService {
                 requestOptions,
             )
 
-        /** @see [addToUser] */
+        /** @see addToUser */
         @MustBeClosed
         fun addToUser(
             params: PermissionPolicyAddToUserParams
         ): HttpResponseFor<PermissionPolicyAddToUserResponse> =
             addToUser(params, RequestOptions.none())
 
-        /** @see [addToUser] */
+        /** @see addToUser */
         @MustBeClosed
         fun addToUser(
             params: PermissionPolicyAddToUserParams,
@@ -787,7 +805,7 @@ interface PermissionPolicyService {
         ): HttpResponseFor<PermissionPolicyAddToUserGroupResponse> =
             addToUserGroup(permissionPolicyId, params, RequestOptions.none())
 
-        /** @see [addToUserGroup] */
+        /** @see addToUserGroup */
         @MustBeClosed
         fun addToUserGroup(
             permissionPolicyId: String,
@@ -799,14 +817,14 @@ interface PermissionPolicyService {
                 requestOptions,
             )
 
-        /** @see [addToUserGroup] */
+        /** @see addToUserGroup */
         @MustBeClosed
         fun addToUserGroup(
             params: PermissionPolicyAddToUserGroupParams
         ): HttpResponseFor<PermissionPolicyAddToUserGroupResponse> =
             addToUserGroup(params, RequestOptions.none())
 
-        /** @see [addToUserGroup] */
+        /** @see addToUserGroup */
         @MustBeClosed
         fun addToUserGroup(
             params: PermissionPolicyAddToUserGroupParams,
@@ -825,7 +843,7 @@ interface PermissionPolicyService {
         ): HttpResponseFor<PermissionPolicyRemoveFromServiceUserResponse> =
             removeFromServiceUser(permissionPolicyId, params, RequestOptions.none())
 
-        /** @see [removeFromServiceUser] */
+        /** @see removeFromServiceUser */
         @MustBeClosed
         fun removeFromServiceUser(
             permissionPolicyId: String,
@@ -837,14 +855,14 @@ interface PermissionPolicyService {
                 requestOptions,
             )
 
-        /** @see [removeFromServiceUser] */
+        /** @see removeFromServiceUser */
         @MustBeClosed
         fun removeFromServiceUser(
             params: PermissionPolicyRemoveFromServiceUserParams
         ): HttpResponseFor<PermissionPolicyRemoveFromServiceUserResponse> =
             removeFromServiceUser(params, RequestOptions.none())
 
-        /** @see [removeFromServiceUser] */
+        /** @see removeFromServiceUser */
         @MustBeClosed
         fun removeFromServiceUser(
             params: PermissionPolicyRemoveFromServiceUserParams,
@@ -865,7 +883,7 @@ interface PermissionPolicyService {
                 PermissionPolicyRemoveFromSupportUserParams.none(),
             )
 
-        /** @see [removeFromSupportUser] */
+        /** @see removeFromSupportUser */
         @MustBeClosed
         fun removeFromSupportUser(
             permissionPolicyId: String,
@@ -878,7 +896,7 @@ interface PermissionPolicyService {
                 requestOptions,
             )
 
-        /** @see [removeFromSupportUser] */
+        /** @see removeFromSupportUser */
         @MustBeClosed
         fun removeFromSupportUser(
             permissionPolicyId: String,
@@ -887,21 +905,21 @@ interface PermissionPolicyService {
         ): HttpResponseFor<PermissionPolicyRemoveFromSupportUserResponse> =
             removeFromSupportUser(permissionPolicyId, params, RequestOptions.none())
 
-        /** @see [removeFromSupportUser] */
+        /** @see removeFromSupportUser */
         @MustBeClosed
         fun removeFromSupportUser(
             params: PermissionPolicyRemoveFromSupportUserParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<PermissionPolicyRemoveFromSupportUserResponse>
 
-        /** @see [removeFromSupportUser] */
+        /** @see removeFromSupportUser */
         @MustBeClosed
         fun removeFromSupportUser(
             params: PermissionPolicyRemoveFromSupportUserParams
         ): HttpResponseFor<PermissionPolicyRemoveFromSupportUserResponse> =
             removeFromSupportUser(params, RequestOptions.none())
 
-        /** @see [removeFromSupportUser] */
+        /** @see removeFromSupportUser */
         @MustBeClosed
         fun removeFromSupportUser(
             permissionPolicyId: String,
@@ -925,7 +943,7 @@ interface PermissionPolicyService {
         ): HttpResponseFor<PermissionPolicyRemoveFromUserResponse> =
             removeFromUser(permissionPolicyId, params, RequestOptions.none())
 
-        /** @see [removeFromUser] */
+        /** @see removeFromUser */
         @MustBeClosed
         fun removeFromUser(
             permissionPolicyId: String,
@@ -937,14 +955,14 @@ interface PermissionPolicyService {
                 requestOptions,
             )
 
-        /** @see [removeFromUser] */
+        /** @see removeFromUser */
         @MustBeClosed
         fun removeFromUser(
             params: PermissionPolicyRemoveFromUserParams
         ): HttpResponseFor<PermissionPolicyRemoveFromUserResponse> =
             removeFromUser(params, RequestOptions.none())
 
-        /** @see [removeFromUser] */
+        /** @see removeFromUser */
         @MustBeClosed
         fun removeFromUser(
             params: PermissionPolicyRemoveFromUserParams,
@@ -963,7 +981,7 @@ interface PermissionPolicyService {
         ): HttpResponseFor<PermissionPolicyRemoveFromUserGroupResponse> =
             removeFromUserGroup(permissionPolicyId, params, RequestOptions.none())
 
-        /** @see [removeFromUserGroup] */
+        /** @see removeFromUserGroup */
         @MustBeClosed
         fun removeFromUserGroup(
             permissionPolicyId: String,
@@ -975,14 +993,14 @@ interface PermissionPolicyService {
                 requestOptions,
             )
 
-        /** @see [removeFromUserGroup] */
+        /** @see removeFromUserGroup */
         @MustBeClosed
         fun removeFromUserGroup(
             params: PermissionPolicyRemoveFromUserGroupParams
         ): HttpResponseFor<PermissionPolicyRemoveFromUserGroupResponse> =
             removeFromUserGroup(params, RequestOptions.none())
 
-        /** @see [removeFromUserGroup] */
+        /** @see removeFromUserGroup */
         @MustBeClosed
         fun removeFromUserGroup(
             params: PermissionPolicyRemoveFromUserGroupParams,

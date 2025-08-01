@@ -19,7 +19,6 @@ internal class PricingListPageResponseTest {
                 .addData(
                     PricingResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountingProductId("accountingProductId")
                         .aggregationId("aggregationId")
                         .aggregationType(PricingResponse.AggregationType.SIMPLE)
@@ -64,6 +63,7 @@ internal class PricingListPageResponseTest {
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .tiersSpanPlan(true)
                         .type(PricingResponse.Type.DEBIT)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -73,7 +73,6 @@ internal class PricingListPageResponseTest {
             .containsExactly(
                 PricingResponse.builder()
                     .id("id")
-                    .version(0L)
                     .accountingProductId("accountingProductId")
                     .aggregationId("aggregationId")
                     .aggregationType(PricingResponse.AggregationType.SIMPLE)
@@ -118,6 +117,7 @@ internal class PricingListPageResponseTest {
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .tiersSpanPlan(true)
                     .type(PricingResponse.Type.DEBIT)
+                    .version(0L)
                     .build()
             )
         assertThat(pricingListPageResponse.nextToken()).contains("nextToken")
@@ -131,7 +131,6 @@ internal class PricingListPageResponseTest {
                 .addData(
                     PricingResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountingProductId("accountingProductId")
                         .aggregationId("aggregationId")
                         .aggregationType(PricingResponse.AggregationType.SIMPLE)
@@ -176,6 +175,7 @@ internal class PricingListPageResponseTest {
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .tiersSpanPlan(true)
                         .type(PricingResponse.Type.DEBIT)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

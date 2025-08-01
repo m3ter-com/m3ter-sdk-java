@@ -15,7 +15,6 @@ internal class TransactionResponseTest {
         val transactionResponse =
             TransactionResponse.builder()
                 .id("id")
-                .version(0L)
                 .amount(0.0)
                 .appliedDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .createdBy("createdBy")
@@ -29,10 +28,10 @@ internal class TransactionResponseTest {
                 .paid(0.0)
                 .transactionDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .transactionTypeId("transactionTypeId")
+                .version(0L)
                 .build()
 
         assertThat(transactionResponse.id()).isEqualTo("id")
-        assertThat(transactionResponse.version()).isEqualTo(0L)
         assertThat(transactionResponse.amount()).contains(0.0)
         assertThat(transactionResponse.appliedDate())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -50,6 +49,7 @@ internal class TransactionResponseTest {
         assertThat(transactionResponse.transactionDate())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(transactionResponse.transactionTypeId()).contains("transactionTypeId")
+        assertThat(transactionResponse.version()).contains(0L)
     }
 
     @Test
@@ -58,7 +58,6 @@ internal class TransactionResponseTest {
         val transactionResponse =
             TransactionResponse.builder()
                 .id("id")
-                .version(0L)
                 .amount(0.0)
                 .appliedDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .createdBy("createdBy")
@@ -72,6 +71,7 @@ internal class TransactionResponseTest {
                 .paid(0.0)
                 .transactionDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .transactionTypeId("transactionTypeId")
+                .version(0L)
                 .build()
 
         val roundtrippedTransactionResponse =

@@ -48,8 +48,10 @@ private constructor(
     /** Number of Debit Reasons to retrieve per page. */
     fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)

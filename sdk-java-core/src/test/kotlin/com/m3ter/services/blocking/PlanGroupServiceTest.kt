@@ -34,7 +34,7 @@ internal class PlanGroupServiceTest {
                     .currency("xxx")
                     .name("x")
                     .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .customFields(
                         PlanGroupCreateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -95,7 +95,7 @@ internal class PlanGroupServiceTest {
                     .currency("xxx")
                     .name("x")
                     .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .customFields(
                         PlanGroupUpdateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))

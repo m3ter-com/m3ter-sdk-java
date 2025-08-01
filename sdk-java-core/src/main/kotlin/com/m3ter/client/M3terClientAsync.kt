@@ -2,6 +2,7 @@
 
 package com.m3ter.client
 
+import com.m3ter.core.ClientOptions
 import com.m3ter.services.async.AccountPlanServiceAsync
 import com.m3ter.services.async.AccountServiceAsync
 import com.m3ter.services.async.AggregationServiceAsync
@@ -36,10 +37,12 @@ import com.m3ter.services.async.PricingServiceAsync
 import com.m3ter.services.async.ProductServiceAsync
 import com.m3ter.services.async.ResourceGroupServiceAsync
 import com.m3ter.services.async.ScheduledEventConfigurationServiceAsync
+import com.m3ter.services.async.StatementServiceAsync
 import com.m3ter.services.async.TransactionTypeServiceAsync
 import com.m3ter.services.async.UsageServiceAsync
 import com.m3ter.services.async.UserServiceAsync
 import com.m3ter.services.async.WebhookServiceAsync
+import java.util.function.Consumer
 
 /**
  * A client for interacting with the M3ter REST API asynchronously. You can also switch to
@@ -69,6 +72,13 @@ interface M3terClientAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): M3terClientAsync
 
     fun authentication(): AuthenticationServiceAsync
 
@@ -138,6 +148,8 @@ interface M3terClientAsync {
 
     fun scheduledEventConfigurations(): ScheduledEventConfigurationServiceAsync
 
+    fun statements(): StatementServiceAsync
+
     fun transactionTypes(): TransactionTypeServiceAsync
 
     fun usage(): UsageServiceAsync
@@ -161,6 +173,13 @@ interface M3terClientAsync {
 
     /** A view of [M3terClientAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): M3terClientAsync.WithRawResponse
 
         fun authentication(): AuthenticationServiceAsync.WithRawResponse
 
@@ -229,6 +248,8 @@ interface M3terClientAsync {
         fun resourceGroups(): ResourceGroupServiceAsync.WithRawResponse
 
         fun scheduledEventConfigurations(): ScheduledEventConfigurationServiceAsync.WithRawResponse
+
+        fun statements(): StatementServiceAsync.WithRawResponse
 
         fun transactionTypes(): TransactionTypeServiceAsync.WithRawResponse
 

@@ -72,6 +72,8 @@ import com.m3ter.services.async.ResourceGroupServiceAsync
 import com.m3ter.services.async.ResourceGroupServiceAsyncImpl
 import com.m3ter.services.async.ScheduledEventConfigurationServiceAsync
 import com.m3ter.services.async.ScheduledEventConfigurationServiceAsyncImpl
+import com.m3ter.services.async.StatementServiceAsync
+import com.m3ter.services.async.StatementServiceAsyncImpl
 import com.m3ter.services.async.TransactionTypeServiceAsync
 import com.m3ter.services.async.TransactionTypeServiceAsyncImpl
 import com.m3ter.services.async.UsageServiceAsync
@@ -80,6 +82,7 @@ import com.m3ter.services.async.UserServiceAsync
 import com.m3ter.services.async.UserServiceAsyncImpl
 import com.m3ter.services.async.WebhookServiceAsync
 import com.m3ter.services.async.WebhookServiceAsyncImpl
+import java.util.function.Consumer
 
 class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClientAsync {
 
@@ -230,6 +233,10 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
         ScheduledEventConfigurationServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val statements: StatementServiceAsync by lazy {
+        StatementServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     private val transactionTypes: TransactionTypeServiceAsync by lazy {
         TransactionTypeServiceAsyncImpl(clientOptionsWithUserAgent)
     }
@@ -247,6 +254,9 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
     override fun sync(): M3terClient = sync
 
     override fun withRawResponse(): M3terClientAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): M3terClientAsync =
+        M3terClientAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun authentication(): AuthenticationServiceAsync = authentication
 
@@ -318,6 +328,8 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
     override fun scheduledEventConfigurations(): ScheduledEventConfigurationServiceAsync =
         scheduledEventConfigurations
+
+    override fun statements(): StatementServiceAsync = statements
 
     override fun transactionTypes(): TransactionTypeServiceAsync = transactionTypes
 
@@ -471,6 +483,10 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
             ScheduledEventConfigurationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val statements: StatementServiceAsync.WithRawResponse by lazy {
+            StatementServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val transactionTypes: TransactionTypeServiceAsync.WithRawResponse by lazy {
             TransactionTypeServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
@@ -486,6 +502,13 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
         private val webhooks: WebhookServiceAsync.WithRawResponse by lazy {
             WebhookServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): M3terClientAsync.WithRawResponse =
+            M3terClientAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         override fun authentication(): AuthenticationServiceAsync.WithRawResponse = authentication
 
@@ -562,6 +585,8 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
         override fun scheduledEventConfigurations():
             ScheduledEventConfigurationServiceAsync.WithRawResponse = scheduledEventConfigurations
+
+        override fun statements(): StatementServiceAsync.WithRawResponse = statements
 
         override fun transactionTypes(): TransactionTypeServiceAsync.WithRawResponse =
             transactionTypes

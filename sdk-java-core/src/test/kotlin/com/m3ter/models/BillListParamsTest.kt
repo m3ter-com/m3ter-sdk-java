@@ -13,6 +13,7 @@ internal class BillListParamsTest {
         BillListParams.builder()
             .orgId("orgId")
             .accountId("accountId")
+            .addAdditional("string")
             .billDate("billDate")
             .billDateEnd("billDateEnd")
             .billDateStart("billDateStart")
@@ -44,6 +45,7 @@ internal class BillListParamsTest {
             BillListParams.builder()
                 .orgId("orgId")
                 .accountId("accountId")
+                .addAdditional("string")
                 .billDate("billDate")
                 .billDateEnd("billDateEnd")
                 .billDateStart("billDateStart")
@@ -65,6 +67,7 @@ internal class BillListParamsTest {
             .isEqualTo(
                 QueryParams.builder()
                     .put("accountId", "accountId")
+                    .put("additional", listOf("string").joinToString(","))
                     .put("billDate", "billDate")
                     .put("billDateEnd", "billDateEnd")
                     .put("billDateStart", "billDateStart")

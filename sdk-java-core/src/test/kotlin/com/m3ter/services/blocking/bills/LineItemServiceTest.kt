@@ -29,6 +29,7 @@ internal class LineItemServiceTest {
                     .orgId("orgId")
                     .billId("billId")
                     .id("id")
+                    .addAdditional("string")
                     .build()
             )
 

@@ -14,6 +14,7 @@ internal class BillCreditLineItemUpdateParamsTest {
             .orgId("orgId")
             .billId("billId")
             .id("id")
+            .accountingProductId("accountingProductId")
             .amount(1.0)
             .description("x")
             .productId("productId")
@@ -34,6 +35,7 @@ internal class BillCreditLineItemUpdateParamsTest {
             BillCreditLineItemUpdateParams.builder()
                 .billId("billId")
                 .id("id")
+                .accountingProductId("accountingProductId")
                 .amount(1.0)
                 .description("x")
                 .productId("productId")
@@ -57,6 +59,7 @@ internal class BillCreditLineItemUpdateParamsTest {
                 .orgId("orgId")
                 .billId("billId")
                 .id("id")
+                .accountingProductId("accountingProductId")
                 .amount(1.0)
                 .description("x")
                 .productId("productId")
@@ -72,6 +75,7 @@ internal class BillCreditLineItemUpdateParamsTest {
 
         val body = params._body()
 
+        assertThat(body.accountingProductId()).isEqualTo("accountingProductId")
         assertThat(body.amount()).isEqualTo(1.0)
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.productId()).isEqualTo("productId")
@@ -94,6 +98,7 @@ internal class BillCreditLineItemUpdateParamsTest {
             BillCreditLineItemUpdateParams.builder()
                 .billId("billId")
                 .id("id")
+                .accountingProductId("accountingProductId")
                 .amount(1.0)
                 .description("x")
                 .productId("productId")
@@ -105,6 +110,7 @@ internal class BillCreditLineItemUpdateParamsTest {
 
         val body = params._body()
 
+        assertThat(body.accountingProductId()).isEqualTo("accountingProductId")
         assertThat(body.amount()).isEqualTo(1.0)
         assertThat(body.description()).isEqualTo("x")
         assertThat(body.productId()).isEqualTo("productId")

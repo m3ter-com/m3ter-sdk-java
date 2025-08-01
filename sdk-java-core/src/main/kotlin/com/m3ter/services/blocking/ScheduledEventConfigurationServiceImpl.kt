@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -24,6 +24,7 @@ import com.m3ter.models.ScheduledEventConfigurationListParams
 import com.m3ter.models.ScheduledEventConfigurationResponse
 import com.m3ter.models.ScheduledEventConfigurationRetrieveParams
 import com.m3ter.models.ScheduledEventConfigurationUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ScheduledEventConfigurationServiceImpl
@@ -36,6 +37,13 @@ internal constructor(private val clientOptions: ClientOptions) :
 
     override fun withRawResponse(): ScheduledEventConfigurationService.WithRawResponse =
         withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): ScheduledEventConfigurationService =
+        ScheduledEventConfigurationServiceImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun create(
         params: ScheduledEventConfigurationCreateParams,
@@ -75,11 +83,18 @@ internal constructor(private val clientOptions: ClientOptions) :
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         ScheduledEventConfigurationService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ScheduledEventConfigurationService.WithRawResponse =
+            ScheduledEventConfigurationServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ScheduledEventConfigurationResponse> =
             jsonHandler<ScheduledEventConfigurationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: ScheduledEventConfigurationCreateParams,
@@ -88,6 +103,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -99,7 +115,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -112,7 +128,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val retrieveHandler: Handler<ScheduledEventConfigurationResponse> =
             jsonHandler<ScheduledEventConfigurationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: ScheduledEventConfigurationRetrieveParams,
@@ -124,6 +139,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -135,7 +151,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -148,7 +164,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val updateHandler: Handler<ScheduledEventConfigurationResponse> =
             jsonHandler<ScheduledEventConfigurationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: ScheduledEventConfigurationUpdateParams,
@@ -160,6 +175,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -172,7 +188,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -185,7 +201,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val listHandler: Handler<ScheduledEventConfigurationListPageResponse> =
             jsonHandler<ScheduledEventConfigurationListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: ScheduledEventConfigurationListParams,
@@ -194,6 +209,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -204,7 +220,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -224,7 +240,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val deleteHandler: Handler<ScheduledEventConfigurationResponse> =
             jsonHandler<ScheduledEventConfigurationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: ScheduledEventConfigurationDeleteParams,
@@ -236,6 +251,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -248,7 +264,7 @@ internal constructor(private val clientOptions: ClientOptions) :
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {

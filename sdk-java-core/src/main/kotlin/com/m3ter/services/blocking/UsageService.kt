@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.DownloadUrlResponse
@@ -12,6 +13,7 @@ import com.m3ter.models.UsageQueryParams
 import com.m3ter.models.UsageQueryResponse
 import com.m3ter.models.UsageSubmitParams
 import com.m3ter.services.blocking.usage.FileUploadService
+import java.util.function.Consumer
 
 interface UsageService {
 
@@ -19,6 +21,13 @@ interface UsageService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): UsageService
 
     fun fileUploads(): FileUploadService
 
@@ -47,19 +56,19 @@ interface UsageService {
     fun getFailedIngestDownloadUrl(): DownloadUrlResponse =
         getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none())
 
-    /** @see [getFailedIngestDownloadUrl] */
+    /** @see getFailedIngestDownloadUrl */
     fun getFailedIngestDownloadUrl(
         params: UsageGetFailedIngestDownloadUrlParams =
             UsageGetFailedIngestDownloadUrlParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DownloadUrlResponse
 
-    /** @see [getFailedIngestDownloadUrl] */
+    /** @see getFailedIngestDownloadUrl */
     fun getFailedIngestDownloadUrl(
         params: UsageGetFailedIngestDownloadUrlParams = UsageGetFailedIngestDownloadUrlParams.none()
     ): DownloadUrlResponse = getFailedIngestDownloadUrl(params, RequestOptions.none())
 
-    /** @see [getFailedIngestDownloadUrl] */
+    /** @see getFailedIngestDownloadUrl */
     fun getFailedIngestDownloadUrl(requestOptions: RequestOptions): DownloadUrlResponse =
         getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none(), requestOptions)
 
@@ -84,17 +93,17 @@ interface UsageService {
      */
     fun query(): UsageQueryResponse = query(UsageQueryParams.none())
 
-    /** @see [query] */
+    /** @see query */
     fun query(
         params: UsageQueryParams = UsageQueryParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UsageQueryResponse
 
-    /** @see [query] */
+    /** @see query */
     fun query(params: UsageQueryParams = UsageQueryParams.none()): UsageQueryResponse =
         query(params, RequestOptions.none())
 
-    /** @see [query] */
+    /** @see query */
     fun query(requestOptions: RequestOptions): UsageQueryResponse =
         query(UsageQueryParams.none(), requestOptions)
 
@@ -135,7 +144,7 @@ interface UsageService {
     fun submit(params: UsageSubmitParams): SubmitMeasurementsResponse =
         submit(params, RequestOptions.none())
 
-    /** @see [submit] */
+    /** @see submit */
     fun submit(
         params: UsageSubmitParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -143,6 +152,13 @@ interface UsageService {
 
     /** A view of [UsageService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): UsageService.WithRawResponse
 
         fun fileUploads(): FileUploadService.WithRawResponse
 
@@ -155,7 +171,7 @@ interface UsageService {
         fun getFailedIngestDownloadUrl(): HttpResponseFor<DownloadUrlResponse> =
             getFailedIngestDownloadUrl(UsageGetFailedIngestDownloadUrlParams.none())
 
-        /** @see [getFailedIngestDownloadUrl] */
+        /** @see getFailedIngestDownloadUrl */
         @MustBeClosed
         fun getFailedIngestDownloadUrl(
             params: UsageGetFailedIngestDownloadUrlParams =
@@ -163,7 +179,7 @@ interface UsageService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DownloadUrlResponse>
 
-        /** @see [getFailedIngestDownloadUrl] */
+        /** @see getFailedIngestDownloadUrl */
         @MustBeClosed
         fun getFailedIngestDownloadUrl(
             params: UsageGetFailedIngestDownloadUrlParams =
@@ -171,7 +187,7 @@ interface UsageService {
         ): HttpResponseFor<DownloadUrlResponse> =
             getFailedIngestDownloadUrl(params, RequestOptions.none())
 
-        /** @see [getFailedIngestDownloadUrl] */
+        /** @see getFailedIngestDownloadUrl */
         @MustBeClosed
         fun getFailedIngestDownloadUrl(
             requestOptions: RequestOptions
@@ -185,20 +201,20 @@ interface UsageService {
         @MustBeClosed
         fun query(): HttpResponseFor<UsageQueryResponse> = query(UsageQueryParams.none())
 
-        /** @see [query] */
+        /** @see query */
         @MustBeClosed
         fun query(
             params: UsageQueryParams = UsageQueryParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<UsageQueryResponse>
 
-        /** @see [query] */
+        /** @see query */
         @MustBeClosed
         fun query(
             params: UsageQueryParams = UsageQueryParams.none()
         ): HttpResponseFor<UsageQueryResponse> = query(params, RequestOptions.none())
 
-        /** @see [query] */
+        /** @see query */
         @MustBeClosed
         fun query(requestOptions: RequestOptions): HttpResponseFor<UsageQueryResponse> =
             query(UsageQueryParams.none(), requestOptions)
@@ -211,7 +227,7 @@ interface UsageService {
         fun submit(params: UsageSubmitParams): HttpResponseFor<SubmitMeasurementsResponse> =
             submit(params, RequestOptions.none())
 
-        /** @see [submit] */
+        /** @see submit */
         @MustBeClosed
         fun submit(
             params: UsageSubmitParams,

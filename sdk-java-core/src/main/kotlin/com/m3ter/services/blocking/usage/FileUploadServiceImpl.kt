@@ -3,13 +3,13 @@
 package com.m3ter.services.blocking.usage
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -19,6 +19,7 @@ import com.m3ter.models.UsageFileUploadGenerateUploadUrlParams
 import com.m3ter.models.UsageFileUploadGenerateUploadUrlResponse
 import com.m3ter.services.blocking.usage.fileUploads.JobService
 import com.m3ter.services.blocking.usage.fileUploads.JobServiceImpl
+import java.util.function.Consumer
 
 class FileUploadServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     FileUploadService {
@@ -30,6 +31,9 @@ class FileUploadServiceImpl internal constructor(private val clientOptions: Clie
     private val jobs: JobService by lazy { JobServiceImpl(clientOptions) }
 
     override fun withRawResponse(): FileUploadService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): FileUploadService =
+        FileUploadServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun jobs(): JobService = jobs
 
@@ -43,17 +47,24 @@ class FileUploadServiceImpl internal constructor(private val clientOptions: Clie
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         FileUploadService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val jobs: JobService.WithRawResponse by lazy {
             JobServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): FileUploadService.WithRawResponse =
+            FileUploadServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
+
         override fun jobs(): JobService.WithRawResponse = jobs
 
         private val generateUploadUrlHandler: Handler<UsageFileUploadGenerateUploadUrlResponse> =
             jsonHandler<UsageFileUploadGenerateUploadUrlResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun generateUploadUrl(
             params: UsageFileUploadGenerateUploadUrlParams,
@@ -62,6 +73,7 @@ class FileUploadServiceImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -74,7 +86,7 @@ class FileUploadServiceImpl internal constructor(private val clientOptions: Clie
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { generateUploadUrlHandler.handle(it) }
                     .also {

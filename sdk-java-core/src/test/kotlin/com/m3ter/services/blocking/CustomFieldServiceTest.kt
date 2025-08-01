@@ -59,7 +59,7 @@ internal class CustomFieldServiceTest {
                     )
                     .contract(
                         CustomFieldUpdateParams.Contract.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .meter(CustomFieldUpdateParams.Meter.builder().build())

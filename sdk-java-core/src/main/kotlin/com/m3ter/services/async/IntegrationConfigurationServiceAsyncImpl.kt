@@ -3,14 +3,14 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -31,6 +31,7 @@ import com.m3ter.models.IntegrationConfigurationRetrieveParams
 import com.m3ter.models.IntegrationConfigurationUpdateParams
 import com.m3ter.models.IntegrationConfigurationUpdateResponse
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class IntegrationConfigurationServiceAsyncImpl
@@ -43,6 +44,13 @@ internal constructor(private val clientOptions: ClientOptions) :
 
     override fun withRawResponse(): IntegrationConfigurationServiceAsync.WithRawResponse =
         withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): IntegrationConfigurationServiceAsync =
+        IntegrationConfigurationServiceAsyncImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun create(
         params: IntegrationConfigurationCreateParams,
@@ -96,11 +104,18 @@ internal constructor(private val clientOptions: ClientOptions) :
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         IntegrationConfigurationServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): IntegrationConfigurationServiceAsync.WithRawResponse =
+            IntegrationConfigurationServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<IntegrationConfigurationCreateResponse> =
             jsonHandler<IntegrationConfigurationCreateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: IntegrationConfigurationCreateParams,
@@ -109,6 +124,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -121,7 +137,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -135,7 +151,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val retrieveHandler: Handler<IntegrationConfigurationResponse> =
             jsonHandler<IntegrationConfigurationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: IntegrationConfigurationRetrieveParams,
@@ -147,6 +162,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -159,7 +175,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -173,7 +189,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val updateHandler: Handler<IntegrationConfigurationUpdateResponse> =
             jsonHandler<IntegrationConfigurationUpdateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: IntegrationConfigurationUpdateParams,
@@ -185,6 +200,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -198,7 +214,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -212,7 +228,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val listHandler: Handler<IntegrationConfigurationListPageResponse> =
             jsonHandler<IntegrationConfigurationListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: IntegrationConfigurationListParams,
@@ -221,6 +236,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -232,7 +248,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -256,7 +272,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val deleteHandler: Handler<IntegrationConfigurationDeleteResponse> =
             jsonHandler<IntegrationConfigurationDeleteResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: IntegrationConfigurationDeleteParams,
@@ -268,6 +283,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -281,7 +297,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {
@@ -295,7 +311,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val enableHandler: Handler<IntegrationConfigurationEnableResponse> =
             jsonHandler<IntegrationConfigurationEnableResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun enable(
             params: IntegrationConfigurationEnableParams,
@@ -307,6 +322,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -321,7 +337,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { enableHandler.handle(it) }
                             .also {
@@ -335,7 +351,6 @@ internal constructor(private val clientOptions: ClientOptions) :
 
         private val getByEntityHandler: Handler<IntegrationConfigurationResponse> =
             jsonHandler<IntegrationConfigurationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun getByEntity(
             params: IntegrationConfigurationGetByEntityParams,
@@ -347,6 +362,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -360,7 +376,7 @@ internal constructor(private val clientOptions: ClientOptions) :
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { getByEntityHandler.handle(it) }
                             .also {

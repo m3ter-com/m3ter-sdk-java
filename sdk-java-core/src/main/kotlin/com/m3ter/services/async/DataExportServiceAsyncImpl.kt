@@ -3,13 +3,13 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -24,6 +24,7 @@ import com.m3ter.services.async.dataExports.JobServiceAsyncImpl
 import com.m3ter.services.async.dataExports.ScheduleServiceAsync
 import com.m3ter.services.async.dataExports.ScheduleServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 class DataExportServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     DataExportServiceAsync {
@@ -42,6 +43,9 @@ class DataExportServiceAsyncImpl internal constructor(private val clientOptions:
 
     override fun withRawResponse(): DataExportServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): DataExportServiceAsync =
+        DataExportServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+
     override fun destinations(): DestinationServiceAsync = destinations
 
     override fun jobs(): JobServiceAsync = jobs
@@ -58,7 +62,8 @@ class DataExportServiceAsyncImpl internal constructor(private val clientOptions:
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         DataExportServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val destinations: DestinationServiceAsync.WithRawResponse by lazy {
             DestinationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
@@ -72,6 +77,13 @@ class DataExportServiceAsyncImpl internal constructor(private val clientOptions:
             ScheduleServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): DataExportServiceAsync.WithRawResponse =
+            DataExportServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
+
         override fun destinations(): DestinationServiceAsync.WithRawResponse = destinations
 
         override fun jobs(): JobServiceAsync.WithRawResponse = jobs
@@ -79,7 +91,7 @@ class DataExportServiceAsyncImpl internal constructor(private val clientOptions:
         override fun schedules(): ScheduleServiceAsync.WithRawResponse = schedules
 
         private val createAdhocHandler: Handler<AdHocResponse> =
-            jsonHandler<AdHocResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<AdHocResponse>(clientOptions.jsonMapper)
 
         override fun createAdhoc(
             params: DataExportCreateAdhocParams,
@@ -88,6 +100,7 @@ class DataExportServiceAsyncImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -101,7 +114,7 @@ class DataExportServiceAsyncImpl internal constructor(private val clientOptions:
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createAdhocHandler.handle(it) }
                             .also {

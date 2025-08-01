@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking.usage.fileUploads
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.parseable
@@ -22,6 +22,7 @@ import com.m3ter.models.UsageFileUploadJobListPage
 import com.m3ter.models.UsageFileUploadJobListPageResponse
 import com.m3ter.models.UsageFileUploadJobListParams
 import com.m3ter.models.UsageFileUploadJobRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class JobServiceImpl internal constructor(private val clientOptions: ClientOptions) : JobService {
@@ -31,6 +32,9 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
     }
 
     override fun withRawResponse(): JobService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): JobService =
+        JobServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: UsageFileUploadJobRetrieveParams,
@@ -56,11 +60,18 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         JobService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): JobService.WithRawResponse =
+            JobServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<FileUploadJobResponse> =
             jsonHandler<FileUploadJobResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: UsageFileUploadJobRetrieveParams,
@@ -72,6 +83,7 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -84,7 +96,7 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -97,7 +109,6 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
 
         private val listHandler: Handler<UsageFileUploadJobListPageResponse> =
             jsonHandler<UsageFileUploadJobListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: UsageFileUploadJobListParams,
@@ -106,6 +117,7 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -117,7 +129,7 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -138,7 +150,6 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
         private val getOriginalDownloadUrlHandler:
             Handler<UsageFileUploadJobGetOriginalDownloadUrlResponse> =
             jsonHandler<UsageFileUploadJobGetOriginalDownloadUrlResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun getOriginalDownloadUrl(
             params: UsageFileUploadJobGetOriginalDownloadUrlParams,
@@ -150,6 +161,7 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -163,7 +175,7 @@ class JobServiceImpl internal constructor(private val clientOptions: ClientOptio
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { getOriginalDownloadUrlHandler.handle(it) }
                     .also {

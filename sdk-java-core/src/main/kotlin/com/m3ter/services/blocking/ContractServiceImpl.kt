@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -26,6 +26,7 @@ import com.m3ter.models.ContractListParams
 import com.m3ter.models.ContractResponse
 import com.m3ter.models.ContractRetrieveParams
 import com.m3ter.models.ContractUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ContractServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -36,6 +37,9 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
     }
 
     override fun withRawResponse(): ContractService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ContractService =
+        ContractServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ContractCreateParams,
@@ -82,10 +86,18 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         ContractService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ContractService.WithRawResponse =
+            ContractServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ContractResponse> =
-            jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ContractResponse>(clientOptions.jsonMapper)
 
         override fun create(
             params: ContractCreateParams,
@@ -94,6 +106,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -104,7 +117,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -116,7 +129,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
         }
 
         private val retrieveHandler: Handler<ContractResponse> =
-            jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ContractResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: ContractRetrieveParams,
@@ -128,6 +141,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -138,7 +152,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -150,7 +164,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
         }
 
         private val updateHandler: Handler<ContractResponse> =
-            jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ContractResponse>(clientOptions.jsonMapper)
 
         override fun update(
             params: ContractUpdateParams,
@@ -162,6 +176,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -173,7 +188,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -186,7 +201,6 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
 
         private val listHandler: Handler<ContractListPageResponse> =
             jsonHandler<ContractListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: ContractListParams,
@@ -195,6 +209,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -204,7 +219,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -223,7 +238,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
         }
 
         private val deleteHandler: Handler<ContractResponse> =
-            jsonHandler<ContractResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<ContractResponse>(clientOptions.jsonMapper)
 
         override fun delete(
             params: ContractDeleteParams,
@@ -235,6 +250,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -246,7 +262,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {
@@ -259,7 +275,6 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
 
         private val endDateBillingEntitiesHandler: Handler<ContractEndDateBillingEntitiesResponse> =
             jsonHandler<ContractEndDateBillingEntitiesResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun endDateBillingEntities(
             params: ContractEndDateBillingEntitiesParams,
@@ -271,6 +286,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -283,7 +299,7 @@ class ContractServiceImpl internal constructor(private val clientOptions: Client
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { endDateBillingEntitiesHandler.handle(it) }
                     .also {

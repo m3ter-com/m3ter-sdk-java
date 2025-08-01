@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -30,6 +30,7 @@ import com.m3ter.models.ExternalMappingListParams
 import com.m3ter.models.ExternalMappingResponse
 import com.m3ter.models.ExternalMappingRetrieveParams
 import com.m3ter.models.ExternalMappingUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ExternalMappingServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -40,6 +41,9 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
     }
 
     override fun withRawResponse(): ExternalMappingService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ExternalMappingService =
+        ExternalMappingServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ExternalMappingCreateParams,
@@ -94,11 +98,18 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         ExternalMappingService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ExternalMappingService.WithRawResponse =
+            ExternalMappingServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ExternalMappingResponse> =
             jsonHandler<ExternalMappingResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: ExternalMappingCreateParams,
@@ -107,6 +118,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -117,7 +129,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -130,7 +142,6 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
 
         private val retrieveHandler: Handler<ExternalMappingResponse> =
             jsonHandler<ExternalMappingResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: ExternalMappingRetrieveParams,
@@ -142,6 +153,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -152,7 +164,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -165,7 +177,6 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
 
         private val updateHandler: Handler<ExternalMappingResponse> =
             jsonHandler<ExternalMappingResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: ExternalMappingUpdateParams,
@@ -177,6 +188,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -188,7 +200,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -201,7 +213,6 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
 
         private val listHandler: Handler<ExternalMappingListPageResponse> =
             jsonHandler<ExternalMappingListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: ExternalMappingListParams,
@@ -210,6 +221,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -219,7 +231,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -239,7 +251,6 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
 
         private val deleteHandler: Handler<ExternalMappingResponse> =
             jsonHandler<ExternalMappingResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: ExternalMappingDeleteParams,
@@ -251,6 +262,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -262,7 +274,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {
@@ -276,7 +288,6 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
         private val listByExternalEntityHandler:
             Handler<ExternalMappingListByExternalEntityPageResponse> =
             jsonHandler<ExternalMappingListByExternalEntityPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun listByExternalEntity(
             params: ExternalMappingListByExternalEntityParams,
@@ -288,6 +299,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -301,7 +313,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listByExternalEntityHandler.handle(it) }
                     .also {
@@ -322,7 +334,6 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
         private val listByM3terEntityHandler:
             Handler<ExternalMappingListByM3terEntityPageResponse> =
             jsonHandler<ExternalMappingListByM3terEntityPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun listByM3terEntity(
             params: ExternalMappingListByM3terEntityParams,
@@ -334,6 +345,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -346,7 +358,7 @@ class ExternalMappingServiceImpl internal constructor(private val clientOptions:
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listByM3terEntityHandler.handle(it) }
                     .also {

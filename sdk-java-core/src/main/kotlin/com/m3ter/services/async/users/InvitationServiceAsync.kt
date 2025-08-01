@@ -2,7 +2,7 @@
 
 package com.m3ter.services.async.users
 
-import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.InvitationResponse
@@ -11,6 +11,7 @@ import com.m3ter.models.UserInvitationListPageAsync
 import com.m3ter.models.UserInvitationListParams
 import com.m3ter.models.UserInvitationRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface InvitationServiceAsync {
 
@@ -20,6 +21,13 @@ interface InvitationServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): InvitationServiceAsync
+
+    /**
      * Invite a new user to your Organization.
      *
      * This sends an email to someone inviting them to join your m3ter Organization.
@@ -27,7 +35,7 @@ interface InvitationServiceAsync {
     fun create(params: UserInvitationCreateParams): CompletableFuture<InvitationResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: UserInvitationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -37,7 +45,7 @@ interface InvitationServiceAsync {
     fun retrieve(id: String): CompletableFuture<InvitationResponse> =
         retrieve(id, UserInvitationRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
@@ -45,23 +53,23 @@ interface InvitationServiceAsync {
     ): CompletableFuture<InvitationResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
     ): CompletableFuture<InvitationResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: UserInvitationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<InvitationResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: UserInvitationRetrieveParams): CompletableFuture<InvitationResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         requestOptions: RequestOptions,
@@ -72,18 +80,18 @@ interface InvitationServiceAsync {
     fun list(): CompletableFuture<UserInvitationListPageAsync> =
         list(UserInvitationListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: UserInvitationListParams = UserInvitationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<UserInvitationListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: UserInvitationListParams = UserInvitationListParams.none()
     ): CompletableFuture<UserInvitationListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<UserInvitationListPageAsync> =
         list(UserInvitationListParams.none(), requestOptions)
 
@@ -94,17 +102,24 @@ interface InvitationServiceAsync {
     interface WithRawResponse {
 
         /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): InvitationServiceAsync.WithRawResponse
+
+        /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/invitations`, but is
          * otherwise the same as [InvitationServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: UserInvitationCreateParams
         ): CompletableFuture<HttpResponseFor<InvitationResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
-        @MustBeClosed
+        /** @see create */
         fun create(
             params: UserInvitationCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -114,12 +129,10 @@ interface InvitationServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/invitations/{id}`, but is
          * otherwise the same as [InvitationServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<InvitationResponse>> =
             retrieve(id, UserInvitationRetrieveParams.none())
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
@@ -127,30 +140,26 @@ interface InvitationServiceAsync {
         ): CompletableFuture<HttpResponseFor<InvitationResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<InvitationResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             params: UserInvitationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<InvitationResponse>>
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             params: UserInvitationRetrieveParams
         ): CompletableFuture<HttpResponseFor<InvitationResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -161,26 +170,22 @@ interface InvitationServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/invitations`, but is
          * otherwise the same as [InvitationServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<UserInvitationListPageAsync>> =
             list(UserInvitationListParams.none())
 
-        /** @see [list] */
-        @MustBeClosed
+        /** @see list */
         fun list(
             params: UserInvitationListParams = UserInvitationListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<UserInvitationListPageAsync>>
 
-        /** @see [list] */
-        @MustBeClosed
+        /** @see list */
         fun list(
             params: UserInvitationListParams = UserInvitationListParams.none()
         ): CompletableFuture<HttpResponseFor<UserInvitationListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
-        @MustBeClosed
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<UserInvitationListPageAsync>> =

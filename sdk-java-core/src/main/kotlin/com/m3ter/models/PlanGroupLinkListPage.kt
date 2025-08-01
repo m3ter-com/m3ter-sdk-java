@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [PlanGroupLinkService.list] */
+/** @see PlanGroupLinkService.list */
 class PlanGroupLinkListPage
 private constructor(
     private val service: PlanGroupLinkService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [PlanGroupLinkListPageResponse], but gracefully handles missing data.
      *
-     * @see [PlanGroupLinkListPageResponse.data]
+     * @see PlanGroupLinkListPageResponse.data
      */
     fun data(): List<PlanGroupLinkResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [PlanGroupLinkListPageResponse], but gracefully handles missing data.
      *
-     * @see [PlanGroupLinkListPageResponse.nextToken]
+     * @see PlanGroupLinkListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

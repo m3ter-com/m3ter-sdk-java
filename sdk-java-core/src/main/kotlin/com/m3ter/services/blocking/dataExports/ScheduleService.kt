@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking.dataExports
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.DataExportScheduleCreateParams
@@ -15,6 +16,7 @@ import com.m3ter.models.DataExportScheduleRetrieveParams
 import com.m3ter.models.DataExportScheduleRetrieveResponse
 import com.m3ter.models.DataExportScheduleUpdateParams
 import com.m3ter.models.DataExportScheduleUpdateResponse
+import java.util.function.Consumer
 
 interface ScheduleService {
 
@@ -22,6 +24,13 @@ interface ScheduleService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): ScheduleService
 
     /**
      * Create a new Data Export Schedule. Each Schedule can be configured for exporting _only one_
@@ -37,21 +46,32 @@ interface ScheduleService {
      * **Usage Data Exports**.
      * - Select the Meters and Accounts whose usage data you want to include in the export each time
      *   the Export Schedule runs.
-     * - If _don't want to aggregate_ the usage data collected by the selected Meters, use
-     *   **ORIGINAL** for `aggregationFrequency`, which is the _default_. This means the raw usage
-     *   data collected by any type of Data Fields and the values for any Derived Fields on the
-     *   selected Meters will be included in the export.
-     * - If you _do want to aggregate_ the usage data collected by the selected Meters, use one of
-     *   the other options for `aggregationFrequency`: **HOUR**, **DAY**, **WEEK**, or **MONTH**.
-     *   You _must_ then also specified an `aggregation` method to be used on the usage data before
-     *   export. Importantly, if you do aggregate usage data, only the usage data collected by any
-     *   numeric Data Fields on the selected Meters - those of type **MEASURE**, **INCOME**, or
-     *   **COST** - will be included in the export each time the Export Schedule runs.
+     * - You can use the `dimensionFilters` parameter to filter the usage data returned for export
+     *   by adding specific values of non-numeric Dimension data fields on included Meters. Only the
+     *   data collected for the values you've added for the selected Dimension fields will be
+     *   included in the export.
+     * - You can use the `aggregations` to apply aggregation methods the usage data returned for
+     *   export. This restricts the range of usage data returned for export to only the data
+     *   collected by aggregated fields on selected Meters. Nothing is returned for any
+     *   non-aggregated fields on Meters. The usage data for Meter fields is returned as the values
+     *   resulting from applying the selected aggregation method. See the
+     *   [Aggregations for Queries - Options and Consequences](https://www.m3ter.com/docs/guides/data-explorer/usage-data-explorer-v2#aggregations-for-queries---understanding-options-and-consequences)
+     *   for more details.
+     * - If you've applied `aggregations` to the usage returned for export, you can then use the
+     *   `groups` parameter to group the data by _Account_, _Dimension_, or _Time_.
+     *
+     * Request and Response schema:
+     * - Use the selector under the `sourceType` parameter to expose the relevant request and
+     *   response schema for the source data type.
+     *
+     * Request and Response samples:
+     * - Use the **Example** selector to show the relevant request and response samples for source
+     *   data type.
      */
     fun create(params: DataExportScheduleCreateParams): DataExportScheduleCreateResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: DataExportScheduleCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -64,7 +84,7 @@ interface ScheduleService {
     fun retrieve(id: String): DataExportScheduleRetrieveResponse =
         retrieve(id, DataExportScheduleRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: DataExportScheduleRetrieveParams = DataExportScheduleRetrieveParams.none(),
@@ -72,23 +92,23 @@ interface ScheduleService {
     ): DataExportScheduleRetrieveResponse =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: DataExportScheduleRetrieveParams = DataExportScheduleRetrieveParams.none(),
     ): DataExportScheduleRetrieveResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: DataExportScheduleRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportScheduleRetrieveResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: DataExportScheduleRetrieveParams): DataExportScheduleRetrieveResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): DataExportScheduleRetrieveResponse =
         retrieve(id, DataExportScheduleRetrieveParams.none(), requestOptions)
 
@@ -106,34 +126,37 @@ interface ScheduleService {
      * **Usage Data Exports**.
      * - Select the Meters and Accounts whose usage data you want to include in the export each time
      *   the Export Schedule runs.
-     * - If _don't want to aggregate_ the usage data collected by the selected Meters, use
-     *   **ORIGINAL** for `aggregationFrequency`, which is the _default_. This means the raw usage
-     *   data collected by any type of Data Fields and the values for any Derived Fields on the
-     *   selected Meters will be included in the export.
-     * - If you _do want to aggregate_ the usage data collected by the selected Meters, use one of
-     *   the other options for `aggregationFrequency`: **HOUR**, **DAY**, **WEEK**, or **MONTH**.
-     *   You _must_ then also specified an `aggregation` method to be used on the usage data before
-     *   export. Importantly, if you do aggregate usage data, only the usage data collected by any
-     *   numeric Data Fields on the selected Meters - those of type **MEASURE**, **INCOME**, or
-     *   **COST** - will be included in the export each time the Export Schedule runs.
+     * - You can use the `dimensionFilters` parameter to filter the usage data returned for export
+     *   by adding specific values of non-numeric Dimension data fields on included Meters. Only the
+     *   data collected for the values you've added for the selected Dimension fields will be
+     *   included in the export.
+     * - You can use the `aggregations` to apply aggregation methods the usage data returned for
+     *   export. This restricts the range of usage data returned for export to only the data
+     *   collected by aggregated fields on selected Meters. Nothing is returned for any
+     *   non-aggregated fields on Meters. The usage data for Meter fields is returned as the values
+     *   resulting from applying the selected aggregation method. See the
+     *   [Aggregations for Queries - Options and Consequences](https://www.m3ter.com/docs/guides/data-explorer/usage-data-explorer-v2#aggregations-for-queries---understanding-options-and-consequences)
+     *   for more details.
+     * - If you've applied `aggregations` to the usage returned for export, you can then use the
+     *   `groups` parameter to group the data by _Account_, _Dimension_, or _Time_.
      */
     fun update(
         id: String,
         params: DataExportScheduleUpdateParams,
     ): DataExportScheduleUpdateResponse = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: DataExportScheduleUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportScheduleUpdateResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: DataExportScheduleUpdateParams): DataExportScheduleUpdateResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: DataExportScheduleUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -148,18 +171,18 @@ interface ScheduleService {
      */
     fun list(): DataExportScheduleListPage = list(DataExportScheduleListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: DataExportScheduleListParams = DataExportScheduleListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportScheduleListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: DataExportScheduleListParams = DataExportScheduleListParams.none()
     ): DataExportScheduleListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): DataExportScheduleListPage =
         list(DataExportScheduleListParams.none(), requestOptions)
 
@@ -170,35 +193,42 @@ interface ScheduleService {
     fun delete(id: String): DataExportScheduleDeleteResponse =
         delete(id, DataExportScheduleDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: DataExportScheduleDeleteParams = DataExportScheduleDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportScheduleDeleteResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: DataExportScheduleDeleteParams = DataExportScheduleDeleteParams.none(),
     ): DataExportScheduleDeleteResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: DataExportScheduleDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DataExportScheduleDeleteResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: DataExportScheduleDeleteParams): DataExportScheduleDeleteResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): DataExportScheduleDeleteResponse =
         delete(id, DataExportScheduleDeleteParams.none(), requestOptions)
 
     /** A view of [ScheduleService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): ScheduleService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/dataexports/schedules`, but
@@ -209,7 +239,7 @@ interface ScheduleService {
             params: DataExportScheduleCreateParams
         ): HttpResponseFor<DataExportScheduleCreateResponse> = create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: DataExportScheduleCreateParams,
@@ -224,7 +254,7 @@ interface ScheduleService {
         fun retrieve(id: String): HttpResponseFor<DataExportScheduleRetrieveResponse> =
             retrieve(id, DataExportScheduleRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -233,7 +263,7 @@ interface ScheduleService {
         ): HttpResponseFor<DataExportScheduleRetrieveResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -241,21 +271,21 @@ interface ScheduleService {
         ): HttpResponseFor<DataExportScheduleRetrieveResponse> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: DataExportScheduleRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportScheduleRetrieveResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: DataExportScheduleRetrieveParams
         ): HttpResponseFor<DataExportScheduleRetrieveResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -274,7 +304,7 @@ interface ScheduleService {
         ): HttpResponseFor<DataExportScheduleUpdateResponse> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -283,13 +313,13 @@ interface ScheduleService {
         ): HttpResponseFor<DataExportScheduleUpdateResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: DataExportScheduleUpdateParams
         ): HttpResponseFor<DataExportScheduleUpdateResponse> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: DataExportScheduleUpdateParams,
@@ -304,20 +334,20 @@ interface ScheduleService {
         fun list(): HttpResponseFor<DataExportScheduleListPage> =
             list(DataExportScheduleListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: DataExportScheduleListParams = DataExportScheduleListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportScheduleListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: DataExportScheduleListParams = DataExportScheduleListParams.none()
         ): HttpResponseFor<DataExportScheduleListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<DataExportScheduleListPage> =
             list(DataExportScheduleListParams.none(), requestOptions)
@@ -331,7 +361,7 @@ interface ScheduleService {
         fun delete(id: String): HttpResponseFor<DataExportScheduleDeleteResponse> =
             delete(id, DataExportScheduleDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -340,7 +370,7 @@ interface ScheduleService {
         ): HttpResponseFor<DataExportScheduleDeleteResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -348,20 +378,20 @@ interface ScheduleService {
         ): HttpResponseFor<DataExportScheduleDeleteResponse> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: DataExportScheduleDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DataExportScheduleDeleteResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: DataExportScheduleDeleteParams
         ): HttpResponseFor<DataExportScheduleDeleteResponse> = delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,

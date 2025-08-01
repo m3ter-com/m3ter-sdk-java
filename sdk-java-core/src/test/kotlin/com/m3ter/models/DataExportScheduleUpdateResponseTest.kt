@@ -19,10 +19,10 @@ internal class DataExportScheduleUpdateResponseTest {
         val operationalDataExportSchedule =
             OperationalDataExportScheduleResponse.builder()
                 .id("id")
-                .version(0L)
                 .addOperationalDataType(
                     OperationalDataExportScheduleResponse.OperationalDataType.BILLS
                 )
+                .version(0L)
                 .build()
 
         val dataExportScheduleUpdateResponse =
@@ -42,10 +42,10 @@ internal class DataExportScheduleUpdateResponseTest {
             DataExportScheduleUpdateResponse.ofOperationalDataExportSchedule(
                 OperationalDataExportScheduleResponse.builder()
                     .id("id")
-                    .version(0L)
                     .addOperationalDataType(
                         OperationalDataExportScheduleResponse.OperationalDataType.BILLS
                     )
+                    .version(0L)
                     .build()
             )
 
@@ -64,7 +64,6 @@ internal class DataExportScheduleUpdateResponseTest {
         val usageDataExportSchedule =
             UsageDataExportScheduleResponse.builder()
                 .id("id")
-                .version(0L)
                 .addAccountId("string")
                 .addAggregation(
                     UsageDataExportScheduleResponse.Aggregation.builder()
@@ -82,13 +81,13 @@ internal class DataExportScheduleUpdateResponseTest {
                         .build()
                 )
                 .addGroup(
-                    UsageDataExportScheduleResponse.Group.DataExportsDataExplorerAccountGroup
-                        .builder()
-                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                    DataExplorerGroup.builder()
+                        .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                         .build()
                 )
                 .addMeterId("string")
                 .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+                .version(0L)
                 .build()
 
         val dataExportScheduleUpdateResponse =
@@ -106,7 +105,6 @@ internal class DataExportScheduleUpdateResponseTest {
             DataExportScheduleUpdateResponse.ofUsageDataExportSchedule(
                 UsageDataExportScheduleResponse.builder()
                     .id("id")
-                    .version(0L)
                     .addAccountId("string")
                     .addAggregation(
                         UsageDataExportScheduleResponse.Aggregation.builder()
@@ -126,13 +124,13 @@ internal class DataExportScheduleUpdateResponseTest {
                             .build()
                     )
                     .addGroup(
-                        UsageDataExportScheduleResponse.Group.DataExportsDataExplorerAccountGroup
-                            .builder()
-                            .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                        DataExplorerGroup.builder()
+                            .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                             .build()
                     )
                     .addMeterId("string")
                     .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+                    .version(0L)
                     .build()
             )
 

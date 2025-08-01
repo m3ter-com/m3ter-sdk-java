@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CounterCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.CounterListParams
 import com.m3ter.models.CounterResponse
 import com.m3ter.models.CounterRetrieveParams
 import com.m3ter.models.CounterUpdateParams
+import java.util.function.Consumer
 
 interface CounterService {
 
@@ -20,10 +22,17 @@ interface CounterService {
      */
     fun withRawResponse(): WithRawResponse
 
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): CounterService
+
     /** Create a new Counter. */
     fun create(params: CounterCreateParams): CounterResponse = create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: CounterCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -32,30 +41,30 @@ interface CounterService {
     /** Retrieve a Counter for the given UUID. */
     fun retrieve(id: String): CounterResponse = retrieve(id, CounterRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CounterRetrieveParams = CounterRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CounterRetrieveParams = CounterRetrieveParams.none(),
     ): CounterResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CounterRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: CounterRetrieveParams): CounterResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CounterResponse =
         retrieve(id, CounterRetrieveParams.none(), requestOptions)
 
@@ -63,17 +72,17 @@ interface CounterService {
     fun update(id: String, params: CounterUpdateParams): CounterResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: CounterUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: CounterUpdateParams): CounterResponse = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CounterUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -84,51 +93,58 @@ interface CounterService {
      */
     fun list(): CounterListPage = list(CounterListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CounterListParams = CounterListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: CounterListParams = CounterListParams.none()): CounterListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CounterListPage =
         list(CounterListParams.none(), requestOptions)
 
     /** Delete a Counter for the given UUID. */
     fun delete(id: String): CounterResponse = delete(id, CounterDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CounterDeleteParams = CounterDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CounterDeleteParams = CounterDeleteParams.none(),
     ): CounterResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: CounterDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CounterResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: CounterDeleteParams): CounterResponse = delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CounterResponse =
         delete(id, CounterDeleteParams.none(), requestOptions)
 
     /** A view of [CounterService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): CounterService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/counters`, but is otherwise
@@ -138,7 +154,7 @@ interface CounterService {
         fun create(params: CounterCreateParams): HttpResponseFor<CounterResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: CounterCreateParams,
@@ -153,7 +169,7 @@ interface CounterService {
         fun retrieve(id: String): HttpResponseFor<CounterResponse> =
             retrieve(id, CounterRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -162,26 +178,26 @@ interface CounterService {
         ): HttpResponseFor<CounterResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: CounterRetrieveParams = CounterRetrieveParams.none(),
         ): HttpResponseFor<CounterResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CounterRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: CounterRetrieveParams): HttpResponseFor<CounterResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<CounterResponse> =
             retrieve(id, CounterRetrieveParams.none(), requestOptions)
@@ -194,7 +210,7 @@ interface CounterService {
         fun update(id: String, params: CounterUpdateParams): HttpResponseFor<CounterResponse> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -203,12 +219,12 @@ interface CounterService {
         ): HttpResponseFor<CounterResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: CounterUpdateParams): HttpResponseFor<CounterResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: CounterUpdateParams,
@@ -221,20 +237,20 @@ interface CounterService {
          */
         @MustBeClosed fun list(): HttpResponseFor<CounterListPage> = list(CounterListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CounterListParams = CounterListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CounterListParams = CounterListParams.none()
         ): HttpResponseFor<CounterListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<CounterListPage> =
             list(CounterListParams.none(), requestOptions)
@@ -247,7 +263,7 @@ interface CounterService {
         fun delete(id: String): HttpResponseFor<CounterResponse> =
             delete(id, CounterDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -256,26 +272,26 @@ interface CounterService {
         ): HttpResponseFor<CounterResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: CounterDeleteParams = CounterDeleteParams.none(),
         ): HttpResponseFor<CounterResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: CounterDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CounterResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: CounterDeleteParams): HttpResponseFor<CounterResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(id: String, requestOptions: RequestOptions): HttpResponseFor<CounterResponse> =
             delete(id, CounterDeleteParams.none(), requestOptions)

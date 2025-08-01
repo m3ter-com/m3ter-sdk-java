@@ -17,7 +17,6 @@ internal class MeterResponseTest {
         val meterResponse =
             MeterResponse.builder()
                 .id("id")
-                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(
@@ -48,10 +47,10 @@ internal class MeterResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .productId("productId")
+                .version(0L)
                 .build()
 
         assertThat(meterResponse.id()).isEqualTo("id")
-        assertThat(meterResponse.version()).isEqualTo(0L)
         assertThat(meterResponse.code()).contains("code")
         assertThat(meterResponse.createdBy()).contains("createdBy")
         assertThat(meterResponse.customFields())
@@ -87,6 +86,7 @@ internal class MeterResponseTest {
         assertThat(meterResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(meterResponse.name()).contains("name")
         assertThat(meterResponse.productId()).contains("productId")
+        assertThat(meterResponse.version()).contains(0L)
     }
 
     @Test
@@ -95,7 +95,6 @@ internal class MeterResponseTest {
         val meterResponse =
             MeterResponse.builder()
                 .id("id")
-                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(
@@ -126,6 +125,7 @@ internal class MeterResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .productId("productId")
+                .version(0L)
                 .build()
 
         val roundtrippedMeterResponse =

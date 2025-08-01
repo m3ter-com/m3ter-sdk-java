@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.AccountPlanCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.AccountPlanListParams
 import com.m3ter.models.AccountPlanResponse
 import com.m3ter.models.AccountPlanRetrieveParams
 import com.m3ter.models.AccountPlanUpdateParams
+import java.util.function.Consumer
 
 interface AccountPlanService {
 
@@ -19,6 +21,13 @@ interface AccountPlanService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): AccountPlanService
 
     /**
      * Create a new AccountPlan or AccountPlanGroup.
@@ -34,7 +43,7 @@ interface AccountPlanService {
     fun create(params: AccountPlanCreateParams): AccountPlanResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: AccountPlanCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,30 +52,30 @@ interface AccountPlanService {
     /** Retrieve the AccountPlan or AccountPlanGroup details corresponding to the given UUID. */
     fun retrieve(id: String): AccountPlanResponse = retrieve(id, AccountPlanRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: AccountPlanRetrieveParams = AccountPlanRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountPlanResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: AccountPlanRetrieveParams = AccountPlanRetrieveParams.none(),
     ): AccountPlanResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: AccountPlanRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountPlanResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: AccountPlanRetrieveParams): AccountPlanResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): AccountPlanResponse =
         retrieve(id, AccountPlanRetrieveParams.none(), requestOptions)
 
@@ -87,46 +96,41 @@ interface AccountPlanService {
     fun update(id: String, params: AccountPlanUpdateParams): AccountPlanResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: AccountPlanUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountPlanResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: AccountPlanUpdateParams): AccountPlanResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: AccountPlanUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountPlanResponse
 
     /**
-     * Retrieve a list of AccountPlan and AccountPlanGroup entities for the specified Organization.
-     *
-     * This endpoint retrieves a list of AccountPlans and AccountPlanGroups for a specific
-     * Organization. The list can be paginated for easier management, and supports filtering with
-     * various parameters.
-     *
-     * **NOTE:** You cannot use the `product` query parameter as a single filter condition, but must
-     * always use it in combination with the `account` query parameter.
+     * Retrieves a list of AccountPlan and AccountPlanGroup entities for the specified Organization.
+     * The list can be paginated for easier management, and supports filtering with various query
+     * parameters.
      */
     fun list(): AccountPlanListPage = list(AccountPlanListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: AccountPlanListParams = AccountPlanListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountPlanListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: AccountPlanListParams = AccountPlanListParams.none()): AccountPlanListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): AccountPlanListPage =
         list(AccountPlanListParams.none(), requestOptions)
 
@@ -138,30 +142,30 @@ interface AccountPlanService {
      */
     fun delete(id: String): AccountPlanResponse = delete(id, AccountPlanDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: AccountPlanDeleteParams = AccountPlanDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountPlanResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: AccountPlanDeleteParams = AccountPlanDeleteParams.none(),
     ): AccountPlanResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: AccountPlanDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): AccountPlanResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: AccountPlanDeleteParams): AccountPlanResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): AccountPlanResponse =
         delete(id, AccountPlanDeleteParams.none(), requestOptions)
 
@@ -171,6 +175,15 @@ interface AccountPlanService {
     interface WithRawResponse {
 
         /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): AccountPlanService.WithRawResponse
+
+        /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/accountplans`, but is
          * otherwise the same as [AccountPlanService.create].
          */
@@ -178,7 +191,7 @@ interface AccountPlanService {
         fun create(params: AccountPlanCreateParams): HttpResponseFor<AccountPlanResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: AccountPlanCreateParams,
@@ -193,7 +206,7 @@ interface AccountPlanService {
         fun retrieve(id: String): HttpResponseFor<AccountPlanResponse> =
             retrieve(id, AccountPlanRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -202,26 +215,26 @@ interface AccountPlanService {
         ): HttpResponseFor<AccountPlanResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: AccountPlanRetrieveParams = AccountPlanRetrieveParams.none(),
         ): HttpResponseFor<AccountPlanResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: AccountPlanRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountPlanResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: AccountPlanRetrieveParams): HttpResponseFor<AccountPlanResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -239,7 +252,7 @@ interface AccountPlanService {
             params: AccountPlanUpdateParams,
         ): HttpResponseFor<AccountPlanResponse> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -248,12 +261,12 @@ interface AccountPlanService {
         ): HttpResponseFor<AccountPlanResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: AccountPlanUpdateParams): HttpResponseFor<AccountPlanResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: AccountPlanUpdateParams,
@@ -267,20 +280,20 @@ interface AccountPlanService {
         @MustBeClosed
         fun list(): HttpResponseFor<AccountPlanListPage> = list(AccountPlanListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: AccountPlanListParams = AccountPlanListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountPlanListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: AccountPlanListParams = AccountPlanListParams.none()
         ): HttpResponseFor<AccountPlanListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<AccountPlanListPage> =
             list(AccountPlanListParams.none(), requestOptions)
@@ -293,7 +306,7 @@ interface AccountPlanService {
         fun delete(id: String): HttpResponseFor<AccountPlanResponse> =
             delete(id, AccountPlanDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -302,26 +315,26 @@ interface AccountPlanService {
         ): HttpResponseFor<AccountPlanResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: AccountPlanDeleteParams = AccountPlanDeleteParams.none(),
         ): HttpResponseFor<AccountPlanResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: AccountPlanDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<AccountPlanResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: AccountPlanDeleteParams): HttpResponseFor<AccountPlanResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,

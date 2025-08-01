@@ -38,7 +38,7 @@ internal class ContractServiceAsyncTest {
                     .endDate(LocalDate.parse("2019-12-27"))
                     .name("x")
                     .startDate(LocalDate.parse("2019-12-27"))
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .customFields(
                         ContractCreateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -96,7 +96,7 @@ internal class ContractServiceAsyncTest {
                     .endDate(LocalDate.parse("2019-12-27"))
                     .name("x")
                     .startDate(LocalDate.parse("2019-12-27"))
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .customFields(
                         ContractUpdateParams.CustomFields.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))

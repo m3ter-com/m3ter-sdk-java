@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CommitmentCreateParams
@@ -14,6 +15,7 @@ import com.m3ter.models.CommitmentRetrieveParams
 import com.m3ter.models.CommitmentSearchParams
 import com.m3ter.models.CommitmentSearchResponse
 import com.m3ter.models.CommitmentUpdateParams
+import java.util.function.Consumer
 
 interface CommitmentService {
 
@@ -21,6 +23,13 @@ interface CommitmentService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): CommitmentService
 
     /**
      * Create a new Commitment.
@@ -40,7 +49,7 @@ interface CommitmentService {
     fun create(params: CommitmentCreateParams): CommitmentResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: CommitmentCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -55,30 +64,30 @@ interface CommitmentService {
      */
     fun retrieve(id: String): CommitmentResponse = retrieve(id, CommitmentRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CommitmentRetrieveParams = CommitmentRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CommitmentResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: CommitmentRetrieveParams = CommitmentRetrieveParams.none(),
     ): CommitmentResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CommitmentRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CommitmentResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: CommitmentRetrieveParams): CommitmentResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CommitmentResponse =
         retrieve(id, CommitmentRetrieveParams.none(), requestOptions)
 
@@ -92,18 +101,18 @@ interface CommitmentService {
     fun update(id: String, params: CommitmentUpdateParams): CommitmentResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: CommitmentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CommitmentResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: CommitmentUpdateParams): CommitmentResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CommitmentUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -118,17 +127,17 @@ interface CommitmentService {
      */
     fun list(): CommitmentListPage = list(CommitmentListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: CommitmentListParams = CommitmentListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CommitmentListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: CommitmentListParams = CommitmentListParams.none()): CommitmentListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CommitmentListPage =
         list(CommitmentListParams.none(), requestOptions)
 
@@ -140,30 +149,30 @@ interface CommitmentService {
      */
     fun delete(id: String): CommitmentResponse = delete(id, CommitmentDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CommitmentDeleteParams = CommitmentDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CommitmentResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: CommitmentDeleteParams = CommitmentDeleteParams.none(),
     ): CommitmentResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: CommitmentDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CommitmentResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: CommitmentDeleteParams): CommitmentResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CommitmentResponse =
         delete(id, CommitmentDeleteParams.none(), requestOptions)
 
@@ -176,23 +185,32 @@ interface CommitmentService {
      */
     fun search(): CommitmentSearchResponse = search(CommitmentSearchParams.none())
 
-    /** @see [search] */
+    /** @see search */
     fun search(
         params: CommitmentSearchParams = CommitmentSearchParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CommitmentSearchResponse
 
-    /** @see [search] */
+    /** @see search */
     fun search(
         params: CommitmentSearchParams = CommitmentSearchParams.none()
     ): CommitmentSearchResponse = search(params, RequestOptions.none())
 
-    /** @see [search] */
+    /** @see search */
     fun search(requestOptions: RequestOptions): CommitmentSearchResponse =
         search(CommitmentSearchParams.none(), requestOptions)
 
     /** A view of [CommitmentService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CommitmentService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/commitments`, but is
@@ -202,7 +220,7 @@ interface CommitmentService {
         fun create(params: CommitmentCreateParams): HttpResponseFor<CommitmentResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: CommitmentCreateParams,
@@ -217,7 +235,7 @@ interface CommitmentService {
         fun retrieve(id: String): HttpResponseFor<CommitmentResponse> =
             retrieve(id, CommitmentRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -226,26 +244,26 @@ interface CommitmentService {
         ): HttpResponseFor<CommitmentResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: CommitmentRetrieveParams = CommitmentRetrieveParams.none(),
         ): HttpResponseFor<CommitmentResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: CommitmentRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CommitmentResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: CommitmentRetrieveParams): HttpResponseFor<CommitmentResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -263,7 +281,7 @@ interface CommitmentService {
             params: CommitmentUpdateParams,
         ): HttpResponseFor<CommitmentResponse> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -272,12 +290,12 @@ interface CommitmentService {
         ): HttpResponseFor<CommitmentResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: CommitmentUpdateParams): HttpResponseFor<CommitmentResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: CommitmentUpdateParams,
@@ -291,20 +309,20 @@ interface CommitmentService {
         @MustBeClosed
         fun list(): HttpResponseFor<CommitmentListPage> = list(CommitmentListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CommitmentListParams = CommitmentListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CommitmentListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: CommitmentListParams = CommitmentListParams.none()
         ): HttpResponseFor<CommitmentListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<CommitmentListPage> =
             list(CommitmentListParams.none(), requestOptions)
@@ -317,7 +335,7 @@ interface CommitmentService {
         fun delete(id: String): HttpResponseFor<CommitmentResponse> =
             delete(id, CommitmentDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -326,26 +344,26 @@ interface CommitmentService {
         ): HttpResponseFor<CommitmentResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: CommitmentDeleteParams = CommitmentDeleteParams.none(),
         ): HttpResponseFor<CommitmentResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: CommitmentDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CommitmentResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: CommitmentDeleteParams): HttpResponseFor<CommitmentResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -361,20 +379,20 @@ interface CommitmentService {
         fun search(): HttpResponseFor<CommitmentSearchResponse> =
             search(CommitmentSearchParams.none())
 
-        /** @see [search] */
+        /** @see search */
         @MustBeClosed
         fun search(
             params: CommitmentSearchParams = CommitmentSearchParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<CommitmentSearchResponse>
 
-        /** @see [search] */
+        /** @see search */
         @MustBeClosed
         fun search(
             params: CommitmentSearchParams = CommitmentSearchParams.none()
         ): HttpResponseFor<CommitmentSearchResponse> = search(params, RequestOptions.none())
 
-        /** @see [search] */
+        /** @see search */
         @MustBeClosed
         fun search(requestOptions: RequestOptions): HttpResponseFor<CommitmentSearchResponse> =
             search(CommitmentSearchParams.none(), requestOptions)

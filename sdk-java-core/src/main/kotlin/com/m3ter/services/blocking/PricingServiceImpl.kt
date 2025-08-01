@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -24,6 +24,7 @@ import com.m3ter.models.PricingListParams
 import com.m3ter.models.PricingResponse
 import com.m3ter.models.PricingRetrieveParams
 import com.m3ter.models.PricingUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PricingServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
     }
 
     override fun withRawResponse(): PricingService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PricingService =
+        PricingServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: PricingCreateParams,
@@ -70,10 +74,18 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         PricingService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PricingService.WithRawResponse =
+            PricingServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<PricingResponse> =
-            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper)
 
         override fun create(
             params: PricingCreateParams,
@@ -82,6 +94,7 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -92,7 +105,7 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -104,7 +117,7 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
         }
 
         private val retrieveHandler: Handler<PricingResponse> =
-            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: PricingRetrieveParams,
@@ -116,6 +129,7 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -126,7 +140,7 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -138,7 +152,7 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
         }
 
         private val updateHandler: Handler<PricingResponse> =
-            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper)
 
         override fun update(
             params: PricingUpdateParams,
@@ -150,6 +164,7 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -161,7 +176,7 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -174,7 +189,6 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
 
         private val listHandler: Handler<PricingListPageResponse> =
             jsonHandler<PricingListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: PricingListParams,
@@ -183,6 +197,7 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -192,7 +207,7 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -211,7 +226,7 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
         }
 
         private val deleteHandler: Handler<PricingResponse> =
-            jsonHandler<PricingResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<PricingResponse>(clientOptions.jsonMapper)
 
         override fun delete(
             params: PricingDeleteParams,
@@ -223,6 +238,7 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -234,7 +250,7 @@ class PricingServiceImpl internal constructor(private val clientOptions: ClientO
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {

@@ -3,11 +3,13 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.OrganizationConfigResponse
 import com.m3ter.models.OrganizationConfigRetrieveParams
 import com.m3ter.models.OrganizationConfigUpdateParams
+import java.util.function.Consumer
 
 interface OrganizationConfigService {
 
@@ -16,21 +18,28 @@ interface OrganizationConfigService {
      */
     fun withRawResponse(): WithRawResponse
 
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): OrganizationConfigService
+
     /** Retrieve the Organization-wide configuration details. */
     fun retrieve(): OrganizationConfigResponse = retrieve(OrganizationConfigRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): OrganizationConfigResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none()
     ): OrganizationConfigResponse = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(requestOptions: RequestOptions): OrganizationConfigResponse =
         retrieve(OrganizationConfigRetrieveParams.none(), requestOptions)
 
@@ -38,7 +47,7 @@ interface OrganizationConfigService {
     fun update(params: OrganizationConfigUpdateParams): OrganizationConfigResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: OrganizationConfigUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -51,6 +60,15 @@ interface OrganizationConfigService {
     interface WithRawResponse {
 
         /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): OrganizationConfigService.WithRawResponse
+
+        /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/organizationconfig`, but is
          * otherwise the same as [OrganizationConfigService.retrieve].
          */
@@ -58,20 +76,20 @@ interface OrganizationConfigService {
         fun retrieve(): HttpResponseFor<OrganizationConfigResponse> =
             retrieve(OrganizationConfigRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<OrganizationConfigResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: OrganizationConfigRetrieveParams = OrganizationConfigRetrieveParams.none()
         ): HttpResponseFor<OrganizationConfigResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(requestOptions: RequestOptions): HttpResponseFor<OrganizationConfigResponse> =
             retrieve(OrganizationConfigRetrieveParams.none(), requestOptions)
@@ -85,7 +103,7 @@ interface OrganizationConfigService {
             params: OrganizationConfigUpdateParams
         ): HttpResponseFor<OrganizationConfigResponse> = update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: OrganizationConfigUpdateParams,

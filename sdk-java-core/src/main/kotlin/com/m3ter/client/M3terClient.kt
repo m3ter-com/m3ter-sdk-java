@@ -2,6 +2,7 @@
 
 package com.m3ter.client
 
+import com.m3ter.core.ClientOptions
 import com.m3ter.services.blocking.AccountPlanService
 import com.m3ter.services.blocking.AccountService
 import com.m3ter.services.blocking.AggregationService
@@ -36,10 +37,12 @@ import com.m3ter.services.blocking.PricingService
 import com.m3ter.services.blocking.ProductService
 import com.m3ter.services.blocking.ResourceGroupService
 import com.m3ter.services.blocking.ScheduledEventConfigurationService
+import com.m3ter.services.blocking.StatementService
 import com.m3ter.services.blocking.TransactionTypeService
 import com.m3ter.services.blocking.UsageService
 import com.m3ter.services.blocking.UserService
 import com.m3ter.services.blocking.WebhookService
+import java.util.function.Consumer
 
 /**
  * A client for interacting with the M3ter REST API synchronously. You can also switch to
@@ -69,6 +72,13 @@ interface M3terClient {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): M3terClient
 
     fun authentication(): AuthenticationService
 
@@ -138,6 +148,8 @@ interface M3terClient {
 
     fun scheduledEventConfigurations(): ScheduledEventConfigurationService
 
+    fun statements(): StatementService
+
     fun transactionTypes(): TransactionTypeService
 
     fun usage(): UsageService
@@ -161,6 +173,13 @@ interface M3terClient {
 
     /** A view of [M3terClient] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): M3terClient.WithRawResponse
 
         fun authentication(): AuthenticationService.WithRawResponse
 
@@ -229,6 +248,8 @@ interface M3terClient {
         fun resourceGroups(): ResourceGroupService.WithRawResponse
 
         fun scheduledEventConfigurations(): ScheduledEventConfigurationService.WithRawResponse
+
+        fun statements(): StatementService.WithRawResponse
 
         fun transactionTypes(): TransactionTypeService.WithRawResponse
 

@@ -18,7 +18,6 @@ internal class CurrencyListPageResponseTest {
                 .addData(
                     CurrencyResponse.builder()
                         .id("id")
-                        .version(0L)
                         .archived(true)
                         .code("code")
                         .createdBy("createdBy")
@@ -28,6 +27,7 @@ internal class CurrencyListPageResponseTest {
                         .maxDecimalPlaces(0)
                         .name("name")
                         .roundingMode(CurrencyResponse.RoundingMode.UP)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -37,7 +37,6 @@ internal class CurrencyListPageResponseTest {
             .containsExactly(
                 CurrencyResponse.builder()
                     .id("id")
-                    .version(0L)
                     .archived(true)
                     .code("code")
                     .createdBy("createdBy")
@@ -47,6 +46,7 @@ internal class CurrencyListPageResponseTest {
                     .maxDecimalPlaces(0)
                     .name("name")
                     .roundingMode(CurrencyResponse.RoundingMode.UP)
+                    .version(0L)
                     .build()
             )
         assertThat(currencyListPageResponse.nextToken()).contains("nextToken")
@@ -60,7 +60,6 @@ internal class CurrencyListPageResponseTest {
                 .addData(
                     CurrencyResponse.builder()
                         .id("id")
-                        .version(0L)
                         .archived(true)
                         .code("code")
                         .createdBy("createdBy")
@@ -70,6 +69,7 @@ internal class CurrencyListPageResponseTest {
                         .maxDecimalPlaces(0)
                         .name("name")
                         .roundingMode(CurrencyResponse.RoundingMode.UP)
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

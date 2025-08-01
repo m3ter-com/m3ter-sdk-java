@@ -5,6 +5,7 @@ package com.m3ter.models
 import com.m3ter.core.Params
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
+import com.m3ter.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -20,6 +21,7 @@ class BillLineItemListParams
 private constructor(
     private val orgId: String?,
     private val billId: String?,
+    private val additional: List<String>?,
     private val nextToken: String?,
     private val pageSize: Int?,
     private val additionalHeaders: Headers,
@@ -31,6 +33,9 @@ private constructor(
 
     fun billId(): Optional<String> = Optional.ofNullable(billId)
 
+    /** Comma separated list of additional fields. */
+    fun additional(): Optional<List<String>> = Optional.ofNullable(additional)
+
     /**
      * The `nextToken` for multi-page retrievals. It is used to fetch the next page of line items in
      * a paginated list.
@@ -40,8 +45,10 @@ private constructor(
     /** Specifies the maximum number of line items to retrieve per page. */
     fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
@@ -59,6 +66,7 @@ private constructor(
 
         private var orgId: String? = null
         private var billId: String? = null
+        private var additional: MutableList<String>? = null
         private var nextToken: String? = null
         private var pageSize: Int? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -68,6 +76,7 @@ private constructor(
         internal fun from(billLineItemListParams: BillLineItemListParams) = apply {
             orgId = billLineItemListParams.orgId
             billId = billLineItemListParams.billId
+            additional = billLineItemListParams.additional?.toMutableList()
             nextToken = billLineItemListParams.nextToken
             pageSize = billLineItemListParams.pageSize
             additionalHeaders = billLineItemListParams.additionalHeaders.toBuilder()
@@ -85,6 +94,23 @@ private constructor(
 
         /** Alias for calling [Builder.billId] with `billId.orElse(null)`. */
         fun billId(billId: Optional<String>) = billId(billId.getOrNull())
+
+        /** Comma separated list of additional fields. */
+        fun additional(additional: List<String>?) = apply {
+            this.additional = additional?.toMutableList()
+        }
+
+        /** Alias for calling [Builder.additional] with `additional.orElse(null)`. */
+        fun additional(additional: Optional<List<String>>) = additional(additional.getOrNull())
+
+        /**
+         * Adds a single [String] to [Builder.additional].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addAdditional(additional: String) = apply {
+            this.additional = (this.additional ?: mutableListOf()).apply { add(additional) }
+        }
 
         /**
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of line
@@ -215,6 +241,7 @@ private constructor(
             BillLineItemListParams(
                 orgId,
                 billId,
+                additional?.toImmutable(),
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -234,6 +261,7 @@ private constructor(
     override fun _queryParams(): QueryParams =
         QueryParams.builder()
             .apply {
+                additional?.let { put("additional", it.joinToString(",")) }
                 nextToken?.let { put("nextToken", it) }
                 pageSize?.let { put("pageSize", it.toString()) }
                 putAll(additionalQueryParams)
@@ -245,11 +273,11 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillLineItemListParams && orgId == other.orgId && billId == other.billId && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is BillLineItemListParams && orgId == other.orgId && billId == other.billId && additional == other.additional && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, billId, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, billId, additional, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "BillLineItemListParams{orgId=$orgId, billId=$billId, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "BillLineItemListParams{orgId=$orgId, billId=$billId, additional=$additional, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

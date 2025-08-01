@@ -24,7 +24,6 @@ import kotlin.jvm.optionals.getOrNull
 class AggregationResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val accountingProductId: JsonField<String>,
     private val aggregation: JsonField<Aggregation>,
     private val code: JsonField<String>,
@@ -43,13 +42,13 @@ private constructor(
     private val segments: JsonField<List<Segment>>,
     private val targetField: JsonField<String>,
     private val unit: JsonField<String>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("accountingProductId")
         @ExcludeMissing
         accountingProductId: JsonField<String> = JsonMissing.of(),
@@ -90,9 +89,9 @@ private constructor(
         @ExcludeMissing
         targetField: JsonField<String> = JsonMissing.of(),
         @JsonProperty("unit") @ExcludeMissing unit: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         accountingProductId,
         aggregation,
         code,
@@ -111,6 +110,7 @@ private constructor(
         segments,
         targetField,
         unit,
+        version,
         mutableMapOf(),
     )
 
@@ -121,17 +121,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -326,18 +315,22 @@ private constructor(
     fun unit(): Optional<String> = unit.getOptional("unit")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [accountingProductId].
@@ -484,6 +477,13 @@ private constructor(
      */
     @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -504,7 +504,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -514,7 +513,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var accountingProductId: JsonField<String> = JsonMissing.of()
         private var aggregation: JsonField<Aggregation> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
@@ -533,12 +531,12 @@ private constructor(
         private var segments: JsonField<MutableList<Segment>>? = null
         private var targetField: JsonField<String> = JsonMissing.of()
         private var unit: JsonField<String> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(aggregationResponse: AggregationResponse) = apply {
             id = aggregationResponse.id
-            version = aggregationResponse.version
             accountingProductId = aggregationResponse.accountingProductId
             aggregation = aggregationResponse.aggregation
             code = aggregationResponse.code
@@ -557,6 +555,7 @@ private constructor(
             segments = aggregationResponse.segments.map { it.toMutableList() }
             targetField = aggregationResponse.targetField
             unit = aggregationResponse.unit
+            version = aggregationResponse.version
             additionalProperties = aggregationResponse.additionalProperties.toMutableMap()
         }
 
@@ -570,22 +569,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         fun accountingProductId(accountingProductId: String) =
             accountingProductId(JsonField.of(accountingProductId))
@@ -916,6 +899,22 @@ private constructor(
          */
         fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -943,7 +942,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -951,7 +949,6 @@ private constructor(
         fun build(): AggregationResponse =
             AggregationResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 accountingProductId,
                 aggregation,
                 code,
@@ -970,6 +967,7 @@ private constructor(
                 (segments ?: JsonMissing.of()).map { it.toImmutable() },
                 targetField,
                 unit,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -982,7 +980,6 @@ private constructor(
         }
 
         id()
-        version()
         accountingProductId()
         aggregation().ifPresent { it.validate() }
         code()
@@ -1001,6 +998,7 @@ private constructor(
         segments().ifPresent { it.forEach { it.validate() } }
         targetField()
         unit()
+        version()
         validated = true
     }
 
@@ -1020,7 +1018,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (accountingProductId.asKnown().isPresent) 1 else 0) +
             (aggregation.asKnown().getOrNull()?.validity() ?: 0) +
             (if (code.asKnown().isPresent) 1 else 0) +
@@ -1038,7 +1035,8 @@ private constructor(
             (segmentedFields.asKnown().getOrNull()?.size ?: 0) +
             (segments.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (targetField.asKnown().isPresent) 1 else 0) +
-            (if (unit.asKnown().isPresent) 1 else 0)
+            (if (unit.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     /**
      * Specifies the computation method applied to usage data collected in `targetField`.
@@ -1091,8 +1089,6 @@ private constructor(
 
             @JvmField val UNIQUE = of("UNIQUE")
 
-            @JvmField val CUSTOM_SQL = of("CUSTOM_SQL")
-
             @JvmStatic fun of(value: String) = Aggregation(JsonField.of(value))
         }
 
@@ -1105,7 +1101,6 @@ private constructor(
             LATEST,
             MEAN,
             UNIQUE,
-            CUSTOM_SQL,
         }
 
         /**
@@ -1125,7 +1120,6 @@ private constructor(
             LATEST,
             MEAN,
             UNIQUE,
-            CUSTOM_SQL,
             /**
              * An enum member indicating that [Aggregation] was instantiated with an unknown value.
              */
@@ -1148,7 +1142,6 @@ private constructor(
                 LATEST -> Value.LATEST
                 MEAN -> Value.MEAN
                 UNIQUE -> Value.UNIQUE
-                CUSTOM_SQL -> Value.CUSTOM_SQL
                 else -> Value._UNKNOWN
             }
 
@@ -1169,7 +1162,6 @@ private constructor(
                 LATEST -> Known.LATEST
                 MEAN -> Known.MEAN
                 UNIQUE -> Known.UNIQUE
-                CUSTOM_SQL -> Known.CUSTOM_SQL
                 else -> throw M3terInvalidDataException("Unknown Aggregation: $value")
             }
 
@@ -1582,15 +1574,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AggregationResponse && id == other.id && version == other.version && accountingProductId == other.accountingProductId && aggregation == other.aggregation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && customSql == other.customSql && defaultValue == other.defaultValue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segmentedFields == other.segmentedFields && segments == other.segments && targetField == other.targetField && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is AggregationResponse && id == other.id && accountingProductId == other.accountingProductId && aggregation == other.aggregation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && customSql == other.customSql && defaultValue == other.defaultValue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segmentedFields == other.segmentedFields && segments == other.segments && targetField == other.targetField && unit == other.unit && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountingProductId, aggregation, code, createdBy, customFields, customSql, defaultValue, dtCreated, dtLastModified, lastModifiedBy, meterId, name, quantityPerUnit, rounding, segmentedFields, segments, targetField, unit, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountingProductId, aggregation, code, createdBy, customFields, customSql, defaultValue, dtCreated, dtLastModified, lastModifiedBy, meterId, name, quantityPerUnit, rounding, segmentedFields, segments, targetField, unit, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AggregationResponse{id=$id, version=$version, accountingProductId=$accountingProductId, aggregation=$aggregation, code=$code, createdBy=$createdBy, customFields=$customFields, customSql=$customSql, defaultValue=$defaultValue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segmentedFields=$segmentedFields, segments=$segments, targetField=$targetField, unit=$unit, additionalProperties=$additionalProperties}"
+        "AggregationResponse{id=$id, accountingProductId=$accountingProductId, aggregation=$aggregation, code=$code, createdBy=$createdBy, customFields=$customFields, customSql=$customSql, defaultValue=$defaultValue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, meterId=$meterId, name=$name, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segmentedFields=$segmentedFields, segments=$segments, targetField=$targetField, unit=$unit, version=$version, additionalProperties=$additionalProperties}"
 }

@@ -3,13 +3,13 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -19,6 +19,7 @@ import com.m3ter.models.BillConfigResponse
 import com.m3ter.models.BillConfigRetrieveParams
 import com.m3ter.models.BillConfigUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 class BillConfigServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     BillConfigServiceAsync {
@@ -28,6 +29,9 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
     }
 
     override fun withRawResponse(): BillConfigServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BillConfigServiceAsync =
+        BillConfigServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun retrieve(
         params: BillConfigRetrieveParams,
@@ -46,10 +50,18 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         BillConfigServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BillConfigServiceAsync.WithRawResponse =
+            BillConfigServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val retrieveHandler: Handler<BillConfigResponse> =
-            jsonHandler<BillConfigResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillConfigResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: BillConfigRetrieveParams,
@@ -58,6 +70,7 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -69,7 +82,7 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -82,7 +95,7 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
         }
 
         private val updateHandler: Handler<BillConfigResponse> =
-            jsonHandler<BillConfigResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillConfigResponse>(clientOptions.jsonMapper)
 
         override fun update(
             params: BillConfigUpdateParams,
@@ -91,6 +104,7 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -103,7 +117,7 @@ class BillConfigServiceAsyncImpl internal constructor(private val clientOptions:
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {

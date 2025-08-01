@@ -19,7 +19,6 @@ internal class CompoundAggregationListPageResponseTest {
                 .addData(
                     CompoundAggregationResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountingProductId("accountingProductId")
                         .calculation("calculation")
                         .code("code")
@@ -43,6 +42,7 @@ internal class CompoundAggregationListPageResponseTest {
                                 .build()
                         )
                         .unit("unit")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")
@@ -52,7 +52,6 @@ internal class CompoundAggregationListPageResponseTest {
             .containsExactly(
                 CompoundAggregationResponse.builder()
                     .id("id")
-                    .version(0L)
                     .accountingProductId("accountingProductId")
                     .calculation("calculation")
                     .code("code")
@@ -76,6 +75,7 @@ internal class CompoundAggregationListPageResponseTest {
                             .build()
                     )
                     .unit("unit")
+                    .version(0L)
                     .build()
             )
         assertThat(compoundAggregationListPageResponse.nextToken()).contains("nextToken")
@@ -89,7 +89,6 @@ internal class CompoundAggregationListPageResponseTest {
                 .addData(
                     CompoundAggregationResponse.builder()
                         .id("id")
-                        .version(0L)
                         .accountingProductId("accountingProductId")
                         .calculation("calculation")
                         .code("code")
@@ -113,6 +112,7 @@ internal class CompoundAggregationListPageResponseTest {
                                 .build()
                         )
                         .unit("unit")
+                        .version(0L)
                         .build()
                 )
                 .nextToken("nextToken")

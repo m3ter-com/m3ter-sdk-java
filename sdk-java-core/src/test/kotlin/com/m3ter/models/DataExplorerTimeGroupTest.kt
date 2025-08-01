@@ -13,13 +13,12 @@ internal class DataExplorerTimeGroupTest {
     fun create() {
         val dataExplorerTimeGroup =
             DataExplorerTimeGroup.builder()
+                .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                 .frequency(DataExplorerTimeGroup.Frequency.DAY)
-                .groupType(DataExplorerTimeGroup.GroupType.ACCOUNT)
                 .build()
 
+        assertThat(dataExplorerTimeGroup.groupType()).contains(DataExplorerGroup.GroupType.ACCOUNT)
         assertThat(dataExplorerTimeGroup.frequency()).isEqualTo(DataExplorerTimeGroup.Frequency.DAY)
-        assertThat(dataExplorerTimeGroup.groupType())
-            .contains(DataExplorerTimeGroup.GroupType.ACCOUNT)
     }
 
     @Test
@@ -27,8 +26,8 @@ internal class DataExplorerTimeGroupTest {
         val jsonMapper = jsonMapper()
         val dataExplorerTimeGroup =
             DataExplorerTimeGroup.builder()
+                .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                 .frequency(DataExplorerTimeGroup.Frequency.DAY)
-                .groupType(DataExplorerTimeGroup.GroupType.ACCOUNT)
                 .build()
 
         val roundtrippedDataExplorerTimeGroup =

@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [CreditReasonService.list] */
+/** @see CreditReasonService.list */
 class CreditReasonListPage
 private constructor(
     private val service: CreditReasonService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [CreditReasonListPageResponse], but gracefully handles missing data.
      *
-     * @see [CreditReasonListPageResponse.data]
+     * @see CreditReasonListPageResponse.data
      */
     fun data(): List<CreditReasonResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [CreditReasonListPageResponse], but gracefully handles missing data.
      *
-     * @see [CreditReasonListPageResponse.nextToken]
+     * @see CreditReasonListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

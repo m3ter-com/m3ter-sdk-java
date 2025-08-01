@@ -23,7 +23,6 @@ import kotlin.jvm.optionals.getOrNull
 class PlanTemplateResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val billFrequency: JsonField<BillFrequency>,
     private val billFrequencyInterval: JsonField<Int>,
     private val code: JsonField<String>,
@@ -44,13 +43,13 @@ private constructor(
     private val standingChargeDescription: JsonField<String>,
     private val standingChargeInterval: JsonField<Int>,
     private val standingChargeOffset: JsonField<Int>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("billFrequency")
         @ExcludeMissing
         billFrequency: JsonField<BillFrequency> = JsonMissing.of(),
@@ -99,9 +98,9 @@ private constructor(
         @JsonProperty("standingChargeOffset")
         @ExcludeMissing
         standingChargeOffset: JsonField<Int> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         billFrequency,
         billFrequencyInterval,
         code,
@@ -122,6 +121,7 @@ private constructor(
         standingChargeDescription,
         standingChargeInterval,
         standingChargeOffset,
+        version,
         mutableMapOf(),
     )
 
@@ -132,17 +132,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * Determines the frequency at which bills are generated.
@@ -350,18 +339,22 @@ private constructor(
         standingChargeOffset.getOptional("standingChargeOffset")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [billFrequency].
@@ -538,6 +531,13 @@ private constructor(
     @ExcludeMissing
     fun _standingChargeOffset(): JsonField<Int> = standingChargeOffset
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -558,7 +558,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -568,7 +567,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var billFrequency: JsonField<BillFrequency> = JsonMissing.of()
         private var billFrequencyInterval: JsonField<Int> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
@@ -589,12 +587,12 @@ private constructor(
         private var standingChargeDescription: JsonField<String> = JsonMissing.of()
         private var standingChargeInterval: JsonField<Int> = JsonMissing.of()
         private var standingChargeOffset: JsonField<Int> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(planTemplateResponse: PlanTemplateResponse) = apply {
             id = planTemplateResponse.id
-            version = planTemplateResponse.version
             billFrequency = planTemplateResponse.billFrequency
             billFrequencyInterval = planTemplateResponse.billFrequencyInterval
             code = planTemplateResponse.code
@@ -615,6 +613,7 @@ private constructor(
             standingChargeDescription = planTemplateResponse.standingChargeDescription
             standingChargeInterval = planTemplateResponse.standingChargeInterval
             standingChargeOffset = planTemplateResponse.standingChargeOffset
+            version = planTemplateResponse.version
             additionalProperties = planTemplateResponse.additionalProperties.toMutableMap()
         }
 
@@ -628,22 +627,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /**
          * Determines the frequency at which bills are generated.
@@ -979,6 +962,22 @@ private constructor(
             this.standingChargeOffset = standingChargeOffset
         }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -1006,7 +1005,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -1014,7 +1012,6 @@ private constructor(
         fun build(): PlanTemplateResponse =
             PlanTemplateResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 billFrequency,
                 billFrequencyInterval,
                 code,
@@ -1035,6 +1032,7 @@ private constructor(
                 standingChargeDescription,
                 standingChargeInterval,
                 standingChargeOffset,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -1047,7 +1045,6 @@ private constructor(
         }
 
         id()
-        version()
         billFrequency().ifPresent { it.validate() }
         billFrequencyInterval()
         code()
@@ -1068,6 +1065,7 @@ private constructor(
         standingChargeDescription()
         standingChargeInterval()
         standingChargeOffset()
+        version()
         validated = true
     }
 
@@ -1087,7 +1085,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (billFrequency.asKnown().getOrNull()?.validity() ?: 0) +
             (if (billFrequencyInterval.asKnown().isPresent) 1 else 0) +
             (if (code.asKnown().isPresent) 1 else 0) +
@@ -1107,7 +1104,8 @@ private constructor(
             (if (standingChargeBillInAdvance.asKnown().isPresent) 1 else 0) +
             (if (standingChargeDescription.asKnown().isPresent) 1 else 0) +
             (if (standingChargeInterval.asKnown().isPresent) 1 else 0) +
-            (if (standingChargeOffset.asKnown().isPresent) 1 else 0)
+            (if (standingChargeOffset.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     /**
      * Determines the frequency at which bills are generated.
@@ -1388,15 +1386,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanTemplateResponse && id == other.id && version == other.version && billFrequency == other.billFrequency && billFrequencyInterval == other.billFrequencyInterval && code == other.code && createdBy == other.createdBy && currency == other.currency && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && name == other.name && ordinal == other.ordinal && productId == other.productId && standingCharge == other.standingCharge && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && standingChargeInterval == other.standingChargeInterval && standingChargeOffset == other.standingChargeOffset && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is PlanTemplateResponse && id == other.id && billFrequency == other.billFrequency && billFrequencyInterval == other.billFrequencyInterval && code == other.code && createdBy == other.createdBy && currency == other.currency && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && name == other.name && ordinal == other.ordinal && productId == other.productId && standingCharge == other.standingCharge && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && standingChargeInterval == other.standingChargeInterval && standingChargeOffset == other.standingChargeOffset && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, billFrequency, billFrequencyInterval, code, createdBy, currency, customFields, dtCreated, dtLastModified, lastModifiedBy, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, name, ordinal, productId, standingCharge, standingChargeBillInAdvance, standingChargeDescription, standingChargeInterval, standingChargeOffset, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, billFrequency, billFrequencyInterval, code, createdBy, currency, customFields, dtCreated, dtLastModified, lastModifiedBy, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, name, ordinal, productId, standingCharge, standingChargeBillInAdvance, standingChargeDescription, standingChargeInterval, standingChargeOffset, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PlanTemplateResponse{id=$id, version=$version, billFrequency=$billFrequency, billFrequencyInterval=$billFrequencyInterval, code=$code, createdBy=$createdBy, currency=$currency, customFields=$customFields, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, minimumSpend=$minimumSpend, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, name=$name, ordinal=$ordinal, productId=$productId, standingCharge=$standingCharge, standingChargeBillInAdvance=$standingChargeBillInAdvance, standingChargeDescription=$standingChargeDescription, standingChargeInterval=$standingChargeInterval, standingChargeOffset=$standingChargeOffset, additionalProperties=$additionalProperties}"
+        "PlanTemplateResponse{id=$id, billFrequency=$billFrequency, billFrequencyInterval=$billFrequencyInterval, code=$code, createdBy=$createdBy, currency=$currency, customFields=$customFields, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, minimumSpend=$minimumSpend, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, minimumSpendDescription=$minimumSpendDescription, name=$name, ordinal=$ordinal, productId=$productId, standingCharge=$standingCharge, standingChargeBillInAdvance=$standingChargeBillInAdvance, standingChargeDescription=$standingChargeDescription, standingChargeInterval=$standingChargeInterval, standingChargeOffset=$standingChargeOffset, version=$version, additionalProperties=$additionalProperties}"
 }

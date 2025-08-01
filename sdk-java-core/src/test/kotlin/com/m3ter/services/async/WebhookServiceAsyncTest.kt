@@ -36,7 +36,7 @@ internal class WebhookServiceAsyncTest {
                         M3terSignedCredentialsRequest.builder()
                             .apiKey("x")
                             .secret("x")
-                            .type(M3terSignedCredentialsRequest.Type.M3_TER_SIGNED_REQUEST)
+                            .type(M3terSignedCredentialsRequest.Type.M3TER_SIGNED_REQUEST)
                             .empty(true)
                             .version(0L)
                             .build()
@@ -96,7 +96,7 @@ internal class WebhookServiceAsyncTest {
                         M3terSignedCredentialsRequest.builder()
                             .apiKey("x")
                             .secret("x")
-                            .type(M3terSignedCredentialsRequest.Type.M3_TER_SIGNED_REQUEST)
+                            .type(M3terSignedCredentialsRequest.Type.M3TER_SIGNED_REQUEST)
                             .empty(true)
                             .version(0L)
                             .build()
@@ -165,12 +165,12 @@ internal class WebhookServiceAsyncTest {
                 .build()
         val webhookServiceAsync = client.webhooks()
 
-        val responseFuture =
+        val webhookFuture =
             webhookServiceAsync.setActive(
                 WebhookSetActiveParams.builder().orgId("orgId").id("id").active(true).build()
             )
 
-        val response = responseFuture.get()
-        response.validate()
+        val webhook = webhookFuture.get()
+        webhook.validate()
     }
 }

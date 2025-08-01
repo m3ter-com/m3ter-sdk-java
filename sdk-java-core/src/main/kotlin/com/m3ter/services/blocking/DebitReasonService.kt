@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.DebitReasonCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.DebitReasonListParams
 import com.m3ter.models.DebitReasonResponse
 import com.m3ter.models.DebitReasonRetrieveParams
 import com.m3ter.models.DebitReasonUpdateParams
+import java.util.function.Consumer
 
 interface DebitReasonService {
 
@@ -21,6 +23,13 @@ interface DebitReasonService {
     fun withRawResponse(): WithRawResponse
 
     /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): DebitReasonService
+
+    /**
      * Create a new Debit Reason for your Organization. When you've created a Debit Reason, it
      * becomes available as a debit type for adding Debit line items to Bills. See
      * [Debits](https://www.m3ter.com/docs/api#tag/Debits).
@@ -28,7 +37,7 @@ interface DebitReasonService {
     fun create(params: DebitReasonCreateParams): DebitReasonResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: DebitReasonCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -37,30 +46,30 @@ interface DebitReasonService {
     /** Retrieve the Debit Reason with the given UUID. */
     fun retrieve(id: String): DebitReasonResponse = retrieve(id, DebitReasonRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: DebitReasonRetrieveParams = DebitReasonRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReasonResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: DebitReasonRetrieveParams = DebitReasonRetrieveParams.none(),
     ): DebitReasonResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: DebitReasonRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReasonResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: DebitReasonRetrieveParams): DebitReasonResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): DebitReasonResponse =
         retrieve(id, DebitReasonRetrieveParams.none(), requestOptions)
 
@@ -68,18 +77,18 @@ interface DebitReasonService {
     fun update(id: String, params: DebitReasonUpdateParams): DebitReasonResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: DebitReasonUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReasonResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: DebitReasonUpdateParams): DebitReasonResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: DebitReasonUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -92,47 +101,47 @@ interface DebitReasonService {
      */
     fun list(): DebitReasonListPage = list(DebitReasonListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: DebitReasonListParams = DebitReasonListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReasonListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: DebitReasonListParams = DebitReasonListParams.none()): DebitReasonListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): DebitReasonListPage =
         list(DebitReasonListParams.none(), requestOptions)
 
     /** Delete the Debit Reason with the given UUID. */
     fun delete(id: String): DebitReasonResponse = delete(id, DebitReasonDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: DebitReasonDeleteParams = DebitReasonDeleteParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReasonResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: DebitReasonDeleteParams = DebitReasonDeleteParams.none(),
     ): DebitReasonResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: DebitReasonDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitReasonResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: DebitReasonDeleteParams): DebitReasonResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): DebitReasonResponse =
         delete(id, DebitReasonDeleteParams.none(), requestOptions)
 
@@ -142,6 +151,15 @@ interface DebitReasonService {
     interface WithRawResponse {
 
         /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): DebitReasonService.WithRawResponse
+
+        /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/picklists/debitreasons`, but
          * is otherwise the same as [DebitReasonService.create].
          */
@@ -149,7 +167,7 @@ interface DebitReasonService {
         fun create(params: DebitReasonCreateParams): HttpResponseFor<DebitReasonResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: DebitReasonCreateParams,
@@ -164,7 +182,7 @@ interface DebitReasonService {
         fun retrieve(id: String): HttpResponseFor<DebitReasonResponse> =
             retrieve(id, DebitReasonRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -173,26 +191,26 @@ interface DebitReasonService {
         ): HttpResponseFor<DebitReasonResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: DebitReasonRetrieveParams = DebitReasonRetrieveParams.none(),
         ): HttpResponseFor<DebitReasonResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: DebitReasonRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DebitReasonResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: DebitReasonRetrieveParams): HttpResponseFor<DebitReasonResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -210,7 +228,7 @@ interface DebitReasonService {
             params: DebitReasonUpdateParams,
         ): HttpResponseFor<DebitReasonResponse> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -219,12 +237,12 @@ interface DebitReasonService {
         ): HttpResponseFor<DebitReasonResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: DebitReasonUpdateParams): HttpResponseFor<DebitReasonResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: DebitReasonUpdateParams,
@@ -238,20 +256,20 @@ interface DebitReasonService {
         @MustBeClosed
         fun list(): HttpResponseFor<DebitReasonListPage> = list(DebitReasonListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: DebitReasonListParams = DebitReasonListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DebitReasonListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: DebitReasonListParams = DebitReasonListParams.none()
         ): HttpResponseFor<DebitReasonListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<DebitReasonListPage> =
             list(DebitReasonListParams.none(), requestOptions)
@@ -265,7 +283,7 @@ interface DebitReasonService {
         fun delete(id: String): HttpResponseFor<DebitReasonResponse> =
             delete(id, DebitReasonDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -274,26 +292,26 @@ interface DebitReasonService {
         ): HttpResponseFor<DebitReasonResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
             params: DebitReasonDeleteParams = DebitReasonDeleteParams.none(),
         ): HttpResponseFor<DebitReasonResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: DebitReasonDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<DebitReasonResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: DebitReasonDeleteParams): HttpResponseFor<DebitReasonResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,

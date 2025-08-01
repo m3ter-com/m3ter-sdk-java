@@ -24,7 +24,6 @@ import kotlin.jvm.optionals.getOrNull
 class DataExportScheduleListResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val code: JsonField<String>,
     private val createdBy: JsonField<String>,
     private val destinationIds: JsonField<List<String>>,
@@ -36,13 +35,13 @@ private constructor(
     private val period: JsonField<Int>,
     private val scheduleType: JsonField<ScheduleType>,
     private val sourceType: JsonField<SourceType>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("destinationIds")
@@ -68,9 +67,9 @@ private constructor(
         @JsonProperty("sourceType")
         @ExcludeMissing
         sourceType: JsonField<SourceType> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         code,
         createdBy,
         destinationIds,
@@ -82,6 +81,7 @@ private constructor(
         period,
         scheduleType,
         sourceType,
+        version,
         mutableMapOf(),
     )
 
@@ -92,17 +92,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * Unique short code of the Data Export Schedule.
@@ -168,7 +157,7 @@ private constructor(
     fun name(): Optional<String> = name.getOptional("name")
 
     /**
-     * Defines the Schedule frequency for the Data Export to run in Hours or Days. Used in
+     * Defines the Schedule frequency for the Data Export to run in Hours, Days, or Minutes. Used in
      * conjunction with the `scheduleType` parameter.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -189,18 +178,22 @@ private constructor(
     fun sourceType(): Optional<SourceType> = sourceType.getOptional("sourceType")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [code].
@@ -294,6 +287,13 @@ private constructor(
     @ExcludeMissing
     fun _sourceType(): JsonField<SourceType> = sourceType
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -315,7 +315,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -325,7 +324,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var destinationIds: JsonField<MutableList<String>>? = null
@@ -337,12 +335,12 @@ private constructor(
         private var period: JsonField<Int> = JsonMissing.of()
         private var scheduleType: JsonField<ScheduleType> = JsonMissing.of()
         private var sourceType: JsonField<SourceType> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(dataExportScheduleListResponse: DataExportScheduleListResponse) = apply {
             id = dataExportScheduleListResponse.id
-            version = dataExportScheduleListResponse.version
             code = dataExportScheduleListResponse.code
             createdBy = dataExportScheduleListResponse.createdBy
             destinationIds =
@@ -355,6 +353,7 @@ private constructor(
             period = dataExportScheduleListResponse.period
             scheduleType = dataExportScheduleListResponse.scheduleType
             sourceType = dataExportScheduleListResponse.sourceType
+            version = dataExportScheduleListResponse.version
             additionalProperties =
                 dataExportScheduleListResponse.additionalProperties.toMutableMap()
         }
@@ -369,22 +368,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** Unique short code of the Data Export Schedule. */
         fun code(code: String) = code(JsonField.of(code))
@@ -503,8 +486,8 @@ private constructor(
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
-         * Defines the Schedule frequency for the Data Export to run in Hours or Days. Used in
-         * conjunction with the `scheduleType` parameter.
+         * Defines the Schedule frequency for the Data Export to run in Hours, Days, or Minutes.
+         * Used in conjunction with the `scheduleType` parameter.
          */
         fun period(period: Int) = period(JsonField.of(period))
 
@@ -540,6 +523,22 @@ private constructor(
          */
         fun sourceType(sourceType: JsonField<SourceType>) = apply { this.sourceType = sourceType }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -567,7 +566,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -575,7 +573,6 @@ private constructor(
         fun build(): DataExportScheduleListResponse =
             DataExportScheduleListResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 code,
                 createdBy,
                 (destinationIds ?: JsonMissing.of()).map { it.toImmutable() },
@@ -587,6 +584,7 @@ private constructor(
                 period,
                 scheduleType,
                 sourceType,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -599,7 +597,6 @@ private constructor(
         }
 
         id()
-        version()
         code()
         createdBy()
         destinationIds()
@@ -611,6 +608,7 @@ private constructor(
         period()
         scheduleType().ifPresent { it.validate() }
         sourceType().ifPresent { it.validate() }
+        version()
         validated = true
     }
 
@@ -630,7 +628,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (code.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
             (destinationIds.asKnown().getOrNull()?.size ?: 0) +
@@ -641,7 +638,8 @@ private constructor(
             (if (name.asKnown().isPresent) 1 else 0) +
             (if (period.asKnown().isPresent) 1 else 0) +
             (scheduleType.asKnown().getOrNull()?.validity() ?: 0) +
-            (sourceType.asKnown().getOrNull()?.validity() ?: 0)
+            (sourceType.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     class ExportFileFormat @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -662,6 +660,8 @@ private constructor(
 
             @JvmField val JSON = of("JSON")
 
+            @JvmField val JSONL = of("JSONL")
+
             @JvmStatic fun of(value: String) = ExportFileFormat(JsonField.of(value))
         }
 
@@ -669,6 +669,7 @@ private constructor(
         enum class Known {
             CSV,
             JSON,
+            JSONL,
         }
 
         /**
@@ -683,6 +684,7 @@ private constructor(
         enum class Value {
             CSV,
             JSON,
+            JSONL,
             /**
              * An enum member indicating that [ExportFileFormat] was instantiated with an unknown
              * value.
@@ -701,6 +703,7 @@ private constructor(
             when (this) {
                 CSV -> Value.CSV
                 JSON -> Value.JSON
+                JSONL -> Value.JSONL
                 else -> Value._UNKNOWN
             }
 
@@ -716,6 +719,7 @@ private constructor(
             when (this) {
                 CSV -> Known.CSV
                 JSON -> Known.JSON
+                JSONL -> Known.JSONL
                 else -> throw M3terInvalidDataException("Unknown ExportFileFormat: $value")
             }
 
@@ -786,9 +790,11 @@ private constructor(
 
         companion object {
 
-            @JvmField val HOURLY = of("HOURLY")
+            @JvmField val HOUR = of("HOUR")
 
-            @JvmField val DAILY = of("DAILY")
+            @JvmField val DAY = of("DAY")
+
+            @JvmField val MINUTE = of("MINUTE")
 
             @JvmField val AD_HOC = of("AD_HOC")
 
@@ -797,8 +803,9 @@ private constructor(
 
         /** An enum containing [ScheduleType]'s known values. */
         enum class Known {
-            HOURLY,
-            DAILY,
+            HOUR,
+            DAY,
+            MINUTE,
             AD_HOC,
         }
 
@@ -812,8 +819,9 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            HOURLY,
-            DAILY,
+            HOUR,
+            DAY,
+            MINUTE,
             AD_HOC,
             /**
              * An enum member indicating that [ScheduleType] was instantiated with an unknown value.
@@ -830,8 +838,9 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                HOURLY -> Value.HOURLY
-                DAILY -> Value.DAILY
+                HOUR -> Value.HOUR
+                DAY -> Value.DAY
+                MINUTE -> Value.MINUTE
                 AD_HOC -> Value.AD_HOC
                 else -> Value._UNKNOWN
             }
@@ -846,8 +855,9 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                HOURLY -> Known.HOURLY
-                DAILY -> Known.DAILY
+                HOUR -> Known.HOUR
+                DAY -> Known.DAY
+                MINUTE -> Known.MINUTE
                 AD_HOC -> Known.AD_HOC
                 else -> throw M3terInvalidDataException("Unknown ScheduleType: $value")
             }
@@ -1035,15 +1045,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportScheduleListResponse && id == other.id && version == other.version && code == other.code && createdBy == other.createdBy && destinationIds == other.destinationIds && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && exportFileFormat == other.exportFileFormat && lastModifiedBy == other.lastModifiedBy && name == other.name && period == other.period && scheduleType == other.scheduleType && sourceType == other.sourceType && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is DataExportScheduleListResponse && id == other.id && code == other.code && createdBy == other.createdBy && destinationIds == other.destinationIds && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && exportFileFormat == other.exportFileFormat && lastModifiedBy == other.lastModifiedBy && name == other.name && period == other.period && scheduleType == other.scheduleType && sourceType == other.sourceType && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, code, createdBy, destinationIds, dtCreated, dtLastModified, exportFileFormat, lastModifiedBy, name, period, scheduleType, sourceType, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, code, createdBy, destinationIds, dtCreated, dtLastModified, exportFileFormat, lastModifiedBy, name, period, scheduleType, sourceType, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "DataExportScheduleListResponse{id=$id, version=$version, code=$code, createdBy=$createdBy, destinationIds=$destinationIds, dtCreated=$dtCreated, dtLastModified=$dtLastModified, exportFileFormat=$exportFileFormat, lastModifiedBy=$lastModifiedBy, name=$name, period=$period, scheduleType=$scheduleType, sourceType=$sourceType, additionalProperties=$additionalProperties}"
+        "DataExportScheduleListResponse{id=$id, code=$code, createdBy=$createdBy, destinationIds=$destinationIds, dtCreated=$dtCreated, dtLastModified=$dtLastModified, exportFileFormat=$exportFileFormat, lastModifiedBy=$lastModifiedBy, name=$name, period=$period, scheduleType=$scheduleType, sourceType=$sourceType, version=$version, additionalProperties=$additionalProperties}"
 }

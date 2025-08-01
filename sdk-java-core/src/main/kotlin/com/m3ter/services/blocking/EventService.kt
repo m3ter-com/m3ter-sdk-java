@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.EventGetFieldsParams
@@ -13,6 +14,7 @@ import com.m3ter.models.EventListPage
 import com.m3ter.models.EventListParams
 import com.m3ter.models.EventResponse
 import com.m3ter.models.EventRetrieveParams
+import java.util.function.Consumer
 
 interface EventService {
 
@@ -20,6 +22,13 @@ interface EventService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): EventService
 
     /**
      * Retrieve a specific Event.
@@ -30,30 +39,30 @@ interface EventService {
      */
     fun retrieve(id: String): EventResponse = retrieve(id, EventRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: EventRetrieveParams = EventRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: EventRetrieveParams = EventRetrieveParams.none(),
     ): EventResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: EventRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: EventRetrieveParams): EventResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): EventResponse =
         retrieve(id, EventRetrieveParams.none(), requestOptions)
 
@@ -73,17 +82,17 @@ interface EventService {
      */
     fun list(): EventListPage = list(EventListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: EventListParams = EventListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: EventListParams = EventListParams.none()): EventListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): EventListPage =
         list(EventListParams.none(), requestOptions)
 
@@ -112,18 +121,18 @@ interface EventService {
      */
     fun getFields(): EventGetFieldsResponse = getFields(EventGetFieldsParams.none())
 
-    /** @see [getFields] */
+    /** @see getFields */
     fun getFields(
         params: EventGetFieldsParams = EventGetFieldsParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventGetFieldsResponse
 
-    /** @see [getFields] */
+    /** @see getFields */
     fun getFields(
         params: EventGetFieldsParams = EventGetFieldsParams.none()
     ): EventGetFieldsResponse = getFields(params, RequestOptions.none())
 
-    /** @see [getFields] */
+    /** @see getFields */
     fun getFields(requestOptions: RequestOptions): EventGetFieldsResponse =
         getFields(EventGetFieldsParams.none(), requestOptions)
 
@@ -134,22 +143,29 @@ interface EventService {
      */
     fun getTypes(): EventGetTypesResponse = getTypes(EventGetTypesParams.none())
 
-    /** @see [getTypes] */
+    /** @see getTypes */
     fun getTypes(
         params: EventGetTypesParams = EventGetTypesParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventGetTypesResponse
 
-    /** @see [getTypes] */
+    /** @see getTypes */
     fun getTypes(params: EventGetTypesParams = EventGetTypesParams.none()): EventGetTypesResponse =
         getTypes(params, RequestOptions.none())
 
-    /** @see [getTypes] */
+    /** @see getTypes */
     fun getTypes(requestOptions: RequestOptions): EventGetTypesResponse =
         getTypes(EventGetTypesParams.none(), requestOptions)
 
     /** A view of [EventService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): EventService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/events/{id}`, but is
@@ -159,7 +175,7 @@ interface EventService {
         fun retrieve(id: String): HttpResponseFor<EventResponse> =
             retrieve(id, EventRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -168,26 +184,26 @@ interface EventService {
         ): HttpResponseFor<EventResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: EventRetrieveParams = EventRetrieveParams.none(),
         ): HttpResponseFor<EventResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: EventRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: EventRetrieveParams): HttpResponseFor<EventResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(id: String, requestOptions: RequestOptions): HttpResponseFor<EventResponse> =
             retrieve(id, EventRetrieveParams.none(), requestOptions)
@@ -198,19 +214,19 @@ interface EventService {
          */
         @MustBeClosed fun list(): HttpResponseFor<EventListPage> = list(EventListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: EventListParams = EventListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(params: EventListParams = EventListParams.none()): HttpResponseFor<EventListPage> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<EventListPage> =
             list(EventListParams.none(), requestOptions)
@@ -223,20 +239,20 @@ interface EventService {
         fun getFields(): HttpResponseFor<EventGetFieldsResponse> =
             getFields(EventGetFieldsParams.none())
 
-        /** @see [getFields] */
+        /** @see getFields */
         @MustBeClosed
         fun getFields(
             params: EventGetFieldsParams = EventGetFieldsParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventGetFieldsResponse>
 
-        /** @see [getFields] */
+        /** @see getFields */
         @MustBeClosed
         fun getFields(
             params: EventGetFieldsParams = EventGetFieldsParams.none()
         ): HttpResponseFor<EventGetFieldsResponse> = getFields(params, RequestOptions.none())
 
-        /** @see [getFields] */
+        /** @see getFields */
         @MustBeClosed
         fun getFields(requestOptions: RequestOptions): HttpResponseFor<EventGetFieldsResponse> =
             getFields(EventGetFieldsParams.none(), requestOptions)
@@ -249,20 +265,20 @@ interface EventService {
         fun getTypes(): HttpResponseFor<EventGetTypesResponse> =
             getTypes(EventGetTypesParams.none())
 
-        /** @see [getTypes] */
+        /** @see getTypes */
         @MustBeClosed
         fun getTypes(
             params: EventGetTypesParams = EventGetTypesParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<EventGetTypesResponse>
 
-        /** @see [getTypes] */
+        /** @see getTypes */
         @MustBeClosed
         fun getTypes(
             params: EventGetTypesParams = EventGetTypesParams.none()
         ): HttpResponseFor<EventGetTypesResponse> = getTypes(params, RequestOptions.none())
 
-        /** @see [getTypes] */
+        /** @see getTypes */
         @MustBeClosed
         fun getTypes(requestOptions: RequestOptions): HttpResponseFor<EventGetTypesResponse> =
             getTypes(EventGetTypesParams.none(), requestOptions)

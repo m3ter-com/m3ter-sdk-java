@@ -34,17 +34,12 @@ private constructor(
     ) : this(data, nextToken, mutableMapOf())
 
     /**
-     * An array containing the list of requested Bills.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun data(): Optional<List<BillResponse>> = data.getOptional("data")
 
     /**
-     * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Bills in a
-     * paginated list.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -96,7 +91,6 @@ private constructor(
             additionalProperties = billSearchResponse.additionalProperties.toMutableMap()
         }
 
-        /** An array containing the list of requested Bills. */
         fun data(data: List<BillResponse>) = data(JsonField.of(data))
 
         /**
@@ -122,10 +116,6 @@ private constructor(
                 }
         }
 
-        /**
-         * The `nextToken` for multi-page retrievals. It is used to fetch the next page of Bills in
-         * a paginated list.
-         */
         fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
         /**

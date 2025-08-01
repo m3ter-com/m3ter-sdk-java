@@ -34,17 +34,12 @@ private constructor(
     ) : this(data, nextToken, mutableMapOf())
 
     /**
-     * Array containing the list of AccountPlans.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun data(): Optional<List<AccountPlanResponse>> = data.getOptional("data")
 
     /**
-     * The `nextToken` for retrieving the next page of AccountPlans. It is used to fetch the next
-     * page of AccountPlans in a paginated list.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -98,7 +93,6 @@ private constructor(
             additionalProperties = accountPlanListPageResponse.additionalProperties.toMutableMap()
         }
 
-        /** Array containing the list of AccountPlans. */
         fun data(data: List<AccountPlanResponse>) = data(JsonField.of(data))
 
         /**
@@ -124,10 +118,6 @@ private constructor(
                 }
         }
 
-        /**
-         * The `nextToken` for retrieving the next page of AccountPlans. It is used to fetch the
-         * next page of AccountPlans in a paginated list.
-         */
         fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
         /**

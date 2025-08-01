@@ -22,7 +22,6 @@ import kotlin.jvm.optionals.getOrNull
 class TransactionResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val amount: JsonField<Double>,
     private val appliedDate: JsonField<OffsetDateTime>,
     private val createdBy: JsonField<String>,
@@ -36,13 +35,13 @@ private constructor(
     private val paid: JsonField<Double>,
     private val transactionDate: JsonField<OffsetDateTime>,
     private val transactionTypeId: JsonField<String>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("appliedDate")
         @ExcludeMissing
@@ -74,9 +73,9 @@ private constructor(
         @JsonProperty("transactionTypeId")
         @ExcludeMissing
         transactionTypeId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         amount,
         appliedDate,
         createdBy,
@@ -90,6 +89,7 @@ private constructor(
         paid,
         transactionDate,
         transactionTypeId,
+        version,
         mutableMapOf(),
     )
 
@@ -100,17 +100,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * The financial value of the transaction, as recorded in the balance.
@@ -223,18 +212,22 @@ private constructor(
     fun transactionTypeId(): Optional<String> = transactionTypeId.getOptional("transactionTypeId")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [amount].
@@ -344,6 +337,13 @@ private constructor(
     @ExcludeMissing
     fun _transactionTypeId(): JsonField<String> = transactionTypeId
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -364,7 +364,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -374,7 +373,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var amount: JsonField<Double> = JsonMissing.of()
         private var appliedDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
@@ -388,12 +386,12 @@ private constructor(
         private var paid: JsonField<Double> = JsonMissing.of()
         private var transactionDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var transactionTypeId: JsonField<String> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(transactionResponse: TransactionResponse) = apply {
             id = transactionResponse.id
-            version = transactionResponse.version
             amount = transactionResponse.amount
             appliedDate = transactionResponse.appliedDate
             createdBy = transactionResponse.createdBy
@@ -407,6 +405,7 @@ private constructor(
             paid = transactionResponse.paid
             transactionDate = transactionResponse.transactionDate
             transactionTypeId = transactionResponse.transactionTypeId
+            version = transactionResponse.version
             additionalProperties = transactionResponse.additionalProperties.toMutableMap()
         }
 
@@ -420,22 +419,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** The financial value of the transaction, as recorded in the balance. */
         fun amount(amount: Double) = amount(JsonField.of(amount))
@@ -625,6 +608,22 @@ private constructor(
             this.transactionTypeId = transactionTypeId
         }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -652,7 +651,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -660,7 +658,6 @@ private constructor(
         fun build(): TransactionResponse =
             TransactionResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 amount,
                 appliedDate,
                 createdBy,
@@ -674,6 +671,7 @@ private constructor(
                 paid,
                 transactionDate,
                 transactionTypeId,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -686,7 +684,6 @@ private constructor(
         }
 
         id()
-        version()
         amount()
         appliedDate()
         createdBy()
@@ -700,6 +697,7 @@ private constructor(
         paid()
         transactionDate()
         transactionTypeId()
+        version()
         validated = true
     }
 
@@ -719,7 +717,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (amount.asKnown().isPresent) 1 else 0) +
             (if (appliedDate.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
@@ -732,7 +729,8 @@ private constructor(
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (if (paid.asKnown().isPresent) 1 else 0) +
             (if (transactionDate.asKnown().isPresent) 1 else 0) +
-            (if (transactionTypeId.asKnown().isPresent) 1 else 0)
+            (if (transactionTypeId.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     /**
      * The type of entity associated with the Transaction - identifies who or what was responsible
@@ -761,6 +759,8 @@ private constructor(
 
             @JvmField val SERVICE_USER = of("SERVICE_USER")
 
+            @JvmField val SCHEDULER = of("SCHEDULER")
+
             @JvmStatic fun of(value: String) = EntityType(JsonField.of(value))
         }
 
@@ -770,6 +770,7 @@ private constructor(
             COMMITMENT,
             USER,
             SERVICE_USER,
+            SCHEDULER,
         }
 
         /**
@@ -786,6 +787,7 @@ private constructor(
             COMMITMENT,
             USER,
             SERVICE_USER,
+            SCHEDULER,
             /**
              * An enum member indicating that [EntityType] was instantiated with an unknown value.
              */
@@ -805,6 +807,7 @@ private constructor(
                 COMMITMENT -> Value.COMMITMENT
                 USER -> Value.USER
                 SERVICE_USER -> Value.SERVICE_USER
+                SCHEDULER -> Value.SCHEDULER
                 else -> Value._UNKNOWN
             }
 
@@ -822,6 +825,7 @@ private constructor(
                 COMMITMENT -> Known.COMMITMENT
                 USER -> Known.USER
                 SERVICE_USER -> Known.SERVICE_USER
+                SCHEDULER -> Known.SCHEDULER
                 else -> throw M3terInvalidDataException("Unknown EntityType: $value")
             }
 
@@ -882,15 +886,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is TransactionResponse && id == other.id && version == other.version && amount == other.amount && appliedDate == other.appliedDate && createdBy == other.createdBy && currencyPaid == other.currencyPaid && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && entityId == other.entityId && entityType == other.entityType && lastModifiedBy == other.lastModifiedBy && paid == other.paid && transactionDate == other.transactionDate && transactionTypeId == other.transactionTypeId && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is TransactionResponse && id == other.id && amount == other.amount && appliedDate == other.appliedDate && createdBy == other.createdBy && currencyPaid == other.currencyPaid && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && entityId == other.entityId && entityType == other.entityType && lastModifiedBy == other.lastModifiedBy && paid == other.paid && transactionDate == other.transactionDate && transactionTypeId == other.transactionTypeId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, amount, appliedDate, createdBy, currencyPaid, description, dtCreated, dtLastModified, entityId, entityType, lastModifiedBy, paid, transactionDate, transactionTypeId, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, amount, appliedDate, createdBy, currencyPaid, description, dtCreated, dtLastModified, entityId, entityType, lastModifiedBy, paid, transactionDate, transactionTypeId, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "TransactionResponse{id=$id, version=$version, amount=$amount, appliedDate=$appliedDate, createdBy=$createdBy, currencyPaid=$currencyPaid, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, entityId=$entityId, entityType=$entityType, lastModifiedBy=$lastModifiedBy, paid=$paid, transactionDate=$transactionDate, transactionTypeId=$transactionTypeId, additionalProperties=$additionalProperties}"
+        "TransactionResponse{id=$id, amount=$amount, appliedDate=$appliedDate, createdBy=$createdBy, currencyPaid=$currencyPaid, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, entityId=$entityId, entityType=$entityType, lastModifiedBy=$lastModifiedBy, paid=$paid, transactionDate=$transactionDate, transactionTypeId=$transactionTypeId, version=$version, additionalProperties=$additionalProperties}"
 }

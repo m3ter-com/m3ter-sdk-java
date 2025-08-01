@@ -53,8 +53,10 @@ private constructor(
     /** List Job entities for the status */
     fun status(): Optional<Status> = Optional.ofNullable(status)
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)

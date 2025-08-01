@@ -3,14 +3,14 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -25,6 +25,7 @@ import com.m3ter.models.BillJobRecalculateParams
 import com.m3ter.models.BillJobResponse
 import com.m3ter.models.BillJobRetrieveParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class BillJobServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -35,6 +36,9 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
     }
 
     override fun withRawResponse(): BillJobServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BillJobServiceAsync =
+        BillJobServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: BillJobCreateParams,
@@ -74,10 +78,18 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         BillJobServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BillJobServiceAsync.WithRawResponse =
+            BillJobServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<BillJobResponse> =
-            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper)
 
         override fun create(
             params: BillJobCreateParams,
@@ -86,6 +98,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -98,7 +111,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -111,7 +124,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val retrieveHandler: Handler<BillJobResponse> =
-            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: BillJobRetrieveParams,
@@ -123,6 +136,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -135,7 +149,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -149,7 +163,6 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val listHandler: Handler<BillJobListPageResponse> =
             jsonHandler<BillJobListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: BillJobListParams,
@@ -158,6 +171,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -169,7 +183,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -190,7 +204,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val cancelHandler: Handler<BillJobResponse> =
-            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper)
 
         override fun cancel(
             params: BillJobCancelParams,
@@ -202,6 +216,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -216,7 +231,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { cancelHandler.handle(it) }
                             .also {
@@ -229,7 +244,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val recalculateHandler: Handler<BillJobResponse> =
-            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper)
 
         override fun recalculate(
             params: BillJobRecalculateParams,
@@ -238,6 +253,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -251,7 +267,7 @@ class BillJobServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { recalculateHandler.handle(it) }
                             .also {

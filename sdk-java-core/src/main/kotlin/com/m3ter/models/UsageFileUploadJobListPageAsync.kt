@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [JobServiceAsync.list] */
+/** @see JobServiceAsync.list */
 class UsageFileUploadJobListPageAsync
 private constructor(
     private val service: JobServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [UsageFileUploadJobListPageResponse], but gracefully handles missing data.
      *
-     * @see [UsageFileUploadJobListPageResponse.data]
+     * @see UsageFileUploadJobListPageResponse.data
      */
     fun data(): List<FileUploadJobResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [UsageFileUploadJobListPageResponse], but gracefully handles missing data.
      *
-     * @see [UsageFileUploadJobListPageResponse.nextToken]
+     * @see UsageFileUploadJobListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

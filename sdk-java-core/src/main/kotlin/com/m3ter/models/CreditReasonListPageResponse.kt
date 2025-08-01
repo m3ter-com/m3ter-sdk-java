@@ -34,16 +34,12 @@ private constructor(
     ) : this(data, nextToken, mutableMapOf())
 
     /**
-     * The CreditReason information.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun data(): Optional<List<CreditReasonResponse>> = data.getOptional("data")
 
     /**
-     * `nextToken` for multi-page retrievals.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -97,7 +93,6 @@ private constructor(
             additionalProperties = creditReasonListPageResponse.additionalProperties.toMutableMap()
         }
 
-        /** The CreditReason information. */
         fun data(data: List<CreditReasonResponse>) = data(JsonField.of(data))
 
         /**
@@ -123,7 +118,6 @@ private constructor(
                 }
         }
 
-        /** `nextToken` for multi-page retrievals. */
         fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
         /**

@@ -3,14 +3,14 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -18,17 +18,15 @@ import com.m3ter.core.http.parseable
 import com.m3ter.core.prepareAsync
 import com.m3ter.models.Webhook
 import com.m3ter.models.WebhookCreateParams
-import com.m3ter.models.WebhookCreateResponse
 import com.m3ter.models.WebhookDeleteParams
 import com.m3ter.models.WebhookListPageAsync
 import com.m3ter.models.WebhookListPageResponse
 import com.m3ter.models.WebhookListParams
 import com.m3ter.models.WebhookRetrieveParams
 import com.m3ter.models.WebhookSetActiveParams
-import com.m3ter.models.WebhookSetActiveResponse
 import com.m3ter.models.WebhookUpdateParams
-import com.m3ter.models.WebhookUpdateResponse
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class WebhookServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -40,10 +38,13 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
     override fun withRawResponse(): WebhookServiceAsync.WithRawResponse = withRawResponse
 
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): WebhookServiceAsync =
+        WebhookServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
+
     override fun create(
         params: WebhookCreateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<WebhookCreateResponse> =
+    ): CompletableFuture<Webhook> =
         // post /organizations/{orgId}/integrationdestinations/webhooks
         withRawResponse().create(params, requestOptions).thenApply { it.parse() }
 
@@ -57,7 +58,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun update(
         params: WebhookUpdateParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<WebhookUpdateResponse> =
+    ): CompletableFuture<Webhook> =
         // put /organizations/{orgId}/integrationdestinations/webhooks/{id}
         withRawResponse().update(params, requestOptions).thenApply { it.parse() }
 
@@ -78,26 +79,33 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
     override fun setActive(
         params: WebhookSetActiveParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<WebhookSetActiveResponse> =
+    ): CompletableFuture<Webhook> =
         // put /organizations/{orgId}/integrationdestinations/webhooks/{id}/active
         withRawResponse().setActive(params, requestOptions).thenApply { it.parse() }
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         WebhookServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
-        private val createHandler: Handler<WebhookCreateResponse> =
-            jsonHandler<WebhookCreateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): WebhookServiceAsync.WithRawResponse =
+            WebhookServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
+
+        private val createHandler: Handler<Webhook> = jsonHandler<Webhook>(clientOptions.jsonMapper)
 
         override fun create(
             params: WebhookCreateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<WebhookCreateResponse>> {
+        ): CompletableFuture<HttpResponseFor<Webhook>> {
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -111,7 +119,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -124,7 +132,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
         }
 
         private val retrieveHandler: Handler<Webhook> =
-            jsonHandler<Webhook>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<Webhook>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: WebhookRetrieveParams,
@@ -136,6 +144,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -149,7 +158,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -161,20 +170,19 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val updateHandler: Handler<WebhookUpdateResponse> =
-            jsonHandler<WebhookUpdateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val updateHandler: Handler<Webhook> = jsonHandler<Webhook>(clientOptions.jsonMapper)
 
         override fun update(
             params: WebhookUpdateParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<WebhookUpdateResponse>> {
+        ): CompletableFuture<HttpResponseFor<Webhook>> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -189,7 +197,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -203,7 +211,6 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
 
         private val listHandler: Handler<WebhookListPageResponse> =
             jsonHandler<WebhookListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: WebhookListParams,
@@ -212,6 +219,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -224,7 +232,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -244,8 +252,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val deleteHandler: Handler<Webhook> =
-            jsonHandler<Webhook>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+        private val deleteHandler: Handler<Webhook> = jsonHandler<Webhook>(clientOptions.jsonMapper)
 
         override fun delete(
             params: WebhookDeleteParams,
@@ -257,6 +264,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -271,7 +279,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {
@@ -283,20 +291,20 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val setActiveHandler: Handler<WebhookSetActiveResponse> =
-            jsonHandler<WebhookSetActiveResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
+        private val setActiveHandler: Handler<Webhook> =
+            jsonHandler<Webhook>(clientOptions.jsonMapper)
 
         override fun setActive(
             params: WebhookSetActiveParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<WebhookSetActiveResponse>> {
+        ): CompletableFuture<HttpResponseFor<Webhook>> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -312,7 +320,7 @@ class WebhookServiceAsyncImpl internal constructor(private val clientOptions: Cl
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { setActiveHandler.handle(it) }
                             .also {

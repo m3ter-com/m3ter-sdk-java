@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [ResourceGroupService.listContents] */
+/** @see ResourceGroupService.listContents */
 class ResourceGroupListContentsPage
 private constructor(
     private val service: ResourceGroupService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [ResourceGroupListContentsPageResponse], but gracefully handles missing data.
      *
-     * @see [ResourceGroupListContentsPageResponse.data]
+     * @see ResourceGroupListContentsPageResponse.data
      */
     fun data(): List<ResourceGroupListContentsResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [ResourceGroupListContentsPageResponse], but gracefully handles missing data.
      *
-     * @see [ResourceGroupListContentsPageResponse.nextToken]
+     * @see ResourceGroupListContentsPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

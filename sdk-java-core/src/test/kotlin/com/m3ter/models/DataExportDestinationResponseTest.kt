@@ -15,7 +15,6 @@ internal class DataExportDestinationResponseTest {
         val dataExportDestinationResponse =
             DataExportDestinationResponse.builder()
                 .id("id")
-                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .destinationType(DataExportDestinationResponse.DestinationType.S3)
@@ -23,10 +22,10 @@ internal class DataExportDestinationResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
+                .version(0L)
                 .build()
 
         assertThat(dataExportDestinationResponse.id()).isEqualTo("id")
-        assertThat(dataExportDestinationResponse.version()).isEqualTo(0L)
         assertThat(dataExportDestinationResponse.code()).contains("code")
         assertThat(dataExportDestinationResponse.createdBy()).contains("createdBy")
         assertThat(dataExportDestinationResponse.destinationType())
@@ -37,6 +36,7 @@ internal class DataExportDestinationResponseTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(dataExportDestinationResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(dataExportDestinationResponse.name()).contains("name")
+        assertThat(dataExportDestinationResponse.version()).contains(0L)
     }
 
     @Test
@@ -45,7 +45,6 @@ internal class DataExportDestinationResponseTest {
         val dataExportDestinationResponse =
             DataExportDestinationResponse.builder()
                 .id("id")
-                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .destinationType(DataExportDestinationResponse.DestinationType.S3)
@@ -53,6 +52,7 @@ internal class DataExportDestinationResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
+                .version(0L)
                 .build()
 
         val roundtrippedDataExportDestinationResponse =

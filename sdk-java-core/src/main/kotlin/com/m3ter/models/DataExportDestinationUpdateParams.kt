@@ -26,8 +26,17 @@ import kotlin.jvm.optionals.getOrNull
 /**
  * Update an Export Destination for the given UUID.
  *
- * **NOTE:** Currently, only Export Destinations using an S3 bucket on your AWS Account are
- * supported.
+ * Currently, two options for setting up Data Export Destinations are available:
+ * - S3 buckets on your AWS account.
+ * - Buckets in your Google Cloud Storage account.
+ *
+ * Request and Response schema:
+ * - Use the selector under the `destinationType` parameter to expose the relevant request and
+ *   response schema for the type of Destination.
+ *
+ * Request and Response samples:
+ * - Use the **Example** selector to show the relevant request and response samples for the type of
+ *   Destination.
  */
 class DataExportDestinationUpdateParams
 private constructor(
@@ -45,8 +54,10 @@ private constructor(
 
     fun body(): Body = body
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)

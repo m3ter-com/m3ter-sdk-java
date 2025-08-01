@@ -23,19 +23,19 @@ import kotlin.jvm.optionals.getOrNull
 class OperationalDataExportScheduleResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val operationalDataTypes: JsonField<List<OperationalDataType>>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("operationalDataTypes")
         @ExcludeMissing
         operationalDataTypes: JsonField<List<OperationalDataType>> = JsonMissing.of(),
-    ) : this(id, version, operationalDataTypes, mutableMapOf())
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
+    ) : this(id, operationalDataTypes, version, mutableMapOf())
 
     /**
      * The id of the schedule.
@@ -44,17 +44,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * A list of the entities whose operational data is included in the data export.
@@ -66,18 +55,22 @@ private constructor(
         operationalDataTypes.getOptional("operationalDataTypes")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [operationalDataTypes].
@@ -88,6 +81,13 @@ private constructor(
     @JsonProperty("operationalDataTypes")
     @ExcludeMissing
     fun _operationalDataTypes(): JsonField<List<OperationalDataType>> = operationalDataTypes
+
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -110,7 +110,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -120,8 +119,8 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var operationalDataTypes: JsonField<MutableList<OperationalDataType>>? = null
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -129,11 +128,11 @@ private constructor(
             operationalDataExportScheduleResponse: OperationalDataExportScheduleResponse
         ) = apply {
             id = operationalDataExportScheduleResponse.id
-            version = operationalDataExportScheduleResponse.version
             operationalDataTypes =
                 operationalDataExportScheduleResponse.operationalDataTypes.map {
                     it.toMutableList()
                 }
+            version = operationalDataExportScheduleResponse.version
             additionalProperties =
                 operationalDataExportScheduleResponse.additionalProperties.toMutableMap()
         }
@@ -148,22 +147,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** A list of the entities whose operational data is included in the data export. */
         fun operationalDataTypes(operationalDataTypes: List<OperationalDataType>) =
@@ -193,6 +176,22 @@ private constructor(
                 }
         }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -220,7 +219,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -228,8 +226,8 @@ private constructor(
         fun build(): OperationalDataExportScheduleResponse =
             OperationalDataExportScheduleResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 (operationalDataTypes ?: JsonMissing.of()).map { it.toImmutable() },
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -242,8 +240,8 @@ private constructor(
         }
 
         id()
-        version()
         operationalDataTypes().ifPresent { it.forEach { it.validate() } }
+        version()
         validated = true
     }
 
@@ -263,8 +261,8 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
-            (operationalDataTypes.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0)
+            (operationalDataTypes.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     class OperationalDataType
     @JsonCreator
@@ -318,6 +316,8 @@ private constructor(
 
             @JvmField val BALANCE_TRANSACTIONS = of("BALANCE_TRANSACTIONS")
 
+            @JvmField val TRANSACTION_TYPES = of("TRANSACTION_TYPES")
+
             @JvmStatic fun of(value: String) = OperationalDataType(JsonField.of(value))
         }
 
@@ -341,6 +341,7 @@ private constructor(
             PLAN_GROUP_LINKS,
             PLAN_TEMPLATES,
             BALANCE_TRANSACTIONS,
+            TRANSACTION_TYPES,
         }
 
         /**
@@ -371,6 +372,7 @@ private constructor(
             PLAN_GROUP_LINKS,
             PLAN_TEMPLATES,
             BALANCE_TRANSACTIONS,
+            TRANSACTION_TYPES,
             /**
              * An enum member indicating that [OperationalDataType] was instantiated with an unknown
              * value.
@@ -405,6 +407,7 @@ private constructor(
                 PLAN_GROUP_LINKS -> Value.PLAN_GROUP_LINKS
                 PLAN_TEMPLATES -> Value.PLAN_TEMPLATES
                 BALANCE_TRANSACTIONS -> Value.BALANCE_TRANSACTIONS
+                TRANSACTION_TYPES -> Value.TRANSACTION_TYPES
                 else -> Value._UNKNOWN
             }
 
@@ -436,6 +439,7 @@ private constructor(
                 PLAN_GROUP_LINKS -> Known.PLAN_GROUP_LINKS
                 PLAN_TEMPLATES -> Known.PLAN_TEMPLATES
                 BALANCE_TRANSACTIONS -> Known.BALANCE_TRANSACTIONS
+                TRANSACTION_TYPES -> Known.TRANSACTION_TYPES
                 else -> throw M3terInvalidDataException("Unknown OperationalDataType: $value")
             }
 
@@ -496,15 +500,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is OperationalDataExportScheduleResponse && id == other.id && version == other.version && operationalDataTypes == other.operationalDataTypes && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is OperationalDataExportScheduleResponse && id == other.id && operationalDataTypes == other.operationalDataTypes && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, operationalDataTypes, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, operationalDataTypes, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "OperationalDataExportScheduleResponse{id=$id, version=$version, operationalDataTypes=$operationalDataTypes, additionalProperties=$additionalProperties}"
+        "OperationalDataExportScheduleResponse{id=$id, operationalDataTypes=$operationalDataTypes, version=$version, additionalProperties=$additionalProperties}"
 }

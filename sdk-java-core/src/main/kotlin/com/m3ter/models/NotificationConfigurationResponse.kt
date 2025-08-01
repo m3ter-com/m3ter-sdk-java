@@ -23,7 +23,6 @@ private constructor(
     private val code: JsonField<String>,
     private val description: JsonField<String>,
     private val name: JsonField<String>,
-    private val version: JsonField<Long>,
     private val active: JsonField<Boolean>,
     private val alwaysFireEvent: JsonField<Boolean>,
     private val calculation: JsonField<String>,
@@ -32,6 +31,7 @@ private constructor(
     private val dtLastModified: JsonField<OffsetDateTime>,
     private val eventName: JsonField<String>,
     private val lastModifiedBy: JsonField<String>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -43,7 +43,6 @@ private constructor(
         @ExcludeMissing
         description: JsonField<String> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("active") @ExcludeMissing active: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("alwaysFireEvent")
         @ExcludeMissing
@@ -62,12 +61,12 @@ private constructor(
         @JsonProperty("lastModifiedBy")
         @ExcludeMissing
         lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
         code,
         description,
         name,
-        version,
         active,
         alwaysFireEvent,
         calculation,
@@ -76,6 +75,7 @@ private constructor(
         dtLastModified,
         eventName,
         lastModifiedBy,
+        version,
         mutableMapOf(),
     )
 
@@ -111,17 +111,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun name(): String = name.getRequired("name")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * A Boolean flag indicating whether or not the Notification is active.
@@ -208,6 +197,17 @@ private constructor(
     fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
@@ -234,13 +234,6 @@ private constructor(
      * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [active].
@@ -306,6 +299,13 @@ private constructor(
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -330,7 +330,6 @@ private constructor(
          * .code()
          * .description()
          * .name()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -343,7 +342,6 @@ private constructor(
         private var code: JsonField<String>? = null
         private var description: JsonField<String>? = null
         private var name: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var active: JsonField<Boolean> = JsonMissing.of()
         private var alwaysFireEvent: JsonField<Boolean> = JsonMissing.of()
         private var calculation: JsonField<String> = JsonMissing.of()
@@ -352,6 +350,7 @@ private constructor(
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var eventName: JsonField<String> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -361,7 +360,6 @@ private constructor(
                 code = notificationConfigurationResponse.code
                 description = notificationConfigurationResponse.description
                 name = notificationConfigurationResponse.name
-                version = notificationConfigurationResponse.version
                 active = notificationConfigurationResponse.active
                 alwaysFireEvent = notificationConfigurationResponse.alwaysFireEvent
                 calculation = notificationConfigurationResponse.calculation
@@ -370,6 +368,7 @@ private constructor(
                 dtLastModified = notificationConfigurationResponse.dtLastModified
                 eventName = notificationConfigurationResponse.eventName
                 lastModifiedBy = notificationConfigurationResponse.lastModifiedBy
+                version = notificationConfigurationResponse.version
                 additionalProperties =
                     notificationConfigurationResponse.additionalProperties.toMutableMap()
             }
@@ -421,22 +420,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /**
          * A Boolean flag indicating whether or not the Notification is active.
@@ -570,6 +553,22 @@ private constructor(
             this.lastModifiedBy = lastModifiedBy
         }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -600,7 +599,6 @@ private constructor(
          * .code()
          * .description()
          * .name()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -611,7 +609,6 @@ private constructor(
                 checkRequired("code", code),
                 checkRequired("description", description),
                 checkRequired("name", name),
-                checkRequired("version", version),
                 active,
                 alwaysFireEvent,
                 calculation,
@@ -620,6 +617,7 @@ private constructor(
                 dtLastModified,
                 eventName,
                 lastModifiedBy,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -635,7 +633,6 @@ private constructor(
         code()
         description()
         name()
-        version()
         active()
         alwaysFireEvent()
         calculation()
@@ -644,6 +641,7 @@ private constructor(
         dtLastModified()
         eventName()
         lastModifiedBy()
+        version()
         validated = true
     }
 
@@ -666,7 +664,6 @@ private constructor(
             (if (code.asKnown().isPresent) 1 else 0) +
             (if (description.asKnown().isPresent) 1 else 0) +
             (if (name.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (active.asKnown().isPresent) 1 else 0) +
             (if (alwaysFireEvent.asKnown().isPresent) 1 else 0) +
             (if (calculation.asKnown().isPresent) 1 else 0) +
@@ -674,22 +671,23 @@ private constructor(
             (if (dtCreated.asKnown().isPresent) 1 else 0) +
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
             (if (eventName.asKnown().isPresent) 1 else 0) +
-            (if (lastModifiedBy.asKnown().isPresent) 1 else 0)
+            (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is NotificationConfigurationResponse && id == other.id && code == other.code && description == other.description && name == other.name && version == other.version && active == other.active && alwaysFireEvent == other.alwaysFireEvent && calculation == other.calculation && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && eventName == other.eventName && lastModifiedBy == other.lastModifiedBy && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is NotificationConfigurationResponse && id == other.id && code == other.code && description == other.description && name == other.name && active == other.active && alwaysFireEvent == other.alwaysFireEvent && calculation == other.calculation && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && eventName == other.eventName && lastModifiedBy == other.lastModifiedBy && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, code, description, name, version, active, alwaysFireEvent, calculation, createdBy, dtCreated, dtLastModified, eventName, lastModifiedBy, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, code, description, name, active, alwaysFireEvent, calculation, createdBy, dtCreated, dtLastModified, eventName, lastModifiedBy, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "NotificationConfigurationResponse{id=$id, code=$code, description=$description, name=$name, version=$version, active=$active, alwaysFireEvent=$alwaysFireEvent, calculation=$calculation, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, eventName=$eventName, lastModifiedBy=$lastModifiedBy, additionalProperties=$additionalProperties}"
+        "NotificationConfigurationResponse{id=$id, code=$code, description=$description, name=$name, active=$active, alwaysFireEvent=$alwaysFireEvent, calculation=$calculation, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, eventName=$eventName, lastModifiedBy=$lastModifiedBy, version=$version, additionalProperties=$additionalProperties}"
 }

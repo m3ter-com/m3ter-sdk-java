@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -32,6 +32,7 @@ import com.m3ter.models.ResourceGroupRemoveResourceParams
 import com.m3ter.models.ResourceGroupResponse
 import com.m3ter.models.ResourceGroupRetrieveParams
 import com.m3ter.models.ResourceGroupUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class ResourceGroupServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -42,6 +43,9 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
     }
 
     override fun withRawResponse(): ResourceGroupService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): ResourceGroupService =
+        ResourceGroupServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: ResourceGroupCreateParams,
@@ -109,11 +113,18 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         ResourceGroupService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ResourceGroupService.WithRawResponse =
+            ResourceGroupServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<ResourceGroupResponse> =
             jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: ResourceGroupCreateParams,
@@ -125,6 +136,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -136,7 +148,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -149,7 +161,6 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
 
         private val retrieveHandler: Handler<ResourceGroupResponse> =
             jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: ResourceGroupRetrieveParams,
@@ -161,6 +172,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -172,7 +184,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -185,7 +197,6 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
 
         private val updateHandler: Handler<ResourceGroupResponse> =
             jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: ResourceGroupUpdateParams,
@@ -197,6 +208,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -209,7 +221,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -222,7 +234,6 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
 
         private val listHandler: Handler<ResourceGroupListPageResponse> =
             jsonHandler<ResourceGroupListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: ResourceGroupListParams,
@@ -234,6 +245,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -244,7 +256,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -264,7 +276,6 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
 
         private val deleteHandler: Handler<ResourceGroupResponse> =
             jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: ResourceGroupDeleteParams,
@@ -276,6 +287,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -288,7 +300,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {
@@ -301,7 +313,6 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
 
         private val addResourceHandler: Handler<ResourceGroupResponse> =
             jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun addResource(
             params: ResourceGroupAddResourceParams,
@@ -313,6 +324,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -326,7 +338,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { addResourceHandler.handle(it) }
                     .also {
@@ -339,7 +351,6 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
 
         private val listContentsHandler: Handler<ResourceGroupListContentsPageResponse> =
             jsonHandler<ResourceGroupListContentsPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun listContents(
             params: ResourceGroupListContentsParams,
@@ -351,6 +362,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -364,7 +376,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listContentsHandler.handle(it) }
                     .also {
@@ -384,7 +396,6 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
 
         private val listPermissionsHandler: Handler<ResourceGroupListPermissionsPageResponse> =
             jsonHandler<ResourceGroupListPermissionsPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun listPermissions(
             params: ResourceGroupListPermissionsParams,
@@ -396,6 +407,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -408,7 +420,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listPermissionsHandler.handle(it) }
                     .also {
@@ -428,7 +440,6 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
 
         private val removeResourceHandler: Handler<ResourceGroupResponse> =
             jsonHandler<ResourceGroupResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun removeResource(
             params: ResourceGroupRemoveResourceParams,
@@ -440,6 +451,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -453,7 +465,7 @@ class ResourceGroupServiceImpl internal constructor(private val clientOptions: C
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { removeResourceHandler.handle(it) }
                     .also {

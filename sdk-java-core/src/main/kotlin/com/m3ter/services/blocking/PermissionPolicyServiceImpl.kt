@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -40,6 +40,7 @@ import com.m3ter.models.PermissionPolicyRemoveFromUserResponse
 import com.m3ter.models.PermissionPolicyResponse
 import com.m3ter.models.PermissionPolicyRetrieveParams
 import com.m3ter.models.PermissionPolicyUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class PermissionPolicyServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -50,6 +51,9 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
     }
 
     override fun withRawResponse(): PermissionPolicyService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): PermissionPolicyService =
+        PermissionPolicyServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: PermissionPolicyCreateParams,
@@ -146,11 +150,18 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         PermissionPolicyService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): PermissionPolicyService.WithRawResponse =
+            PermissionPolicyServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<PermissionPolicyResponse> =
             jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: PermissionPolicyCreateParams,
@@ -159,6 +170,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -169,7 +181,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -182,7 +194,6 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
 
         private val retrieveHandler: Handler<PermissionPolicyResponse> =
             jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: PermissionPolicyRetrieveParams,
@@ -194,6 +205,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -204,7 +216,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -217,7 +229,6 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
 
         private val updateHandler: Handler<PermissionPolicyResponse> =
             jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: PermissionPolicyUpdateParams,
@@ -229,6 +240,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -240,7 +252,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -253,7 +265,6 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
 
         private val listHandler: Handler<PermissionPolicyListPageResponse> =
             jsonHandler<PermissionPolicyListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: PermissionPolicyListParams,
@@ -262,6 +273,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -271,7 +283,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -291,7 +303,6 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
 
         private val deleteHandler: Handler<PermissionPolicyResponse> =
             jsonHandler<PermissionPolicyResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: PermissionPolicyDeleteParams,
@@ -303,6 +314,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -314,7 +326,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {
@@ -327,7 +339,6 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
 
         private val addToServiceUserHandler: Handler<PermissionPolicyAddToServiceUserResponse> =
             jsonHandler<PermissionPolicyAddToServiceUserResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun addToServiceUser(
             params: PermissionPolicyAddToServiceUserParams,
@@ -339,6 +350,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -351,7 +363,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { addToServiceUserHandler.handle(it) }
                     .also {
@@ -364,7 +376,6 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
 
         private val addToSupportUserHandler: Handler<PermissionPolicyAddToSupportUserResponse> =
             jsonHandler<PermissionPolicyAddToSupportUserResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun addToSupportUser(
             params: PermissionPolicyAddToSupportUserParams,
@@ -376,6 +387,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -388,7 +400,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { addToSupportUserHandler.handle(it) }
                     .also {
@@ -401,7 +413,6 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
 
         private val addToUserHandler: Handler<PermissionPolicyAddToUserResponse> =
             jsonHandler<PermissionPolicyAddToUserResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun addToUser(
             params: PermissionPolicyAddToUserParams,
@@ -413,6 +424,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -425,7 +437,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { addToUserHandler.handle(it) }
                     .also {
@@ -438,7 +450,6 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
 
         private val addToUserGroupHandler: Handler<PermissionPolicyAddToUserGroupResponse> =
             jsonHandler<PermissionPolicyAddToUserGroupResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun addToUserGroup(
             params: PermissionPolicyAddToUserGroupParams,
@@ -450,6 +461,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -462,7 +474,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { addToUserGroupHandler.handle(it) }
                     .also {
@@ -476,7 +488,6 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
         private val removeFromServiceUserHandler:
             Handler<PermissionPolicyRemoveFromServiceUserResponse> =
             jsonHandler<PermissionPolicyRemoveFromServiceUserResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun removeFromServiceUser(
             params: PermissionPolicyRemoveFromServiceUserParams,
@@ -488,6 +499,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -500,7 +512,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { removeFromServiceUserHandler.handle(it) }
                     .also {
@@ -514,7 +526,6 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
         private val removeFromSupportUserHandler:
             Handler<PermissionPolicyRemoveFromSupportUserResponse> =
             jsonHandler<PermissionPolicyRemoveFromSupportUserResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun removeFromSupportUser(
             params: PermissionPolicyRemoveFromSupportUserParams,
@@ -526,6 +537,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -538,7 +550,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { removeFromSupportUserHandler.handle(it) }
                     .also {
@@ -551,7 +563,6 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
 
         private val removeFromUserHandler: Handler<PermissionPolicyRemoveFromUserResponse> =
             jsonHandler<PermissionPolicyRemoveFromUserResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun removeFromUser(
             params: PermissionPolicyRemoveFromUserParams,
@@ -563,6 +574,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -575,7 +587,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { removeFromUserHandler.handle(it) }
                     .also {
@@ -589,7 +601,6 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
         private val removeFromUserGroupHandler:
             Handler<PermissionPolicyRemoveFromUserGroupResponse> =
             jsonHandler<PermissionPolicyRemoveFromUserGroupResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun removeFromUserGroup(
             params: PermissionPolicyRemoveFromUserGroupParams,
@@ -601,6 +612,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -613,7 +625,7 @@ class PermissionPolicyServiceImpl internal constructor(private val clientOptions
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { removeFromUserGroupHandler.handle(it) }
                     .also {

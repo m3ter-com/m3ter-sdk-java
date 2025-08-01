@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [CurrencyService.list] */
+/** @see CurrencyService.list */
 class CurrencyListPage
 private constructor(
     private val service: CurrencyService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [CurrencyListPageResponse], but gracefully handles missing data.
      *
-     * @see [CurrencyListPageResponse.data]
+     * @see CurrencyListPageResponse.data
      */
     fun data(): List<CurrencyResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [CurrencyListPageResponse], but gracefully handles missing data.
      *
-     * @see [CurrencyListPageResponse.nextToken]
+     * @see CurrencyListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

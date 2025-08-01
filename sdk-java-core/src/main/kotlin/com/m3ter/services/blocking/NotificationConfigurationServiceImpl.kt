@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -24,6 +24,7 @@ import com.m3ter.models.NotificationConfigurationListParams
 import com.m3ter.models.NotificationConfigurationResponse
 import com.m3ter.models.NotificationConfigurationRetrieveParams
 import com.m3ter.models.NotificationConfigurationUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class NotificationConfigurationServiceImpl
@@ -35,6 +36,13 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
 
     override fun withRawResponse(): NotificationConfigurationService.WithRawResponse =
         withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): NotificationConfigurationService =
+        NotificationConfigurationServiceImpl(
+            clientOptions.toBuilder().apply(modifier::accept).build()
+        )
 
     override fun create(
         params: NotificationConfigurationCreateParams,
@@ -74,11 +82,18 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         NotificationConfigurationService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): NotificationConfigurationService.WithRawResponse =
+            NotificationConfigurationServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<NotificationConfigurationResponse> =
             jsonHandler<NotificationConfigurationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: NotificationConfigurationCreateParams,
@@ -87,6 +102,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -98,7 +114,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -111,7 +127,6 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
 
         private val retrieveHandler: Handler<NotificationConfigurationResponse> =
             jsonHandler<NotificationConfigurationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: NotificationConfigurationRetrieveParams,
@@ -123,6 +138,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -134,7 +150,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -147,7 +163,6 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
 
         private val updateHandler: Handler<NotificationConfigurationResponse> =
             jsonHandler<NotificationConfigurationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: NotificationConfigurationUpdateParams,
@@ -159,6 +174,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -171,7 +187,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -184,7 +200,6 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
 
         private val listHandler: Handler<NotificationConfigurationListPageResponse> =
             jsonHandler<NotificationConfigurationListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: NotificationConfigurationListParams,
@@ -193,6 +208,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -203,7 +219,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -223,7 +239,6 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
 
         private val deleteHandler: Handler<NotificationConfigurationResponse> =
             jsonHandler<NotificationConfigurationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: NotificationConfigurationDeleteParams,
@@ -235,6 +250,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -247,7 +263,7 @@ internal constructor(private val clientOptions: ClientOptions) : NotificationCon
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {

@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [MeterService.list] */
+/** @see MeterService.list */
 class MeterListPage
 private constructor(
     private val service: MeterService,
@@ -21,7 +21,7 @@ private constructor(
     /**
      * Delegates to [MeterListPageResponse], but gracefully handles missing data.
      *
-     * @see [MeterListPageResponse.data]
+     * @see MeterListPageResponse.data
      */
     fun data(): List<MeterResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -29,7 +29,7 @@ private constructor(
     /**
      * Delegates to [MeterListPageResponse], but gracefully handles missing data.
      *
-     * @see [MeterListPageResponse.nextToken]
+     * @see MeterListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

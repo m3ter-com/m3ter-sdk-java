@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking.balances
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.BalanceTransactionCreateParams
@@ -11,6 +12,7 @@ import com.m3ter.models.BalanceTransactionListParams
 import com.m3ter.models.BalanceTransactionSummaryParams
 import com.m3ter.models.BalanceTransactionSummaryResponse
 import com.m3ter.models.TransactionResponse
+import java.util.function.Consumer
 
 interface TransactionService {
 
@@ -18,6 +20,13 @@ interface TransactionService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): TransactionService
 
     /**
      * Add a Transaction to a Balance. This endpoint allows you to create a new Transaction amount
@@ -39,18 +48,18 @@ interface TransactionService {
     fun create(balanceId: String, params: BalanceTransactionCreateParams): TransactionResponse =
         create(balanceId, params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         balanceId: String,
         params: BalanceTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TransactionResponse = create(params.toBuilder().balanceId(balanceId).build(), requestOptions)
 
-    /** @see [create] */
+    /** @see create */
     fun create(params: BalanceTransactionCreateParams): TransactionResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: BalanceTransactionCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -65,7 +74,7 @@ interface TransactionService {
     fun list(balanceId: String): BalanceTransactionListPage =
         list(balanceId, BalanceTransactionListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         balanceId: String,
         params: BalanceTransactionListParams = BalanceTransactionListParams.none(),
@@ -73,31 +82,51 @@ interface TransactionService {
     ): BalanceTransactionListPage =
         list(params.toBuilder().balanceId(balanceId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         balanceId: String,
         params: BalanceTransactionListParams = BalanceTransactionListParams.none(),
     ): BalanceTransactionListPage = list(balanceId, params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BalanceTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceTransactionListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: BalanceTransactionListParams): BalanceTransactionListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(balanceId: String, requestOptions: RequestOptions): BalanceTransactionListPage =
         list(balanceId, BalanceTransactionListParams.none(), requestOptions)
 
-    /** Retrieves the Balance Transactions Summary for a given Balance. */
+    /**
+     * Retrieves the Balance Transactions Summary for a given Balance.
+     *
+     * The response contains useful recorded and calculated Transaction amounts created for a
+     * Balance during the time it is active for the Account, including amounts relevant to any
+     * rollover amount configured for a Balance:
+     * - `totalCreditAmount`. The sum of all credits amounts created for the Balance.
+     * - `totalDebitAmount`. The sum of all debit amounts created for the Balance.
+     * - `initialCreditAmount`. The initial credit amount created for the Balance.
+     * - `expiredBalanceAmount`. The amount of the Balance remaining at the time the Balance expires
+     *   and which is not included in any configured Rollover amount. For example, suppose a Balance
+     *   reaches its end date and $1000 credit remains unused. If the Balance is configured to
+     *   rollover $800, then the `expiredBalanceAmount` is calculated as $1000 - $800 = $200.
+     * - `rolloverConsumed`. The sum of debits made against the configured rollover amount. Note
+     *   that this amount is dynamic relative to when the API call is made until either the rollover
+     *   end date is reached or the cap configured for the rollover amount is reached, after which
+     *   it will be unchanged. If no rollover is configured for a Balance, then this is ignored.
+     * - `balanceConsumed`. The sum of debits made against the Balance. Note that this amount is
+     *   dynamic relative to when the API call is made until either the Balance end date is reached
+     *   or the available Balance amount reaches zero, after which it will be unchanged.
+     */
     fun summary(balanceId: String): BalanceTransactionSummaryResponse =
         summary(balanceId, BalanceTransactionSummaryParams.none())
 
-    /** @see [summary] */
+    /** @see summary */
     fun summary(
         balanceId: String,
         params: BalanceTransactionSummaryParams = BalanceTransactionSummaryParams.none(),
@@ -105,23 +134,23 @@ interface TransactionService {
     ): BalanceTransactionSummaryResponse =
         summary(params.toBuilder().balanceId(balanceId).build(), requestOptions)
 
-    /** @see [summary] */
+    /** @see summary */
     fun summary(
         balanceId: String,
         params: BalanceTransactionSummaryParams = BalanceTransactionSummaryParams.none(),
     ): BalanceTransactionSummaryResponse = summary(balanceId, params, RequestOptions.none())
 
-    /** @see [summary] */
+    /** @see summary */
     fun summary(
         params: BalanceTransactionSummaryParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BalanceTransactionSummaryResponse
 
-    /** @see [summary] */
+    /** @see summary */
     fun summary(params: BalanceTransactionSummaryParams): BalanceTransactionSummaryResponse =
         summary(params, RequestOptions.none())
 
-    /** @see [summary] */
+    /** @see summary */
     fun summary(
         balanceId: String,
         requestOptions: RequestOptions,
@@ -134,6 +163,15 @@ interface TransactionService {
     interface WithRawResponse {
 
         /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): TransactionService.WithRawResponse
+
+        /**
          * Returns a raw HTTP response for `post
          * /organizations/{orgId}/balances/{balanceId}/transactions`, but is otherwise the same as
          * [TransactionService.create].
@@ -144,7 +182,7 @@ interface TransactionService {
             params: BalanceTransactionCreateParams,
         ): HttpResponseFor<TransactionResponse> = create(balanceId, params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             balanceId: String,
@@ -153,12 +191,12 @@ interface TransactionService {
         ): HttpResponseFor<TransactionResponse> =
             create(params.toBuilder().balanceId(balanceId).build(), requestOptions)
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(params: BalanceTransactionCreateParams): HttpResponseFor<TransactionResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: BalanceTransactionCreateParams,
@@ -174,7 +212,7 @@ interface TransactionService {
         fun list(balanceId: String): HttpResponseFor<BalanceTransactionListPage> =
             list(balanceId, BalanceTransactionListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             balanceId: String,
@@ -183,7 +221,7 @@ interface TransactionService {
         ): HttpResponseFor<BalanceTransactionListPage> =
             list(params.toBuilder().balanceId(balanceId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             balanceId: String,
@@ -191,20 +229,20 @@ interface TransactionService {
         ): HttpResponseFor<BalanceTransactionListPage> =
             list(balanceId, params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BalanceTransactionListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BalanceTransactionListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BalanceTransactionListParams
         ): HttpResponseFor<BalanceTransactionListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             balanceId: String,
@@ -221,7 +259,7 @@ interface TransactionService {
         fun summary(balanceId: String): HttpResponseFor<BalanceTransactionSummaryResponse> =
             summary(balanceId, BalanceTransactionSummaryParams.none())
 
-        /** @see [summary] */
+        /** @see summary */
         @MustBeClosed
         fun summary(
             balanceId: String,
@@ -230,7 +268,7 @@ interface TransactionService {
         ): HttpResponseFor<BalanceTransactionSummaryResponse> =
             summary(params.toBuilder().balanceId(balanceId).build(), requestOptions)
 
-        /** @see [summary] */
+        /** @see summary */
         @MustBeClosed
         fun summary(
             balanceId: String,
@@ -238,21 +276,21 @@ interface TransactionService {
         ): HttpResponseFor<BalanceTransactionSummaryResponse> =
             summary(balanceId, params, RequestOptions.none())
 
-        /** @see [summary] */
+        /** @see summary */
         @MustBeClosed
         fun summary(
             params: BalanceTransactionSummaryParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BalanceTransactionSummaryResponse>
 
-        /** @see [summary] */
+        /** @see summary */
         @MustBeClosed
         fun summary(
             params: BalanceTransactionSummaryParams
         ): HttpResponseFor<BalanceTransactionSummaryResponse> =
             summary(params, RequestOptions.none())
 
-        /** @see [summary] */
+        /** @see summary */
         @MustBeClosed
         fun summary(
             balanceId: String,

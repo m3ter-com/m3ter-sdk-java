@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [PlanServiceAsync.list] */
+/** @see PlanServiceAsync.list */
 class PlanListPageAsync
 private constructor(
     private val service: PlanServiceAsync,
@@ -24,14 +24,14 @@ private constructor(
     /**
      * Delegates to [PlanListPageResponse], but gracefully handles missing data.
      *
-     * @see [PlanListPageResponse.data]
+     * @see PlanListPageResponse.data
      */
     fun data(): List<PlanResponse> = response._data().getOptional("data").getOrNull() ?: emptyList()
 
     /**
      * Delegates to [PlanListPageResponse], but gracefully handles missing data.
      *
-     * @see [PlanListPageResponse.nextToken]
+     * @see PlanListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

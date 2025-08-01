@@ -3,13 +3,13 @@
 package com.m3ter.services.async.usage
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -20,6 +20,7 @@ import com.m3ter.models.UsageFileUploadGenerateUploadUrlResponse
 import com.m3ter.services.async.usage.fileUploads.JobServiceAsync
 import com.m3ter.services.async.usage.fileUploads.JobServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 class FileUploadServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     FileUploadServiceAsync {
@@ -31,6 +32,9 @@ class FileUploadServiceAsyncImpl internal constructor(private val clientOptions:
     private val jobs: JobServiceAsync by lazy { JobServiceAsyncImpl(clientOptions) }
 
     override fun withRawResponse(): FileUploadServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): FileUploadServiceAsync =
+        FileUploadServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun jobs(): JobServiceAsync = jobs
 
@@ -44,17 +48,24 @@ class FileUploadServiceAsyncImpl internal constructor(private val clientOptions:
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         FileUploadServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val jobs: JobServiceAsync.WithRawResponse by lazy {
             JobServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): FileUploadServiceAsync.WithRawResponse =
+            FileUploadServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
+
         override fun jobs(): JobServiceAsync.WithRawResponse = jobs
 
         private val generateUploadUrlHandler: Handler<UsageFileUploadGenerateUploadUrlResponse> =
             jsonHandler<UsageFileUploadGenerateUploadUrlResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun generateUploadUrl(
             params: UsageFileUploadGenerateUploadUrlParams,
@@ -63,6 +74,7 @@ class FileUploadServiceAsyncImpl internal constructor(private val clientOptions:
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -77,7 +89,7 @@ class FileUploadServiceAsyncImpl internal constructor(private val clientOptions:
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { generateUploadUrlHandler.handle(it) }
                             .also {

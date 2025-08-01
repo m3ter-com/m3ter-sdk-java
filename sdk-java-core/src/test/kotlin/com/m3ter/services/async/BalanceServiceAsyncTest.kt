@@ -4,6 +4,7 @@ package com.m3ter.services.async
 
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClientAsync
+import com.m3ter.core.JsonValue
 import com.m3ter.models.BalanceCreateParams
 import com.m3ter.models.BalanceDeleteParams
 import com.m3ter.models.BalanceRetrieveParams
@@ -36,8 +37,14 @@ internal class BalanceServiceAsyncTest {
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .balanceDrawDownDescription("balanceDrawDownDescription")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .consumptionsAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                    .contractId("contractId")
+                    .customFields(
+                        BalanceCreateParams.CustomFields.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .description("description")
                     .feesAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .addLineItemType(BalanceCreateParams.LineItemType.STANDING_CHARGE)
@@ -98,8 +105,14 @@ internal class BalanceServiceAsyncTest {
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .balanceDrawDownDescription("balanceDrawDownDescription")
-                    .code("JS!?Q0]r] ]\$]")
+                    .code("S?oC\"\$]C] ]]]]]5]")
                     .consumptionsAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+                    .contractId("contractId")
+                    .customFields(
+                        BalanceUpdateParams.CustomFields.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .description("description")
                     .feesAccountingProductId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                     .addLineItemType(BalanceUpdateParams.LineItemType.STANDING_CHARGE)

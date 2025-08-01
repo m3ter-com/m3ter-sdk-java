@@ -10,7 +10,7 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [UserService.list] */
+/** @see UserService.list */
 class UserListPage
 private constructor(
     private val service: UserService,
@@ -21,14 +21,14 @@ private constructor(
     /**
      * Delegates to [UserListPageResponse], but gracefully handles missing data.
      *
-     * @see [UserListPageResponse.data]
+     * @see UserListPageResponse.data
      */
     fun data(): List<UserResponse> = response._data().getOptional("data").getOrNull() ?: emptyList()
 
     /**
      * Delegates to [UserListPageResponse], but gracefully handles missing data.
      *
-     * @see [UserListPageResponse.nextToken]
+     * @see UserListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

@@ -41,6 +41,12 @@ private constructor(
     fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun accountingProductId(): String = body.accountingProductId()
+
+    /**
      * The amount for the line item.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -132,6 +138,14 @@ private constructor(
     fun version(): Optional<Long> = body.version()
 
     /**
+     * Returns the raw JSON value of [accountingProductId].
+     *
+     * Unlike [accountingProductId], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    fun _accountingProductId(): JsonField<String> = body._accountingProductId()
+
+    /**
      * Returns the raw JSON value of [amount].
      *
      * Unlike [amount], this method doesn't throw if the JSON field has an unexpected type.
@@ -214,8 +228,10 @@ private constructor(
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
@@ -229,6 +245,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .billId()
+         * .accountingProductId()
          * .amount()
          * .description()
          * .productId()
@@ -280,14 +297,29 @@ private constructor(
          *
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [accountingProductId]
          * - [amount]
          * - [description]
          * - [productId]
          * - [referencedBillId]
-         * - [referencedLineItemId]
          * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        fun accountingProductId(accountingProductId: String) = apply {
+            body.accountingProductId(accountingProductId)
+        }
+
+        /**
+         * Sets [Builder.accountingProductId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.accountingProductId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+            body.accountingProductId(accountingProductId)
+        }
 
         /** The amount for the line item. */
         fun amount(amount: Double) = apply { body.amount(amount) }
@@ -569,6 +601,7 @@ private constructor(
          * The following fields are required:
          * ```java
          * .billId()
+         * .accountingProductId()
          * .amount()
          * .description()
          * .productId()
@@ -607,6 +640,7 @@ private constructor(
 
     class Body
     private constructor(
+        private val accountingProductId: JsonField<String>,
         private val amount: JsonField<Double>,
         private val description: JsonField<String>,
         private val productId: JsonField<String>,
@@ -623,6 +657,9 @@ private constructor(
 
         @JsonCreator
         private constructor(
+            @JsonProperty("accountingProductId")
+            @ExcludeMissing
+            accountingProductId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
             @JsonProperty("description")
             @ExcludeMissing
@@ -653,6 +690,7 @@ private constructor(
             reasonId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         ) : this(
+            accountingProductId,
             amount,
             description,
             productId,
@@ -666,6 +704,12 @@ private constructor(
             version,
             mutableMapOf(),
         )
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun accountingProductId(): String = accountingProductId.getRequired("accountingProductId")
 
         /**
          * The amount for the line item.
@@ -760,6 +804,16 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = version.getOptional("version")
+
+        /**
+         * Returns the raw JSON value of [accountingProductId].
+         *
+         * Unlike [accountingProductId], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("accountingProductId")
+        @ExcludeMissing
+        fun _accountingProductId(): JsonField<String> = accountingProductId
 
         /**
          * Returns the raw JSON value of [amount].
@@ -877,6 +931,7 @@ private constructor(
              *
              * The following fields are required:
              * ```java
+             * .accountingProductId()
              * .amount()
              * .description()
              * .productId()
@@ -892,6 +947,7 @@ private constructor(
         /** A builder for [Body]. */
         class Builder internal constructor() {
 
+            private var accountingProductId: JsonField<String>? = null
             private var amount: JsonField<Double>? = null
             private var description: JsonField<String>? = null
             private var productId: JsonField<String>? = null
@@ -907,6 +963,7 @@ private constructor(
 
             @JvmSynthetic
             internal fun from(body: Body) = apply {
+                accountingProductId = body.accountingProductId
                 amount = body.amount
                 description = body.description
                 productId = body.productId
@@ -919,6 +976,20 @@ private constructor(
                 reasonId = body.reasonId
                 version = body.version
                 additionalProperties = body.additionalProperties.toMutableMap()
+            }
+
+            fun accountingProductId(accountingProductId: String) =
+                accountingProductId(JsonField.of(accountingProductId))
+
+            /**
+             * Sets [Builder.accountingProductId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.accountingProductId] with a well-typed [String]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun accountingProductId(accountingProductId: JsonField<String>) = apply {
+                this.accountingProductId = accountingProductId
             }
 
             /** The amount for the line item. */
@@ -1106,6 +1177,7 @@ private constructor(
              *
              * The following fields are required:
              * ```java
+             * .accountingProductId()
              * .amount()
              * .description()
              * .productId()
@@ -1119,6 +1191,7 @@ private constructor(
              */
             fun build(): Body =
                 Body(
+                    checkRequired("accountingProductId", accountingProductId),
                     checkRequired("amount", amount),
                     checkRequired("description", description),
                     checkRequired("productId", productId),
@@ -1141,6 +1214,7 @@ private constructor(
                 return@apply
             }
 
+            accountingProductId()
             amount()
             description()
             productId()
@@ -1171,7 +1245,8 @@ private constructor(
          */
         @JvmSynthetic
         internal fun validity(): Int =
-            (if (amount.asKnown().isPresent) 1 else 0) +
+            (if (accountingProductId.asKnown().isPresent) 1 else 0) +
+                (if (amount.asKnown().isPresent) 1 else 0) +
                 (if (description.asKnown().isPresent) 1 else 0) +
                 (if (productId.asKnown().isPresent) 1 else 0) +
                 (if (referencedBillId.asKnown().isPresent) 1 else 0) +
@@ -1188,17 +1263,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && amount == other.amount && description == other.description && productId == other.productId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && creditReasonId == other.creditReasonId && lineItemType == other.lineItemType && reasonId == other.reasonId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && accountingProductId == other.accountingProductId && amount == other.amount && description == other.description && productId == other.productId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && creditReasonId == other.creditReasonId && lineItemType == other.lineItemType && reasonId == other.reasonId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, description, productId, referencedBillId, referencedLineItemId, servicePeriodEndDate, servicePeriodStartDate, creditReasonId, lineItemType, reasonId, version, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(accountingProductId, amount, description, productId, referencedBillId, referencedLineItemId, servicePeriodEndDate, servicePeriodStartDate, creditReasonId, lineItemType, reasonId, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{amount=$amount, description=$description, productId=$productId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, creditReasonId=$creditReasonId, lineItemType=$lineItemType, reasonId=$reasonId, version=$version, additionalProperties=$additionalProperties}"
+            "Body{accountingProductId=$accountingProductId, amount=$amount, description=$description, productId=$productId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, creditReasonId=$creditReasonId, lineItemType=$lineItemType, reasonId=$reasonId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     class LineItemType @JsonCreator private constructor(private val value: JsonField<String>) :

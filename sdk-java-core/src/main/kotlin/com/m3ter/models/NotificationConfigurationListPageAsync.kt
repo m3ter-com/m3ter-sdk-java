@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [NotificationConfigurationServiceAsync.list] */
+/** @see NotificationConfigurationServiceAsync.list */
 class NotificationConfigurationListPageAsync
 private constructor(
     private val service: NotificationConfigurationServiceAsync,
@@ -25,7 +25,7 @@ private constructor(
      * Delegates to [NotificationConfigurationListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [NotificationConfigurationListPageResponse.data]
+     * @see NotificationConfigurationListPageResponse.data
      */
     fun data(): List<NotificationConfigurationResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -34,7 +34,7 @@ private constructor(
      * Delegates to [NotificationConfigurationListPageResponse], but gracefully handles missing
      * data.
      *
-     * @see [NotificationConfigurationListPageResponse.nextToken]
+     * @see NotificationConfigurationListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

@@ -41,8 +41,10 @@ private constructor(
     /** UUID of the Product to retrieve Plans for. */
     fun productId(): Optional<String> = Optional.ofNullable(productId)
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)

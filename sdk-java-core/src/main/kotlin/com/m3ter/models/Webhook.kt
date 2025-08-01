@@ -21,7 +21,6 @@ import kotlin.jvm.optionals.getOrNull
 class Webhook
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val active: JsonField<Boolean>,
     private val code: JsonField<String>,
     private val createdBy: JsonField<String>,
@@ -32,13 +31,13 @@ private constructor(
     private val lastModifiedBy: JsonField<String>,
     private val name: JsonField<String>,
     private val url: JsonField<String>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("active") @ExcludeMissing active: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
@@ -59,9 +58,9 @@ private constructor(
         lastModifiedBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
         @JsonProperty("url") @ExcludeMissing url: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         active,
         code,
         createdBy,
@@ -72,6 +71,7 @@ private constructor(
         lastModifiedBy,
         name,
         url,
+        version,
         mutableMapOf(),
     )
 
@@ -82,17 +82,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -168,18 +157,22 @@ private constructor(
     fun url(): Optional<String> = url.getOptional("url")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [active].
@@ -259,6 +252,13 @@ private constructor(
      */
     @JsonProperty("url") @ExcludeMissing fun _url(): JsonField<String> = url
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -279,7 +279,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -289,7 +288,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var active: JsonField<Boolean> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
@@ -300,12 +298,12 @@ private constructor(
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var name: JsonField<String> = JsonMissing.of()
         private var url: JsonField<String> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(webhook: Webhook) = apply {
             id = webhook.id
-            version = webhook.version
             active = webhook.active
             code = webhook.code
             createdBy = webhook.createdBy
@@ -316,6 +314,7 @@ private constructor(
             lastModifiedBy = webhook.lastModifiedBy
             name = webhook.name
             url = webhook.url
+            version = webhook.version
             additionalProperties = webhook.additionalProperties.toMutableMap()
         }
 
@@ -329,22 +328,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         fun active(active: Boolean) = active(JsonField.of(active))
 
@@ -466,6 +449,22 @@ private constructor(
          */
         fun url(url: JsonField<String>) = apply { this.url = url }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -493,7 +492,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -501,7 +499,6 @@ private constructor(
         fun build(): Webhook =
             Webhook(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 active,
                 code,
                 createdBy,
@@ -512,6 +509,7 @@ private constructor(
                 lastModifiedBy,
                 name,
                 url,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -524,7 +522,6 @@ private constructor(
         }
 
         id()
-        version()
         active()
         code()
         createdBy()
@@ -535,6 +532,7 @@ private constructor(
         lastModifiedBy()
         name()
         url()
+        version()
         validated = true
     }
 
@@ -554,7 +552,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (active.asKnown().isPresent) 1 else 0) +
             (if (code.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
@@ -564,22 +561,23 @@ private constructor(
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (if (name.asKnown().isPresent) 1 else 0) +
-            (if (url.asKnown().isPresent) 1 else 0)
+            (if (url.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is Webhook && id == other.id && version == other.version && active == other.active && code == other.code && createdBy == other.createdBy && credentials == other.credentials && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && url == other.url && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Webhook && id == other.id && active == other.active && code == other.code && createdBy == other.createdBy && credentials == other.credentials && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && url == other.url && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, active, code, createdBy, credentials, description, dtCreated, dtLastModified, lastModifiedBy, name, url, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, active, code, createdBy, credentials, description, dtCreated, dtLastModified, lastModifiedBy, name, url, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Webhook{id=$id, version=$version, active=$active, code=$code, createdBy=$createdBy, credentials=$credentials, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, url=$url, additionalProperties=$additionalProperties}"
+        "Webhook{id=$id, active=$active, code=$code, createdBy=$createdBy, credentials=$credentials, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, name=$name, url=$url, version=$version, additionalProperties=$additionalProperties}"
 }

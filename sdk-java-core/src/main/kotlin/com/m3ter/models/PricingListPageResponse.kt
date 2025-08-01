@@ -34,16 +34,12 @@ private constructor(
     ) : this(data, nextToken, mutableMapOf())
 
     /**
-     * The requested Pricings.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun data(): Optional<List<PricingResponse>> = data.getOptional("data")
 
     /**
-     * `nextToken` for multi-page retrievals.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -95,7 +91,6 @@ private constructor(
             additionalProperties = pricingListPageResponse.additionalProperties.toMutableMap()
         }
 
-        /** The requested Pricings. */
         fun data(data: List<PricingResponse>) = data(JsonField.of(data))
 
         /**
@@ -121,7 +116,6 @@ private constructor(
                 }
         }
 
-        /** `nextToken` for multi-page retrievals. */
         fun nextToken(nextToken: String) = nextToken(JsonField.of(nextToken))
 
         /**

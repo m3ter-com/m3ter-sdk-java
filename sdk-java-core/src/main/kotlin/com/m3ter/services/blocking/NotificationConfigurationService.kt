@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.NotificationConfigurationCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.NotificationConfigurationListParams
 import com.m3ter.models.NotificationConfigurationResponse
 import com.m3ter.models.NotificationConfigurationRetrieveParams
 import com.m3ter.models.NotificationConfigurationUpdateParams
+import java.util.function.Consumer
 
 interface NotificationConfigurationService {
 
@@ -19,6 +21,13 @@ interface NotificationConfigurationService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): NotificationConfigurationService
 
     /**
      * Create a new Notification for an Event.
@@ -29,7 +38,7 @@ interface NotificationConfigurationService {
     fun create(params: NotificationConfigurationCreateParams): NotificationConfigurationResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: NotificationConfigurationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -43,7 +52,7 @@ interface NotificationConfigurationService {
     fun retrieve(id: String): NotificationConfigurationResponse =
         retrieve(id, NotificationConfigurationRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: NotificationConfigurationRetrieveParams =
@@ -52,25 +61,25 @@ interface NotificationConfigurationService {
     ): NotificationConfigurationResponse =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: NotificationConfigurationRetrieveParams =
             NotificationConfigurationRetrieveParams.none(),
     ): NotificationConfigurationResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: NotificationConfigurationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NotificationConfigurationResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: NotificationConfigurationRetrieveParams
     ): NotificationConfigurationResponse = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): NotificationConfigurationResponse =
         retrieve(id, NotificationConfigurationRetrieveParams.none(), requestOptions)
 
@@ -86,18 +95,18 @@ interface NotificationConfigurationService {
         params: NotificationConfigurationUpdateParams,
     ): NotificationConfigurationResponse = update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: NotificationConfigurationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NotificationConfigurationResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: NotificationConfigurationUpdateParams): NotificationConfigurationResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: NotificationConfigurationUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -112,18 +121,18 @@ interface NotificationConfigurationService {
      */
     fun list(): NotificationConfigurationListPage = list(NotificationConfigurationListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: NotificationConfigurationListParams = NotificationConfigurationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NotificationConfigurationListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: NotificationConfigurationListParams = NotificationConfigurationListParams.none()
     ): NotificationConfigurationListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): NotificationConfigurationListPage =
         list(NotificationConfigurationListParams.none(), requestOptions)
 
@@ -136,7 +145,7 @@ interface NotificationConfigurationService {
     fun delete(id: String): NotificationConfigurationResponse =
         delete(id, NotificationConfigurationDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: NotificationConfigurationDeleteParams =
@@ -144,23 +153,23 @@ interface NotificationConfigurationService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NotificationConfigurationResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: NotificationConfigurationDeleteParams = NotificationConfigurationDeleteParams.none(),
     ): NotificationConfigurationResponse = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: NotificationConfigurationDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): NotificationConfigurationResponse
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: NotificationConfigurationDeleteParams): NotificationConfigurationResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): NotificationConfigurationResponse =
         delete(id, NotificationConfigurationDeleteParams.none(), requestOptions)
 
@@ -169,6 +178,15 @@ interface NotificationConfigurationService {
      * each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): NotificationConfigurationService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post
@@ -181,7 +199,7 @@ interface NotificationConfigurationService {
         ): HttpResponseFor<NotificationConfigurationResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: NotificationConfigurationCreateParams,
@@ -197,7 +215,7 @@ interface NotificationConfigurationService {
         fun retrieve(id: String): HttpResponseFor<NotificationConfigurationResponse> =
             retrieve(id, NotificationConfigurationRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -207,7 +225,7 @@ interface NotificationConfigurationService {
         ): HttpResponseFor<NotificationConfigurationResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -216,21 +234,21 @@ interface NotificationConfigurationService {
         ): HttpResponseFor<NotificationConfigurationResponse> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: NotificationConfigurationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<NotificationConfigurationResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: NotificationConfigurationRetrieveParams
         ): HttpResponseFor<NotificationConfigurationResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -250,7 +268,7 @@ interface NotificationConfigurationService {
         ): HttpResponseFor<NotificationConfigurationResponse> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -259,14 +277,14 @@ interface NotificationConfigurationService {
         ): HttpResponseFor<NotificationConfigurationResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: NotificationConfigurationUpdateParams
         ): HttpResponseFor<NotificationConfigurationResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: NotificationConfigurationUpdateParams,
@@ -282,7 +300,7 @@ interface NotificationConfigurationService {
         fun list(): HttpResponseFor<NotificationConfigurationListPage> =
             list(NotificationConfigurationListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: NotificationConfigurationListParams =
@@ -290,13 +308,13 @@ interface NotificationConfigurationService {
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<NotificationConfigurationListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: NotificationConfigurationListParams = NotificationConfigurationListParams.none()
         ): HttpResponseFor<NotificationConfigurationListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             requestOptions: RequestOptions
@@ -312,7 +330,7 @@ interface NotificationConfigurationService {
         fun delete(id: String): HttpResponseFor<NotificationConfigurationResponse> =
             delete(id, NotificationConfigurationDeleteParams.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -322,7 +340,7 @@ interface NotificationConfigurationService {
         ): HttpResponseFor<NotificationConfigurationResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -331,21 +349,21 @@ interface NotificationConfigurationService {
         ): HttpResponseFor<NotificationConfigurationResponse> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: NotificationConfigurationDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<NotificationConfigurationResponse>
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: NotificationConfigurationDeleteParams
         ): HttpResponseFor<NotificationConfigurationResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,

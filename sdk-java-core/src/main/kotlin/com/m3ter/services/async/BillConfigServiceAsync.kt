@@ -2,13 +2,14 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.BillConfigResponse
 import com.m3ter.models.BillConfigRetrieveParams
 import com.m3ter.models.BillConfigUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface BillConfigServiceAsync {
 
@@ -17,22 +18,29 @@ interface BillConfigServiceAsync {
      */
     fun withRawResponse(): WithRawResponse
 
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): BillConfigServiceAsync
+
     /** Retrieve the Organization-wide BillConfig. */
     fun retrieve(): CompletableFuture<BillConfigResponse> =
         retrieve(BillConfigRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillConfigRetrieveParams = BillConfigRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillConfigResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillConfigRetrieveParams = BillConfigRetrieveParams.none()
     ): CompletableFuture<BillConfigResponse> = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(requestOptions: RequestOptions): CompletableFuture<BillConfigResponse> =
         retrieve(BillConfigRetrieveParams.none(), requestOptions)
 
@@ -45,18 +53,18 @@ interface BillConfigServiceAsync {
      */
     fun update(): CompletableFuture<BillConfigResponse> = update(BillConfigUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: BillConfigUpdateParams = BillConfigUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<BillConfigResponse>
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: BillConfigUpdateParams = BillConfigUpdateParams.none()
     ): CompletableFuture<BillConfigResponse> = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(requestOptions: RequestOptions): CompletableFuture<BillConfigResponse> =
         update(BillConfigUpdateParams.none(), requestOptions)
 
@@ -67,29 +75,34 @@ interface BillConfigServiceAsync {
     interface WithRawResponse {
 
         /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BillConfigServiceAsync.WithRawResponse
+
+        /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/billconfig`, but is otherwise
          * the same as [BillConfigServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             retrieve(BillConfigRetrieveParams.none())
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             params: BillConfigRetrieveParams = BillConfigRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>>
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             params: BillConfigRetrieveParams = BillConfigRetrieveParams.none()
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
@@ -99,26 +112,22 @@ interface BillConfigServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/billconfig`, but is otherwise
          * the same as [BillConfigServiceAsync.update].
          */
-        @MustBeClosed
         fun update(): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             update(BillConfigUpdateParams.none())
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(
             params: BillConfigUpdateParams = BillConfigUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>>
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(
             params: BillConfigUpdateParams = BillConfigUpdateParams.none()
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<BillConfigResponse>> =

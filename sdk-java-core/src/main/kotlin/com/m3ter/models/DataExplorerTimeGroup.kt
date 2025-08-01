@@ -21,20 +21,29 @@ import kotlin.jvm.optionals.getOrNull
 /** Group by time */
 class DataExplorerTimeGroup
 private constructor(
+    private val groupType: JsonField<DataExplorerGroup.GroupType>,
     private val frequency: JsonField<Frequency>,
-    private val groupType: JsonField<GroupType>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
+        @JsonProperty("groupType")
+        @ExcludeMissing
+        groupType: JsonField<DataExplorerGroup.GroupType> = JsonMissing.of(),
         @JsonProperty("frequency")
         @ExcludeMissing
         frequency: JsonField<Frequency> = JsonMissing.of(),
-        @JsonProperty("groupType")
-        @ExcludeMissing
-        groupType: JsonField<GroupType> = JsonMissing.of(),
-    ) : this(frequency, groupType, mutableMapOf())
+    ) : this(groupType, frequency, mutableMapOf())
+
+    fun toDataExplorerGroup(): DataExplorerGroup =
+        DataExplorerGroup.builder().groupType(groupType).build()
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun groupType(): Optional<DataExplorerGroup.GroupType> = groupType.getOptional("groupType")
 
     /**
      * Frequency of usage data
@@ -45,10 +54,13 @@ private constructor(
     fun frequency(): Frequency = frequency.getRequired("frequency")
 
     /**
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * Returns the raw JSON value of [groupType].
+     *
+     * Unlike [groupType], this method doesn't throw if the JSON field has an unexpected type.
      */
-    fun groupType(): Optional<GroupType> = groupType.getOptional("groupType")
+    @JsonProperty("groupType")
+    @ExcludeMissing
+    fun _groupType(): JsonField<DataExplorerGroup.GroupType> = groupType
 
     /**
      * Returns the raw JSON value of [frequency].
@@ -56,13 +68,6 @@ private constructor(
      * Unlike [frequency], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("frequency") @ExcludeMissing fun _frequency(): JsonField<Frequency> = frequency
-
-    /**
-     * Returns the raw JSON value of [groupType].
-     *
-     * Unlike [groupType], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("groupType") @ExcludeMissing fun _groupType(): JsonField<GroupType> = groupType
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -92,15 +97,28 @@ private constructor(
     /** A builder for [DataExplorerTimeGroup]. */
     class Builder internal constructor() {
 
+        private var groupType: JsonField<DataExplorerGroup.GroupType> = JsonMissing.of()
         private var frequency: JsonField<Frequency>? = null
-        private var groupType: JsonField<GroupType> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(dataExplorerTimeGroup: DataExplorerTimeGroup) = apply {
-            frequency = dataExplorerTimeGroup.frequency
             groupType = dataExplorerTimeGroup.groupType
+            frequency = dataExplorerTimeGroup.frequency
             additionalProperties = dataExplorerTimeGroup.additionalProperties.toMutableMap()
+        }
+
+        fun groupType(groupType: DataExplorerGroup.GroupType) = groupType(JsonField.of(groupType))
+
+        /**
+         * Sets [Builder.groupType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.groupType] with a well-typed
+         * [DataExplorerGroup.GroupType] value instead. This method is primarily for setting the
+         * field to an undocumented or not yet supported value.
+         */
+        fun groupType(groupType: JsonField<DataExplorerGroup.GroupType>) = apply {
+            this.groupType = groupType
         }
 
         /** Frequency of usage data */
@@ -114,17 +132,6 @@ private constructor(
          * value.
          */
         fun frequency(frequency: JsonField<Frequency>) = apply { this.frequency = frequency }
-
-        fun groupType(groupType: GroupType) = groupType(JsonField.of(groupType))
-
-        /**
-         * Sets [Builder.groupType] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.groupType] with a well-typed [GroupType] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun groupType(groupType: JsonField<GroupType>) = apply { this.groupType = groupType }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -159,8 +166,8 @@ private constructor(
          */
         fun build(): DataExplorerTimeGroup =
             DataExplorerTimeGroup(
-                checkRequired("frequency", frequency),
                 groupType,
+                checkRequired("frequency", frequency),
                 additionalProperties.toMutableMap(),
             )
     }
@@ -172,8 +179,8 @@ private constructor(
             return@apply
         }
 
-        frequency().validate()
         groupType().ifPresent { it.validate() }
+        frequency().validate()
         validated = true
     }
 
@@ -192,8 +199,8 @@ private constructor(
      */
     @JvmSynthetic
     internal fun validity(): Int =
-        (frequency.asKnown().getOrNull()?.validity() ?: 0) +
-            (groupType.asKnown().getOrNull()?.validity() ?: 0)
+        (groupType.asKnown().getOrNull()?.validity() ?: 0) +
+            (frequency.asKnown().getOrNull()?.validity() ?: 0)
 
     /** Frequency of usage data */
     class Frequency @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
@@ -477,15 +484,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExplorerTimeGroup && frequency == other.frequency && groupType == other.groupType && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is DataExplorerTimeGroup && groupType == other.groupType && frequency == other.frequency && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(frequency, groupType, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(groupType, frequency, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "DataExplorerTimeGroup{frequency=$frequency, groupType=$groupType, additionalProperties=$additionalProperties}"
+        "DataExplorerTimeGroup{groupType=$groupType, frequency=$frequency, additionalProperties=$additionalProperties}"
 }

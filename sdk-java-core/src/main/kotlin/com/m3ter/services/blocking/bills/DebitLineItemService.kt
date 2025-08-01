@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking.bills
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.BillDebitLineItemCreateParams
@@ -12,6 +13,7 @@ import com.m3ter.models.BillDebitLineItemListParams
 import com.m3ter.models.BillDebitLineItemRetrieveParams
 import com.m3ter.models.BillDebitLineItemUpdateParams
 import com.m3ter.models.DebitLineItemResponse
+import java.util.function.Consumer
 
 interface DebitLineItemService {
 
@@ -19,6 +21,13 @@ interface DebitLineItemService {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): DebitLineItemService
 
     /**
      * Create a new Debit line item for the given bill.
@@ -29,18 +38,18 @@ interface DebitLineItemService {
     fun create(billId: String, params: BillDebitLineItemCreateParams): DebitLineItemResponse =
         create(billId, params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         billId: String,
         params: BillDebitLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitLineItemResponse = create(params.toBuilder().billId(billId).build(), requestOptions)
 
-    /** @see [create] */
+    /** @see create */
     fun create(params: BillDebitLineItemCreateParams): DebitLineItemResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: BillDebitLineItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -50,18 +59,18 @@ interface DebitLineItemService {
     fun retrieve(id: String, params: BillDebitLineItemRetrieveParams): DebitLineItemResponse =
         retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: BillDebitLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitLineItemResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: BillDebitLineItemRetrieveParams): DebitLineItemResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: BillDebitLineItemRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -71,18 +80,18 @@ interface DebitLineItemService {
     fun update(id: String, params: BillDebitLineItemUpdateParams): DebitLineItemResponse =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: BillDebitLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitLineItemResponse = update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: BillDebitLineItemUpdateParams): DebitLineItemResponse =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: BillDebitLineItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -92,30 +101,30 @@ interface DebitLineItemService {
     fun list(billId: String): BillDebitLineItemListPage =
         list(billId, BillDebitLineItemListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         billId: String,
         params: BillDebitLineItemListParams = BillDebitLineItemListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillDebitLineItemListPage = list(params.toBuilder().billId(billId).build(), requestOptions)
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         billId: String,
         params: BillDebitLineItemListParams = BillDebitLineItemListParams.none(),
     ): BillDebitLineItemListPage = list(billId, params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: BillDebitLineItemListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): BillDebitLineItemListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(params: BillDebitLineItemListParams): BillDebitLineItemListPage =
         list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(billId: String, requestOptions: RequestOptions): BillDebitLineItemListPage =
         list(billId, BillDebitLineItemListParams.none(), requestOptions)
 
@@ -123,18 +132,18 @@ interface DebitLineItemService {
     fun delete(id: String, params: BillDebitLineItemDeleteParams): DebitLineItemResponse =
         delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: BillDebitLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DebitLineItemResponse = delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: BillDebitLineItemDeleteParams): DebitLineItemResponse =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: BillDebitLineItemDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -144,6 +153,15 @@ interface DebitLineItemService {
      * A view of [DebitLineItemService] that provides access to raw HTTP responses for each method.
      */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): DebitLineItemService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post
@@ -156,7 +174,7 @@ interface DebitLineItemService {
             params: BillDebitLineItemCreateParams,
         ): HttpResponseFor<DebitLineItemResponse> = create(billId, params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             billId: String,
@@ -165,12 +183,12 @@ interface DebitLineItemService {
         ): HttpResponseFor<DebitLineItemResponse> =
             create(params.toBuilder().billId(billId).build(), requestOptions)
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(params: BillDebitLineItemCreateParams): HttpResponseFor<DebitLineItemResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: BillDebitLineItemCreateParams,
@@ -188,7 +206,7 @@ interface DebitLineItemService {
             params: BillDebitLineItemRetrieveParams,
         ): HttpResponseFor<DebitLineItemResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -197,13 +215,13 @@ interface DebitLineItemService {
         ): HttpResponseFor<DebitLineItemResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: BillDebitLineItemRetrieveParams
         ): HttpResponseFor<DebitLineItemResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: BillDebitLineItemRetrieveParams,
@@ -221,7 +239,7 @@ interface DebitLineItemService {
             params: BillDebitLineItemUpdateParams,
         ): HttpResponseFor<DebitLineItemResponse> = update(id, params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             id: String,
@@ -230,12 +248,12 @@ interface DebitLineItemService {
         ): HttpResponseFor<DebitLineItemResponse> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(params: BillDebitLineItemUpdateParams): HttpResponseFor<DebitLineItemResponse> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
+        /** @see update */
         @MustBeClosed
         fun update(
             params: BillDebitLineItemUpdateParams,
@@ -251,7 +269,7 @@ interface DebitLineItemService {
         fun list(billId: String): HttpResponseFor<BillDebitLineItemListPage> =
             list(billId, BillDebitLineItemListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             billId: String,
@@ -260,26 +278,26 @@ interface DebitLineItemService {
         ): HttpResponseFor<BillDebitLineItemListPage> =
             list(params.toBuilder().billId(billId).build(), requestOptions)
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             billId: String,
             params: BillDebitLineItemListParams = BillDebitLineItemListParams.none(),
         ): HttpResponseFor<BillDebitLineItemListPage> = list(billId, params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: BillDebitLineItemListParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<BillDebitLineItemListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(params: BillDebitLineItemListParams): HttpResponseFor<BillDebitLineItemListPage> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             billId: String,
@@ -298,7 +316,7 @@ interface DebitLineItemService {
             params: BillDebitLineItemDeleteParams,
         ): HttpResponseFor<DebitLineItemResponse> = delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             id: String,
@@ -307,12 +325,12 @@ interface DebitLineItemService {
         ): HttpResponseFor<DebitLineItemResponse> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(params: BillDebitLineItemDeleteParams): HttpResponseFor<DebitLineItemResponse> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
+        /** @see delete */
         @MustBeClosed
         fun delete(
             params: BillDebitLineItemDeleteParams,

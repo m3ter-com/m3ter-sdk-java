@@ -13,6 +13,7 @@ internal class BillLineItemListParamsTest {
         BillLineItemListParams.builder()
             .orgId("orgId")
             .billId("billId")
+            .addAdditional("string")
             .nextToken("nextToken")
             .pageSize(1)
             .build()
@@ -34,6 +35,7 @@ internal class BillLineItemListParamsTest {
             BillLineItemListParams.builder()
                 .orgId("orgId")
                 .billId("billId")
+                .addAdditional("string")
                 .nextToken("nextToken")
                 .pageSize(1)
                 .build()
@@ -42,7 +44,11 @@ internal class BillLineItemListParamsTest {
 
         assertThat(queryParams)
             .isEqualTo(
-                QueryParams.builder().put("nextToken", "nextToken").put("pageSize", "1").build()
+                QueryParams.builder()
+                    .put("additional", listOf("string").joinToString(","))
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .build()
             )
     }
 

@@ -15,7 +15,6 @@ internal class UsageDataExportScheduleResponseTest {
         val usageDataExportScheduleResponse =
             UsageDataExportScheduleResponse.builder()
                 .id("id")
-                .version(0L)
                 .addAccountId("string")
                 .addAggregation(
                     UsageDataExportScheduleResponse.Aggregation.builder()
@@ -33,17 +32,16 @@ internal class UsageDataExportScheduleResponseTest {
                         .build()
                 )
                 .addGroup(
-                    UsageDataExportScheduleResponse.Group.DataExportsDataExplorerAccountGroup
-                        .builder()
-                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                    DataExplorerGroup.builder()
+                        .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                         .build()
                 )
                 .addMeterId("string")
                 .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+                .version(0L)
                 .build()
 
         assertThat(usageDataExportScheduleResponse.id()).isEqualTo("id")
-        assertThat(usageDataExportScheduleResponse.version()).isEqualTo(0L)
         assertThat(usageDataExportScheduleResponse.accountIds().getOrNull())
             .containsExactly("string")
         assertThat(usageDataExportScheduleResponse.aggregations().getOrNull())
@@ -65,16 +63,12 @@ internal class UsageDataExportScheduleResponseTest {
             )
         assertThat(usageDataExportScheduleResponse.groups().getOrNull())
             .containsExactly(
-                UsageDataExportScheduleResponse.Group.ofDataExportsDataExplorerAccount(
-                    UsageDataExportScheduleResponse.Group.DataExportsDataExplorerAccountGroup
-                        .builder()
-                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
-                        .build()
-                )
+                DataExplorerGroup.builder().groupType(DataExplorerGroup.GroupType.ACCOUNT).build()
             )
         assertThat(usageDataExportScheduleResponse.meterIds().getOrNull()).containsExactly("string")
         assertThat(usageDataExportScheduleResponse.timePeriod())
             .contains(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+        assertThat(usageDataExportScheduleResponse.version()).contains(0L)
     }
 
     @Test
@@ -83,7 +77,6 @@ internal class UsageDataExportScheduleResponseTest {
         val usageDataExportScheduleResponse =
             UsageDataExportScheduleResponse.builder()
                 .id("id")
-                .version(0L)
                 .addAccountId("string")
                 .addAggregation(
                     UsageDataExportScheduleResponse.Aggregation.builder()
@@ -101,13 +94,13 @@ internal class UsageDataExportScheduleResponseTest {
                         .build()
                 )
                 .addGroup(
-                    UsageDataExportScheduleResponse.Group.DataExportsDataExplorerAccountGroup
-                        .builder()
-                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                    DataExplorerGroup.builder()
+                        .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                         .build()
                 )
                 .addMeterId("string")
                 .timePeriod(UsageDataExportScheduleResponse.TimePeriod.TODAY)
+                .version(0L)
                 .build()
 
         val roundtrippedUsageDataExportScheduleResponse =

@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -24,6 +24,7 @@ import com.m3ter.models.BillJobListParams
 import com.m3ter.models.BillJobRecalculateParams
 import com.m3ter.models.BillJobResponse
 import com.m3ter.models.BillJobRetrieveParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class BillJobServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -34,6 +35,9 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
     }
 
     override fun withRawResponse(): BillJobService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BillJobService =
+        BillJobServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: BillJobCreateParams,
@@ -70,10 +74,18 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         BillJobService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): BillJobService.WithRawResponse =
+            BillJobServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<BillJobResponse> =
-            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper)
 
         override fun create(
             params: BillJobCreateParams,
@@ -82,6 +94,7 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -92,7 +105,7 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -104,7 +117,7 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
         }
 
         private val retrieveHandler: Handler<BillJobResponse> =
-            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper)
 
         override fun retrieve(
             params: BillJobRetrieveParams,
@@ -116,6 +129,7 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -126,7 +140,7 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -139,7 +153,6 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
 
         private val listHandler: Handler<BillJobListPageResponse> =
             jsonHandler<BillJobListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: BillJobListParams,
@@ -148,6 +161,7 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -157,7 +171,7 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -176,7 +190,7 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
         }
 
         private val cancelHandler: Handler<BillJobResponse> =
-            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper)
 
         override fun cancel(
             params: BillJobCancelParams,
@@ -188,6 +202,7 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -200,7 +215,7 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { cancelHandler.handle(it) }
                     .also {
@@ -212,7 +227,7 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
         }
 
         private val recalculateHandler: Handler<BillJobResponse> =
-            jsonHandler<BillJobResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<BillJobResponse>(clientOptions.jsonMapper)
 
         override fun recalculate(
             params: BillJobRecalculateParams,
@@ -221,6 +236,7 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -232,7 +248,7 @@ class BillJobServiceImpl internal constructor(private val clientOptions: ClientO
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { recalculateHandler.handle(it) }
                     .also {

@@ -2,13 +2,14 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.CustomFieldRetrieveParams
 import com.m3ter.models.CustomFieldUpdateParams
 import com.m3ter.models.CustomFieldsResponse
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface CustomFieldServiceAsync {
 
@@ -18,41 +19,48 @@ interface CustomFieldServiceAsync {
     fun withRawResponse(): WithRawResponse
 
     /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): CustomFieldServiceAsync
+
+    /**
      * Retrieve all Custom Fields added at Organizational level for the entities that support them.
      */
     fun retrieve(): CompletableFuture<CustomFieldsResponse> =
         retrieve(CustomFieldRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CustomFieldsResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none()
     ): CompletableFuture<CustomFieldsResponse> = retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(requestOptions: RequestOptions): CompletableFuture<CustomFieldsResponse> =
         retrieve(CustomFieldRetrieveParams.none(), requestOptions)
 
     /** Update Custom Fields added at Organization level to entities that support them. */
     fun update(): CompletableFuture<CustomFieldsResponse> = update(CustomFieldUpdateParams.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CustomFieldUpdateParams = CustomFieldUpdateParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<CustomFieldsResponse>
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: CustomFieldUpdateParams = CustomFieldUpdateParams.none()
     ): CompletableFuture<CustomFieldsResponse> = update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(requestOptions: RequestOptions): CompletableFuture<CustomFieldsResponse> =
         update(CustomFieldUpdateParams.none(), requestOptions)
 
@@ -63,29 +71,34 @@ interface CustomFieldServiceAsync {
     interface WithRawResponse {
 
         /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CustomFieldServiceAsync.WithRawResponse
+
+        /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/customfields`, but is
          * otherwise the same as [CustomFieldServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
             retrieve(CustomFieldRetrieveParams.none())
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>>
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             params: CustomFieldRetrieveParams = CustomFieldRetrieveParams.none()
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
@@ -95,26 +108,22 @@ interface CustomFieldServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/customfields`, but is
          * otherwise the same as [CustomFieldServiceAsync.update].
          */
-        @MustBeClosed
         fun update(): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
             update(CustomFieldUpdateParams.none())
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(
             params: CustomFieldUpdateParams = CustomFieldUpdateParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>>
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(
             params: CustomFieldUpdateParams = CustomFieldUpdateParams.none()
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<CustomFieldsResponse>> =

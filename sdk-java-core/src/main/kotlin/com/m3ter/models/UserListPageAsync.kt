@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [UserServiceAsync.list] */
+/** @see UserServiceAsync.list */
 class UserListPageAsync
 private constructor(
     private val service: UserServiceAsync,
@@ -24,14 +24,14 @@ private constructor(
     /**
      * Delegates to [UserListPageResponse], but gracefully handles missing data.
      *
-     * @see [UserListPageResponse.data]
+     * @see UserListPageResponse.data
      */
     fun data(): List<UserResponse> = response._data().getOptional("data").getOrNull() ?: emptyList()
 
     /**
      * Delegates to [UserListPageResponse], but gracefully handles missing data.
      *
-     * @see [UserListPageResponse.nextToken]
+     * @see UserListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

@@ -5,7 +5,7 @@ package com.m3ter.services.blocking
 import com.m3ter.TestServerExtension
 import com.m3ter.client.okhttp.M3terOkHttpClient
 import com.m3ter.core.JsonValue
-import com.m3ter.models.DataExplorerAccountGroup
+import com.m3ter.models.DataExplorerGroup
 import com.m3ter.models.MeasurementRequest
 import com.m3ter.models.SubmitMeasurementsRequest
 import com.m3ter.models.UsageGetFailedIngestDownloadUrlParams
@@ -72,8 +72,8 @@ internal class UsageServiceTest {
                     )
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .addGroup(
-                        UsageQueryParams.Group.DataExportsDataExplorerAccountGroup.builder()
-                            .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                        DataExplorerGroup.builder()
+                            .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                             .build()
                     )
                     .limit(1)

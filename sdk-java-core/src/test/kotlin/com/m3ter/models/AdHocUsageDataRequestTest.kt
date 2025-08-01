@@ -4,6 +4,7 @@ package com.m3ter.models
 
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.m3ter.core.jsonMapper
+import java.time.OffsetDateTime
 import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -31,9 +32,10 @@ internal class AdHocUsageDataRequestTest {
                         .addValue("string")
                         .build()
                 )
+                .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addGroup(
-                    AdHocUsageDataRequest.Group.DataExportsDataExplorerAccountGroup.builder()
-                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                    DataExplorerGroup.builder()
+                        .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                         .build()
                 )
                 .addMeterId("string")
@@ -60,13 +62,11 @@ internal class AdHocUsageDataRequestTest {
                     .addValue("string")
                     .build()
             )
+        assertThat(adHocUsageDataRequest.endDate())
+            .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(adHocUsageDataRequest.groups().getOrNull())
             .containsExactly(
-                AdHocUsageDataRequest.Group.ofDataExportsDataExplorerAccount(
-                    AdHocUsageDataRequest.Group.DataExportsDataExplorerAccountGroup.builder()
-                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
-                        .build()
-                )
+                DataExplorerGroup.builder().groupType(DataExplorerGroup.GroupType.ACCOUNT).build()
             )
         assertThat(adHocUsageDataRequest.meterIds().getOrNull()).containsExactly("string")
         assertThat(adHocUsageDataRequest.version()).contains(0L)
@@ -94,9 +94,10 @@ internal class AdHocUsageDataRequestTest {
                         .addValue("string")
                         .build()
                 )
+                .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .addGroup(
-                    AdHocUsageDataRequest.Group.DataExportsDataExplorerAccountGroup.builder()
-                        .groupType(DataExplorerAccountGroup.GroupType.ACCOUNT)
+                    DataExplorerGroup.builder()
+                        .groupType(DataExplorerGroup.GroupType.ACCOUNT)
                         .build()
                 )
                 .addMeterId("string")

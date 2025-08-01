@@ -24,7 +24,6 @@ import kotlin.jvm.optionals.getOrNull
 class CompoundAggregationResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val accountingProductId: JsonField<String>,
     private val calculation: JsonField<String>,
     private val code: JsonField<String>,
@@ -40,13 +39,13 @@ private constructor(
     private val rounding: JsonField<Rounding>,
     private val segments: JsonField<List<Segment>>,
     private val unit: JsonField<String>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("accountingProductId")
         @ExcludeMissing
         accountingProductId: JsonField<String> = JsonMissing.of(),
@@ -80,9 +79,9 @@ private constructor(
         @ExcludeMissing
         segments: JsonField<List<Segment>> = JsonMissing.of(),
         @JsonProperty("unit") @ExcludeMissing unit: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         accountingProductId,
         calculation,
         code,
@@ -98,6 +97,7 @@ private constructor(
         rounding,
         segments,
         unit,
+        version,
         mutableMapOf(),
     )
 
@@ -108,17 +108,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -265,18 +254,22 @@ private constructor(
     fun unit(): Optional<String> = unit.getOptional("unit")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [accountingProductId].
@@ -399,6 +392,13 @@ private constructor(
      */
     @JsonProperty("unit") @ExcludeMissing fun _unit(): JsonField<String> = unit
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -419,7 +419,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -429,7 +428,6 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var accountingProductId: JsonField<String> = JsonMissing.of()
         private var calculation: JsonField<String> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
@@ -445,12 +443,12 @@ private constructor(
         private var rounding: JsonField<Rounding> = JsonMissing.of()
         private var segments: JsonField<MutableList<Segment>>? = null
         private var unit: JsonField<String> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(compoundAggregationResponse: CompoundAggregationResponse) = apply {
             id = compoundAggregationResponse.id
-            version = compoundAggregationResponse.version
             accountingProductId = compoundAggregationResponse.accountingProductId
             calculation = compoundAggregationResponse.calculation
             code = compoundAggregationResponse.code
@@ -466,6 +464,7 @@ private constructor(
             rounding = compoundAggregationResponse.rounding
             segments = compoundAggregationResponse.segments.map { it.toMutableList() }
             unit = compoundAggregationResponse.unit
+            version = compoundAggregationResponse.version
             additionalProperties = compoundAggregationResponse.additionalProperties.toMutableMap()
         }
 
@@ -479,22 +478,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         fun accountingProductId(accountingProductId: String) =
             accountingProductId(JsonField.of(accountingProductId))
@@ -744,6 +727,22 @@ private constructor(
          */
         fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -771,7 +770,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -779,7 +777,6 @@ private constructor(
         fun build(): CompoundAggregationResponse =
             CompoundAggregationResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 accountingProductId,
                 calculation,
                 code,
@@ -795,6 +792,7 @@ private constructor(
                 rounding,
                 (segments ?: JsonMissing.of()).map { it.toImmutable() },
                 unit,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -807,7 +805,6 @@ private constructor(
         }
 
         id()
-        version()
         accountingProductId()
         calculation()
         code()
@@ -823,6 +820,7 @@ private constructor(
         rounding().ifPresent { it.validate() }
         segments().ifPresent { it.forEach { it.validate() } }
         unit()
+        version()
         validated = true
     }
 
@@ -842,7 +840,6 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (accountingProductId.asKnown().isPresent) 1 else 0) +
             (if (calculation.asKnown().isPresent) 1 else 0) +
             (if (code.asKnown().isPresent) 1 else 0) +
@@ -857,7 +854,8 @@ private constructor(
             (if (quantityPerUnit.asKnown().isPresent) 1 else 0) +
             (rounding.asKnown().getOrNull()?.validity() ?: 0) +
             (segments.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
-            (if (unit.asKnown().isPresent) 1 else 0)
+            (if (unit.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     class CustomFields
     @JsonCreator
@@ -1216,15 +1214,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CompoundAggregationResponse && id == other.id && version == other.version && accountingProductId == other.accountingProductId && calculation == other.calculation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && evaluateNullAggregations == other.evaluateNullAggregations && lastModifiedBy == other.lastModifiedBy && name == other.name && productId == other.productId && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segments == other.segments && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CompoundAggregationResponse && id == other.id && accountingProductId == other.accountingProductId && calculation == other.calculation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && evaluateNullAggregations == other.evaluateNullAggregations && lastModifiedBy == other.lastModifiedBy && name == other.name && productId == other.productId && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segments == other.segments && unit == other.unit && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountingProductId, calculation, code, createdBy, customFields, dtCreated, dtLastModified, evaluateNullAggregations, lastModifiedBy, name, productId, quantityPerUnit, rounding, segments, unit, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountingProductId, calculation, code, createdBy, customFields, dtCreated, dtLastModified, evaluateNullAggregations, lastModifiedBy, name, productId, quantityPerUnit, rounding, segments, unit, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CompoundAggregationResponse{id=$id, version=$version, accountingProductId=$accountingProductId, calculation=$calculation, code=$code, createdBy=$createdBy, customFields=$customFields, dtCreated=$dtCreated, dtLastModified=$dtLastModified, evaluateNullAggregations=$evaluateNullAggregations, lastModifiedBy=$lastModifiedBy, name=$name, productId=$productId, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segments=$segments, unit=$unit, additionalProperties=$additionalProperties}"
+        "CompoundAggregationResponse{id=$id, accountingProductId=$accountingProductId, calculation=$calculation, code=$code, createdBy=$createdBy, customFields=$customFields, dtCreated=$dtCreated, dtLastModified=$dtLastModified, evaluateNullAggregations=$evaluateNullAggregations, lastModifiedBy=$lastModifiedBy, name=$name, productId=$productId, quantityPerUnit=$quantityPerUnit, rounding=$rounding, segments=$segments, unit=$unit, version=$version, additionalProperties=$additionalProperties}"
 }

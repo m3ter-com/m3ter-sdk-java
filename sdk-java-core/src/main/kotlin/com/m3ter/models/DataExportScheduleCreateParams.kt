@@ -37,16 +37,27 @@ import kotlin.jvm.optionals.getOrNull
  * **Usage Data Exports**.
  * - Select the Meters and Accounts whose usage data you want to include in the export each time the
  *   Export Schedule runs.
- * - If _don't want to aggregate_ the usage data collected by the selected Meters, use **ORIGINAL**
- *   for `aggregationFrequency`, which is the _default_. This means the raw usage data collected by
- *   any type of Data Fields and the values for any Derived Fields on the selected Meters will be
- *   included in the export.
- * - If you _do want to aggregate_ the usage data collected by the selected Meters, use one of the
- *   other options for `aggregationFrequency`: **HOUR**, **DAY**, **WEEK**, or **MONTH**. You _must_
- *   then also specified an `aggregation` method to be used on the usage data before export.
- *   Importantly, if you do aggregate usage data, only the usage data collected by any numeric Data
- *   Fields on the selected Meters - those of type **MEASURE**, **INCOME**, or **COST** - will be
- *   included in the export each time the Export Schedule runs.
+ * - You can use the `dimensionFilters` parameter to filter the usage data returned for export by
+ *   adding specific values of non-numeric Dimension data fields on included Meters. Only the data
+ *   collected for the values you've added for the selected Dimension fields will be included in the
+ *   export.
+ * - You can use the `aggregations` to apply aggregation methods the usage data returned for export.
+ *   This restricts the range of usage data returned for export to only the data collected by
+ *   aggregated fields on selected Meters. Nothing is returned for any non-aggregated fields on
+ *   Meters. The usage data for Meter fields is returned as the values resulting from applying the
+ *   selected aggregation method. See the
+ *   [Aggregations for Queries - Options and Consequences](https://www.m3ter.com/docs/guides/data-explorer/usage-data-explorer-v2#aggregations-for-queries---understanding-options-and-consequences)
+ *   for more details.
+ * - If you've applied `aggregations` to the usage returned for export, you can then use the
+ *   `groups` parameter to group the data by _Account_, _Dimension_, or _Time_.
+ *
+ * Request and Response schema:
+ * - Use the selector under the `sourceType` parameter to expose the relevant request and response
+ *   schema for the source data type.
+ *
+ * Request and Response samples:
+ * - Use the **Example** selector to show the relevant request and response samples for source data
+ *   type.
  */
 class DataExportScheduleCreateParams
 private constructor(
@@ -62,8 +73,10 @@ private constructor(
     /** Request representing an operational schedule configuration. */
     fun body(): Body = body
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)

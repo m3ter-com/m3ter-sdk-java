@@ -17,7 +17,14 @@ internal class LineItemResponseTest {
         val lineItemResponse =
             LineItemResponse.builder()
                 .id("id")
-                .version(0L)
+                .accountingProductCode("accountingProductCode")
+                .accountingProductId("accountingProductId")
+                .accountingProductName("accountingProductName")
+                .additional(
+                    LineItemResponse.Additional.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .build()
+                )
                 .aggregationId("aggregationId")
                 .averageUnitPrice(0.0)
                 .balanceId("balanceId")
@@ -26,6 +33,7 @@ internal class LineItemResponseTest {
                         .bandQuantity(0.0)
                         .bandSubtotal(0.0)
                         .bandUnits(0.0)
+                        .convertedBandSubtotal(0.0)
                         .creditTypeId("creditTypeId")
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
@@ -78,10 +86,19 @@ internal class LineItemResponseTest {
                 .subtotal(0.0)
                 .unit("unit")
                 .units(0.0)
+                .version(0L)
                 .build()
 
         assertThat(lineItemResponse.id()).isEqualTo("id")
-        assertThat(lineItemResponse.version()).isEqualTo(0L)
+        assertThat(lineItemResponse.accountingProductCode()).contains("accountingProductCode")
+        assertThat(lineItemResponse.accountingProductId()).contains("accountingProductId")
+        assertThat(lineItemResponse.accountingProductName()).contains("accountingProductName")
+        assertThat(lineItemResponse.additional())
+            .contains(
+                LineItemResponse.Additional.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("bar"))
+                    .build()
+            )
         assertThat(lineItemResponse.aggregationId()).contains("aggregationId")
         assertThat(lineItemResponse.averageUnitPrice()).contains(0.0)
         assertThat(lineItemResponse.balanceId()).contains("balanceId")
@@ -91,6 +108,7 @@ internal class LineItemResponseTest {
                     .bandQuantity(0.0)
                     .bandSubtotal(0.0)
                     .bandUnits(0.0)
+                    .convertedBandSubtotal(0.0)
                     .creditTypeId("creditTypeId")
                     .fixedPrice(0.0)
                     .lowerLimit(0.0)
@@ -150,6 +168,7 @@ internal class LineItemResponseTest {
         assertThat(lineItemResponse.subtotal()).contains(0.0)
         assertThat(lineItemResponse.unit()).contains("unit")
         assertThat(lineItemResponse.units()).contains(0.0)
+        assertThat(lineItemResponse.version()).contains(0L)
     }
 
     @Test
@@ -158,7 +177,14 @@ internal class LineItemResponseTest {
         val lineItemResponse =
             LineItemResponse.builder()
                 .id("id")
-                .version(0L)
+                .accountingProductCode("accountingProductCode")
+                .accountingProductId("accountingProductId")
+                .accountingProductName("accountingProductName")
+                .additional(
+                    LineItemResponse.Additional.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("bar"))
+                        .build()
+                )
                 .aggregationId("aggregationId")
                 .averageUnitPrice(0.0)
                 .balanceId("balanceId")
@@ -167,6 +193,7 @@ internal class LineItemResponseTest {
                         .bandQuantity(0.0)
                         .bandSubtotal(0.0)
                         .bandUnits(0.0)
+                        .convertedBandSubtotal(0.0)
                         .creditTypeId("creditTypeId")
                         .fixedPrice(0.0)
                         .lowerLimit(0.0)
@@ -219,6 +246,7 @@ internal class LineItemResponseTest {
                 .subtotal(0.0)
                 .unit("unit")
                 .units(0.0)
+                .version(0L)
                 .build()
 
         val roundtrippedLineItemResponse =

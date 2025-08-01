@@ -5,6 +5,7 @@ package com.m3ter.models
 import com.m3ter.core.Params
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
+import com.m3ter.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -19,6 +20,7 @@ class BillRetrieveParams
 private constructor(
     private val orgId: String?,
     private val id: String?,
+    private val additional: List<String>?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -28,8 +30,13 @@ private constructor(
 
     fun id(): Optional<String> = Optional.ofNullable(id)
 
+    /** Comma separated list of additional fields. */
+    fun additional(): Optional<List<String>> = Optional.ofNullable(additional)
+
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
@@ -47,6 +54,7 @@ private constructor(
 
         private var orgId: String? = null
         private var id: String? = null
+        private var additional: MutableList<String>? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -54,6 +62,7 @@ private constructor(
         internal fun from(billRetrieveParams: BillRetrieveParams) = apply {
             orgId = billRetrieveParams.orgId
             id = billRetrieveParams.id
+            additional = billRetrieveParams.additional?.toMutableList()
             additionalHeaders = billRetrieveParams.additionalHeaders.toBuilder()
             additionalQueryParams = billRetrieveParams.additionalQueryParams.toBuilder()
         }
@@ -69,6 +78,23 @@ private constructor(
 
         /** Alias for calling [Builder.id] with `id.orElse(null)`. */
         fun id(id: Optional<String>) = id(id.getOrNull())
+
+        /** Comma separated list of additional fields. */
+        fun additional(additional: List<String>?) = apply {
+            this.additional = additional?.toMutableList()
+        }
+
+        /** Alias for calling [Builder.additional] with `additional.orElse(null)`. */
+        fun additional(additional: Optional<List<String>>) = additional(additional.getOrNull())
+
+        /**
+         * Adds a single [String] to [Builder.additional].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addAdditional(additional: String) = apply {
+            this.additional = (this.additional ?: mutableListOf()).apply { add(additional) }
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -174,7 +200,13 @@ private constructor(
          * Further updates to this [Builder] will not mutate the returned instance.
          */
         fun build(): BillRetrieveParams =
-            BillRetrieveParams(orgId, id, additionalHeaders.build(), additionalQueryParams.build())
+            BillRetrieveParams(
+                orgId,
+                id,
+                additional?.toImmutable(),
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
+            )
     }
 
     fun _pathParam(index: Int): String =
@@ -186,18 +218,24 @@ private constructor(
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams =
+        QueryParams.builder()
+            .apply {
+                additional?.let { put("additional", it.joinToString(",")) }
+                putAll(additionalQueryParams)
+            }
+            .build()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is BillRetrieveParams && orgId == other.orgId && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is BillRetrieveParams && orgId == other.orgId && id == other.id && additional == other.additional && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, additional, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "BillRetrieveParams{orgId=$orgId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "BillRetrieveParams{orgId=$orgId, id=$id, additional=$additional, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

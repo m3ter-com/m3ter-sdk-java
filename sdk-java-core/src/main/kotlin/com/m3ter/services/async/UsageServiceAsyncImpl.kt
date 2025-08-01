@@ -3,13 +3,13 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -24,6 +24,7 @@ import com.m3ter.models.UsageSubmitParams
 import com.m3ter.services.async.usage.FileUploadServiceAsync
 import com.m3ter.services.async.usage.FileUploadServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 class UsageServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     UsageServiceAsync {
@@ -37,6 +38,9 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
     }
 
     override fun withRawResponse(): UsageServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): UsageServiceAsync =
+        UsageServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun fileUploads(): FileUploadServiceAsync = fileUploads
 
@@ -66,17 +70,24 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         UsageServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
 
         private val fileUploads: FileUploadServiceAsync.WithRawResponse by lazy {
             FileUploadServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): UsageServiceAsync.WithRawResponse =
+            UsageServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
+
         override fun fileUploads(): FileUploadServiceAsync.WithRawResponse = fileUploads
 
         private val getFailedIngestDownloadUrlHandler: Handler<DownloadUrlResponse> =
             jsonHandler<DownloadUrlResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun getFailedIngestDownloadUrl(
             params: UsageGetFailedIngestDownloadUrlParams,
@@ -85,6 +96,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -98,7 +110,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { getFailedIngestDownloadUrlHandler.handle(it) }
                             .also {
@@ -111,7 +123,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
         }
 
         private val queryHandler: Handler<UsageQueryResponse> =
-            jsonHandler<UsageQueryResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+            jsonHandler<UsageQueryResponse>(clientOptions.jsonMapper)
 
         override fun query(
             params: UsageQueryParams,
@@ -120,6 +132,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -133,7 +146,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { queryHandler.handle(it) }
                             .also {
@@ -147,13 +160,12 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
         private val submitHandler: Handler<SubmitMeasurementsResponse> =
             jsonHandler<SubmitMeasurementsResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun submit(
             params: UsageSubmitParams,
             requestOptions: RequestOptions,
         ): CompletableFuture<HttpResponseFor<SubmitMeasurementsResponse>> {
-            var ingestUrl = clientOptions.baseUrl
+            var ingestUrl = clientOptions.baseUrl()
             if (!ingestUrl.startsWith("http://localhost")) {
                 ingestUrl = ingestUrl.replace("api.", "ingest.")
             }
@@ -161,7 +173,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
-                    .url(ingestUrl)
+                    .baseUrl(ingestUrl)
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -174,7 +186,7 @@ class UsageServiceAsyncImpl internal constructor(private val clientOptions: Clie
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { submitHandler.handle(it) }
                             .also {

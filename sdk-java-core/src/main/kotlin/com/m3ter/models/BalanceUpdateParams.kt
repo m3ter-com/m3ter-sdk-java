@@ -107,6 +107,29 @@ private constructor(
     fun consumptionsAccountingProductId(): Optional<String> = body.consumptionsAccountingProductId()
 
     /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun contractId(): Optional<String> = body.contractId()
+
+    /**
+     * User defined fields enabling you to attach custom data. The value for a custom field can be
+     * either a string or a number.
+     *
+     * If `customFields` can also be defined for this entity at the Organizational level,
+     * `customField` values defined at individual level override values of `customFields` with the
+     * same name defined at Organization level.
+     *
+     * See
+     * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
+     * in the m3ter documentation for more information.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun customFields(): Optional<CustomFields> = body.customFields()
+
+    /**
      * A description of the Balance.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -275,6 +298,20 @@ private constructor(
         body._consumptionsAccountingProductId()
 
     /**
+     * Returns the raw JSON value of [contractId].
+     *
+     * Unlike [contractId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _contractId(): JsonField<String> = body._contractId()
+
+    /**
+     * Returns the raw JSON value of [customFields].
+     *
+     * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _customFields(): JsonField<CustomFields> = body._customFields()
+
+    /**
      * Returns the raw JSON value of [description].
      *
      * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
@@ -349,8 +386,10 @@ private constructor(
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
+    /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
 
+    /** Additional query param to send with the request. */
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
@@ -518,6 +557,42 @@ private constructor(
             apply {
                 body.consumptionsAccountingProductId(consumptionsAccountingProductId)
             }
+
+        fun contractId(contractId: String) = apply { body.contractId(contractId) }
+
+        /**
+         * Sets [Builder.contractId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.contractId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun contractId(contractId: JsonField<String>) = apply { body.contractId(contractId) }
+
+        /**
+         * User defined fields enabling you to attach custom data. The value for a custom field can
+         * be either a string or a number.
+         *
+         * If `customFields` can also be defined for this entity at the Organizational level,
+         * `customField` values defined at individual level override values of `customFields` with
+         * the same name defined at Organization level.
+         *
+         * See
+         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
+         * in the m3ter documentation for more information.
+         */
+        fun customFields(customFields: CustomFields) = apply { body.customFields(customFields) }
+
+        /**
+         * Sets [Builder.customFields] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun customFields(customFields: JsonField<CustomFields>) = apply {
+            body.customFields(customFields)
+        }
 
         /** A description of the Balance. */
         fun description(description: String) = apply { body.description(description) }
@@ -890,6 +965,8 @@ private constructor(
         private val balanceDrawDownDescription: JsonField<String>,
         private val code: JsonField<String>,
         private val consumptionsAccountingProductId: JsonField<String>,
+        private val contractId: JsonField<String>,
+        private val customFields: JsonField<CustomFields>,
         private val description: JsonField<String>,
         private val feesAccountingProductId: JsonField<String>,
         private val lineItemTypes: JsonField<List<LineItemType>>,
@@ -924,6 +1001,12 @@ private constructor(
             @JsonProperty("consumptionsAccountingProductId")
             @ExcludeMissing
             consumptionsAccountingProductId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("contractId")
+            @ExcludeMissing
+            contractId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("customFields")
+            @ExcludeMissing
+            customFields: JsonField<CustomFields> = JsonMissing.of(),
             @JsonProperty("description")
             @ExcludeMissing
             description: JsonField<String> = JsonMissing.of(),
@@ -958,6 +1041,8 @@ private constructor(
             balanceDrawDownDescription,
             code,
             consumptionsAccountingProductId,
+            contractId,
+            customFields,
             description,
             feesAccountingProductId,
             lineItemTypes,
@@ -1035,6 +1120,29 @@ private constructor(
          */
         fun consumptionsAccountingProductId(): Optional<String> =
             consumptionsAccountingProductId.getOptional("consumptionsAccountingProductId")
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun contractId(): Optional<String> = contractId.getOptional("contractId")
+
+        /**
+         * User defined fields enabling you to attach custom data. The value for a custom field can
+         * be either a string or a number.
+         *
+         * If `customFields` can also be defined for this entity at the Organizational level,
+         * `customField` values defined at individual level override values of `customFields` with
+         * the same name defined at Organization level.
+         *
+         * See
+         * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
+         * in the m3ter documentation for more information.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
          * A description of the Balance.
@@ -1218,6 +1326,25 @@ private constructor(
         fun _consumptionsAccountingProductId(): JsonField<String> = consumptionsAccountingProductId
 
         /**
+         * Returns the raw JSON value of [contractId].
+         *
+         * Unlike [contractId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("contractId")
+        @ExcludeMissing
+        fun _contractId(): JsonField<String> = contractId
+
+        /**
+         * Returns the raw JSON value of [customFields].
+         *
+         * Unlike [customFields], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("customFields")
+        @ExcludeMissing
+        fun _customFields(): JsonField<CustomFields> = customFields
+
+        /**
          * Returns the raw JSON value of [description].
          *
          * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
@@ -1347,6 +1474,8 @@ private constructor(
             private var balanceDrawDownDescription: JsonField<String> = JsonMissing.of()
             private var code: JsonField<String> = JsonMissing.of()
             private var consumptionsAccountingProductId: JsonField<String> = JsonMissing.of()
+            private var contractId: JsonField<String> = JsonMissing.of()
+            private var customFields: JsonField<CustomFields> = JsonMissing.of()
             private var description: JsonField<String> = JsonMissing.of()
             private var feesAccountingProductId: JsonField<String> = JsonMissing.of()
             private var lineItemTypes: JsonField<MutableList<LineItemType>>? = null
@@ -1368,6 +1497,8 @@ private constructor(
                 balanceDrawDownDescription = body.balanceDrawDownDescription
                 code = body.code
                 consumptionsAccountingProductId = body.consumptionsAccountingProductId
+                contractId = body.contractId
+                customFields = body.customFields
                 description = body.description
                 feesAccountingProductId = body.feesAccountingProductId
                 lineItemTypes = body.lineItemTypes.map { it.toMutableList() }
@@ -1485,6 +1616,42 @@ private constructor(
             fun consumptionsAccountingProductId(
                 consumptionsAccountingProductId: JsonField<String>
             ) = apply { this.consumptionsAccountingProductId = consumptionsAccountingProductId }
+
+            fun contractId(contractId: String) = contractId(JsonField.of(contractId))
+
+            /**
+             * Sets [Builder.contractId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.contractId] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun contractId(contractId: JsonField<String>) = apply { this.contractId = contractId }
+
+            /**
+             * User defined fields enabling you to attach custom data. The value for a custom field
+             * can be either a string or a number.
+             *
+             * If `customFields` can also be defined for this entity at the Organizational level,
+             * `customField` values defined at individual level override values of `customFields`
+             * with the same name defined at Organization level.
+             *
+             * See
+             * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
+             * in the m3ter documentation for more information.
+             */
+            fun customFields(customFields: CustomFields) = customFields(JsonField.of(customFields))
+
+            /**
+             * Sets [Builder.customFields] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.customFields] with a well-typed [CustomFields] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun customFields(customFields: JsonField<CustomFields>) = apply {
+                this.customFields = customFields
+            }
 
             /** A description of the Balance. */
             fun description(description: String) = description(JsonField.of(description))
@@ -1749,6 +1916,8 @@ private constructor(
                     balanceDrawDownDescription,
                     code,
                     consumptionsAccountingProductId,
+                    contractId,
+                    customFields,
                     description,
                     feesAccountingProductId,
                     (lineItemTypes ?: JsonMissing.of()).map { it.toImmutable() },
@@ -1777,6 +1946,8 @@ private constructor(
             balanceDrawDownDescription()
             code()
             consumptionsAccountingProductId()
+            contractId()
+            customFields().ifPresent { it.validate() }
             description()
             feesAccountingProductId()
             lineItemTypes().ifPresent { it.forEach { it.validate() } }
@@ -1813,6 +1984,8 @@ private constructor(
                 (if (balanceDrawDownDescription.asKnown().isPresent) 1 else 0) +
                 (if (code.asKnown().isPresent) 1 else 0) +
                 (if (consumptionsAccountingProductId.asKnown().isPresent) 1 else 0) +
+                (if (contractId.asKnown().isPresent) 1 else 0) +
+                (customFields.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (description.asKnown().isPresent) 1 else 0) +
                 (if (feesAccountingProductId.asKnown().isPresent) 1 else 0) +
                 (lineItemTypes.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
@@ -1829,17 +2002,130 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && accountId == other.accountId && currency == other.currency && endDate == other.endDate && startDate == other.startDate && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && description == other.description && feesAccountingProductId == other.feesAccountingProductId && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && accountId == other.accountId && currency == other.currency && endDate == other.endDate && startDate == other.startDate && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && contractId == other.contractId && customFields == other.customFields && description == other.description && feesAccountingProductId == other.feesAccountingProductId && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountId, currency, endDate, startDate, balanceDrawDownDescription, code, consumptionsAccountingProductId, description, feesAccountingProductId, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, version, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(accountId, currency, endDate, startDate, balanceDrawDownDescription, code, consumptionsAccountingProductId, contractId, customFields, description, feesAccountingProductId, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, version, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{accountId=$accountId, currency=$currency, endDate=$endDate, startDate=$startDate, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, description=$description, feesAccountingProductId=$feesAccountingProductId, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, version=$version, additionalProperties=$additionalProperties}"
+            "Body{accountId=$accountId, currency=$currency, endDate=$endDate, startDate=$startDate, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, contractId=$contractId, customFields=$customFields, description=$description, feesAccountingProductId=$feesAccountingProductId, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, version=$version, additionalProperties=$additionalProperties}"
+    }
+
+    /**
+     * User defined fields enabling you to attach custom data. The value for a custom field can be
+     * either a string or a number.
+     *
+     * If `customFields` can also be defined for this entity at the Organizational level,
+     * `customField` values defined at individual level override values of `customFields` with the
+     * same name defined at Organization level.
+     *
+     * See
+     * [Working with Custom Fields](https://www.m3ter.com/docs/guides/creating-and-managing-products/working-with-custom-fields)
+     * in the m3ter documentation for more information.
+     */
+    class CustomFields
+    @JsonCreator
+    private constructor(
+        @com.fasterxml.jackson.annotation.JsonValue
+        private val additionalProperties: Map<String, JsonValue>
+    ) {
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            /** Returns a mutable builder for constructing an instance of [CustomFields]. */
+            @JvmStatic fun builder() = Builder()
+        }
+
+        /** A builder for [CustomFields]. */
+        class Builder internal constructor() {
+
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            @JvmSynthetic
+            internal fun from(customFields: CustomFields) = apply {
+                additionalProperties = customFields.additionalProperties.toMutableMap()
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            /**
+             * Returns an immutable instance of [CustomFields].
+             *
+             * Further updates to this [Builder] will not mutate the returned instance.
+             */
+            fun build(): CustomFields = CustomFields(additionalProperties.toImmutable())
+        }
+
+        private var validated: Boolean = false
+
+        fun validate(): CustomFields = apply {
+            if (validated) {
+                return@apply
+            }
+
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic
+        internal fun validity(): Int =
+            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() = "CustomFields{additionalProperties=$additionalProperties}"
     }
 
     /** Available line item types for Balances */

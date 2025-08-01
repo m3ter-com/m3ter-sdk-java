@@ -15,7 +15,6 @@ internal class CurrencyResponseTest {
         val currencyResponse =
             CurrencyResponse.builder()
                 .id("id")
-                .version(0L)
                 .archived(true)
                 .code("code")
                 .createdBy("createdBy")
@@ -25,10 +24,10 @@ internal class CurrencyResponseTest {
                 .maxDecimalPlaces(0)
                 .name("name")
                 .roundingMode(CurrencyResponse.RoundingMode.UP)
+                .version(0L)
                 .build()
 
         assertThat(currencyResponse.id()).isEqualTo("id")
-        assertThat(currencyResponse.version()).isEqualTo(0L)
         assertThat(currencyResponse.archived()).contains(true)
         assertThat(currencyResponse.code()).contains("code")
         assertThat(currencyResponse.createdBy()).contains("createdBy")
@@ -40,6 +39,7 @@ internal class CurrencyResponseTest {
         assertThat(currencyResponse.maxDecimalPlaces()).contains(0)
         assertThat(currencyResponse.name()).contains("name")
         assertThat(currencyResponse.roundingMode()).contains(CurrencyResponse.RoundingMode.UP)
+        assertThat(currencyResponse.version()).contains(0L)
     }
 
     @Test
@@ -48,7 +48,6 @@ internal class CurrencyResponseTest {
         val currencyResponse =
             CurrencyResponse.builder()
                 .id("id")
-                .version(0L)
                 .archived(true)
                 .code("code")
                 .createdBy("createdBy")
@@ -58,6 +57,7 @@ internal class CurrencyResponseTest {
                 .maxDecimalPlaces(0)
                 .name("name")
                 .roundingMode(CurrencyResponse.RoundingMode.UP)
+                .version(0L)
                 .build()
 
         val roundtrippedCurrencyResponse =

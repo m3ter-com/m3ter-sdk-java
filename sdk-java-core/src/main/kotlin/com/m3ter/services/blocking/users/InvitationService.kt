@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking.users
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.InvitationResponse
@@ -10,6 +11,7 @@ import com.m3ter.models.UserInvitationCreateParams
 import com.m3ter.models.UserInvitationListPage
 import com.m3ter.models.UserInvitationListParams
 import com.m3ter.models.UserInvitationRetrieveParams
+import java.util.function.Consumer
 
 interface InvitationService {
 
@@ -19,6 +21,13 @@ interface InvitationService {
     fun withRawResponse(): WithRawResponse
 
     /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): InvitationService
+
+    /**
      * Invite a new user to your Organization.
      *
      * This sends an email to someone inviting them to join your m3ter Organization.
@@ -26,7 +35,7 @@ interface InvitationService {
     fun create(params: UserInvitationCreateParams): InvitationResponse =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: UserInvitationCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -35,53 +44,62 @@ interface InvitationService {
     /** Retrieve the specified invitation with the given UUID. */
     fun retrieve(id: String): InvitationResponse = retrieve(id, UserInvitationRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvitationResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
     ): InvitationResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: UserInvitationRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): InvitationResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: UserInvitationRetrieveParams): InvitationResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): InvitationResponse =
         retrieve(id, UserInvitationRetrieveParams.none(), requestOptions)
 
     /** Retrieve a list of all invitations in the Organization. */
     fun list(): UserInvitationListPage = list(UserInvitationListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: UserInvitationListParams = UserInvitationListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UserInvitationListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: UserInvitationListParams = UserInvitationListParams.none()
     ): UserInvitationListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): UserInvitationListPage =
         list(UserInvitationListParams.none(), requestOptions)
 
     /** A view of [InvitationService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
+
+        /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): InvitationService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/invitations`, but is
@@ -91,7 +109,7 @@ interface InvitationService {
         fun create(params: UserInvitationCreateParams): HttpResponseFor<InvitationResponse> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
+        /** @see create */
         @MustBeClosed
         fun create(
             params: UserInvitationCreateParams,
@@ -106,7 +124,7 @@ interface InvitationService {
         fun retrieve(id: String): HttpResponseFor<InvitationResponse> =
             retrieve(id, UserInvitationRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -115,26 +133,26 @@ interface InvitationService {
         ): HttpResponseFor<InvitationResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: UserInvitationRetrieveParams = UserInvitationRetrieveParams.none(),
         ): HttpResponseFor<InvitationResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: UserInvitationRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<InvitationResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(params: UserInvitationRetrieveParams): HttpResponseFor<InvitationResponse> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -149,20 +167,20 @@ interface InvitationService {
         @MustBeClosed
         fun list(): HttpResponseFor<UserInvitationListPage> = list(UserInvitationListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: UserInvitationListParams = UserInvitationListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<UserInvitationListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: UserInvitationListParams = UserInvitationListParams.none()
         ): HttpResponseFor<UserInvitationListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<UserInvitationListPage> =
             list(UserInvitationListParams.none(), requestOptions)

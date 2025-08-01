@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.concurrent.Executor
 import kotlin.jvm.optionals.getOrNull
 
-/** @see [CurrencyServiceAsync.list] */
+/** @see CurrencyServiceAsync.list */
 class CurrencyListPageAsync
 private constructor(
     private val service: CurrencyServiceAsync,
@@ -24,7 +24,7 @@ private constructor(
     /**
      * Delegates to [CurrencyListPageResponse], but gracefully handles missing data.
      *
-     * @see [CurrencyListPageResponse.data]
+     * @see CurrencyListPageResponse.data
      */
     fun data(): List<CurrencyResponse> =
         response._data().getOptional("data").getOrNull() ?: emptyList()
@@ -32,7 +32,7 @@ private constructor(
     /**
      * Delegates to [CurrencyListPageResponse], but gracefully handles missing data.
      *
-     * @see [CurrencyListPageResponse.nextToken]
+     * @see CurrencyListPageResponse.nextToken
      */
     fun nextToken(): Optional<String> = response._nextToken().getOptional("nextToken")
 

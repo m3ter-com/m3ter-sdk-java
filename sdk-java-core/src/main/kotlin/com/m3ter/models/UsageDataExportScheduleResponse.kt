@@ -6,24 +6,13 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import com.m3ter.core.BaseDeserializer
-import com.m3ter.core.BaseSerializer
 import com.m3ter.core.Enum
 import com.m3ter.core.ExcludeMissing
 import com.m3ter.core.JsonField
 import com.m3ter.core.JsonMissing
 import com.m3ter.core.JsonValue
-import com.m3ter.core.allMaxBy
 import com.m3ter.core.checkKnown
 import com.m3ter.core.checkRequired
-import com.m3ter.core.getOrThrow
 import com.m3ter.core.toImmutable
 import com.m3ter.errors.M3terInvalidDataException
 import java.util.Collections
@@ -34,20 +23,19 @@ import kotlin.jvm.optionals.getOrNull
 class UsageDataExportScheduleResponse
 private constructor(
     private val id: JsonField<String>,
-    private val version: JsonField<Long>,
     private val accountIds: JsonField<List<String>>,
     private val aggregations: JsonField<List<Aggregation>>,
     private val dimensionFilters: JsonField<List<DimensionFilter>>,
-    private val groups: JsonField<List<Group>>,
+    private val groups: JsonField<List<DataExplorerGroup>>,
     private val meterIds: JsonField<List<String>>,
     private val timePeriod: JsonField<TimePeriod>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("accountIds")
         @ExcludeMissing
         accountIds: JsonField<List<String>> = JsonMissing.of(),
@@ -57,22 +45,25 @@ private constructor(
         @JsonProperty("dimensionFilters")
         @ExcludeMissing
         dimensionFilters: JsonField<List<DimensionFilter>> = JsonMissing.of(),
-        @JsonProperty("groups") @ExcludeMissing groups: JsonField<List<Group>> = JsonMissing.of(),
+        @JsonProperty("groups")
+        @ExcludeMissing
+        groups: JsonField<List<DataExplorerGroup>> = JsonMissing.of(),
         @JsonProperty("meterIds")
         @ExcludeMissing
         meterIds: JsonField<List<String>> = JsonMissing.of(),
         @JsonProperty("timePeriod")
         @ExcludeMissing
         timePeriod: JsonField<TimePeriod> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
-        version,
         accountIds,
         aggregations,
         dimensionFilters,
         groups,
         meterIds,
         timePeriod,
+        version,
         mutableMapOf(),
     )
 
@@ -83,17 +74,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
-
-    /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
 
     /**
      * List of account IDs for which the usage data will be exported.
@@ -126,7 +106,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun groups(): Optional<List<Group>> = groups.getOptional("groups")
+    fun groups(): Optional<List<DataExplorerGroup>> = groups.getOptional("groups")
 
     /**
      * List of meter IDs for which the usage data will be exported.
@@ -139,18 +119,27 @@ private constructor(
     /**
      * Define a time period to control the range of usage data you want the data export to contain
      * when it runs:
-     * - **TODAY**. Data collected for the current day up until the time the export runs.
-     * - **YESTERDAY**. Data collected for the day before the export runs - that is, the 24 hour
-     *   period from midnight to midnight of the day before.
-     * - **WEEK_TO_DATE**. Data collected for the period covering the current week to the date and
-     *   time the export runs, and weeks run Monday to Monday.
-     * - **CURRENT_MONTH**. Data collected for the current month in which the export is ran up to
-     *   and including the date and time the export runs.
-     * - **LAST_30_DAYS**. Data collected for the 30 days prior to the date the export is ran.
-     * - **LAST_35_DAYS**. Data collected for the 35 days prior to the date the export is ran.
-     * - **PREVIOUS_WEEK**. Data collected for the previous full week period, and weeks run Monday
-     *   to Monday.
-     * - **PREVIOUS_MONTH**. Data collected for the previous full month period.
+     * - **TODAY**. Data collected for the current day up until the time the export is scheduled to
+     *   run.
+     * - **YESTERDAY**. Data collected for the day before the export runs under the schedule - that
+     *   is, the 24 hour period from midnight to midnight of the day before.
+     * - **PREVIOUS_WEEK**, **PREVIOUS_MONTH**, **PREVIOUS_QUARTER**, **PREVIOUS_YEAR**. Data
+     *   collected for the previous full week, month, quarter, or year period. For example if
+     *   **PREVIOUS_WEEK**, weeks run Monday to Monday - if the export is scheduled to run on June
+     *   12th 2024, which is a Wednesday, the export will contain data for the period running from
+     *   Monday, June 3rd 2024 to midnight on Sunday, June 9th 2024.
+     * - **WEEK_TO_DATE**, **MONTH_TO_DATE**, or **YEAR_TO_DATE**. Data collected for the period
+     *   covering the current week, month, or year period. For example if **WEEK_TO_DATE**, weeks
+     *   run Monday to Monday - if the Export is scheduled to run at 10 a.m. UTC on October 16th
+     *   2024, which is a Wednesday, it will contain all usage data collected starting Monday
+     *   October 14th 2024 through to the Wednesday at 10 a.m. UTC of the current week.
+     * - **LAST_12_HOURS**. Data collected for the twelve hour period up to the start of the hour in
+     *   which the export is scheduled to run.
+     * - **LAST_7_DAYS**, **LAST_30_DAYS**, **LAST_35_DAYS**, **LAST_90_DAYS**, **LAST_120_DAYS**
+     *   **LAST_YEAR**. Data collected for the selected period prior to the date the export is
+     *   scheduled to run. For example if **LAST_30_DAYS** and the export is scheduled to run for
+     *   any time on June 15th 2024, it will contain usage data collected for the previous 30 days -
+     *   starting May 16th 2024 through to midnight on June 14th 2024
      *
      * For more details and examples, see the
      * [Time Period](https://www.m3ter.com/docs/guides/data-exports/creating-export-schedules#time-period)
@@ -162,18 +151,22 @@ private constructor(
     fun timePeriod(): Optional<TimePeriod> = timePeriod.getOptional("timePeriod")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [accountIds].
@@ -208,7 +201,9 @@ private constructor(
      *
      * Unlike [groups], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("groups") @ExcludeMissing fun _groups(): JsonField<List<Group>> = groups
+    @JsonProperty("groups")
+    @ExcludeMissing
+    fun _groups(): JsonField<List<DataExplorerGroup>> = groups
 
     /**
      * Returns the raw JSON value of [meterIds].
@@ -225,6 +220,13 @@ private constructor(
     @JsonProperty("timePeriod")
     @ExcludeMissing
     fun _timePeriod(): JsonField<TimePeriod> = timePeriod
+
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -247,7 +249,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -257,20 +258,19 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var accountIds: JsonField<MutableList<String>>? = null
         private var aggregations: JsonField<MutableList<Aggregation>>? = null
         private var dimensionFilters: JsonField<MutableList<DimensionFilter>>? = null
-        private var groups: JsonField<MutableList<Group>>? = null
+        private var groups: JsonField<MutableList<DataExplorerGroup>>? = null
         private var meterIds: JsonField<MutableList<String>>? = null
         private var timePeriod: JsonField<TimePeriod> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(usageDataExportScheduleResponse: UsageDataExportScheduleResponse) =
             apply {
                 id = usageDataExportScheduleResponse.id
-                version = usageDataExportScheduleResponse.version
                 accountIds = usageDataExportScheduleResponse.accountIds.map { it.toMutableList() }
                 aggregations =
                     usageDataExportScheduleResponse.aggregations.map { it.toMutableList() }
@@ -279,6 +279,7 @@ private constructor(
                 groups = usageDataExportScheduleResponse.groups.map { it.toMutableList() }
                 meterIds = usageDataExportScheduleResponse.meterIds.map { it.toMutableList() }
                 timePeriod = usageDataExportScheduleResponse.timePeriod
+                version = usageDataExportScheduleResponse.version
                 additionalProperties =
                     usageDataExportScheduleResponse.additionalProperties.toMutableMap()
             }
@@ -293,22 +294,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /** List of account IDs for which the usage data will be exported. */
         fun accountIds(accountIds: List<String>) = accountIds(JsonField.of(accountIds))
@@ -390,52 +375,30 @@ private constructor(
         }
 
         /** List of groups to apply */
-        fun groups(groups: List<Group>) = groups(JsonField.of(groups))
+        fun groups(groups: List<DataExplorerGroup>) = groups(JsonField.of(groups))
 
         /**
          * Sets [Builder.groups] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.groups] with a well-typed `List<Group>` value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
+         * You should usually call [Builder.groups] with a well-typed `List<DataExplorerGroup>`
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
          */
-        fun groups(groups: JsonField<List<Group>>) = apply {
+        fun groups(groups: JsonField<List<DataExplorerGroup>>) = apply {
             this.groups = groups.map { it.toMutableList() }
         }
 
         /**
-         * Adds a single [Group] to [groups].
+         * Adds a single [DataExplorerGroup] to [groups].
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
-        fun addGroup(group: Group) = apply {
+        fun addGroup(group: DataExplorerGroup) = apply {
             groups =
                 (groups ?: JsonField.of(mutableListOf())).also {
                     checkKnown("groups", it).add(group)
                 }
         }
-
-        /**
-         * Alias for calling [addGroup] with
-         * `Group.ofDataExportsDataExplorerAccount(dataExportsDataExplorerAccount)`.
-         */
-        fun addGroup(dataExportsDataExplorerAccount: Group.DataExportsDataExplorerAccountGroup) =
-            addGroup(Group.ofDataExportsDataExplorerAccount(dataExportsDataExplorerAccount))
-
-        /**
-         * Alias for calling [addGroup] with
-         * `Group.ofDataExportsDataExplorerDimension(dataExportsDataExplorerDimension)`.
-         */
-        fun addGroup(
-            dataExportsDataExplorerDimension: Group.DataExportsDataExplorerDimensionGroup
-        ) = addGroup(Group.ofDataExportsDataExplorerDimension(dataExportsDataExplorerDimension))
-
-        /**
-         * Alias for calling [addGroup] with
-         * `Group.ofDataExportsDataExplorerTime(dataExportsDataExplorerTime)`.
-         */
-        fun addGroup(dataExportsDataExplorerTime: Group.DataExportsDataExplorerTimeGroup) =
-            addGroup(Group.ofDataExportsDataExplorerTime(dataExportsDataExplorerTime))
 
         /** List of meter IDs for which the usage data will be exported. */
         fun meterIds(meterIds: List<String>) = meterIds(JsonField.of(meterIds))
@@ -466,18 +429,28 @@ private constructor(
         /**
          * Define a time period to control the range of usage data you want the data export to
          * contain when it runs:
-         * - **TODAY**. Data collected for the current day up until the time the export runs.
-         * - **YESTERDAY**. Data collected for the day before the export runs - that is, the 24 hour
-         *   period from midnight to midnight of the day before.
-         * - **WEEK_TO_DATE**. Data collected for the period covering the current week to the date
-         *   and time the export runs, and weeks run Monday to Monday.
-         * - **CURRENT_MONTH**. Data collected for the current month in which the export is ran up
-         *   to and including the date and time the export runs.
-         * - **LAST_30_DAYS**. Data collected for the 30 days prior to the date the export is ran.
-         * - **LAST_35_DAYS**. Data collected for the 35 days prior to the date the export is ran.
-         * - **PREVIOUS_WEEK**. Data collected for the previous full week period, and weeks run
-         *   Monday to Monday.
-         * - **PREVIOUS_MONTH**. Data collected for the previous full month period.
+         * - **TODAY**. Data collected for the current day up until the time the export is scheduled
+         *   to run.
+         * - **YESTERDAY**. Data collected for the day before the export runs under the schedule -
+         *   that is, the 24 hour period from midnight to midnight of the day before.
+         * - **PREVIOUS_WEEK**, **PREVIOUS_MONTH**, **PREVIOUS_QUARTER**, **PREVIOUS_YEAR**. Data
+         *   collected for the previous full week, month, quarter, or year period. For example if
+         *   **PREVIOUS_WEEK**, weeks run Monday to Monday - if the export is scheduled to run on
+         *   June 12th 2024, which is a Wednesday, the export will contain data for the period
+         *   running from Monday, June 3rd 2024 to midnight on Sunday, June 9th 2024.
+         * - **WEEK_TO_DATE**, **MONTH_TO_DATE**, or **YEAR_TO_DATE**. Data collected for the period
+         *   covering the current week, month, or year period. For example if **WEEK_TO_DATE**,
+         *   weeks run Monday to Monday - if the Export is scheduled to run at 10 a.m. UTC on
+         *   October 16th 2024, which is a Wednesday, it will contain all usage data collected
+         *   starting Monday October 14th 2024 through to the Wednesday at 10 a.m. UTC of the
+         *   current week.
+         * - **LAST_12_HOURS**. Data collected for the twelve hour period up to the start of the
+         *   hour in which the export is scheduled to run.
+         * - **LAST_7_DAYS**, **LAST_30_DAYS**, **LAST_35_DAYS**, **LAST_90_DAYS**,
+         *   **LAST_120_DAYS** **LAST_YEAR**. Data collected for the selected period prior to the
+         *   date the export is scheduled to run. For example if **LAST_30_DAYS** and the export is
+         *   scheduled to run for any time on June 15th 2024, it will contain usage data collected
+         *   for the previous 30 days - starting May 16th 2024 through to midnight on June 14th 2024
          *
          * For more details and examples, see the
          * [Time Period](https://www.m3ter.com/docs/guides/data-exports/creating-export-schedules#time-period)
@@ -493,6 +466,22 @@ private constructor(
          * supported value.
          */
         fun timePeriod(timePeriod: JsonField<TimePeriod>) = apply { this.timePeriod = timePeriod }
+
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -521,7 +510,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -529,13 +517,13 @@ private constructor(
         fun build(): UsageDataExportScheduleResponse =
             UsageDataExportScheduleResponse(
                 checkRequired("id", id),
-                checkRequired("version", version),
                 (accountIds ?: JsonMissing.of()).map { it.toImmutable() },
                 (aggregations ?: JsonMissing.of()).map { it.toImmutable() },
                 (dimensionFilters ?: JsonMissing.of()).map { it.toImmutable() },
                 (groups ?: JsonMissing.of()).map { it.toImmutable() },
                 (meterIds ?: JsonMissing.of()).map { it.toImmutable() },
                 timePeriod,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -548,13 +536,13 @@ private constructor(
         }
 
         id()
-        version()
         accountIds()
         aggregations().ifPresent { it.forEach { it.validate() } }
         dimensionFilters().ifPresent { it.forEach { it.validate() } }
         groups().ifPresent { it.forEach { it.validate() } }
         meterIds()
         timePeriod().ifPresent { it.validate() }
+        version()
         validated = true
     }
 
@@ -574,13 +562,13 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (accountIds.asKnown().getOrNull()?.size ?: 0) +
             (aggregations.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (dimensionFilters.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (groups.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (meterIds.asKnown().getOrNull()?.size ?: 0) +
-            (timePeriod.asKnown().getOrNull()?.validity() ?: 0)
+            (timePeriod.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     class Aggregation
     private constructor(
@@ -1401,1332 +1389,30 @@ private constructor(
             "DimensionFilter{fieldCode=$fieldCode, meterId=$meterId, values=$values, additionalProperties=$additionalProperties}"
     }
 
-    /** Group by a field */
-    @JsonDeserialize(using = Group.Deserializer::class)
-    @JsonSerialize(using = Group.Serializer::class)
-    class Group
-    private constructor(
-        private val dataExportsDataExplorerAccount: DataExportsDataExplorerAccountGroup? = null,
-        private val dataExportsDataExplorerDimension: DataExportsDataExplorerDimensionGroup? = null,
-        private val dataExportsDataExplorerTime: DataExportsDataExplorerTimeGroup? = null,
-        private val _json: JsonValue? = null,
-    ) {
-
-        /** Group by account */
-        fun dataExportsDataExplorerAccount(): Optional<DataExportsDataExplorerAccountGroup> =
-            Optional.ofNullable(dataExportsDataExplorerAccount)
-
-        /** Group by dimension */
-        fun dataExportsDataExplorerDimension(): Optional<DataExportsDataExplorerDimensionGroup> =
-            Optional.ofNullable(dataExportsDataExplorerDimension)
-
-        /** Group by time */
-        fun dataExportsDataExplorerTime(): Optional<DataExportsDataExplorerTimeGroup> =
-            Optional.ofNullable(dataExportsDataExplorerTime)
-
-        fun isDataExportsDataExplorerAccount(): Boolean = dataExportsDataExplorerAccount != null
-
-        fun isDataExportsDataExplorerDimension(): Boolean = dataExportsDataExplorerDimension != null
-
-        fun isDataExportsDataExplorerTime(): Boolean = dataExportsDataExplorerTime != null
-
-        /** Group by account */
-        fun asDataExportsDataExplorerAccount(): DataExportsDataExplorerAccountGroup =
-            dataExportsDataExplorerAccount.getOrThrow("dataExportsDataExplorerAccount")
-
-        /** Group by dimension */
-        fun asDataExportsDataExplorerDimension(): DataExportsDataExplorerDimensionGroup =
-            dataExportsDataExplorerDimension.getOrThrow("dataExportsDataExplorerDimension")
-
-        /** Group by time */
-        fun asDataExportsDataExplorerTime(): DataExportsDataExplorerTimeGroup =
-            dataExportsDataExplorerTime.getOrThrow("dataExportsDataExplorerTime")
-
-        fun _json(): Optional<JsonValue> = Optional.ofNullable(_json)
-
-        fun <T> accept(visitor: Visitor<T>): T =
-            when {
-                dataExportsDataExplorerAccount != null ->
-                    visitor.visitDataExportsDataExplorerAccount(dataExportsDataExplorerAccount)
-                dataExportsDataExplorerDimension != null ->
-                    visitor.visitDataExportsDataExplorerDimension(dataExportsDataExplorerDimension)
-                dataExportsDataExplorerTime != null ->
-                    visitor.visitDataExportsDataExplorerTime(dataExportsDataExplorerTime)
-                else -> visitor.unknown(_json)
-            }
-
-        private var validated: Boolean = false
-
-        fun validate(): Group = apply {
-            if (validated) {
-                return@apply
-            }
-
-            accept(
-                object : Visitor<Unit> {
-                    override fun visitDataExportsDataExplorerAccount(
-                        dataExportsDataExplorerAccount: DataExportsDataExplorerAccountGroup
-                    ) {
-                        dataExportsDataExplorerAccount.validate()
-                    }
-
-                    override fun visitDataExportsDataExplorerDimension(
-                        dataExportsDataExplorerDimension: DataExportsDataExplorerDimensionGroup
-                    ) {
-                        dataExportsDataExplorerDimension.validate()
-                    }
-
-                    override fun visitDataExportsDataExplorerTime(
-                        dataExportsDataExplorerTime: DataExportsDataExplorerTimeGroup
-                    ) {
-                        dataExportsDataExplorerTime.validate()
-                    }
-                }
-            )
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: M3terInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        @JvmSynthetic
-        internal fun validity(): Int =
-            accept(
-                object : Visitor<Int> {
-                    override fun visitDataExportsDataExplorerAccount(
-                        dataExportsDataExplorerAccount: DataExportsDataExplorerAccountGroup
-                    ) = dataExportsDataExplorerAccount.validity()
-
-                    override fun visitDataExportsDataExplorerDimension(
-                        dataExportsDataExplorerDimension: DataExportsDataExplorerDimensionGroup
-                    ) = dataExportsDataExplorerDimension.validity()
-
-                    override fun visitDataExportsDataExplorerTime(
-                        dataExportsDataExplorerTime: DataExportsDataExplorerTimeGroup
-                    ) = dataExportsDataExplorerTime.validity()
-
-                    override fun unknown(json: JsonValue?) = 0
-                }
-            )
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Group && dataExportsDataExplorerAccount == other.dataExportsDataExplorerAccount && dataExportsDataExplorerDimension == other.dataExportsDataExplorerDimension && dataExportsDataExplorerTime == other.dataExportsDataExplorerTime /* spotless:on */
-        }
-
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(dataExportsDataExplorerAccount, dataExportsDataExplorerDimension, dataExportsDataExplorerTime) /* spotless:on */
-
-        override fun toString(): String =
-            when {
-                dataExportsDataExplorerAccount != null ->
-                    "Group{dataExportsDataExplorerAccount=$dataExportsDataExplorerAccount}"
-                dataExportsDataExplorerDimension != null ->
-                    "Group{dataExportsDataExplorerDimension=$dataExportsDataExplorerDimension}"
-                dataExportsDataExplorerTime != null ->
-                    "Group{dataExportsDataExplorerTime=$dataExportsDataExplorerTime}"
-                _json != null -> "Group{_unknown=$_json}"
-                else -> throw IllegalStateException("Invalid Group")
-            }
-
-        companion object {
-
-            /** Group by account */
-            @JvmStatic
-            fun ofDataExportsDataExplorerAccount(
-                dataExportsDataExplorerAccount: DataExportsDataExplorerAccountGroup
-            ) = Group(dataExportsDataExplorerAccount = dataExportsDataExplorerAccount)
-
-            /** Group by dimension */
-            @JvmStatic
-            fun ofDataExportsDataExplorerDimension(
-                dataExportsDataExplorerDimension: DataExportsDataExplorerDimensionGroup
-            ) = Group(dataExportsDataExplorerDimension = dataExportsDataExplorerDimension)
-
-            /** Group by time */
-            @JvmStatic
-            fun ofDataExportsDataExplorerTime(
-                dataExportsDataExplorerTime: DataExportsDataExplorerTimeGroup
-            ) = Group(dataExportsDataExplorerTime = dataExportsDataExplorerTime)
-        }
-
-        /** An interface that defines how to map each variant of [Group] to a value of type [T]. */
-        interface Visitor<out T> {
-
-            /** Group by account */
-            fun visitDataExportsDataExplorerAccount(
-                dataExportsDataExplorerAccount: DataExportsDataExplorerAccountGroup
-            ): T
-
-            /** Group by dimension */
-            fun visitDataExportsDataExplorerDimension(
-                dataExportsDataExplorerDimension: DataExportsDataExplorerDimensionGroup
-            ): T
-
-            /** Group by time */
-            fun visitDataExportsDataExplorerTime(
-                dataExportsDataExplorerTime: DataExportsDataExplorerTimeGroup
-            ): T
-
-            /**
-             * Maps an unknown variant of [Group] to a value of type [T].
-             *
-             * An instance of [Group] can contain an unknown variant if it was deserialized from
-             * data that doesn't match any known variant. For example, if the SDK is on an older
-             * version than the API, then the API may respond with new variants that the SDK is
-             * unaware of.
-             *
-             * @throws M3terInvalidDataException in the default implementation.
-             */
-            fun unknown(json: JsonValue?): T {
-                throw M3terInvalidDataException("Unknown Group: $json")
-            }
-        }
-
-        internal class Deserializer : BaseDeserializer<Group>(Group::class) {
-
-            override fun ObjectCodec.deserialize(node: JsonNode): Group {
-                val json = JsonValue.fromJsonNode(node)
-
-                val bestMatches =
-                    sequenceOf(
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<DataExportsDataExplorerAccountGroup>(),
-                                )
-                                ?.let { Group(dataExportsDataExplorerAccount = it, _json = json) },
-                            tryDeserialize(
-                                    node,
-                                    jacksonTypeRef<DataExportsDataExplorerDimensionGroup>(),
-                                )
-                                ?.let {
-                                    Group(dataExportsDataExplorerDimension = it, _json = json)
-                                },
-                            tryDeserialize(node, jacksonTypeRef<DataExportsDataExplorerTimeGroup>())
-                                ?.let { Group(dataExportsDataExplorerTime = it, _json = json) },
-                        )
-                        .filterNotNull()
-                        .allMaxBy { it.validity() }
-                        .toList()
-                return when (bestMatches.size) {
-                    // This can happen if what we're deserializing is completely incompatible with
-                    // all the possible variants (e.g. deserializing from boolean).
-                    0 -> Group(_json = json)
-                    1 -> bestMatches.single()
-                    // If there's more than one match with the highest validity, then use the first
-                    // completely valid match, or simply the first match if none are completely
-                    // valid.
-                    else -> bestMatches.firstOrNull { it.isValid() } ?: bestMatches.first()
-                }
-            }
-        }
-
-        internal class Serializer : BaseSerializer<Group>(Group::class) {
-
-            override fun serialize(
-                value: Group,
-                generator: JsonGenerator,
-                provider: SerializerProvider,
-            ) {
-                when {
-                    value.dataExportsDataExplorerAccount != null ->
-                        generator.writeObject(value.dataExportsDataExplorerAccount)
-                    value.dataExportsDataExplorerDimension != null ->
-                        generator.writeObject(value.dataExportsDataExplorerDimension)
-                    value.dataExportsDataExplorerTime != null ->
-                        generator.writeObject(value.dataExportsDataExplorerTime)
-                    value._json != null -> generator.writeObject(value._json)
-                    else -> throw IllegalStateException("Invalid Group")
-                }
-            }
-        }
-
-        /** Group by account */
-        class DataExportsDataExplorerAccountGroup
-        private constructor(
-            private val groupType: JsonField<DataExplorerAccountGroup.GroupType>,
-            private val additionalProperties: MutableMap<String, JsonValue>,
-        ) {
-
-            @JsonCreator
-            private constructor(
-                @JsonProperty("groupType")
-                @ExcludeMissing
-                groupType: JsonField<DataExplorerAccountGroup.GroupType> = JsonMissing.of()
-            ) : this(groupType, mutableMapOf())
-
-            fun toDataExplorerAccountGroup(): DataExplorerAccountGroup =
-                DataExplorerAccountGroup.builder().groupType(groupType).build()
-
-            /**
-             * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
-             *   the server responded with an unexpected value).
-             */
-            fun groupType(): Optional<DataExplorerAccountGroup.GroupType> =
-                groupType.getOptional("groupType")
-
-            /**
-             * Returns the raw JSON value of [groupType].
-             *
-             * Unlike [groupType], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("groupType")
-            @ExcludeMissing
-            fun _groupType(): JsonField<DataExplorerAccountGroup.GroupType> = groupType
-
-            @JsonAnySetter
-            private fun putAdditionalProperty(key: String, value: JsonValue) {
-                additionalProperties.put(key, value)
-            }
-
-            @JsonAnyGetter
-            @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> =
-                Collections.unmodifiableMap(additionalProperties)
-
-            fun toBuilder() = Builder().from(this)
-
-            companion object {
-
-                /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [DataExportsDataExplorerAccountGroup].
-                 */
-                @JvmStatic fun builder() = Builder()
-            }
-
-            /** A builder for [DataExportsDataExplorerAccountGroup]. */
-            class Builder internal constructor() {
-
-                private var groupType: JsonField<DataExplorerAccountGroup.GroupType> =
-                    JsonMissing.of()
-                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-                @JvmSynthetic
-                internal fun from(
-                    dataExportsDataExplorerAccountGroup: DataExportsDataExplorerAccountGroup
-                ) = apply {
-                    groupType = dataExportsDataExplorerAccountGroup.groupType
-                    additionalProperties =
-                        dataExportsDataExplorerAccountGroup.additionalProperties.toMutableMap()
-                }
-
-                fun groupType(groupType: DataExplorerAccountGroup.GroupType) =
-                    groupType(JsonField.of(groupType))
-
-                /**
-                 * Sets [Builder.groupType] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.groupType] with a well-typed
-                 * [DataExplorerAccountGroup.GroupType] value instead. This method is primarily for
-                 * setting the field to an undocumented or not yet supported value.
-                 */
-                fun groupType(groupType: JsonField<DataExplorerAccountGroup.GroupType>) = apply {
-                    this.groupType = groupType
-                }
-
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
-
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    additionalProperties.put(key, value)
-                }
-
-                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.putAll(additionalProperties)
-                    }
-
-                fun removeAdditionalProperty(key: String) = apply {
-                    additionalProperties.remove(key)
-                }
-
-                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
-
-                /**
-                 * Returns an immutable instance of [DataExportsDataExplorerAccountGroup].
-                 *
-                 * Further updates to this [Builder] will not mutate the returned instance.
-                 */
-                fun build(): DataExportsDataExplorerAccountGroup =
-                    DataExportsDataExplorerAccountGroup(
-                        groupType,
-                        additionalProperties.toMutableMap(),
-                    )
-            }
-
-            private var validated: Boolean = false
-
-            fun validate(): DataExportsDataExplorerAccountGroup = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                groupType().ifPresent { it.validate() }
-                validated = true
-            }
-
-            fun isValid(): Boolean =
-                try {
-                    validate()
-                    true
-                } catch (e: M3terInvalidDataException) {
-                    false
-                }
-
-            /**
-             * Returns a score indicating how many valid values are contained in this object
-             * recursively.
-             *
-             * Used for best match union deserialization.
-             */
-            @JvmSynthetic
-            internal fun validity(): Int = (groupType.asKnown().getOrNull()?.validity() ?: 0)
-
-            class GroupType @JsonCreator private constructor(private val value: JsonField<String>) :
-                Enum {
-
-                /**
-                 * Returns this class instance's raw value.
-                 *
-                 * This is usually only useful if this instance was deserialized from data that
-                 * doesn't match any known member, and you want to know that value. For example, if
-                 * the SDK is on an older version than the API, then the API may respond with new
-                 * members that the SDK is unaware of.
-                 */
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                companion object {
-
-                    @JvmField val ACCOUNT = of("ACCOUNT")
-
-                    @JvmField val DIMENSION = of("DIMENSION")
-
-                    @JvmField val TIME = of("TIME")
-
-                    @JvmStatic fun of(value: String) = GroupType(JsonField.of(value))
-                }
-
-                /** An enum containing [GroupType]'s known values. */
-                enum class Known {
-                    ACCOUNT,
-                    DIMENSION,
-                    TIME,
-                }
-
-                /**
-                 * An enum containing [GroupType]'s known values, as well as an [_UNKNOWN] member.
-                 *
-                 * An instance of [GroupType] can contain an unknown value in a couple of cases:
-                 * - It was deserialized from data that doesn't match any known member. For example,
-                 *   if the SDK is on an older version than the API, then the API may respond with
-                 *   new members that the SDK is unaware of.
-                 * - It was constructed with an arbitrary value using the [of] method.
-                 */
-                enum class Value {
-                    ACCOUNT,
-                    DIMENSION,
-                    TIME,
-                    /**
-                     * An enum member indicating that [GroupType] was instantiated with an unknown
-                     * value.
-                     */
-                    _UNKNOWN,
-                }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value, or
-                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-                 *
-                 * Use the [known] method instead if you're certain the value is always known or if
-                 * you want to throw for the unknown case.
-                 */
-                fun value(): Value =
-                    when (this) {
-                        ACCOUNT -> Value.ACCOUNT
-                        DIMENSION -> Value.DIMENSION
-                        TIME -> Value.TIME
-                        else -> Value._UNKNOWN
-                    }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value.
-                 *
-                 * Use the [value] method instead if you're uncertain the value is always known and
-                 * don't want to throw for the unknown case.
-                 *
-                 * @throws M3terInvalidDataException if this class instance's value is a not a known
-                 *   member.
-                 */
-                fun known(): Known =
-                    when (this) {
-                        ACCOUNT -> Known.ACCOUNT
-                        DIMENSION -> Known.DIMENSION
-                        TIME -> Known.TIME
-                        else -> throw M3terInvalidDataException("Unknown GroupType: $value")
-                    }
-
-                /**
-                 * Returns this class instance's primitive wire representation.
-                 *
-                 * This differs from the [toString] method because that method is primarily for
-                 * debugging and generally doesn't throw.
-                 *
-                 * @throws M3terInvalidDataException if this class instance's value does not have
-                 *   the expected primitive type.
-                 */
-                fun asString(): String =
-                    _value().asString().orElseThrow {
-                        M3terInvalidDataException("Value is not a String")
-                    }
-
-                private var validated: Boolean = false
-
-                fun validate(): GroupType = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    known()
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: M3terInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return /* spotless:off */ other is GroupType && value == other.value /* spotless:on */
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-            }
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is DataExportsDataExplorerAccountGroup && groupType == other.groupType && additionalProperties == other.additionalProperties /* spotless:on */
-            }
-
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(groupType, additionalProperties) }
-            /* spotless:on */
-
-            override fun hashCode(): Int = hashCode
-
-            override fun toString() =
-                "DataExportsDataExplorerAccountGroup{groupType=$groupType, additionalProperties=$additionalProperties}"
-        }
-
-        /** Group by dimension */
-        class DataExportsDataExplorerDimensionGroup
-        private constructor(
-            private val fieldCode: JsonField<String>,
-            private val meterId: JsonField<String>,
-            private val groupType: JsonField<DataExplorerDimensionGroup.GroupType>,
-            private val additionalProperties: MutableMap<String, JsonValue>,
-        ) {
-
-            @JsonCreator
-            private constructor(
-                @JsonProperty("fieldCode")
-                @ExcludeMissing
-                fieldCode: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("meterId")
-                @ExcludeMissing
-                meterId: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("groupType")
-                @ExcludeMissing
-                groupType: JsonField<DataExplorerDimensionGroup.GroupType> = JsonMissing.of(),
-            ) : this(fieldCode, meterId, groupType, mutableMapOf())
-
-            fun toDataExplorerDimensionGroup(): DataExplorerDimensionGroup =
-                DataExplorerDimensionGroup.builder()
-                    .fieldCode(fieldCode)
-                    .meterId(meterId)
-                    .groupType(groupType)
-                    .build()
-
-            /**
-             * Field code to group by
-             *
-             * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
-             */
-            fun fieldCode(): String = fieldCode.getRequired("fieldCode")
-
-            /**
-             * Meter ID to group by
-             *
-             * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
-             */
-            fun meterId(): String = meterId.getRequired("meterId")
-
-            /**
-             * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
-             *   the server responded with an unexpected value).
-             */
-            fun groupType(): Optional<DataExplorerDimensionGroup.GroupType> =
-                groupType.getOptional("groupType")
-
-            /**
-             * Returns the raw JSON value of [fieldCode].
-             *
-             * Unlike [fieldCode], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("fieldCode")
-            @ExcludeMissing
-            fun _fieldCode(): JsonField<String> = fieldCode
-
-            /**
-             * Returns the raw JSON value of [meterId].
-             *
-             * Unlike [meterId], this method doesn't throw if the JSON field has an unexpected type.
-             */
-            @JsonProperty("meterId") @ExcludeMissing fun _meterId(): JsonField<String> = meterId
-
-            /**
-             * Returns the raw JSON value of [groupType].
-             *
-             * Unlike [groupType], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("groupType")
-            @ExcludeMissing
-            fun _groupType(): JsonField<DataExplorerDimensionGroup.GroupType> = groupType
-
-            @JsonAnySetter
-            private fun putAdditionalProperty(key: String, value: JsonValue) {
-                additionalProperties.put(key, value)
-            }
-
-            @JsonAnyGetter
-            @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> =
-                Collections.unmodifiableMap(additionalProperties)
-
-            fun toBuilder() = Builder().from(this)
-
-            companion object {
-
-                /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [DataExportsDataExplorerDimensionGroup].
-                 *
-                 * The following fields are required:
-                 * ```java
-                 * .fieldCode()
-                 * .meterId()
-                 * ```
-                 */
-                @JvmStatic fun builder() = Builder()
-            }
-
-            /** A builder for [DataExportsDataExplorerDimensionGroup]. */
-            class Builder internal constructor() {
-
-                private var fieldCode: JsonField<String>? = null
-                private var meterId: JsonField<String>? = null
-                private var groupType: JsonField<DataExplorerDimensionGroup.GroupType> =
-                    JsonMissing.of()
-                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-                @JvmSynthetic
-                internal fun from(
-                    dataExportsDataExplorerDimensionGroup: DataExportsDataExplorerDimensionGroup
-                ) = apply {
-                    fieldCode = dataExportsDataExplorerDimensionGroup.fieldCode
-                    meterId = dataExportsDataExplorerDimensionGroup.meterId
-                    groupType = dataExportsDataExplorerDimensionGroup.groupType
-                    additionalProperties =
-                        dataExportsDataExplorerDimensionGroup.additionalProperties.toMutableMap()
-                }
-
-                /** Field code to group by */
-                fun fieldCode(fieldCode: String) = fieldCode(JsonField.of(fieldCode))
-
-                /**
-                 * Sets [Builder.fieldCode] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.fieldCode] with a well-typed [String] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
-                 */
-                fun fieldCode(fieldCode: JsonField<String>) = apply { this.fieldCode = fieldCode }
-
-                /** Meter ID to group by */
-                fun meterId(meterId: String) = meterId(JsonField.of(meterId))
-
-                /**
-                 * Sets [Builder.meterId] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.meterId] with a well-typed [String] value
-                 * instead. This method is primarily for setting the field to an undocumented or not
-                 * yet supported value.
-                 */
-                fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
-
-                fun groupType(groupType: DataExplorerDimensionGroup.GroupType) =
-                    groupType(JsonField.of(groupType))
-
-                /**
-                 * Sets [Builder.groupType] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.groupType] with a well-typed
-                 * [DataExplorerDimensionGroup.GroupType] value instead. This method is primarily
-                 * for setting the field to an undocumented or not yet supported value.
-                 */
-                fun groupType(groupType: JsonField<DataExplorerDimensionGroup.GroupType>) = apply {
-                    this.groupType = groupType
-                }
-
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
-
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    additionalProperties.put(key, value)
-                }
-
-                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.putAll(additionalProperties)
-                    }
-
-                fun removeAdditionalProperty(key: String) = apply {
-                    additionalProperties.remove(key)
-                }
-
-                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
-
-                /**
-                 * Returns an immutable instance of [DataExportsDataExplorerDimensionGroup].
-                 *
-                 * Further updates to this [Builder] will not mutate the returned instance.
-                 *
-                 * The following fields are required:
-                 * ```java
-                 * .fieldCode()
-                 * .meterId()
-                 * ```
-                 *
-                 * @throws IllegalStateException if any required field is unset.
-                 */
-                fun build(): DataExportsDataExplorerDimensionGroup =
-                    DataExportsDataExplorerDimensionGroup(
-                        checkRequired("fieldCode", fieldCode),
-                        checkRequired("meterId", meterId),
-                        groupType,
-                        additionalProperties.toMutableMap(),
-                    )
-            }
-
-            private var validated: Boolean = false
-
-            fun validate(): DataExportsDataExplorerDimensionGroup = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                fieldCode()
-                meterId()
-                groupType().ifPresent { it.validate() }
-                validated = true
-            }
-
-            fun isValid(): Boolean =
-                try {
-                    validate()
-                    true
-                } catch (e: M3terInvalidDataException) {
-                    false
-                }
-
-            /**
-             * Returns a score indicating how many valid values are contained in this object
-             * recursively.
-             *
-             * Used for best match union deserialization.
-             */
-            @JvmSynthetic
-            internal fun validity(): Int =
-                (if (fieldCode.asKnown().isPresent) 1 else 0) +
-                    (if (meterId.asKnown().isPresent) 1 else 0) +
-                    (groupType.asKnown().getOrNull()?.validity() ?: 0)
-
-            class GroupType @JsonCreator private constructor(private val value: JsonField<String>) :
-                Enum {
-
-                /**
-                 * Returns this class instance's raw value.
-                 *
-                 * This is usually only useful if this instance was deserialized from data that
-                 * doesn't match any known member, and you want to know that value. For example, if
-                 * the SDK is on an older version than the API, then the API may respond with new
-                 * members that the SDK is unaware of.
-                 */
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                companion object {
-
-                    @JvmField val ACCOUNT = of("ACCOUNT")
-
-                    @JvmField val DIMENSION = of("DIMENSION")
-
-                    @JvmField val TIME = of("TIME")
-
-                    @JvmStatic fun of(value: String) = GroupType(JsonField.of(value))
-                }
-
-                /** An enum containing [GroupType]'s known values. */
-                enum class Known {
-                    ACCOUNT,
-                    DIMENSION,
-                    TIME,
-                }
-
-                /**
-                 * An enum containing [GroupType]'s known values, as well as an [_UNKNOWN] member.
-                 *
-                 * An instance of [GroupType] can contain an unknown value in a couple of cases:
-                 * - It was deserialized from data that doesn't match any known member. For example,
-                 *   if the SDK is on an older version than the API, then the API may respond with
-                 *   new members that the SDK is unaware of.
-                 * - It was constructed with an arbitrary value using the [of] method.
-                 */
-                enum class Value {
-                    ACCOUNT,
-                    DIMENSION,
-                    TIME,
-                    /**
-                     * An enum member indicating that [GroupType] was instantiated with an unknown
-                     * value.
-                     */
-                    _UNKNOWN,
-                }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value, or
-                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-                 *
-                 * Use the [known] method instead if you're certain the value is always known or if
-                 * you want to throw for the unknown case.
-                 */
-                fun value(): Value =
-                    when (this) {
-                        ACCOUNT -> Value.ACCOUNT
-                        DIMENSION -> Value.DIMENSION
-                        TIME -> Value.TIME
-                        else -> Value._UNKNOWN
-                    }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value.
-                 *
-                 * Use the [value] method instead if you're uncertain the value is always known and
-                 * don't want to throw for the unknown case.
-                 *
-                 * @throws M3terInvalidDataException if this class instance's value is a not a known
-                 *   member.
-                 */
-                fun known(): Known =
-                    when (this) {
-                        ACCOUNT -> Known.ACCOUNT
-                        DIMENSION -> Known.DIMENSION
-                        TIME -> Known.TIME
-                        else -> throw M3terInvalidDataException("Unknown GroupType: $value")
-                    }
-
-                /**
-                 * Returns this class instance's primitive wire representation.
-                 *
-                 * This differs from the [toString] method because that method is primarily for
-                 * debugging and generally doesn't throw.
-                 *
-                 * @throws M3terInvalidDataException if this class instance's value does not have
-                 *   the expected primitive type.
-                 */
-                fun asString(): String =
-                    _value().asString().orElseThrow {
-                        M3terInvalidDataException("Value is not a String")
-                    }
-
-                private var validated: Boolean = false
-
-                fun validate(): GroupType = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    known()
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: M3terInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return /* spotless:off */ other is GroupType && value == other.value /* spotless:on */
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-            }
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is DataExportsDataExplorerDimensionGroup && fieldCode == other.fieldCode && meterId == other.meterId && groupType == other.groupType && additionalProperties == other.additionalProperties /* spotless:on */
-            }
-
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(fieldCode, meterId, groupType, additionalProperties) }
-            /* spotless:on */
-
-            override fun hashCode(): Int = hashCode
-
-            override fun toString() =
-                "DataExportsDataExplorerDimensionGroup{fieldCode=$fieldCode, meterId=$meterId, groupType=$groupType, additionalProperties=$additionalProperties}"
-        }
-
-        /** Group by time */
-        class DataExportsDataExplorerTimeGroup
-        private constructor(
-            private val frequency: JsonField<DataExplorerTimeGroup.Frequency>,
-            private val groupType: JsonField<DataExplorerTimeGroup.GroupType>,
-            private val additionalProperties: MutableMap<String, JsonValue>,
-        ) {
-
-            @JsonCreator
-            private constructor(
-                @JsonProperty("frequency")
-                @ExcludeMissing
-                frequency: JsonField<DataExplorerTimeGroup.Frequency> = JsonMissing.of(),
-                @JsonProperty("groupType")
-                @ExcludeMissing
-                groupType: JsonField<DataExplorerTimeGroup.GroupType> = JsonMissing.of(),
-            ) : this(frequency, groupType, mutableMapOf())
-
-            fun toDataExplorerTimeGroup(): DataExplorerTimeGroup =
-                DataExplorerTimeGroup.builder().frequency(frequency).groupType(groupType).build()
-
-            /**
-             * Frequency of usage data
-             *
-             * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-             *   unexpectedly missing or null (e.g. if the server responded with an unexpected
-             *   value).
-             */
-            fun frequency(): DataExplorerTimeGroup.Frequency = frequency.getRequired("frequency")
-
-            /**
-             * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
-             *   the server responded with an unexpected value).
-             */
-            fun groupType(): Optional<DataExplorerTimeGroup.GroupType> =
-                groupType.getOptional("groupType")
-
-            /**
-             * Returns the raw JSON value of [frequency].
-             *
-             * Unlike [frequency], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("frequency")
-            @ExcludeMissing
-            fun _frequency(): JsonField<DataExplorerTimeGroup.Frequency> = frequency
-
-            /**
-             * Returns the raw JSON value of [groupType].
-             *
-             * Unlike [groupType], this method doesn't throw if the JSON field has an unexpected
-             * type.
-             */
-            @JsonProperty("groupType")
-            @ExcludeMissing
-            fun _groupType(): JsonField<DataExplorerTimeGroup.GroupType> = groupType
-
-            @JsonAnySetter
-            private fun putAdditionalProperty(key: String, value: JsonValue) {
-                additionalProperties.put(key, value)
-            }
-
-            @JsonAnyGetter
-            @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> =
-                Collections.unmodifiableMap(additionalProperties)
-
-            fun toBuilder() = Builder().from(this)
-
-            companion object {
-
-                /**
-                 * Returns a mutable builder for constructing an instance of
-                 * [DataExportsDataExplorerTimeGroup].
-                 *
-                 * The following fields are required:
-                 * ```java
-                 * .frequency()
-                 * ```
-                 */
-                @JvmStatic fun builder() = Builder()
-            }
-
-            /** A builder for [DataExportsDataExplorerTimeGroup]. */
-            class Builder internal constructor() {
-
-                private var frequency: JsonField<DataExplorerTimeGroup.Frequency>? = null
-                private var groupType: JsonField<DataExplorerTimeGroup.GroupType> = JsonMissing.of()
-                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-                @JvmSynthetic
-                internal fun from(
-                    dataExportsDataExplorerTimeGroup: DataExportsDataExplorerTimeGroup
-                ) = apply {
-                    frequency = dataExportsDataExplorerTimeGroup.frequency
-                    groupType = dataExportsDataExplorerTimeGroup.groupType
-                    additionalProperties =
-                        dataExportsDataExplorerTimeGroup.additionalProperties.toMutableMap()
-                }
-
-                /** Frequency of usage data */
-                fun frequency(frequency: DataExplorerTimeGroup.Frequency) =
-                    frequency(JsonField.of(frequency))
-
-                /**
-                 * Sets [Builder.frequency] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.frequency] with a well-typed
-                 * [DataExplorerTimeGroup.Frequency] value instead. This method is primarily for
-                 * setting the field to an undocumented or not yet supported value.
-                 */
-                fun frequency(frequency: JsonField<DataExplorerTimeGroup.Frequency>) = apply {
-                    this.frequency = frequency
-                }
-
-                fun groupType(groupType: DataExplorerTimeGroup.GroupType) =
-                    groupType(JsonField.of(groupType))
-
-                /**
-                 * Sets [Builder.groupType] to an arbitrary JSON value.
-                 *
-                 * You should usually call [Builder.groupType] with a well-typed
-                 * [DataExplorerTimeGroup.GroupType] value instead. This method is primarily for
-                 * setting the field to an undocumented or not yet supported value.
-                 */
-                fun groupType(groupType: JsonField<DataExplorerTimeGroup.GroupType>) = apply {
-                    this.groupType = groupType
-                }
-
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    putAllAdditionalProperties(additionalProperties)
-                }
-
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    additionalProperties.put(key, value)
-                }
-
-                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.putAll(additionalProperties)
-                    }
-
-                fun removeAdditionalProperty(key: String) = apply {
-                    additionalProperties.remove(key)
-                }
-
-                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                    keys.forEach(::removeAdditionalProperty)
-                }
-
-                /**
-                 * Returns an immutable instance of [DataExportsDataExplorerTimeGroup].
-                 *
-                 * Further updates to this [Builder] will not mutate the returned instance.
-                 *
-                 * The following fields are required:
-                 * ```java
-                 * .frequency()
-                 * ```
-                 *
-                 * @throws IllegalStateException if any required field is unset.
-                 */
-                fun build(): DataExportsDataExplorerTimeGroup =
-                    DataExportsDataExplorerTimeGroup(
-                        checkRequired("frequency", frequency),
-                        groupType,
-                        additionalProperties.toMutableMap(),
-                    )
-            }
-
-            private var validated: Boolean = false
-
-            fun validate(): DataExportsDataExplorerTimeGroup = apply {
-                if (validated) {
-                    return@apply
-                }
-
-                frequency().validate()
-                groupType().ifPresent { it.validate() }
-                validated = true
-            }
-
-            fun isValid(): Boolean =
-                try {
-                    validate()
-                    true
-                } catch (e: M3terInvalidDataException) {
-                    false
-                }
-
-            /**
-             * Returns a score indicating how many valid values are contained in this object
-             * recursively.
-             *
-             * Used for best match union deserialization.
-             */
-            @JvmSynthetic
-            internal fun validity(): Int =
-                (frequency.asKnown().getOrNull()?.validity() ?: 0) +
-                    (groupType.asKnown().getOrNull()?.validity() ?: 0)
-
-            class GroupType @JsonCreator private constructor(private val value: JsonField<String>) :
-                Enum {
-
-                /**
-                 * Returns this class instance's raw value.
-                 *
-                 * This is usually only useful if this instance was deserialized from data that
-                 * doesn't match any known member, and you want to know that value. For example, if
-                 * the SDK is on an older version than the API, then the API may respond with new
-                 * members that the SDK is unaware of.
-                 */
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                companion object {
-
-                    @JvmField val ACCOUNT = of("ACCOUNT")
-
-                    @JvmField val DIMENSION = of("DIMENSION")
-
-                    @JvmField val TIME = of("TIME")
-
-                    @JvmStatic fun of(value: String) = GroupType(JsonField.of(value))
-                }
-
-                /** An enum containing [GroupType]'s known values. */
-                enum class Known {
-                    ACCOUNT,
-                    DIMENSION,
-                    TIME,
-                }
-
-                /**
-                 * An enum containing [GroupType]'s known values, as well as an [_UNKNOWN] member.
-                 *
-                 * An instance of [GroupType] can contain an unknown value in a couple of cases:
-                 * - It was deserialized from data that doesn't match any known member. For example,
-                 *   if the SDK is on an older version than the API, then the API may respond with
-                 *   new members that the SDK is unaware of.
-                 * - It was constructed with an arbitrary value using the [of] method.
-                 */
-                enum class Value {
-                    ACCOUNT,
-                    DIMENSION,
-                    TIME,
-                    /**
-                     * An enum member indicating that [GroupType] was instantiated with an unknown
-                     * value.
-                     */
-                    _UNKNOWN,
-                }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value, or
-                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
-                 *
-                 * Use the [known] method instead if you're certain the value is always known or if
-                 * you want to throw for the unknown case.
-                 */
-                fun value(): Value =
-                    when (this) {
-                        ACCOUNT -> Value.ACCOUNT
-                        DIMENSION -> Value.DIMENSION
-                        TIME -> Value.TIME
-                        else -> Value._UNKNOWN
-                    }
-
-                /**
-                 * Returns an enum member corresponding to this class instance's value.
-                 *
-                 * Use the [value] method instead if you're uncertain the value is always known and
-                 * don't want to throw for the unknown case.
-                 *
-                 * @throws M3terInvalidDataException if this class instance's value is a not a known
-                 *   member.
-                 */
-                fun known(): Known =
-                    when (this) {
-                        ACCOUNT -> Known.ACCOUNT
-                        DIMENSION -> Known.DIMENSION
-                        TIME -> Known.TIME
-                        else -> throw M3terInvalidDataException("Unknown GroupType: $value")
-                    }
-
-                /**
-                 * Returns this class instance's primitive wire representation.
-                 *
-                 * This differs from the [toString] method because that method is primarily for
-                 * debugging and generally doesn't throw.
-                 *
-                 * @throws M3terInvalidDataException if this class instance's value does not have
-                 *   the expected primitive type.
-                 */
-                fun asString(): String =
-                    _value().asString().orElseThrow {
-                        M3terInvalidDataException("Value is not a String")
-                    }
-
-                private var validated: Boolean = false
-
-                fun validate(): GroupType = apply {
-                    if (validated) {
-                        return@apply
-                    }
-
-                    known()
-                    validated = true
-                }
-
-                fun isValid(): Boolean =
-                    try {
-                        validate()
-                        true
-                    } catch (e: M3terInvalidDataException) {
-                        false
-                    }
-
-                /**
-                 * Returns a score indicating how many valid values are contained in this object
-                 * recursively.
-                 *
-                 * Used for best match union deserialization.
-                 */
-                @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return /* spotless:off */ other is GroupType && value == other.value /* spotless:on */
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-            }
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is DataExportsDataExplorerTimeGroup && frequency == other.frequency && groupType == other.groupType && additionalProperties == other.additionalProperties /* spotless:on */
-            }
-
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(frequency, groupType, additionalProperties) }
-            /* spotless:on */
-
-            override fun hashCode(): Int = hashCode
-
-            override fun toString() =
-                "DataExportsDataExplorerTimeGroup{frequency=$frequency, groupType=$groupType, additionalProperties=$additionalProperties}"
-        }
-    }
-
     /**
      * Define a time period to control the range of usage data you want the data export to contain
      * when it runs:
-     * - **TODAY**. Data collected for the current day up until the time the export runs.
-     * - **YESTERDAY**. Data collected for the day before the export runs - that is, the 24 hour
-     *   period from midnight to midnight of the day before.
-     * - **WEEK_TO_DATE**. Data collected for the period covering the current week to the date and
-     *   time the export runs, and weeks run Monday to Monday.
-     * - **CURRENT_MONTH**. Data collected for the current month in which the export is ran up to
-     *   and including the date and time the export runs.
-     * - **LAST_30_DAYS**. Data collected for the 30 days prior to the date the export is ran.
-     * - **LAST_35_DAYS**. Data collected for the 35 days prior to the date the export is ran.
-     * - **PREVIOUS_WEEK**. Data collected for the previous full week period, and weeks run Monday
-     *   to Monday.
-     * - **PREVIOUS_MONTH**. Data collected for the previous full month period.
+     * - **TODAY**. Data collected for the current day up until the time the export is scheduled to
+     *   run.
+     * - **YESTERDAY**. Data collected for the day before the export runs under the schedule - that
+     *   is, the 24 hour period from midnight to midnight of the day before.
+     * - **PREVIOUS_WEEK**, **PREVIOUS_MONTH**, **PREVIOUS_QUARTER**, **PREVIOUS_YEAR**. Data
+     *   collected for the previous full week, month, quarter, or year period. For example if
+     *   **PREVIOUS_WEEK**, weeks run Monday to Monday - if the export is scheduled to run on June
+     *   12th 2024, which is a Wednesday, the export will contain data for the period running from
+     *   Monday, June 3rd 2024 to midnight on Sunday, June 9th 2024.
+     * - **WEEK_TO_DATE**, **MONTH_TO_DATE**, or **YEAR_TO_DATE**. Data collected for the period
+     *   covering the current week, month, or year period. For example if **WEEK_TO_DATE**, weeks
+     *   run Monday to Monday - if the Export is scheduled to run at 10 a.m. UTC on October 16th
+     *   2024, which is a Wednesday, it will contain all usage data collected starting Monday
+     *   October 14th 2024 through to the Wednesday at 10 a.m. UTC of the current week.
+     * - **LAST_12_HOURS**. Data collected for the twelve hour period up to the start of the hour in
+     *   which the export is scheduled to run.
+     * - **LAST_7_DAYS**, **LAST_30_DAYS**, **LAST_35_DAYS**, **LAST_90_DAYS**, **LAST_120_DAYS**
+     *   **LAST_YEAR**. Data collected for the selected period prior to the date the export is
+     *   scheduled to run. For example if **LAST_30_DAYS** and the export is scheduled to run for
+     *   any time on June 15th 2024, it will contain usage data collected for the previous 30 days -
+     *   starting May 16th 2024 through to midnight on June 14th 2024
      *
      * For more details and examples, see the
      * [Time Period](https://www.m3ter.com/docs/guides/data-exports/creating-export-schedules#time-period)
@@ -2947,15 +1633,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UsageDataExportScheduleResponse && id == other.id && version == other.version && accountIds == other.accountIds && aggregations == other.aggregations && dimensionFilters == other.dimensionFilters && groups == other.groups && meterIds == other.meterIds && timePeriod == other.timePeriod && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is UsageDataExportScheduleResponse && id == other.id && accountIds == other.accountIds && aggregations == other.aggregations && dimensionFilters == other.dimensionFilters && groups == other.groups && meterIds == other.meterIds && timePeriod == other.timePeriod && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, version, accountIds, aggregations, dimensionFilters, groups, meterIds, timePeriod, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, accountIds, aggregations, dimensionFilters, groups, meterIds, timePeriod, version, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "UsageDataExportScheduleResponse{id=$id, version=$version, accountIds=$accountIds, aggregations=$aggregations, dimensionFilters=$dimensionFilters, groups=$groups, meterIds=$meterIds, timePeriod=$timePeriod, additionalProperties=$additionalProperties}"
+        "UsageDataExportScheduleResponse{id=$id, accountIds=$accountIds, aggregations=$aggregations, dimensionFilters=$dimensionFilters, groups=$groups, meterIds=$meterIds, timePeriod=$timePeriod, version=$version, additionalProperties=$additionalProperties}"
 }

@@ -17,7 +17,6 @@ internal class M3terSignedCredentialsResponseTest {
                 .id("id")
                 .destination("x")
                 .type("x")
-                .version(0L)
                 .apiKey("apiKey")
                 .createdBy("createdBy")
                 .destinationId("destinationId")
@@ -26,12 +25,12 @@ internal class M3terSignedCredentialsResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .secret("secret")
+                .version(0L)
                 .build()
 
         assertThat(m3terSignedCredentialsResponse.id()).isEqualTo("id")
         assertThat(m3terSignedCredentialsResponse.destination()).isEqualTo("x")
         assertThat(m3terSignedCredentialsResponse.type()).isEqualTo("x")
-        assertThat(m3terSignedCredentialsResponse.version()).isEqualTo(0L)
         assertThat(m3terSignedCredentialsResponse.apiKey()).contains("apiKey")
         assertThat(m3terSignedCredentialsResponse.createdBy()).contains("createdBy")
         assertThat(m3terSignedCredentialsResponse.destinationId()).contains("destinationId")
@@ -42,6 +41,7 @@ internal class M3terSignedCredentialsResponseTest {
         assertThat(m3terSignedCredentialsResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(m3terSignedCredentialsResponse.name()).contains("name")
         assertThat(m3terSignedCredentialsResponse.secret()).contains("secret")
+        assertThat(m3terSignedCredentialsResponse.version()).contains(0L)
     }
 
     @Test
@@ -52,7 +52,6 @@ internal class M3terSignedCredentialsResponseTest {
                 .id("id")
                 .destination("x")
                 .type("x")
-                .version(0L)
                 .apiKey("apiKey")
                 .createdBy("createdBy")
                 .destinationId("destinationId")
@@ -61,6 +60,7 @@ internal class M3terSignedCredentialsResponseTest {
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
                 .secret("secret")
+                .version(0L)
                 .build()
 
         val roundtrippedM3terSignedCredentialsResponse =

@@ -15,7 +15,7 @@ internal class PlanGroupCreateParamsTest {
             .currency("xxx")
             .name("x")
             .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-            .code("JS!?Q0]r] ]\$]")
+            .code("S?oC\"\$]C] ]]]]]5]")
             .customFields(
                 PlanGroupCreateParams.CustomFields.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -50,7 +50,7 @@ internal class PlanGroupCreateParamsTest {
                 .currency("xxx")
                 .name("x")
                 .accountId("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .customFields(
                     PlanGroupCreateParams.CustomFields.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -72,7 +72,7 @@ internal class PlanGroupCreateParamsTest {
         assertThat(body.currency()).isEqualTo("xxx")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.accountId()).contains("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-        assertThat(body.code()).contains("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).contains("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.customFields())
             .contains(
                 PlanGroupCreateParams.CustomFields.builder()

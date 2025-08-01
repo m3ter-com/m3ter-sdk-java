@@ -15,7 +15,7 @@ internal class AccountUpdateParamsTest {
         AccountUpdateParams.builder()
             .orgId("orgId")
             .id("id")
-            .code("JS!?Q0]r] ]\$]")
+            .code("S?oC\"\$]C] ]]]]]5]")
             .emailAddress("dev@stainless.com")
             .name("x")
             .address(
@@ -57,7 +57,7 @@ internal class AccountUpdateParamsTest {
         val params =
             AccountUpdateParams.builder()
                 .id("id")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .emailAddress("dev@stainless.com")
                 .name("x")
                 .build()
@@ -74,7 +74,7 @@ internal class AccountUpdateParamsTest {
             AccountUpdateParams.builder()
                 .orgId("orgId")
                 .id("id")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .emailAddress("dev@stainless.com")
                 .name("x")
                 .address(
@@ -112,7 +112,7 @@ internal class AccountUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.emailAddress()).isEqualTo("dev@stainless.com")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.address())
@@ -158,14 +158,14 @@ internal class AccountUpdateParamsTest {
         val params =
             AccountUpdateParams.builder()
                 .id("id")
-                .code("JS!?Q0]r] ]\$]")
+                .code("S?oC\"\$]C] ]]]]]5]")
                 .emailAddress("dev@stainless.com")
                 .name("x")
                 .build()
 
         val body = params._body()
 
-        assertThat(body.code()).isEqualTo("JS!?Q0]r] ]\$]")
+        assertThat(body.code()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.emailAddress()).isEqualTo("dev@stainless.com")
         assertThat(body.name()).isEqualTo("x")
     }

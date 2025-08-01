@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -25,6 +25,7 @@ import com.m3ter.models.CompoundAggregationListParams
 import com.m3ter.models.CompoundAggregationResponse
 import com.m3ter.models.CompoundAggregationRetrieveParams
 import com.m3ter.models.CompoundAggregationUpdateParams
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class CompoundAggregationServiceImpl
@@ -35,6 +36,11 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
     }
 
     override fun withRawResponse(): CompoundAggregationService.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): CompoundAggregationService =
+        CompoundAggregationServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: CompoundAggregationCreateParams,
@@ -74,11 +80,18 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         CompoundAggregationService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): CompoundAggregationService.WithRawResponse =
+            CompoundAggregationServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<AggregationResponse> =
             jsonHandler<AggregationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: CompoundAggregationCreateParams,
@@ -87,6 +100,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -97,7 +111,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -110,7 +124,6 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
 
         private val retrieveHandler: Handler<CompoundAggregationResponse> =
             jsonHandler<CompoundAggregationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: CompoundAggregationRetrieveParams,
@@ -122,6 +135,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -132,7 +146,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -145,7 +159,6 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
 
         private val updateHandler: Handler<AggregationResponse> =
             jsonHandler<AggregationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: CompoundAggregationUpdateParams,
@@ -157,6 +170,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -168,7 +182,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -181,7 +195,6 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
 
         private val listHandler: Handler<CompoundAggregationListPageResponse> =
             jsonHandler<CompoundAggregationListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: CompoundAggregationListParams,
@@ -190,6 +203,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -199,7 +213,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -219,7 +233,6 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
 
         private val deleteHandler: Handler<CompoundAggregationResponse> =
             jsonHandler<CompoundAggregationResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: CompoundAggregationDeleteParams,
@@ -231,6 +244,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -242,7 +256,7 @@ internal constructor(private val clientOptions: ClientOptions) : CompoundAggrega
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {

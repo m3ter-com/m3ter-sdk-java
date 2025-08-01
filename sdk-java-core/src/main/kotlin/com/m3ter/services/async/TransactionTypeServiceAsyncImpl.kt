@@ -3,14 +3,14 @@
 package com.m3ter.services.async
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -25,6 +25,7 @@ import com.m3ter.models.TransactionTypeResponse
 import com.m3ter.models.TransactionTypeRetrieveParams
 import com.m3ter.models.TransactionTypeUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class TransactionTypeServiceAsyncImpl
@@ -35,6 +36,11 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
     }
 
     override fun withRawResponse(): TransactionTypeServiceAsync.WithRawResponse = withRawResponse
+
+    override fun withOptions(
+        modifier: Consumer<ClientOptions.Builder>
+    ): TransactionTypeServiceAsync =
+        TransactionTypeServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: TransactionTypeCreateParams,
@@ -74,11 +80,18 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         TransactionTypeServiceAsync.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): TransactionTypeServiceAsync.WithRawResponse =
+            TransactionTypeServiceAsyncImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<TransactionTypeResponse> =
             jsonHandler<TransactionTypeResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: TransactionTypeCreateParams,
@@ -87,6 +100,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -100,7 +114,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { createHandler.handle(it) }
                             .also {
@@ -114,7 +128,6 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
 
         private val retrieveHandler: Handler<TransactionTypeResponse> =
             jsonHandler<TransactionTypeResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: TransactionTypeRetrieveParams,
@@ -126,6 +139,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -139,7 +153,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { retrieveHandler.handle(it) }
                             .also {
@@ -153,7 +167,6 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
 
         private val updateHandler: Handler<TransactionTypeResponse> =
             jsonHandler<TransactionTypeResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: TransactionTypeUpdateParams,
@@ -165,6 +178,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -179,7 +193,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { updateHandler.handle(it) }
                             .also {
@@ -193,7 +207,6 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
 
         private val listHandler: Handler<TransactionTypeListPageResponse> =
             jsonHandler<TransactionTypeListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: TransactionTypeListParams,
@@ -202,6 +215,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -214,7 +228,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { listHandler.handle(it) }
                             .also {
@@ -236,7 +250,6 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
 
         private val deleteHandler: Handler<TransactionTypeResponse> =
             jsonHandler<TransactionTypeResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: TransactionTypeDeleteParams,
@@ -248,6 +261,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -262,7 +276,7 @@ internal constructor(private val clientOptions: ClientOptions) : TransactionType
             return request
                 .thenComposeAsync { clientOptions.httpClient.executeAsync(it, requestOptions) }
                 .thenApply { response ->
-                    response.parseable {
+                    errorHandler.handle(response).parseable {
                         response
                             .use { deleteHandler.handle(it) }
                             .also {

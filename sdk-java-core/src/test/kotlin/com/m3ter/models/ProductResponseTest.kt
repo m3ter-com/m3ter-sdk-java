@@ -16,7 +16,6 @@ internal class ProductResponseTest {
         val productResponse =
             ProductResponse.builder()
                 .id("id")
-                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(
@@ -28,10 +27,10 @@ internal class ProductResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
+                .version(0L)
                 .build()
 
         assertThat(productResponse.id()).isEqualTo("id")
-        assertThat(productResponse.version()).isEqualTo(0L)
         assertThat(productResponse.code()).contains("code")
         assertThat(productResponse.createdBy()).contains("createdBy")
         assertThat(productResponse.customFields())
@@ -46,6 +45,7 @@ internal class ProductResponseTest {
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(productResponse.lastModifiedBy()).contains("lastModifiedBy")
         assertThat(productResponse.name()).contains("name")
+        assertThat(productResponse.version()).contains(0L)
     }
 
     @Test
@@ -54,7 +54,6 @@ internal class ProductResponseTest {
         val productResponse =
             ProductResponse.builder()
                 .id("id")
-                .version(0L)
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(
@@ -66,6 +65,7 @@ internal class ProductResponseTest {
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .name("name")
+                .version(0L)
                 .build()
 
         val roundtrippedProductResponse =

@@ -2,7 +2,7 @@
 
 package com.m3ter.services.async
 
-import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.ProductCreateParams
@@ -13,6 +13,7 @@ import com.m3ter.models.ProductResponse
 import com.m3ter.models.ProductRetrieveParams
 import com.m3ter.models.ProductUpdateParams
 import java.util.concurrent.CompletableFuture
+import java.util.function.Consumer
 
 interface ProductServiceAsync {
 
@@ -20,6 +21,13 @@ interface ProductServiceAsync {
      * Returns a view of this service that provides access to raw HTTP responses for each method.
      */
     fun withRawResponse(): WithRawResponse
+
+    /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): ProductServiceAsync
 
     /**
      * Create a new Product.
@@ -30,7 +38,7 @@ interface ProductServiceAsync {
     fun create(params: ProductCreateParams): CompletableFuture<ProductResponse> =
         create(params, RequestOptions.none())
 
-    /** @see [create] */
+    /** @see create */
     fun create(
         params: ProductCreateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -45,7 +53,7 @@ interface ProductServiceAsync {
     fun retrieve(id: String): CompletableFuture<ProductResponse> =
         retrieve(id, ProductRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ProductRetrieveParams = ProductRetrieveParams.none(),
@@ -53,23 +61,23 @@ interface ProductServiceAsync {
     ): CompletableFuture<ProductResponse> =
         retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: ProductRetrieveParams = ProductRetrieveParams.none(),
     ): CompletableFuture<ProductResponse> = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: ProductRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ProductResponse>
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: ProductRetrieveParams): CompletableFuture<ProductResponse> =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): CompletableFuture<ProductResponse> =
         retrieve(id, ProductRetrieveParams.none(), requestOptions)
 
@@ -86,7 +94,7 @@ interface ProductServiceAsync {
     fun update(id: String, params: ProductUpdateParams): CompletableFuture<ProductResponse> =
         update(id, params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         id: String,
         params: ProductUpdateParams,
@@ -94,11 +102,11 @@ interface ProductServiceAsync {
     ): CompletableFuture<ProductResponse> =
         update(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [update] */
+    /** @see update */
     fun update(params: ProductUpdateParams): CompletableFuture<ProductResponse> =
         update(params, RequestOptions.none())
 
-    /** @see [update] */
+    /** @see update */
     fun update(
         params: ProductUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -112,18 +120,18 @@ interface ProductServiceAsync {
      */
     fun list(): CompletableFuture<ProductListPageAsync> = list(ProductListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ProductListParams = ProductListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ProductListPageAsync>
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: ProductListParams = ProductListParams.none()
     ): CompletableFuture<ProductListPageAsync> = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): CompletableFuture<ProductListPageAsync> =
         list(ProductListParams.none(), requestOptions)
 
@@ -136,7 +144,7 @@ interface ProductServiceAsync {
     fun delete(id: String): CompletableFuture<ProductResponse> =
         delete(id, ProductDeleteParams.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: ProductDeleteParams = ProductDeleteParams.none(),
@@ -144,23 +152,23 @@ interface ProductServiceAsync {
     ): CompletableFuture<ProductResponse> =
         delete(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         id: String,
         params: ProductDeleteParams = ProductDeleteParams.none(),
     ): CompletableFuture<ProductResponse> = delete(id, params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(
         params: ProductDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<ProductResponse>
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(params: ProductDeleteParams): CompletableFuture<ProductResponse> =
         delete(params, RequestOptions.none())
 
-    /** @see [delete] */
+    /** @see delete */
     fun delete(id: String, requestOptions: RequestOptions): CompletableFuture<ProductResponse> =
         delete(id, ProductDeleteParams.none(), requestOptions)
 
@@ -170,17 +178,24 @@ interface ProductServiceAsync {
     interface WithRawResponse {
 
         /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): ProductServiceAsync.WithRawResponse
+
+        /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/products`, but is otherwise
          * the same as [ProductServiceAsync.create].
          */
-        @MustBeClosed
         fun create(
             params: ProductCreateParams
         ): CompletableFuture<HttpResponseFor<ProductResponse>> =
             create(params, RequestOptions.none())
 
-        /** @see [create] */
-        @MustBeClosed
+        /** @see create */
         fun create(
             params: ProductCreateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -190,12 +205,10 @@ interface ProductServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/products/{id}`, but is
          * otherwise the same as [ProductServiceAsync.retrieve].
          */
-        @MustBeClosed
         fun retrieve(id: String): CompletableFuture<HttpResponseFor<ProductResponse>> =
             retrieve(id, ProductRetrieveParams.none())
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: ProductRetrieveParams = ProductRetrieveParams.none(),
@@ -203,30 +216,26 @@ interface ProductServiceAsync {
         ): CompletableFuture<HttpResponseFor<ProductResponse>> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             id: String,
             params: ProductRetrieveParams = ProductRetrieveParams.none(),
         ): CompletableFuture<HttpResponseFor<ProductResponse>> =
             retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             params: ProductRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ProductResponse>>
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             params: ProductRetrieveParams
         ): CompletableFuture<HttpResponseFor<ProductResponse>> =
             retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
-        @MustBeClosed
+        /** @see retrieve */
         fun retrieve(
             id: String,
             requestOptions: RequestOptions,
@@ -237,15 +246,13 @@ interface ProductServiceAsync {
          * Returns a raw HTTP response for `put /organizations/{orgId}/products/{id}`, but is
          * otherwise the same as [ProductServiceAsync.update].
          */
-        @MustBeClosed
         fun update(
             id: String,
             params: ProductUpdateParams,
         ): CompletableFuture<HttpResponseFor<ProductResponse>> =
             update(id, params, RequestOptions.none())
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(
             id: String,
             params: ProductUpdateParams,
@@ -253,15 +260,13 @@ interface ProductServiceAsync {
         ): CompletableFuture<HttpResponseFor<ProductResponse>> =
             update(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(
             params: ProductUpdateParams
         ): CompletableFuture<HttpResponseFor<ProductResponse>> =
             update(params, RequestOptions.none())
 
-        /** @see [update] */
-        @MustBeClosed
+        /** @see update */
         fun update(
             params: ProductUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
@@ -271,26 +276,22 @@ interface ProductServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/products`, but is otherwise
          * the same as [ProductServiceAsync.list].
          */
-        @MustBeClosed
         fun list(): CompletableFuture<HttpResponseFor<ProductListPageAsync>> =
             list(ProductListParams.none())
 
-        /** @see [list] */
-        @MustBeClosed
+        /** @see list */
         fun list(
             params: ProductListParams = ProductListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ProductListPageAsync>>
 
-        /** @see [list] */
-        @MustBeClosed
+        /** @see list */
         fun list(
             params: ProductListParams = ProductListParams.none()
         ): CompletableFuture<HttpResponseFor<ProductListPageAsync>> =
             list(params, RequestOptions.none())
 
-        /** @see [list] */
-        @MustBeClosed
+        /** @see list */
         fun list(
             requestOptions: RequestOptions
         ): CompletableFuture<HttpResponseFor<ProductListPageAsync>> =
@@ -300,12 +301,10 @@ interface ProductServiceAsync {
          * Returns a raw HTTP response for `delete /organizations/{orgId}/products/{id}`, but is
          * otherwise the same as [ProductServiceAsync.delete].
          */
-        @MustBeClosed
         fun delete(id: String): CompletableFuture<HttpResponseFor<ProductResponse>> =
             delete(id, ProductDeleteParams.none())
 
-        /** @see [delete] */
-        @MustBeClosed
+        /** @see delete */
         fun delete(
             id: String,
             params: ProductDeleteParams = ProductDeleteParams.none(),
@@ -313,30 +312,26 @@ interface ProductServiceAsync {
         ): CompletableFuture<HttpResponseFor<ProductResponse>> =
             delete(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [delete] */
-        @MustBeClosed
+        /** @see delete */
         fun delete(
             id: String,
             params: ProductDeleteParams = ProductDeleteParams.none(),
         ): CompletableFuture<HttpResponseFor<ProductResponse>> =
             delete(id, params, RequestOptions.none())
 
-        /** @see [delete] */
-        @MustBeClosed
+        /** @see delete */
         fun delete(
             params: ProductDeleteParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<ProductResponse>>
 
-        /** @see [delete] */
-        @MustBeClosed
+        /** @see delete */
         fun delete(
             params: ProductDeleteParams
         ): CompletableFuture<HttpResponseFor<ProductResponse>> =
             delete(params, RequestOptions.none())
 
-        /** @see [delete] */
-        @MustBeClosed
+        /** @see delete */
         fun delete(
             id: String,
             requestOptions: RequestOptions,

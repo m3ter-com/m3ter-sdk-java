@@ -29,6 +29,7 @@ internal class LineItemServiceAsyncTest {
                     .orgId("orgId")
                     .billId("billId")
                     .id("id")
+                    .addAdditional("string")
                     .build()
             )
 

@@ -30,7 +30,9 @@ internal class BillServiceTest {
         val billService = client.bills()
 
         val billResponse =
-            billService.retrieve(BillRetrieveParams.builder().orgId("orgId").id("id").build())
+            billService.retrieve(
+                BillRetrieveParams.builder().orgId("orgId").id("id").addAdditional("string").build()
+            )
 
         billResponse.validate()
     }
@@ -110,7 +112,11 @@ internal class BillServiceTest {
 
         val billResponse =
             billService.latestByAccount(
-                BillLatestByAccountParams.builder().orgId("orgId").accountId("accountId").build()
+                BillLatestByAccountParams.builder()
+                    .orgId("orgId")
+                    .accountId("accountId")
+                    .addAdditional("string")
+                    .build()
             )
 
         billResponse.validate()

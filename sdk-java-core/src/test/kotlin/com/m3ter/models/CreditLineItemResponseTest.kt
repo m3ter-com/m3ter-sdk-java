@@ -22,12 +22,12 @@ internal class CreditLineItemResponseTest {
                 .referencedLineItemId("referencedLineItemId")
                 .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .servicePeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .version(0L)
                 .createdBy("createdBy")
                 .creditReasonId("creditReasonId")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
+                .version(0L)
                 .build()
 
         assertThat(creditLineItemResponse.id()).isEqualTo("id")
@@ -40,7 +40,6 @@ internal class CreditLineItemResponseTest {
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(creditLineItemResponse.servicePeriodStartDate())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(creditLineItemResponse.version()).isEqualTo(0L)
         assertThat(creditLineItemResponse.createdBy()).contains("createdBy")
         assertThat(creditLineItemResponse.creditReasonId()).contains("creditReasonId")
         assertThat(creditLineItemResponse.dtCreated())
@@ -48,6 +47,7 @@ internal class CreditLineItemResponseTest {
         assertThat(creditLineItemResponse.dtLastModified())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(creditLineItemResponse.lastModifiedBy()).contains("lastModifiedBy")
+        assertThat(creditLineItemResponse.version()).contains(0L)
     }
 
     @Test
@@ -63,12 +63,12 @@ internal class CreditLineItemResponseTest {
                 .referencedLineItemId("referencedLineItemId")
                 .servicePeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .servicePeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .version(0L)
                 .createdBy("createdBy")
                 .creditReasonId("creditReasonId")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
+                .version(0L)
                 .build()
 
         val roundtrippedCreditLineItemResponse =

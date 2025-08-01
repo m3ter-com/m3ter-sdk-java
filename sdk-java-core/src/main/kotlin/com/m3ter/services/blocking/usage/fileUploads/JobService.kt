@@ -3,6 +3,7 @@
 package com.m3ter.services.blocking.usage.fileUploads
 
 import com.google.errorprone.annotations.MustBeClosed
+import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.FileUploadJobResponse
@@ -11,6 +12,7 @@ import com.m3ter.models.UsageFileUploadJobGetOriginalDownloadUrlResponse
 import com.m3ter.models.UsageFileUploadJobListPage
 import com.m3ter.models.UsageFileUploadJobListParams
 import com.m3ter.models.UsageFileUploadJobRetrieveParams
+import java.util.function.Consumer
 
 interface JobService {
 
@@ -20,6 +22,13 @@ interface JobService {
     fun withRawResponse(): WithRawResponse
 
     /**
+     * Returns a view of this service with the given option modifications applied.
+     *
+     * The original service is not modified.
+     */
+    fun withOptions(modifier: Consumer<ClientOptions.Builder>): JobService
+
+    /**
      * Get the file upload job response using the UUID of the file upload job.
      *
      * Part of the file upload service for measurements ingest.
@@ -27,30 +36,30 @@ interface JobService {
     fun retrieve(id: String): FileUploadJobResponse =
         retrieve(id, UsageFileUploadJobRetrieveParams.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UsageFileUploadJobRetrieveParams = UsageFileUploadJobRetrieveParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FileUploadJobResponse = retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         id: String,
         params: UsageFileUploadJobRetrieveParams = UsageFileUploadJobRetrieveParams.none(),
     ): FileUploadJobResponse = retrieve(id, params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(
         params: UsageFileUploadJobRetrieveParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): FileUploadJobResponse
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(params: UsageFileUploadJobRetrieveParams): FileUploadJobResponse =
         retrieve(params, RequestOptions.none())
 
-    /** @see [retrieve] */
+    /** @see retrieve */
     fun retrieve(id: String, requestOptions: RequestOptions): FileUploadJobResponse =
         retrieve(id, UsageFileUploadJobRetrieveParams.none(), requestOptions)
 
@@ -63,18 +72,18 @@ interface JobService {
      */
     fun list(): UsageFileUploadJobListPage = list(UsageFileUploadJobListParams.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UsageFileUploadJobListPage
 
-    /** @see [list] */
+    /** @see list */
     fun list(
         params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none()
     ): UsageFileUploadJobListPage = list(params, RequestOptions.none())
 
-    /** @see [list] */
+    /** @see list */
     fun list(requestOptions: RequestOptions): UsageFileUploadJobListPage =
         list(UsageFileUploadJobListParams.none(), requestOptions)
 
@@ -90,7 +99,7 @@ interface JobService {
     fun getOriginalDownloadUrl(id: String): UsageFileUploadJobGetOriginalDownloadUrlResponse =
         getOriginalDownloadUrl(id, UsageFileUploadJobGetOriginalDownloadUrlParams.none())
 
-    /** @see [getOriginalDownloadUrl] */
+    /** @see getOriginalDownloadUrl */
     fun getOriginalDownloadUrl(
         id: String,
         params: UsageFileUploadJobGetOriginalDownloadUrlParams =
@@ -99,7 +108,7 @@ interface JobService {
     ): UsageFileUploadJobGetOriginalDownloadUrlResponse =
         getOriginalDownloadUrl(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see [getOriginalDownloadUrl] */
+    /** @see getOriginalDownloadUrl */
     fun getOriginalDownloadUrl(
         id: String,
         params: UsageFileUploadJobGetOriginalDownloadUrlParams =
@@ -107,19 +116,19 @@ interface JobService {
     ): UsageFileUploadJobGetOriginalDownloadUrlResponse =
         getOriginalDownloadUrl(id, params, RequestOptions.none())
 
-    /** @see [getOriginalDownloadUrl] */
+    /** @see getOriginalDownloadUrl */
     fun getOriginalDownloadUrl(
         params: UsageFileUploadJobGetOriginalDownloadUrlParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): UsageFileUploadJobGetOriginalDownloadUrlResponse
 
-    /** @see [getOriginalDownloadUrl] */
+    /** @see getOriginalDownloadUrl */
     fun getOriginalDownloadUrl(
         params: UsageFileUploadJobGetOriginalDownloadUrlParams
     ): UsageFileUploadJobGetOriginalDownloadUrlResponse =
         getOriginalDownloadUrl(params, RequestOptions.none())
 
-    /** @see [getOriginalDownloadUrl] */
+    /** @see getOriginalDownloadUrl */
     fun getOriginalDownloadUrl(
         id: String,
         requestOptions: RequestOptions,
@@ -134,6 +143,13 @@ interface JobService {
     interface WithRawResponse {
 
         /**
+         * Returns a view of this service with the given option modifications applied.
+         *
+         * The original service is not modified.
+         */
+        fun withOptions(modifier: Consumer<ClientOptions.Builder>): JobService.WithRawResponse
+
+        /**
          * Returns a raw HTTP response for `get
          * /organizations/{orgId}/fileuploads/measurements/jobs/{id}`, but is otherwise the same as
          * [JobService.retrieve].
@@ -142,7 +158,7 @@ interface JobService {
         fun retrieve(id: String): HttpResponseFor<FileUploadJobResponse> =
             retrieve(id, UsageFileUploadJobRetrieveParams.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -151,27 +167,27 @@ interface JobService {
         ): HttpResponseFor<FileUploadJobResponse> =
             retrieve(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
             params: UsageFileUploadJobRetrieveParams = UsageFileUploadJobRetrieveParams.none(),
         ): HttpResponseFor<FileUploadJobResponse> = retrieve(id, params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: UsageFileUploadJobRetrieveParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<FileUploadJobResponse>
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             params: UsageFileUploadJobRetrieveParams
         ): HttpResponseFor<FileUploadJobResponse> = retrieve(params, RequestOptions.none())
 
-        /** @see [retrieve] */
+        /** @see retrieve */
         @MustBeClosed
         fun retrieve(
             id: String,
@@ -188,20 +204,20 @@ interface JobService {
         fun list(): HttpResponseFor<UsageFileUploadJobListPage> =
             list(UsageFileUploadJobListParams.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<UsageFileUploadJobListPage>
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(
             params: UsageFileUploadJobListParams = UsageFileUploadJobListParams.none()
         ): HttpResponseFor<UsageFileUploadJobListPage> = list(params, RequestOptions.none())
 
-        /** @see [list] */
+        /** @see list */
         @MustBeClosed
         fun list(requestOptions: RequestOptions): HttpResponseFor<UsageFileUploadJobListPage> =
             list(UsageFileUploadJobListParams.none(), requestOptions)
@@ -217,7 +233,7 @@ interface JobService {
         ): HttpResponseFor<UsageFileUploadJobGetOriginalDownloadUrlResponse> =
             getOriginalDownloadUrl(id, UsageFileUploadJobGetOriginalDownloadUrlParams.none())
 
-        /** @see [getOriginalDownloadUrl] */
+        /** @see getOriginalDownloadUrl */
         @MustBeClosed
         fun getOriginalDownloadUrl(
             id: String,
@@ -227,7 +243,7 @@ interface JobService {
         ): HttpResponseFor<UsageFileUploadJobGetOriginalDownloadUrlResponse> =
             getOriginalDownloadUrl(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see [getOriginalDownloadUrl] */
+        /** @see getOriginalDownloadUrl */
         @MustBeClosed
         fun getOriginalDownloadUrl(
             id: String,
@@ -236,21 +252,21 @@ interface JobService {
         ): HttpResponseFor<UsageFileUploadJobGetOriginalDownloadUrlResponse> =
             getOriginalDownloadUrl(id, params, RequestOptions.none())
 
-        /** @see [getOriginalDownloadUrl] */
+        /** @see getOriginalDownloadUrl */
         @MustBeClosed
         fun getOriginalDownloadUrl(
             params: UsageFileUploadJobGetOriginalDownloadUrlParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<UsageFileUploadJobGetOriginalDownloadUrlResponse>
 
-        /** @see [getOriginalDownloadUrl] */
+        /** @see getOriginalDownloadUrl */
         @MustBeClosed
         fun getOriginalDownloadUrl(
             params: UsageFileUploadJobGetOriginalDownloadUrlParams
         ): HttpResponseFor<UsageFileUploadJobGetOriginalDownloadUrlResponse> =
             getOriginalDownloadUrl(params, RequestOptions.none())
 
-        /** @see [getOriginalDownloadUrl] */
+        /** @see getOriginalDownloadUrl */
         @MustBeClosed
         fun getOriginalDownloadUrl(
             id: String,

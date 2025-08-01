@@ -3,14 +3,14 @@
 package com.m3ter.services.blocking.dataExports
 
 import com.m3ter.core.ClientOptions
-import com.m3ter.core.JsonValue
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.checkRequired
+import com.m3ter.core.handlers.errorBodyHandler
 import com.m3ter.core.handlers.errorHandler
 import com.m3ter.core.handlers.jsonHandler
-import com.m3ter.core.handlers.withErrorHandler
 import com.m3ter.core.http.HttpMethod
 import com.m3ter.core.http.HttpRequest
+import com.m3ter.core.http.HttpResponse
 import com.m3ter.core.http.HttpResponse.Handler
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.core.http.json
@@ -27,6 +27,7 @@ import com.m3ter.models.DataExportDestinationRetrieveParams
 import com.m3ter.models.DataExportDestinationRetrieveResponse
 import com.m3ter.models.DataExportDestinationUpdateParams
 import com.m3ter.models.DataExportDestinationUpdateResponse
+import java.util.function.Consumer
 import kotlin.jvm.optionals.getOrNull
 
 class DestinationServiceImpl internal constructor(private val clientOptions: ClientOptions) :
@@ -37,6 +38,9 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
     }
 
     override fun withRawResponse(): DestinationService.WithRawResponse = withRawResponse
+
+    override fun withOptions(modifier: Consumer<ClientOptions.Builder>): DestinationService =
+        DestinationServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun create(
         params: DataExportDestinationCreateParams,
@@ -76,11 +80,18 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         DestinationService.WithRawResponse {
 
-        private val errorHandler: Handler<JsonValue> = errorHandler(clientOptions.jsonMapper)
+        private val errorHandler: Handler<HttpResponse> =
+            errorHandler(errorBodyHandler(clientOptions.jsonMapper))
+
+        override fun withOptions(
+            modifier: Consumer<ClientOptions.Builder>
+        ): DestinationService.WithRawResponse =
+            DestinationServiceImpl.WithRawResponseImpl(
+                clientOptions.toBuilder().apply(modifier::accept).build()
+            )
 
         private val createHandler: Handler<DataExportDestinationCreateResponse> =
             jsonHandler<DataExportDestinationCreateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun create(
             params: DataExportDestinationCreateParams,
@@ -89,6 +100,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.POST)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -100,7 +112,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { createHandler.handle(it) }
                     .also {
@@ -113,7 +125,6 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
 
         private val retrieveHandler: Handler<DataExportDestinationRetrieveResponse> =
             jsonHandler<DataExportDestinationRetrieveResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun retrieve(
             params: DataExportDestinationRetrieveParams,
@@ -125,6 +136,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -136,7 +148,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { retrieveHandler.handle(it) }
                     .also {
@@ -149,7 +161,6 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
 
         private val updateHandler: Handler<DataExportDestinationUpdateResponse> =
             jsonHandler<DataExportDestinationUpdateResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun update(
             params: DataExportDestinationUpdateParams,
@@ -161,6 +172,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.PUT)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -173,7 +185,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { updateHandler.handle(it) }
                     .also {
@@ -186,7 +198,6 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
 
         private val listHandler: Handler<DataExportDestinationListPageResponse> =
             jsonHandler<DataExportDestinationListPageResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun list(
             params: DataExportDestinationListParams,
@@ -195,6 +206,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.GET)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -205,7 +217,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { listHandler.handle(it) }
                     .also {
@@ -225,7 +237,6 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
 
         private val deleteHandler: Handler<DataExportDestinationDeleteResponse> =
             jsonHandler<DataExportDestinationDeleteResponse>(clientOptions.jsonMapper)
-                .withErrorHandler(errorHandler)
 
         override fun delete(
             params: DataExportDestinationDeleteParams,
@@ -237,6 +248,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
             val request =
                 HttpRequest.builder()
                     .method(HttpMethod.DELETE)
+                    .baseUrl(clientOptions.baseUrl())
                     .addPathSegments(
                         "organizations",
                         params._pathParam(0).ifBlank { clientOptions.orgId },
@@ -249,7 +261,7 @@ class DestinationServiceImpl internal constructor(private val clientOptions: Cli
                     .prepare(clientOptions, params)
             val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
             val response = clientOptions.httpClient.execute(request, requestOptions)
-            return response.parseable {
+            return errorHandler.handle(response).parseable {
                 response
                     .use { deleteHandler.handle(it) }
                     .also {
