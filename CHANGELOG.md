@@ -1,5 +1,64 @@
 # Changelog
 
+## 0.4.0 (2025-08-01)
+
+Full Changelog: [v0.3.0-alpha...v0.4.0](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.3.0-alpha...v0.4.0)
+
+### Features
+
+* add retryable exception ([2295d8b](https://github.com/m3ter-com/m3ter-sdk-java/commit/2295d8bd9b35aa668d96e60a222d1630f37c7664))
+* **api:** add aggregationId query param to ListPricings ([95b043e](https://github.com/m3ter-com/m3ter-sdk-java/commit/95b043e7f7de7f0c8ef0b7aa5ae353f5679d9274))
+* **api:** add statements ([84e504d](https://github.com/m3ter-com/m3ter-sdk-java/commit/84e504db22483620f39121033e634de1141131d8))
+* **api:** mark `version` attribute as computed in Terraform ([00483d9](https://github.com/m3ter-com/m3ter-sdk-java/commit/00483d9f0daa3a3f6e20077622fb8c0658bc5323))
+* **api:** OpenAPI spec update ([bfdd384](https://github.com/m3ter-com/m3ter-sdk-java/commit/bfdd3848586016bc0a75e2330a735801a20494f2))
+* **api:** remove audit fields from Terraform provider ([61f12dd](https://github.com/m3ter-com/m3ter-sdk-java/commit/61f12dd9d0fcc9fdb34f0e673a6f5eaf4c1e305c))
+* **api:** Set "version" attribute to "computed_optional" in Terraform ([4a41d16](https://github.com/m3ter-com/m3ter-sdk-java/commit/4a41d1617bb181e6584c2507be488fec32ab9539))
+* **client:** add `{QueryParams,Headers}#put(String, JsonValue)` methods ([6a64af2](https://github.com/m3ter-com/m3ter-sdk-java/commit/6a64af2898b4f615b1efd93bedc00acb6006d761))
+* **client:** add a `withOptions` method ([5cd1096](https://github.com/m3ter-com/m3ter-sdk-java/commit/5cd1096924eb0a964227ccd58bddd0a3d080505d))
+* **client:** add https config options ([8f10ae8](https://github.com/m3ter-com/m3ter-sdk-java/commit/8f10ae8227f01fd2f72cbb820d4eb4065d099ea8))
+* **client:** allow configuring env via system properties ([7d750ff](https://github.com/m3ter-com/m3ter-sdk-java/commit/7d750ff59a1d0b7158490fd37accf089f74a1554))
+* **client:** ensure compat with proguard ([310e079](https://github.com/m3ter-com/m3ter-sdk-java/commit/310e079d07efd8e273f045995707c78b28d4185c))
+* **client:** implement per-endpoint base URL support ([c6b88d3](https://github.com/m3ter-com/m3ter-sdk-java/commit/c6b88d312c38f746dc3e49b1b3b632479f5af86d))
+
+
+### Bug Fixes
+
+* **api:** terraform release readiness ([fd0f0fb](https://github.com/m3ter-com/m3ter-sdk-java/commit/fd0f0fb898048e6f2e9780a89aff9cd15d6469b4))
+* **api:** use WebhookDestinationResponse in webhook endpoint response schemas ([6047b2a](https://github.com/m3ter-com/m3ter-sdk-java/commit/6047b2a9493bfb7fc06bce0e3f6ad217e8f7247a))
+* **ci:** release-doctor — report correct token name ([d1cf75d](https://github.com/m3ter-com/m3ter-sdk-java/commit/d1cf75dd92af473567961d41b7035829c053c0bc))
+* **client:** bad casing ([be4c007](https://github.com/m3ter-com/m3ter-sdk-java/commit/be4c007a96140c9f2b3fdf3e3f772f89b7444afd))
+* **client:** bump max requests per host to max requests (5 -&gt; 64) ([d6d8370](https://github.com/m3ter-com/m3ter-sdk-java/commit/d6d8370648e643045b7264472c565e10613750fe))
+* **client:** don't close client on `withOptions` usage when original is gc'd ([4317629](https://github.com/m3ter-com/m3ter-sdk-java/commit/4317629da7889b3706c80b574486a726ab4494fc))
+* **client:** ensure error handling always occurs ([b678ecd](https://github.com/m3ter-com/m3ter-sdk-java/commit/b678ecdd117c5005ea6a9bf690d7e05eca611391))
+* **client:** r8 support ([21dfb4e](https://github.com/m3ter-com/m3ter-sdk-java/commit/21dfb4e7d52f341f39d86f2e64e668a6214ccb6b))
+* **client:** remove `@MustBeClosed` for future returning methods ([656862e](https://github.com/m3ter-com/m3ter-sdk-java/commit/656862ea56b26056e581c2d336fb4aa9eb119bcf))
+
+
+### Chores
+
+* **ci:** bump `actions/setup-java` to v4 ([292dca5](https://github.com/m3ter-com/m3ter-sdk-java/commit/292dca5fedba4cc61db2c70e8e4c2e949b9952b7))
+* **ci:** enable for pull requests ([0124626](https://github.com/m3ter-com/m3ter-sdk-java/commit/0124626ac856bed1f48098cca46b6afe4453af02))
+* **ci:** ensure docs generation always succeeds ([2a07c3b](https://github.com/m3ter-com/m3ter-sdk-java/commit/2a07c3b7c763588248e61f8948685d5cdc754097))
+* **ci:** only run for pushes and fork pull requests ([c96694b](https://github.com/m3ter-com/m3ter-sdk-java/commit/c96694bc2fc70a682661a74b5947f50b88009305))
+* **docs:** grammar improvements ([e090c4b](https://github.com/m3ter-com/m3ter-sdk-java/commit/e090c4b7d2cc8612bea53ff3dc6ebfcc3c59dbd6))
+* fix conflict ([5a929f6](https://github.com/m3ter-com/m3ter-sdk-java/commit/5a929f651ac278cf3122f11a1702c6e53af5eec7))
+* **internal:** allow running specific example from cli ([f813a48](https://github.com/m3ter-com/m3ter-sdk-java/commit/f813a481de046a56aa8a1261c09f35864b2678ed))
+* **internal:** bump ci test timeout ([0f25fb6](https://github.com/m3ter-com/m3ter-sdk-java/commit/0f25fb6e3134e3143112131dc4ec6fbd9b14fa43))
+* **internal:** codegen related update ([03e0d6c](https://github.com/m3ter-com/m3ter-sdk-java/commit/03e0d6c0c3247f3514c6b7c0fa8b2a82b6a79090))
+* **internal:** reduce proguard ci logging ([b8d1e95](https://github.com/m3ter-com/m3ter-sdk-java/commit/b8d1e9529c1f3f468fbea0cee08d47e1be087e2c))
+* **internal:** refactor delegating from client to options ([e21cc2b](https://github.com/m3ter-com/m3ter-sdk-java/commit/e21cc2bbb8a56f6c65e5393e9b29bb6e4bab064c))
+* **internal:** remove unnecessary `[...]` in `[@see](https://github.com/see)` ([ebac8f7](https://github.com/m3ter-com/m3ter-sdk-java/commit/ebac8f7060a04445e4e0145d73a2851ff8afd5bd))
+
+
+### Documentation
+
+* more code comments ([d50d97f](https://github.com/m3ter-com/m3ter-sdk-java/commit/d50d97f10f9dd17afdf8911f5e254793b90a91a6))
+
+
+### Refactors
+
+* **internal:** minor `ClientOptionsTest` change ([4c3da2f](https://github.com/m3ter-com/m3ter-sdk-java/commit/4c3da2ff5e771e32027df2e12cb892e84ac46f75))
+
 ## 0.3.0-alpha (2025-05-09)
 
 Full Changelog: [v0.2.0-alpha...v0.3.0-alpha](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.2.0-alpha...v0.3.0-alpha)
