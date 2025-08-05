@@ -18,7 +18,7 @@ tasks.withType<JavaCompile>().configureEach {
 
 application {
     // Use `./gradlew :sdk-java-example:run` to run `Main`
-    // Use `./gradlew :sdk-java-example:run -Dexample=Something` to run `SomethingExample`
+    // Use `./gradlew :sdk-java-example:run -Pexample=Something` to run `SomethingExample`
     mainClass = "com.m3ter.example.${
         if (project.hasProperty("example"))
             "${project.property("example")}Example"
