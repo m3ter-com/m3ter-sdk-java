@@ -1964,12 +1964,53 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && pricingBands == other.pricingBands && startDate == other.startDate && accountingProductId == other.accountingProductId && aggregationId == other.aggregationId && code == other.code && compoundAggregationId == other.compoundAggregationId && cumulative == other.cumulative && description == other.description && endDate == other.endDate && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && overagePricingBands == other.overagePricingBands && planId == other.planId && planTemplateId == other.planTemplateId && segment == other.segment && tiersSpanPlan == other.tiersSpanPlan && type == other.type && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                pricingBands == other.pricingBands &&
+                startDate == other.startDate &&
+                accountingProductId == other.accountingProductId &&
+                aggregationId == other.aggregationId &&
+                code == other.code &&
+                compoundAggregationId == other.compoundAggregationId &&
+                cumulative == other.cumulative &&
+                description == other.description &&
+                endDate == other.endDate &&
+                minimumSpend == other.minimumSpend &&
+                minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
+                minimumSpendDescription == other.minimumSpendDescription &&
+                overagePricingBands == other.overagePricingBands &&
+                planId == other.planId &&
+                planTemplateId == other.planTemplateId &&
+                segment == other.segment &&
+                tiersSpanPlan == other.tiersSpanPlan &&
+                type == other.type &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(pricingBands, startDate, accountingProductId, aggregationId, code, compoundAggregationId, cumulative, description, endDate, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, overagePricingBands, planId, planTemplateId, segment, tiersSpanPlan, type, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                pricingBands,
+                startDate,
+                accountingProductId,
+                aggregationId,
+                code,
+                compoundAggregationId,
+                cumulative,
+                description,
+                endDate,
+                minimumSpend,
+                minimumSpendBillInAdvance,
+                minimumSpendDescription,
+                overagePricingBands,
+                planId,
+                planTemplateId,
+                segment,
+                tiersSpanPlan,
+                type,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2080,12 +2121,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Segment && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Segment && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2225,7 +2264,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2238,10 +2277,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PricingUpdateParams && orgId == other.orgId && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is PricingUpdateParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "PricingUpdateParams{orgId=$orgId, id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

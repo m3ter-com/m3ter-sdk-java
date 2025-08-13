@@ -1262,12 +1262,39 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && accountingProductId == other.accountingProductId && amount == other.amount && description == other.description && productId == other.productId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && debitReasonId == other.debitReasonId && lineItemType == other.lineItemType && reasonId == other.reasonId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                accountingProductId == other.accountingProductId &&
+                amount == other.amount &&
+                description == other.description &&
+                productId == other.productId &&
+                referencedBillId == other.referencedBillId &&
+                referencedLineItemId == other.referencedLineItemId &&
+                servicePeriodEndDate == other.servicePeriodEndDate &&
+                servicePeriodStartDate == other.servicePeriodStartDate &&
+                debitReasonId == other.debitReasonId &&
+                lineItemType == other.lineItemType &&
+                reasonId == other.reasonId &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountingProductId, amount, description, productId, referencedBillId, referencedLineItemId, servicePeriodEndDate, servicePeriodStartDate, debitReasonId, lineItemType, reasonId, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                accountingProductId,
+                amount,
+                description,
+                productId,
+                referencedBillId,
+                referencedLineItemId,
+                servicePeriodEndDate,
+                servicePeriodStartDate,
+                debitReasonId,
+                lineItemType,
+                reasonId,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1490,7 +1517,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemType && value == other.value /* spotless:on */
+            return other is LineItemType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1503,10 +1530,17 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillDebitLineItemUpdateParams && orgId == other.orgId && billId == other.billId && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BillDebitLineItemUpdateParams &&
+            orgId == other.orgId &&
+            billId == other.billId &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, billId, id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, billId, id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "BillDebitLineItemUpdateParams{orgId=$orgId, billId=$billId, id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

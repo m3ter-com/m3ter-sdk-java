@@ -374,10 +374,36 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CommitmentListParams && orgId == other.orgId && accountId == other.accountId && contractId == other.contractId && date == other.date && endDateEnd == other.endDateEnd && endDateStart == other.endDateStart && ids == other.ids && nextToken == other.nextToken && pageSize == other.pageSize && productId == other.productId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CommitmentListParams &&
+            orgId == other.orgId &&
+            accountId == other.accountId &&
+            contractId == other.contractId &&
+            date == other.date &&
+            endDateEnd == other.endDateEnd &&
+            endDateStart == other.endDateStart &&
+            ids == other.ids &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            productId == other.productId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, contractId, date, endDateEnd, endDateStart, ids, nextToken, pageSize, productId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            accountId,
+            contractId,
+            date,
+            endDateEnd,
+            endDateStart,
+            ids,
+            nextToken,
+            pageSize,
+            productId,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "CommitmentListParams{orgId=$orgId, accountId=$accountId, contractId=$contractId, date=$date, endDateEnd=$endDateEnd, endDateStart=$endDateStart, ids=$ids, nextToken=$nextToken, pageSize=$pageSize, productId=$productId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

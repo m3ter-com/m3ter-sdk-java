@@ -399,12 +399,29 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillConfigResponse && id == other.id && billLockDate == other.billLockDate && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is BillConfigResponse &&
+            id == other.id &&
+            billLockDate == other.billLockDate &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, billLockDate, createdBy, dtCreated, dtLastModified, lastModifiedBy, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            billLockDate,
+            createdBy,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

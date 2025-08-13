@@ -1674,12 +1674,45 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && accountIds == other.accountIds && billDate == other.billDate && billFrequencyInterval == other.billFrequencyInterval && billingFrequency == other.billingFrequency && currencyConversions == other.currencyConversions && dayEpoch == other.dayEpoch && dueDate == other.dueDate && externalInvoiceDate == other.externalInvoiceDate && lastDateInBillingPeriod == other.lastDateInBillingPeriod && monthEpoch == other.monthEpoch && targetCurrency == other.targetCurrency && timezone == other.timezone && version == other.version && weekEpoch == other.weekEpoch && yearEpoch == other.yearEpoch && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                accountIds == other.accountIds &&
+                billDate == other.billDate &&
+                billFrequencyInterval == other.billFrequencyInterval &&
+                billingFrequency == other.billingFrequency &&
+                currencyConversions == other.currencyConversions &&
+                dayEpoch == other.dayEpoch &&
+                dueDate == other.dueDate &&
+                externalInvoiceDate == other.externalInvoiceDate &&
+                lastDateInBillingPeriod == other.lastDateInBillingPeriod &&
+                monthEpoch == other.monthEpoch &&
+                targetCurrency == other.targetCurrency &&
+                timezone == other.timezone &&
+                version == other.version &&
+                weekEpoch == other.weekEpoch &&
+                yearEpoch == other.yearEpoch &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountIds, billDate, billFrequencyInterval, billingFrequency, currencyConversions, dayEpoch, dueDate, externalInvoiceDate, lastDateInBillingPeriod, monthEpoch, targetCurrency, timezone, version, weekEpoch, yearEpoch, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                accountIds,
+                billDate,
+                billFrequencyInterval,
+                billingFrequency,
+                currencyConversions,
+                dayEpoch,
+                dueDate,
+                externalInvoiceDate,
+                lastDateInBillingPeriod,
+                monthEpoch,
+                targetCurrency,
+                timezone,
+                version,
+                weekEpoch,
+                yearEpoch,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1837,7 +1870,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BillingFrequency && value == other.value /* spotless:on */
+            return other is BillingFrequency && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1850,10 +1883,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillJobCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BillJobCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "BillJobCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

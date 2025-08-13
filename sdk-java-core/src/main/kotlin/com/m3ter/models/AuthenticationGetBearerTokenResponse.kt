@@ -272,12 +272,17 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AuthenticationGetBearerTokenResponse && accessToken == other.accessToken && expiresIn == other.expiresIn && scope == other.scope && tokenType == other.tokenType && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AuthenticationGetBearerTokenResponse &&
+            accessToken == other.accessToken &&
+            expiresIn == other.expiresIn &&
+            scope == other.scope &&
+            tokenType == other.tokenType &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(accessToken, expiresIn, scope, tokenType, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(accessToken, expiresIn, scope, tokenType, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -2707,12 +2707,67 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && accountId == other.accountId && amount == other.amount && currency == other.currency && endDate == other.endDate && startDate == other.startDate && accountingProductId == other.accountingProductId && amountFirstBill == other.amountFirstBill && amountPrePaid == other.amountPrePaid && billEpoch == other.billEpoch && billingInterval == other.billingInterval && billingOffset == other.billingOffset && billingPlanId == other.billingPlanId && childBillingMode == other.childBillingMode && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && commitmentFeeDescription == other.commitmentFeeDescription && commitmentUsageDescription == other.commitmentUsageDescription && contractId == other.contractId && drawdownsAccountingProductId == other.drawdownsAccountingProductId && feeDates == other.feeDates && feesAccountingProductId == other.feesAccountingProductId && lineItemTypes == other.lineItemTypes && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && separateOverageUsage == other.separateOverageUsage && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                accountId == other.accountId &&
+                amount == other.amount &&
+                currency == other.currency &&
+                endDate == other.endDate &&
+                startDate == other.startDate &&
+                accountingProductId == other.accountingProductId &&
+                amountFirstBill == other.amountFirstBill &&
+                amountPrePaid == other.amountPrePaid &&
+                billEpoch == other.billEpoch &&
+                billingInterval == other.billingInterval &&
+                billingOffset == other.billingOffset &&
+                billingPlanId == other.billingPlanId &&
+                childBillingMode == other.childBillingMode &&
+                commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance &&
+                commitmentFeeDescription == other.commitmentFeeDescription &&
+                commitmentUsageDescription == other.commitmentUsageDescription &&
+                contractId == other.contractId &&
+                drawdownsAccountingProductId == other.drawdownsAccountingProductId &&
+                feeDates == other.feeDates &&
+                feesAccountingProductId == other.feesAccountingProductId &&
+                lineItemTypes == other.lineItemTypes &&
+                overageDescription == other.overageDescription &&
+                overageSurchargePercent == other.overageSurchargePercent &&
+                productIds == other.productIds &&
+                separateOverageUsage == other.separateOverageUsage &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountId, amount, currency, endDate, startDate, accountingProductId, amountFirstBill, amountPrePaid, billEpoch, billingInterval, billingOffset, billingPlanId, childBillingMode, commitmentFeeBillInAdvance, commitmentFeeDescription, commitmentUsageDescription, contractId, drawdownsAccountingProductId, feeDates, feesAccountingProductId, lineItemTypes, overageDescription, overageSurchargePercent, productIds, separateOverageUsage, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                accountId,
+                amount,
+                currency,
+                endDate,
+                startDate,
+                accountingProductId,
+                amountFirstBill,
+                amountPrePaid,
+                billEpoch,
+                billingInterval,
+                billingOffset,
+                billingPlanId,
+                childBillingMode,
+                commitmentFeeBillInAdvance,
+                commitmentFeeDescription,
+                commitmentUsageDescription,
+                contractId,
+                drawdownsAccountingProductId,
+                feeDates,
+                feesAccountingProductId,
+                lineItemTypes,
+                overageDescription,
+                overageSurchargePercent,
+                productIds,
+                separateOverageUsage,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2854,7 +2909,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ChildBillingMode && value == other.value /* spotless:on */
+            return other is ChildBillingMode && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -3000,7 +3055,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemType && value == other.value /* spotless:on */
+            return other is LineItemType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -3013,10 +3068,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CommitmentUpdateParams && orgId == other.orgId && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CommitmentUpdateParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CommitmentUpdateParams{orgId=$orgId, id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

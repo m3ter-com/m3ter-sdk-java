@@ -215,10 +215,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportJobGetDownloadUrlParams && orgId == other.orgId && jobId == other.jobId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is DataExportJobGetDownloadUrlParams &&
+            orgId == other.orgId &&
+            jobId == other.jobId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, jobId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, jobId, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "DataExportJobGetDownloadUrlParams{orgId=$orgId, jobId=$jobId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

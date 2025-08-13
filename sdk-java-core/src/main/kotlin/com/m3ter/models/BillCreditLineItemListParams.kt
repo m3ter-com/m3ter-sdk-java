@@ -237,10 +237,17 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillCreditLineItemListParams && orgId == other.orgId && billId == other.billId && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BillCreditLineItemListParams &&
+            orgId == other.orgId &&
+            billId == other.billId &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, billId, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, billId, nextToken, pageSize, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "BillCreditLineItemListParams{orgId=$orgId, billId=$billId, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

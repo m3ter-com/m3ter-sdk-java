@@ -300,10 +300,28 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CreditReasonListParams && orgId == other.orgId && archived == other.archived && codes == other.codes && ids == other.ids && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CreditReasonListParams &&
+            orgId == other.orgId &&
+            archived == other.archived &&
+            codes == other.codes &&
+            ids == other.ids &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, archived, codes, ids, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            archived,
+            codes,
+            ids,
+            nextToken,
+            pageSize,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "CreditReasonListParams{orgId=$orgId, archived=$archived, codes=$codes, ids=$ids, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -304,12 +304,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Data && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Data && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -321,12 +319,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UsageQueryResponse && data == other.data && hasMoreData == other.hasMoreData && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is UsageQueryResponse &&
+            data == other.data &&
+            hasMoreData == other.hasMoreData &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(data, hasMoreData, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

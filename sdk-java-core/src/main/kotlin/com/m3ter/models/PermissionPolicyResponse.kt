@@ -478,12 +478,33 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PermissionPolicyResponse && id == other.id && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && managedPolicy == other.managedPolicy && name == other.name && permissionPolicy == other.permissionPolicy && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PermissionPolicyResponse &&
+            id == other.id &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            managedPolicy == other.managedPolicy &&
+            name == other.name &&
+            permissionPolicy == other.permissionPolicy &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, createdBy, dtCreated, dtLastModified, lastModifiedBy, managedPolicy, name, permissionPolicy, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            createdBy,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            managedPolicy,
+            name,
+            permissionPolicy,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

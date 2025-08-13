@@ -1374,7 +1374,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AggregationType && value == other.value /* spotless:on */
+            return other is AggregationType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1477,12 +1477,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Segment && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Segment && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1622,7 +1620,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1635,12 +1633,67 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PricingResponse && id == other.id && accountingProductId == other.accountingProductId && aggregationId == other.aggregationId && aggregationType == other.aggregationType && code == other.code && compoundAggregationId == other.compoundAggregationId && createdBy == other.createdBy && cumulative == other.cumulative && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && lastModifiedBy == other.lastModifiedBy && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && overagePricingBands == other.overagePricingBands && planId == other.planId && planTemplateId == other.planTemplateId && pricingBands == other.pricingBands && segment == other.segment && segmentString == other.segmentString && startDate == other.startDate && tiersSpanPlan == other.tiersSpanPlan && type == other.type && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PricingResponse &&
+            id == other.id &&
+            accountingProductId == other.accountingProductId &&
+            aggregationId == other.aggregationId &&
+            aggregationType == other.aggregationType &&
+            code == other.code &&
+            compoundAggregationId == other.compoundAggregationId &&
+            createdBy == other.createdBy &&
+            cumulative == other.cumulative &&
+            description == other.description &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            endDate == other.endDate &&
+            lastModifiedBy == other.lastModifiedBy &&
+            minimumSpend == other.minimumSpend &&
+            minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
+            minimumSpendDescription == other.minimumSpendDescription &&
+            overagePricingBands == other.overagePricingBands &&
+            planId == other.planId &&
+            planTemplateId == other.planTemplateId &&
+            pricingBands == other.pricingBands &&
+            segment == other.segment &&
+            segmentString == other.segmentString &&
+            startDate == other.startDate &&
+            tiersSpanPlan == other.tiersSpanPlan &&
+            type == other.type &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountingProductId, aggregationId, aggregationType, code, compoundAggregationId, createdBy, cumulative, description, dtCreated, dtLastModified, endDate, lastModifiedBy, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, overagePricingBands, planId, planTemplateId, pricingBands, segment, segmentString, startDate, tiersSpanPlan, type, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountingProductId,
+            aggregationId,
+            aggregationType,
+            code,
+            compoundAggregationId,
+            createdBy,
+            cumulative,
+            description,
+            dtCreated,
+            dtLastModified,
+            endDate,
+            lastModifiedBy,
+            minimumSpend,
+            minimumSpendBillInAdvance,
+            minimumSpendDescription,
+            overagePricingBands,
+            planId,
+            planTemplateId,
+            pricingBands,
+            segment,
+            segmentString,
+            startDate,
+            tiersSpanPlan,
+            type,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -679,12 +679,41 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is NotificationConfigurationResponse && id == other.id && code == other.code && description == other.description && name == other.name && active == other.active && alwaysFireEvent == other.alwaysFireEvent && calculation == other.calculation && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && eventName == other.eventName && lastModifiedBy == other.lastModifiedBy && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is NotificationConfigurationResponse &&
+            id == other.id &&
+            code == other.code &&
+            description == other.description &&
+            name == other.name &&
+            active == other.active &&
+            alwaysFireEvent == other.alwaysFireEvent &&
+            calculation == other.calculation &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            eventName == other.eventName &&
+            lastModifiedBy == other.lastModifiedBy &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, code, description, name, active, alwaysFireEvent, calculation, createdBy, dtCreated, dtLastModified, eventName, lastModifiedBy, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            code,
+            description,
+            name,
+            active,
+            alwaysFireEvent,
+            calculation,
+            createdBy,
+            dtCreated,
+            dtLastModified,
+            eventName,
+            lastModifiedBy,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

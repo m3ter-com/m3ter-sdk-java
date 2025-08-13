@@ -419,10 +419,36 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountPlanListParams && orgId == other.orgId && account == other.account && contract == other.contract && date == other.date && ids == other.ids && includeall == other.includeall && nextToken == other.nextToken && pageSize == other.pageSize && plan == other.plan && product == other.product && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is AccountPlanListParams &&
+            orgId == other.orgId &&
+            account == other.account &&
+            contract == other.contract &&
+            date == other.date &&
+            ids == other.ids &&
+            includeall == other.includeall &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            plan == other.plan &&
+            product == other.product &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, account, contract, date, ids, includeall, nextToken, pageSize, plan, product, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            account,
+            contract,
+            date,
+            ids,
+            includeall,
+            nextToken,
+            pageSize,
+            plan,
+            product,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "AccountPlanListParams{orgId=$orgId, account=$account, contract=$contract, date=$date, ids=$ids, includeall=$includeall, nextToken=$nextToken, pageSize=$pageSize, plan=$plan, product=$product, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

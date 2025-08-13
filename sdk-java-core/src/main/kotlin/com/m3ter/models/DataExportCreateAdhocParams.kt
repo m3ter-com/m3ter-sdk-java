@@ -370,10 +370,13 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && adHocOperationalDataRequest == other.adHocOperationalDataRequest && adHocUsageDataRequest == other.adHocUsageDataRequest /* spotless:on */
+            return other is Body &&
+                adHocOperationalDataRequest == other.adHocOperationalDataRequest &&
+                adHocUsageDataRequest == other.adHocUsageDataRequest
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(adHocOperationalDataRequest, adHocUsageDataRequest) /* spotless:on */
+        override fun hashCode(): Int =
+            Objects.hash(adHocOperationalDataRequest, adHocUsageDataRequest)
 
         override fun toString(): String =
             when {
@@ -481,10 +484,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportCreateAdhocParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is DataExportCreateAdhocParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "DataExportCreateAdhocParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

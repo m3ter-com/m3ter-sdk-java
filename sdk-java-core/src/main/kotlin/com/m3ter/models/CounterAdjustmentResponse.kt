@@ -549,12 +549,37 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterAdjustmentResponse && id == other.id && accountId == other.accountId && counterId == other.counterId && createdBy == other.createdBy && date == other.date && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && purchaseOrderNumber == other.purchaseOrderNumber && value == other.value && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CounterAdjustmentResponse &&
+            id == other.id &&
+            accountId == other.accountId &&
+            counterId == other.counterId &&
+            createdBy == other.createdBy &&
+            date == other.date &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            purchaseOrderNumber == other.purchaseOrderNumber &&
+            value == other.value &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountId, counterId, createdBy, date, dtCreated, dtLastModified, lastModifiedBy, purchaseOrderNumber, value, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountId,
+            counterId,
+            createdBy,
+            date,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            purchaseOrderNumber,
+            value,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

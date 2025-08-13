@@ -592,12 +592,39 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is M3terSignedCredentialsResponse && id == other.id && destination == other.destination && type == other.type && apiKey == other.apiKey && createdBy == other.createdBy && destinationId == other.destinationId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && secret == other.secret && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is M3terSignedCredentialsResponse &&
+            id == other.id &&
+            destination == other.destination &&
+            type == other.type &&
+            apiKey == other.apiKey &&
+            createdBy == other.createdBy &&
+            destinationId == other.destinationId &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            name == other.name &&
+            secret == other.secret &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, destination, type, apiKey, createdBy, destinationId, dtCreated, dtLastModified, lastModifiedBy, name, secret, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            destination,
+            type,
+            apiKey,
+            createdBy,
+            destinationId,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            name,
+            secret,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

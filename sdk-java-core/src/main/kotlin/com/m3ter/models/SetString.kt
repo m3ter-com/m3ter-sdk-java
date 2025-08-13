@@ -137,12 +137,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SetString && empty == other.empty && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is SetString &&
+            empty == other.empty &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(empty, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

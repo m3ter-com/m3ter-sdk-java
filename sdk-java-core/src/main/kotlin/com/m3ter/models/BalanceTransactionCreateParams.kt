@@ -970,12 +970,31 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && amount == other.amount && appliedDate == other.appliedDate && currencyPaid == other.currencyPaid && description == other.description && paid == other.paid && transactionDate == other.transactionDate && transactionTypeId == other.transactionTypeId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                amount == other.amount &&
+                appliedDate == other.appliedDate &&
+                currencyPaid == other.currencyPaid &&
+                description == other.description &&
+                paid == other.paid &&
+                transactionDate == other.transactionDate &&
+                transactionTypeId == other.transactionTypeId &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, appliedDate, currencyPaid, description, paid, transactionDate, transactionTypeId, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                amount,
+                appliedDate,
+                currencyPaid,
+                description,
+                paid,
+                transactionDate,
+                transactionTypeId,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -988,10 +1007,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BalanceTransactionCreateParams && orgId == other.orgId && balanceId == other.balanceId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BalanceTransactionCreateParams &&
+            orgId == other.orgId &&
+            balanceId == other.balanceId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, balanceId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, balanceId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "BalanceTransactionCreateParams{orgId=$orgId, balanceId=$balanceId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

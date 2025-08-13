@@ -834,12 +834,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Account && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Account && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -936,12 +934,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountPlan && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is AccountPlan && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1038,12 +1034,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Aggregation && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Aggregation && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1141,12 +1135,11 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CompoundAggregation && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CompoundAggregation &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1243,12 +1236,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Contract && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Contract && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1345,12 +1336,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Meter && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Meter && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1447,12 +1436,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Organization && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Organization && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1549,12 +1536,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Plan && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Plan && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1651,12 +1636,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PlanTemplate && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is PlanTemplate && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1753,12 +1736,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Product && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Product && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1770,12 +1751,47 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomFieldsResponse && id == other.id && account == other.account && accountPlan == other.accountPlan && aggregation == other.aggregation && compoundAggregation == other.compoundAggregation && contract == other.contract && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meter == other.meter && organization == other.organization && plan == other.plan && planTemplate == other.planTemplate && product == other.product && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CustomFieldsResponse &&
+            id == other.id &&
+            account == other.account &&
+            accountPlan == other.accountPlan &&
+            aggregation == other.aggregation &&
+            compoundAggregation == other.compoundAggregation &&
+            contract == other.contract &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            meter == other.meter &&
+            organization == other.organization &&
+            plan == other.plan &&
+            planTemplate == other.planTemplate &&
+            product == other.product &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, account, accountPlan, aggregation, compoundAggregation, contract, createdBy, dtCreated, dtLastModified, lastModifiedBy, meter, organization, plan, planTemplate, product, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            account,
+            accountPlan,
+            aggregation,
+            compoundAggregation,
+            contract,
+            createdBy,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            meter,
+            organization,
+            plan,
+            planTemplate,
+            product,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -988,12 +988,55 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterPricingResponse && id == other.id && accountingProductId == other.accountingProductId && code == other.code && counterId == other.counterId && createdBy == other.createdBy && cumulative == other.cumulative && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && lastModifiedBy == other.lastModifiedBy && planId == other.planId && planTemplateId == other.planTemplateId && pricingBands == other.pricingBands && proRateAdjustmentCredit == other.proRateAdjustmentCredit && proRateAdjustmentDebit == other.proRateAdjustmentDebit && proRateRunningTotal == other.proRateRunningTotal && runningTotalBillInAdvance == other.runningTotalBillInAdvance && startDate == other.startDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CounterPricingResponse &&
+            id == other.id &&
+            accountingProductId == other.accountingProductId &&
+            code == other.code &&
+            counterId == other.counterId &&
+            createdBy == other.createdBy &&
+            cumulative == other.cumulative &&
+            description == other.description &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            endDate == other.endDate &&
+            lastModifiedBy == other.lastModifiedBy &&
+            planId == other.planId &&
+            planTemplateId == other.planTemplateId &&
+            pricingBands == other.pricingBands &&
+            proRateAdjustmentCredit == other.proRateAdjustmentCredit &&
+            proRateAdjustmentDebit == other.proRateAdjustmentDebit &&
+            proRateRunningTotal == other.proRateRunningTotal &&
+            runningTotalBillInAdvance == other.runningTotalBillInAdvance &&
+            startDate == other.startDate &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountingProductId, code, counterId, createdBy, cumulative, description, dtCreated, dtLastModified, endDate, lastModifiedBy, planId, planTemplateId, pricingBands, proRateAdjustmentCredit, proRateAdjustmentDebit, proRateRunningTotal, runningTotalBillInAdvance, startDate, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountingProductId,
+            code,
+            counterId,
+            createdBy,
+            cumulative,
+            description,
+            dtCreated,
+            dtLastModified,
+            endDate,
+            lastModifiedBy,
+            planId,
+            planTemplateId,
+            pricingBands,
+            proRateAdjustmentCredit,
+            proRateAdjustmentDebit,
+            proRateRunningTotal,
+            runningTotalBillInAdvance,
+            startDate,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

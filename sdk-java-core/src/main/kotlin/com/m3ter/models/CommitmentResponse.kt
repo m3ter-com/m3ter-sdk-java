@@ -1687,7 +1687,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ChildBillingMode && value == other.value /* spotless:on */
+            return other is ChildBillingMode && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1833,7 +1833,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemType && value == other.value /* spotless:on */
+            return other is LineItemType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1846,12 +1846,79 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CommitmentResponse && id == other.id && accountId == other.accountId && accountingProductId == other.accountingProductId && amount == other.amount && amountFirstBill == other.amountFirstBill && amountPrePaid == other.amountPrePaid && amountSpent == other.amountSpent && billEpoch == other.billEpoch && billingInterval == other.billingInterval && billingOffset == other.billingOffset && billingPlanId == other.billingPlanId && childBillingMode == other.childBillingMode && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && commitmentFeeDescription == other.commitmentFeeDescription && commitmentUsageDescription == other.commitmentUsageDescription && contractId == other.contractId && createdBy == other.createdBy && currency == other.currency && drawdownsAccountingProductId == other.drawdownsAccountingProductId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feeDates == other.feeDates && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && separateOverageUsage == other.separateOverageUsage && startDate == other.startDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CommitmentResponse &&
+            id == other.id &&
+            accountId == other.accountId &&
+            accountingProductId == other.accountingProductId &&
+            amount == other.amount &&
+            amountFirstBill == other.amountFirstBill &&
+            amountPrePaid == other.amountPrePaid &&
+            amountSpent == other.amountSpent &&
+            billEpoch == other.billEpoch &&
+            billingInterval == other.billingInterval &&
+            billingOffset == other.billingOffset &&
+            billingPlanId == other.billingPlanId &&
+            childBillingMode == other.childBillingMode &&
+            commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance &&
+            commitmentFeeDescription == other.commitmentFeeDescription &&
+            commitmentUsageDescription == other.commitmentUsageDescription &&
+            contractId == other.contractId &&
+            createdBy == other.createdBy &&
+            currency == other.currency &&
+            drawdownsAccountingProductId == other.drawdownsAccountingProductId &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            endDate == other.endDate &&
+            feeDates == other.feeDates &&
+            feesAccountingProductId == other.feesAccountingProductId &&
+            lastModifiedBy == other.lastModifiedBy &&
+            lineItemTypes == other.lineItemTypes &&
+            overageDescription == other.overageDescription &&
+            overageSurchargePercent == other.overageSurchargePercent &&
+            productIds == other.productIds &&
+            separateOverageUsage == other.separateOverageUsage &&
+            startDate == other.startDate &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountId, accountingProductId, amount, amountFirstBill, amountPrePaid, amountSpent, billEpoch, billingInterval, billingOffset, billingPlanId, childBillingMode, commitmentFeeBillInAdvance, commitmentFeeDescription, commitmentUsageDescription, contractId, createdBy, currency, drawdownsAccountingProductId, dtCreated, dtLastModified, endDate, feeDates, feesAccountingProductId, lastModifiedBy, lineItemTypes, overageDescription, overageSurchargePercent, productIds, separateOverageUsage, startDate, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountId,
+            accountingProductId,
+            amount,
+            amountFirstBill,
+            amountPrePaid,
+            amountSpent,
+            billEpoch,
+            billingInterval,
+            billingOffset,
+            billingPlanId,
+            childBillingMode,
+            commitmentFeeBillInAdvance,
+            commitmentFeeDescription,
+            commitmentUsageDescription,
+            contractId,
+            createdBy,
+            currency,
+            drawdownsAccountingProductId,
+            dtCreated,
+            dtLastModified,
+            endDate,
+            feeDates,
+            feesAccountingProductId,
+            lastModifiedBy,
+            lineItemTypes,
+            overageDescription,
+            overageSurchargePercent,
+            productIds,
+            separateOverageUsage,
+            startDate,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

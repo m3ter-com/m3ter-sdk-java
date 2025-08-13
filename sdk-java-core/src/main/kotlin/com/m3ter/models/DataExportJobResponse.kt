@@ -497,7 +497,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SourceType && value == other.value /* spotless:on */
+            return other is SourceType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -633,7 +633,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -646,12 +646,29 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportJobResponse && id == other.id && dateCreated == other.dateCreated && scheduleId == other.scheduleId && sourceType == other.sourceType && startedAt == other.startedAt && status == other.status && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DataExportJobResponse &&
+            id == other.id &&
+            dateCreated == other.dateCreated &&
+            scheduleId == other.scheduleId &&
+            sourceType == other.sourceType &&
+            startedAt == other.startedAt &&
+            status == other.status &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, dateCreated, scheduleId, sourceType, startedAt, status, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            dateCreated,
+            scheduleId,
+            sourceType,
+            startedAt,
+            status,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

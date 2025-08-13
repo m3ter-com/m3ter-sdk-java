@@ -359,7 +359,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is GroupType && value == other.value /* spotless:on */
+            return other is GroupType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -372,12 +372,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExplorerDimensionGroup && groupType == other.groupType && fieldCode == other.fieldCode && meterId == other.meterId && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DataExplorerDimensionGroup &&
+            groupType == other.groupType &&
+            fieldCode == other.fieldCode &&
+            meterId == other.meterId &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(groupType, fieldCode, meterId, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(groupType, fieldCode, meterId, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -310,10 +310,28 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalMappingListParams && orgId == other.orgId && externalSystemId == other.externalSystemId && integrationConfigId == other.integrationConfigId && m3terIds == other.m3terIds && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ExternalMappingListParams &&
+            orgId == other.orgId &&
+            externalSystemId == other.externalSystemId &&
+            integrationConfigId == other.integrationConfigId &&
+            m3terIds == other.m3terIds &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, externalSystemId, integrationConfigId, m3terIds, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            externalSystemId,
+            integrationConfigId,
+            m3terIds,
+            nextToken,
+            pageSize,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "ExternalMappingListParams{orgId=$orgId, externalSystemId=$externalSystemId, integrationConfigId=$integrationConfigId, m3terIds=$m3terIds, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

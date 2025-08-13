@@ -418,10 +418,38 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventListParams && orgId == other.orgId && accountId == other.accountId && eventName == other.eventName && eventType == other.eventType && ids == other.ids && includeActioned == other.includeActioned && nextToken == other.nextToken && notificationCode == other.notificationCode && notificationId == other.notificationId && pageSize == other.pageSize && resourceId == other.resourceId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is EventListParams &&
+            orgId == other.orgId &&
+            accountId == other.accountId &&
+            eventName == other.eventName &&
+            eventType == other.eventType &&
+            ids == other.ids &&
+            includeActioned == other.includeActioned &&
+            nextToken == other.nextToken &&
+            notificationCode == other.notificationCode &&
+            notificationId == other.notificationId &&
+            pageSize == other.pageSize &&
+            resourceId == other.resourceId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, eventName, eventType, ids, includeActioned, nextToken, notificationCode, notificationId, pageSize, resourceId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            accountId,
+            eventName,
+            eventType,
+            ids,
+            includeActioned,
+            nextToken,
+            notificationCode,
+            notificationId,
+            pageSize,
+            resourceId,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "EventListParams{orgId=$orgId, accountId=$accountId, eventName=$eventName, eventType=$eventType, ids=$ids, includeActioned=$includeActioned, nextToken=$nextToken, notificationCode=$notificationCode, notificationId=$notificationId, pageSize=$pageSize, resourceId=$resourceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

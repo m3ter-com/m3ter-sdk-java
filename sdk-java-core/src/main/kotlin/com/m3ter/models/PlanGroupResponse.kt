@@ -1032,12 +1032,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1049,12 +1047,53 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanGroupResponse && id == other.id && accountId == other.accountId && code == other.code && createdBy == other.createdBy && currency == other.currency && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && minimumSpend == other.minimumSpend && minimumSpendAccountingProductId == other.minimumSpendAccountingProductId && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && name == other.name && standingCharge == other.standingCharge && standingChargeAccountingProductId == other.standingChargeAccountingProductId && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PlanGroupResponse &&
+            id == other.id &&
+            accountId == other.accountId &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            currency == other.currency &&
+            customFields == other.customFields &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            minimumSpend == other.minimumSpend &&
+            minimumSpendAccountingProductId == other.minimumSpendAccountingProductId &&
+            minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
+            minimumSpendDescription == other.minimumSpendDescription &&
+            name == other.name &&
+            standingCharge == other.standingCharge &&
+            standingChargeAccountingProductId == other.standingChargeAccountingProductId &&
+            standingChargeBillInAdvance == other.standingChargeBillInAdvance &&
+            standingChargeDescription == other.standingChargeDescription &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountId, code, createdBy, currency, customFields, dtCreated, dtLastModified, lastModifiedBy, minimumSpend, minimumSpendAccountingProductId, minimumSpendBillInAdvance, minimumSpendDescription, name, standingCharge, standingChargeAccountingProductId, standingChargeBillInAdvance, standingChargeDescription, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountId,
+            code,
+            createdBy,
+            currency,
+            customFields,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            minimumSpend,
+            minimumSpendAccountingProductId,
+            minimumSpendBillInAdvance,
+            minimumSpendDescription,
+            name,
+            standingCharge,
+            standingChargeAccountingProductId,
+            standingChargeBillInAdvance,
+            standingChargeDescription,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

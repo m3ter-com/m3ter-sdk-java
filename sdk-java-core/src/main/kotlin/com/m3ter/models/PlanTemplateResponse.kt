@@ -1260,7 +1260,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BillFrequency && value == other.value /* spotless:on */
+            return other is BillFrequency && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1369,12 +1369,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1386,12 +1384,59 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanTemplateResponse && id == other.id && billFrequency == other.billFrequency && billFrequencyInterval == other.billFrequencyInterval && code == other.code && createdBy == other.createdBy && currency == other.currency && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && name == other.name && ordinal == other.ordinal && productId == other.productId && standingCharge == other.standingCharge && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && standingChargeInterval == other.standingChargeInterval && standingChargeOffset == other.standingChargeOffset && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PlanTemplateResponse &&
+            id == other.id &&
+            billFrequency == other.billFrequency &&
+            billFrequencyInterval == other.billFrequencyInterval &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            currency == other.currency &&
+            customFields == other.customFields &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            minimumSpend == other.minimumSpend &&
+            minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
+            minimumSpendDescription == other.minimumSpendDescription &&
+            name == other.name &&
+            ordinal == other.ordinal &&
+            productId == other.productId &&
+            standingCharge == other.standingCharge &&
+            standingChargeBillInAdvance == other.standingChargeBillInAdvance &&
+            standingChargeDescription == other.standingChargeDescription &&
+            standingChargeInterval == other.standingChargeInterval &&
+            standingChargeOffset == other.standingChargeOffset &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, billFrequency, billFrequencyInterval, code, createdBy, currency, customFields, dtCreated, dtLastModified, lastModifiedBy, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, name, ordinal, productId, standingCharge, standingChargeBillInAdvance, standingChargeDescription, standingChargeInterval, standingChargeOffset, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            billFrequency,
+            billFrequencyInterval,
+            code,
+            createdBy,
+            currency,
+            customFields,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            minimumSpend,
+            minimumSpendBillInAdvance,
+            minimumSpendDescription,
+            name,
+            ordinal,
+            productId,
+            standingCharge,
+            standingChargeBillInAdvance,
+            standingChargeDescription,
+            standingChargeInterval,
+            standingChargeOffset,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

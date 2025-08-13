@@ -873,7 +873,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EntityType && value == other.value /* spotless:on */
+            return other is EntityType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -886,12 +886,45 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is TransactionResponse && id == other.id && amount == other.amount && appliedDate == other.appliedDate && createdBy == other.createdBy && currencyPaid == other.currencyPaid && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && entityId == other.entityId && entityType == other.entityType && lastModifiedBy == other.lastModifiedBy && paid == other.paid && transactionDate == other.transactionDate && transactionTypeId == other.transactionTypeId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is TransactionResponse &&
+            id == other.id &&
+            amount == other.amount &&
+            appliedDate == other.appliedDate &&
+            createdBy == other.createdBy &&
+            currencyPaid == other.currencyPaid &&
+            description == other.description &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            entityId == other.entityId &&
+            entityType == other.entityType &&
+            lastModifiedBy == other.lastModifiedBy &&
+            paid == other.paid &&
+            transactionDate == other.transactionDate &&
+            transactionTypeId == other.transactionTypeId &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, amount, appliedDate, createdBy, currencyPaid, description, dtCreated, dtLastModified, entityId, entityType, lastModifiedBy, paid, transactionDate, transactionTypeId, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            amount,
+            appliedDate,
+            createdBy,
+            currencyPaid,
+            description,
+            dtCreated,
+            dtLastModified,
+            entityId,
+            entityType,
+            lastModifiedBy,
+            paid,
+            transactionDate,
+            transactionTypeId,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

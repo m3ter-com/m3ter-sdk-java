@@ -767,7 +767,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExportFileFormat && value == other.value /* spotless:on */
+            return other is ExportFileFormat && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -906,7 +906,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ScheduleType && value == other.value /* spotless:on */
+            return other is ScheduleType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1032,7 +1032,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SourceType && value == other.value /* spotless:on */
+            return other is SourceType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1045,12 +1045,41 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportScheduleListResponse && id == other.id && code == other.code && createdBy == other.createdBy && destinationIds == other.destinationIds && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && exportFileFormat == other.exportFileFormat && lastModifiedBy == other.lastModifiedBy && name == other.name && period == other.period && scheduleType == other.scheduleType && sourceType == other.sourceType && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DataExportScheduleListResponse &&
+            id == other.id &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            destinationIds == other.destinationIds &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            exportFileFormat == other.exportFileFormat &&
+            lastModifiedBy == other.lastModifiedBy &&
+            name == other.name &&
+            period == other.period &&
+            scheduleType == other.scheduleType &&
+            sourceType == other.sourceType &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, code, createdBy, destinationIds, dtCreated, dtLastModified, exportFileFormat, lastModifiedBy, name, period, scheduleType, sourceType, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            code,
+            createdBy,
+            destinationIds,
+            dtCreated,
+            dtLastModified,
+            exportFileFormat,
+            lastModifiedBy,
+            name,
+            period,
+            scheduleType,
+            sourceType,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

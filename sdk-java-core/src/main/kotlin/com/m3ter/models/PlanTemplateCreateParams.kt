@@ -1858,12 +1858,49 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && billFrequency == other.billFrequency && currency == other.currency && name == other.name && productId == other.productId && standingCharge == other.standingCharge && billFrequencyInterval == other.billFrequencyInterval && code == other.code && customFields == other.customFields && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && ordinal == other.ordinal && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && standingChargeInterval == other.standingChargeInterval && standingChargeOffset == other.standingChargeOffset && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                billFrequency == other.billFrequency &&
+                currency == other.currency &&
+                name == other.name &&
+                productId == other.productId &&
+                standingCharge == other.standingCharge &&
+                billFrequencyInterval == other.billFrequencyInterval &&
+                code == other.code &&
+                customFields == other.customFields &&
+                minimumSpend == other.minimumSpend &&
+                minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
+                minimumSpendDescription == other.minimumSpendDescription &&
+                ordinal == other.ordinal &&
+                standingChargeBillInAdvance == other.standingChargeBillInAdvance &&
+                standingChargeDescription == other.standingChargeDescription &&
+                standingChargeInterval == other.standingChargeInterval &&
+                standingChargeOffset == other.standingChargeOffset &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(billFrequency, currency, name, productId, standingCharge, billFrequencyInterval, code, customFields, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, ordinal, standingChargeBillInAdvance, standingChargeDescription, standingChargeInterval, standingChargeOffset, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                billFrequency,
+                currency,
+                name,
+                productId,
+                standingCharge,
+                billFrequencyInterval,
+                code,
+                customFields,
+                minimumSpend,
+                minimumSpendBillInAdvance,
+                minimumSpendDescription,
+                ordinal,
+                standingChargeBillInAdvance,
+                standingChargeDescription,
+                standingChargeInterval,
+                standingChargeOffset,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2024,7 +2061,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BillFrequency && value == other.value /* spotless:on */
+            return other is BillFrequency && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2133,12 +2170,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2150,10 +2185,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanTemplateCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is PlanTemplateCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "PlanTemplateCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

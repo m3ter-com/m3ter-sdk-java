@@ -1383,7 +1383,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BillingFrequency && value == other.value /* spotless:on */
+            return other is BillingFrequency && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1526,7 +1526,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1655,7 +1655,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1668,12 +1668,65 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillJobResponse && id == other.id && accountIds == other.accountIds && billDate == other.billDate && billFrequencyInterval == other.billFrequencyInterval && billIds == other.billIds && billingFrequency == other.billingFrequency && createdBy == other.createdBy && currencyConversions == other.currencyConversions && dayEpoch == other.dayEpoch && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && dueDate == other.dueDate && externalInvoiceDate == other.externalInvoiceDate && lastDateInBillingPeriod == other.lastDateInBillingPeriod && lastModifiedBy == other.lastModifiedBy && monthEpoch == other.monthEpoch && pending == other.pending && status == other.status && targetCurrency == other.targetCurrency && timezone == other.timezone && total == other.total && type == other.type && version == other.version && weekEpoch == other.weekEpoch && yearEpoch == other.yearEpoch && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is BillJobResponse &&
+            id == other.id &&
+            accountIds == other.accountIds &&
+            billDate == other.billDate &&
+            billFrequencyInterval == other.billFrequencyInterval &&
+            billIds == other.billIds &&
+            billingFrequency == other.billingFrequency &&
+            createdBy == other.createdBy &&
+            currencyConversions == other.currencyConversions &&
+            dayEpoch == other.dayEpoch &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            dueDate == other.dueDate &&
+            externalInvoiceDate == other.externalInvoiceDate &&
+            lastDateInBillingPeriod == other.lastDateInBillingPeriod &&
+            lastModifiedBy == other.lastModifiedBy &&
+            monthEpoch == other.monthEpoch &&
+            pending == other.pending &&
+            status == other.status &&
+            targetCurrency == other.targetCurrency &&
+            timezone == other.timezone &&
+            total == other.total &&
+            type == other.type &&
+            version == other.version &&
+            weekEpoch == other.weekEpoch &&
+            yearEpoch == other.yearEpoch &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountIds, billDate, billFrequencyInterval, billIds, billingFrequency, createdBy, currencyConversions, dayEpoch, dtCreated, dtLastModified, dueDate, externalInvoiceDate, lastDateInBillingPeriod, lastModifiedBy, monthEpoch, pending, status, targetCurrency, timezone, total, type, version, weekEpoch, yearEpoch, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountIds,
+            billDate,
+            billFrequencyInterval,
+            billIds,
+            billingFrequency,
+            createdBy,
+            currencyConversions,
+            dayEpoch,
+            dtCreated,
+            dtLastModified,
+            dueDate,
+            externalInvoiceDate,
+            lastDateInBillingPeriod,
+            lastModifiedBy,
+            monthEpoch,
+            pending,
+            status,
+            targetCurrency,
+            timezone,
+            total,
+            type,
+            version,
+            weekEpoch,
+            yearEpoch,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

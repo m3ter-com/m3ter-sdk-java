@@ -1267,12 +1267,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1417,7 +1415,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemType && value == other.value /* spotless:on */
+            return other is LineItemType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1430,12 +1428,65 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Balance && id == other.id && accountId == other.accountId && amount == other.amount && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && contractId == other.contractId && createdBy == other.createdBy && currency == other.currency && customFields == other.customFields && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && startDate == other.startDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is Balance &&
+            id == other.id &&
+            accountId == other.accountId &&
+            amount == other.amount &&
+            balanceDrawDownDescription == other.balanceDrawDownDescription &&
+            code == other.code &&
+            consumptionsAccountingProductId == other.consumptionsAccountingProductId &&
+            contractId == other.contractId &&
+            createdBy == other.createdBy &&
+            currency == other.currency &&
+            customFields == other.customFields &&
+            description == other.description &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            endDate == other.endDate &&
+            feesAccountingProductId == other.feesAccountingProductId &&
+            lastModifiedBy == other.lastModifiedBy &&
+            lineItemTypes == other.lineItemTypes &&
+            name == other.name &&
+            overageDescription == other.overageDescription &&
+            overageSurchargePercent == other.overageSurchargePercent &&
+            productIds == other.productIds &&
+            rolloverAmount == other.rolloverAmount &&
+            rolloverEndDate == other.rolloverEndDate &&
+            startDate == other.startDate &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountId, amount, balanceDrawDownDescription, code, consumptionsAccountingProductId, contractId, createdBy, currency, customFields, description, dtCreated, dtLastModified, endDate, feesAccountingProductId, lastModifiedBy, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, startDate, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountId,
+            amount,
+            balanceDrawDownDescription,
+            code,
+            consumptionsAccountingProductId,
+            contractId,
+            createdBy,
+            currency,
+            customFields,
+            description,
+            dtCreated,
+            dtLastModified,
+            endDate,
+            feesAccountingProductId,
+            lastModifiedBy,
+            lineItemTypes,
+            name,
+            overageDescription,
+            overageSurchargePercent,
+            productIds,
+            rolloverAmount,
+            rolloverEndDate,
+            startDate,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

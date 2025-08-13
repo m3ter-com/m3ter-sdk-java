@@ -620,12 +620,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && targetId == other.targetId && targetType == other.targetType && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                targetId == other.targetId &&
+                targetType == other.targetType &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(targetId, targetType, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(targetId, targetType, version, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -761,7 +765,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TargetType && value == other.value /* spotless:on */
+            return other is TargetType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -774,10 +778,17 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ResourceGroupRemoveResourceParams && orgId == other.orgId && type == other.type && resourceGroupId == other.resourceGroupId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ResourceGroupRemoveResourceParams &&
+            orgId == other.orgId &&
+            type == other.type &&
+            resourceGroupId == other.resourceGroupId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, type, resourceGroupId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, type, resourceGroupId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "ResourceGroupRemoveResourceParams{orgId=$orgId, type=$type, resourceGroupId=$resourceGroupId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

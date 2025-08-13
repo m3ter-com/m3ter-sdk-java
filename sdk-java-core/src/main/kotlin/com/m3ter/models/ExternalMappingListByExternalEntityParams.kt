@@ -284,10 +284,28 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalMappingListByExternalEntityParams && orgId == other.orgId && system == other.system && externalTable == other.externalTable && externalId == other.externalId && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ExternalMappingListByExternalEntityParams &&
+            orgId == other.orgId &&
+            system == other.system &&
+            externalTable == other.externalTable &&
+            externalId == other.externalId &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, system, externalTable, externalId, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            system,
+            externalTable,
+            externalId,
+            nextToken,
+            pageSize,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "ExternalMappingListByExternalEntityParams{orgId=$orgId, system=$system, externalTable=$externalTable, externalId=$externalId, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

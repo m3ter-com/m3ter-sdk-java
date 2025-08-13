@@ -246,10 +246,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UsageSubmitParams && orgId == other.orgId && submitMeasurementsRequest == other.submitMeasurementsRequest && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is UsageSubmitParams &&
+            orgId == other.orgId &&
+            submitMeasurementsRequest == other.submitMeasurementsRequest &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, submitMeasurementsRequest, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, submitMeasurementsRequest, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "UsageSubmitParams{orgId=$orgId, submitMeasurementsRequest=$submitMeasurementsRequest, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

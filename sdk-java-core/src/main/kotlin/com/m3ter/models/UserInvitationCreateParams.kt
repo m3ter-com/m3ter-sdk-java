@@ -984,12 +984,33 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && email == other.email && firstName == other.firstName && lastName == other.lastName && contactNumber == other.contactNumber && dtEndAccess == other.dtEndAccess && dtExpiry == other.dtExpiry && m3terUser == other.m3terUser && permissionPolicyIds == other.permissionPolicyIds && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                email == other.email &&
+                firstName == other.firstName &&
+                lastName == other.lastName &&
+                contactNumber == other.contactNumber &&
+                dtEndAccess == other.dtEndAccess &&
+                dtExpiry == other.dtExpiry &&
+                m3terUser == other.m3terUser &&
+                permissionPolicyIds == other.permissionPolicyIds &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(email, firstName, lastName, contactNumber, dtEndAccess, dtExpiry, m3terUser, permissionPolicyIds, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                email,
+                firstName,
+                lastName,
+                contactNumber,
+                dtEndAccess,
+                dtExpiry,
+                m3terUser,
+                permissionPolicyIds,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1002,10 +1023,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UserInvitationCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is UserInvitationCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "UserInvitationCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

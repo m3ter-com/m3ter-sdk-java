@@ -946,12 +946,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1100,7 +1098,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Rounding && value == other.value /* spotless:on */
+            return other is Rounding && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1197,12 +1195,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Segment && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Segment && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1214,12 +1210,49 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CompoundAggregationResponse && id == other.id && accountingProductId == other.accountingProductId && calculation == other.calculation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && evaluateNullAggregations == other.evaluateNullAggregations && lastModifiedBy == other.lastModifiedBy && name == other.name && productId == other.productId && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segments == other.segments && unit == other.unit && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CompoundAggregationResponse &&
+            id == other.id &&
+            accountingProductId == other.accountingProductId &&
+            calculation == other.calculation &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            customFields == other.customFields &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            evaluateNullAggregations == other.evaluateNullAggregations &&
+            lastModifiedBy == other.lastModifiedBy &&
+            name == other.name &&
+            productId == other.productId &&
+            quantityPerUnit == other.quantityPerUnit &&
+            rounding == other.rounding &&
+            segments == other.segments &&
+            unit == other.unit &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountingProductId, calculation, code, createdBy, customFields, dtCreated, dtLastModified, evaluateNullAggregations, lastModifiedBy, name, productId, quantityPerUnit, rounding, segments, unit, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountingProductId,
+            calculation,
+            code,
+            createdBy,
+            customFields,
+            dtCreated,
+            dtLastModified,
+            evaluateNullAggregations,
+            lastModifiedBy,
+            name,
+            productId,
+            quantityPerUnit,
+            rounding,
+            segments,
+            unit,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

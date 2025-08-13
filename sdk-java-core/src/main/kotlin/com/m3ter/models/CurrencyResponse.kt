@@ -704,7 +704,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is RoundingMode && value == other.value /* spotless:on */
+            return other is RoundingMode && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -717,12 +717,37 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CurrencyResponse && id == other.id && archived == other.archived && code == other.code && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && maxDecimalPlaces == other.maxDecimalPlaces && name == other.name && roundingMode == other.roundingMode && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CurrencyResponse &&
+            id == other.id &&
+            archived == other.archived &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            maxDecimalPlaces == other.maxDecimalPlaces &&
+            name == other.name &&
+            roundingMode == other.roundingMode &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, archived, code, createdBy, dtCreated, dtLastModified, lastModifiedBy, maxDecimalPlaces, name, roundingMode, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            archived,
+            code,
+            createdBy,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            maxDecimalPlaces,
+            name,
+            roundingMode,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -1418,7 +1418,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+                return other is Status && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1545,7 +1545,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                return other is Type && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1558,12 +1558,67 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Organization && id == other.id && addressLine1 == other.addressLine1 && addressLine2 == other.addressLine2 && addressLine3 == other.addressLine3 && addressLine4 == other.addressLine4 && billingContactUserId1 == other.billingContactUserId1 && billingContactUserId2 == other.billingContactUserId2 && billingContactUserId3 == other.billingContactUserId3 && country == other.country && createdBy == other.createdBy && customerId == other.customerId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && invoiceGeneralReference == other.invoiceGeneralReference && lastModifiedBy == other.lastModifiedBy && locality == other.locality && organizationName == other.organizationName && orgId == other.orgId && postCode == other.postCode && purchaseOrderNumber == other.purchaseOrderNumber && region == other.region && shortName == other.shortName && status == other.status && taxId == other.taxId && type == other.type && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Organization &&
+                id == other.id &&
+                addressLine1 == other.addressLine1 &&
+                addressLine2 == other.addressLine2 &&
+                addressLine3 == other.addressLine3 &&
+                addressLine4 == other.addressLine4 &&
+                billingContactUserId1 == other.billingContactUserId1 &&
+                billingContactUserId2 == other.billingContactUserId2 &&
+                billingContactUserId3 == other.billingContactUserId3 &&
+                country == other.country &&
+                createdBy == other.createdBy &&
+                customerId == other.customerId &&
+                dtCreated == other.dtCreated &&
+                dtLastModified == other.dtLastModified &&
+                invoiceGeneralReference == other.invoiceGeneralReference &&
+                lastModifiedBy == other.lastModifiedBy &&
+                locality == other.locality &&
+                organizationName == other.organizationName &&
+                orgId == other.orgId &&
+                postCode == other.postCode &&
+                purchaseOrderNumber == other.purchaseOrderNumber &&
+                region == other.region &&
+                shortName == other.shortName &&
+                status == other.status &&
+                taxId == other.taxId &&
+                type == other.type &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, addressLine1, addressLine2, addressLine3, addressLine4, billingContactUserId1, billingContactUserId2, billingContactUserId3, country, createdBy, customerId, dtCreated, dtLastModified, invoiceGeneralReference, lastModifiedBy, locality, organizationName, orgId, postCode, purchaseOrderNumber, region, shortName, status, taxId, type, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                addressLine1,
+                addressLine2,
+                addressLine3,
+                addressLine4,
+                billingContactUserId1,
+                billingContactUserId2,
+                billingContactUserId3,
+                country,
+                createdBy,
+                customerId,
+                dtCreated,
+                dtLastModified,
+                invoiceGeneralReference,
+                lastModifiedBy,
+                locality,
+                organizationName,
+                orgId,
+                postCode,
+                purchaseOrderNumber,
+                region,
+                shortName,
+                status,
+                taxId,
+                type,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1933,12 +1988,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ServiceUser && id == other.id && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is ServiceUser &&
+                id == other.id &&
+                createdBy == other.createdBy &&
+                dtCreated == other.dtCreated &&
+                dtLastModified == other.dtLastModified &&
+                lastModifiedBy == other.lastModifiedBy &&
+                name == other.name &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, createdBy, dtCreated, dtLastModified, lastModifiedBy, name, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                createdBy,
+                dtCreated,
+                dtLastModified,
+                lastModifiedBy,
+                name,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2636,12 +2708,43 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is User && id == other.id && contactNumber == other.contactNumber && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && email == other.email && firstAcceptedTermsAndConditions == other.firstAcceptedTermsAndConditions && firstName == other.firstName && lastAcceptedTermsAndConditions == other.lastAcceptedTermsAndConditions && lastModifiedBy == other.lastModifiedBy && lastName == other.lastName && organizations == other.organizations && supportUser == other.supportUser && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is User &&
+                id == other.id &&
+                contactNumber == other.contactNumber &&
+                createdBy == other.createdBy &&
+                dtCreated == other.dtCreated &&
+                dtLastModified == other.dtLastModified &&
+                email == other.email &&
+                firstAcceptedTermsAndConditions == other.firstAcceptedTermsAndConditions &&
+                firstName == other.firstName &&
+                lastAcceptedTermsAndConditions == other.lastAcceptedTermsAndConditions &&
+                lastModifiedBy == other.lastModifiedBy &&
+                lastName == other.lastName &&
+                organizations == other.organizations &&
+                supportUser == other.supportUser &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, contactNumber, createdBy, dtCreated, dtLastModified, email, firstAcceptedTermsAndConditions, firstName, lastAcceptedTermsAndConditions, lastModifiedBy, lastName, organizations, supportUser, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                contactNumber,
+                createdBy,
+                dtCreated,
+                dtLastModified,
+                email,
+                firstAcceptedTermsAndConditions,
+                firstName,
+                lastAcceptedTermsAndConditions,
+                lastModifiedBy,
+                lastName,
+                organizations,
+                supportUser,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2654,12 +2757,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UserMeResponse && organization == other.organization && serviceUser == other.serviceUser && user == other.user && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is UserMeResponse &&
+            organization == other.organization &&
+            serviceUser == other.serviceUser &&
+            user == other.user &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(organization, serviceUser, user, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(organization, serviceUser, user, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

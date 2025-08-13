@@ -119,10 +119,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportScheduleUpdateResponse && operationalDataExportSchedule == other.operationalDataExportSchedule && usageDataExportSchedule == other.usageDataExportSchedule /* spotless:on */
+        return other is DataExportScheduleUpdateResponse &&
+            operationalDataExportSchedule == other.operationalDataExportSchedule &&
+            usageDataExportSchedule == other.usageDataExportSchedule
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(operationalDataExportSchedule, usageDataExportSchedule) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(operationalDataExportSchedule, usageDataExportSchedule)
 
     override fun toString(): String =
         when {
