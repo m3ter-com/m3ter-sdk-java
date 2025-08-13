@@ -359,10 +359,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && dataExportDestinationS3Request == other.dataExportDestinationS3Request && dataExportDestinationGoogleCloudStorageRequest == other.dataExportDestinationGoogleCloudStorageRequest /* spotless:on */
+            return other is Body &&
+                dataExportDestinationS3Request == other.dataExportDestinationS3Request &&
+                dataExportDestinationGoogleCloudStorageRequest ==
+                    other.dataExportDestinationGoogleCloudStorageRequest
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(dataExportDestinationS3Request, dataExportDestinationGoogleCloudStorageRequest) /* spotless:on */
+        override fun hashCode(): Int =
+            Objects.hash(
+                dataExportDestinationS3Request,
+                dataExportDestinationGoogleCloudStorageRequest,
+            )
 
         override fun toString(): String =
             when {
@@ -482,10 +489,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportDestinationCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is DataExportDestinationCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "DataExportDestinationCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

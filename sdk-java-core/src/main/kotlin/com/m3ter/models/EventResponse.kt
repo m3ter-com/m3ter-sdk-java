@@ -305,12 +305,18 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventResponse && id == other.id && dtActioned == other.dtActioned && eventName == other.eventName && eventTime == other.eventTime && m3terEvent == other.m3terEvent && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is EventResponse &&
+            id == other.id &&
+            dtActioned == other.dtActioned &&
+            eventName == other.eventName &&
+            eventTime == other.eventTime &&
+            m3terEvent == other.m3terEvent &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, dtActioned, eventName, eventTime, m3terEvent, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(id, dtActioned, eventName, eventTime, m3terEvent, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

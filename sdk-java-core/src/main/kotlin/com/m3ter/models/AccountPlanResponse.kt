@@ -996,7 +996,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ChildBillingMode && value == other.value /* spotless:on */
+            return other is ChildBillingMode && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1105,12 +1105,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1122,12 +1120,49 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountPlanResponse && id == other.id && accountId == other.accountId && billEpoch == other.billEpoch && childBillingMode == other.childBillingMode && code == other.code && contractId == other.contractId && createdBy == other.createdBy && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && lastModifiedBy == other.lastModifiedBy && planGroupId == other.planGroupId && planId == other.planId && productId == other.productId && startDate == other.startDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AccountPlanResponse &&
+            id == other.id &&
+            accountId == other.accountId &&
+            billEpoch == other.billEpoch &&
+            childBillingMode == other.childBillingMode &&
+            code == other.code &&
+            contractId == other.contractId &&
+            createdBy == other.createdBy &&
+            customFields == other.customFields &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            endDate == other.endDate &&
+            lastModifiedBy == other.lastModifiedBy &&
+            planGroupId == other.planGroupId &&
+            planId == other.planId &&
+            productId == other.productId &&
+            startDate == other.startDate &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountId, billEpoch, childBillingMode, code, contractId, createdBy, customFields, dtCreated, dtLastModified, endDate, lastModifiedBy, planGroupId, planId, productId, startDate, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountId,
+            billEpoch,
+            childBillingMode,
+            code,
+            contractId,
+            createdBy,
+            customFields,
+            dtCreated,
+            dtLastModified,
+            endDate,
+            lastModifiedBy,
+            planGroupId,
+            planId,
+            productId,
+            startDate,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

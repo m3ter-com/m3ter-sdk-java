@@ -603,7 +603,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -616,10 +616,48 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillListParams && orgId == other.orgId && accountId == other.accountId && additional == other.additional && billDate == other.billDate && billDateEnd == other.billDateEnd && billDateStart == other.billDateStart && billingFrequency == other.billingFrequency && excludeLineItems == other.excludeLineItems && externalInvoiceDateEnd == other.externalInvoiceDateEnd && externalInvoiceDateStart == other.externalInvoiceDateStart && ids == other.ids && includeBillTotal == other.includeBillTotal && locked == other.locked && nextToken == other.nextToken && pageSize == other.pageSize && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BillListParams &&
+            orgId == other.orgId &&
+            accountId == other.accountId &&
+            additional == other.additional &&
+            billDate == other.billDate &&
+            billDateEnd == other.billDateEnd &&
+            billDateStart == other.billDateStart &&
+            billingFrequency == other.billingFrequency &&
+            excludeLineItems == other.excludeLineItems &&
+            externalInvoiceDateEnd == other.externalInvoiceDateEnd &&
+            externalInvoiceDateStart == other.externalInvoiceDateStart &&
+            ids == other.ids &&
+            includeBillTotal == other.includeBillTotal &&
+            locked == other.locked &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            status == other.status &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, additional, billDate, billDateEnd, billDateStart, billingFrequency, excludeLineItems, externalInvoiceDateEnd, externalInvoiceDateStart, ids, includeBillTotal, locked, nextToken, pageSize, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            accountId,
+            additional,
+            billDate,
+            billDateEnd,
+            billDateStart,
+            billingFrequency,
+            excludeLineItems,
+            externalInvoiceDateEnd,
+            externalInvoiceDateStart,
+            ids,
+            includeBillTotal,
+            locked,
+            nextToken,
+            pageSize,
+            status,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "BillListParams{orgId=$orgId, accountId=$accountId, additional=$additional, billDate=$billDate, billDateEnd=$billDateEnd, billDateStart=$billDateStart, billingFrequency=$billingFrequency, excludeLineItems=$excludeLineItems, externalInvoiceDateEnd=$externalInvoiceDateEnd, externalInvoiceDateStart=$externalInvoiceDateStart, ids=$ids, includeBillTotal=$includeBillTotal, locked=$locked, nextToken=$nextToken, pageSize=$pageSize, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -782,12 +782,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -799,12 +797,41 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is MeterResponse && id == other.id && code == other.code && createdBy == other.createdBy && customFields == other.customFields && dataFields == other.dataFields && derivedFields == other.derivedFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && groupId == other.groupId && lastModifiedBy == other.lastModifiedBy && name == other.name && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is MeterResponse &&
+            id == other.id &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            customFields == other.customFields &&
+            dataFields == other.dataFields &&
+            derivedFields == other.derivedFields &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            groupId == other.groupId &&
+            lastModifiedBy == other.lastModifiedBy &&
+            name == other.name &&
+            productId == other.productId &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, code, createdBy, customFields, dataFields, derivedFields, dtCreated, dtLastModified, groupId, lastModifiedBy, name, productId, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            code,
+            createdBy,
+            customFields,
+            dataFields,
+            derivedFields,
+            dtCreated,
+            dtLastModified,
+            groupId,
+            lastModifiedBy,
+            name,
+            productId,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

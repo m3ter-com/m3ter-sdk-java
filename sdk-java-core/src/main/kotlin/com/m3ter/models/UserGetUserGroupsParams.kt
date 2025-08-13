@@ -263,10 +263,17 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UserGetUserGroupsParams && orgId == other.orgId && id == other.id && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is UserGetUserGroupsParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, nextToken, pageSize, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "UserGetUserGroupsParams{orgId=$orgId, id=$id, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -549,7 +549,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DestinationType && value == other.value /* spotless:on */
+            return other is DestinationType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -692,7 +692,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PartitionOrder && value == other.value /* spotless:on */
+            return other is PartitionOrder && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -705,12 +705,27 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportDestinationS3Request && bucketName == other.bucketName && iamRoleArn == other.iamRoleArn && destinationType == other.destinationType && partitionOrder == other.partitionOrder && prefix == other.prefix && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DataExportDestinationS3Request &&
+            bucketName == other.bucketName &&
+            iamRoleArn == other.iamRoleArn &&
+            destinationType == other.destinationType &&
+            partitionOrder == other.partitionOrder &&
+            prefix == other.prefix &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(bucketName, iamRoleArn, destinationType, partitionOrder, prefix, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            bucketName,
+            iamRoleArn,
+            destinationType,
+            partitionOrder,
+            prefix,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

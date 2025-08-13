@@ -569,7 +569,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -582,12 +582,33 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is FileUploadJobResponse && id == other.id && contentLength == other.contentLength && failedRows == other.failedRows && fileName == other.fileName && processedRows == other.processedRows && status == other.status && totalRows == other.totalRows && uploadDate == other.uploadDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is FileUploadJobResponse &&
+            id == other.id &&
+            contentLength == other.contentLength &&
+            failedRows == other.failedRows &&
+            fileName == other.fileName &&
+            processedRows == other.processedRows &&
+            status == other.status &&
+            totalRows == other.totalRows &&
+            uploadDate == other.uploadDate &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, contentLength, failedRows, fileName, processedRows, status, totalRows, uploadDate, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            contentLength,
+            failedRows,
+            fileName,
+            processedRows,
+            status,
+            totalRows,
+            uploadDate,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

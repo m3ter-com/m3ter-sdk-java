@@ -528,12 +528,25 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FailedEntities && accountplan == other.accountplan && contract == other.contract && counterPricings == other.counterPricings && prepayment == other.prepayment && pricings == other.pricings && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is FailedEntities &&
+                accountplan == other.accountplan &&
+                contract == other.contract &&
+                counterPricings == other.counterPricings &&
+                prepayment == other.prepayment &&
+                pricings == other.pricings &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountplan, contract, counterPricings, prepayment, pricings, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                accountplan,
+                contract,
+                counterPricings,
+                prepayment,
+                pricings,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -823,12 +836,25 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is UpdatedEntities && accountplan == other.accountplan && contract == other.contract && counterPricings == other.counterPricings && prepayment == other.prepayment && pricings == other.pricings && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is UpdatedEntities &&
+                accountplan == other.accountplan &&
+                contract == other.contract &&
+                counterPricings == other.counterPricings &&
+                prepayment == other.prepayment &&
+                pricings == other.pricings &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountplan, contract, counterPricings, prepayment, pricings, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                accountplan,
+                contract,
+                counterPricings,
+                prepayment,
+                pricings,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -841,12 +867,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountEndDateBillingEntitiesResponse && failedEntities == other.failedEntities && statusMessage == other.statusMessage && updatedEntities == other.updatedEntities && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AccountEndDateBillingEntitiesResponse &&
+            failedEntities == other.failedEntities &&
+            statusMessage == other.statusMessage &&
+            updatedEntities == other.updatedEntities &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(failedEntities, statusMessage, updatedEntities, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(failedEntities, statusMessage, updatedEntities, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

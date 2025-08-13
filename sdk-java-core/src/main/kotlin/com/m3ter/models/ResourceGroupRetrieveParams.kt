@@ -217,10 +217,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ResourceGroupRetrieveParams && orgId == other.orgId && type == other.type && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ResourceGroupRetrieveParams &&
+            orgId == other.orgId &&
+            type == other.type &&
+            id == other.id &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, type, id, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, type, id, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "ResourceGroupRetrieveParams{orgId=$orgId, type=$type, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

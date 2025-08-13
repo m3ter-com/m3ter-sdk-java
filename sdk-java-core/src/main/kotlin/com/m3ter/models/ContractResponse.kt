@@ -788,12 +788,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -805,12 +803,43 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ContractResponse && id == other.id && accountId == other.accountId && code == other.code && createdBy == other.createdBy && customFields == other.customFields && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && lastModifiedBy == other.lastModifiedBy && name == other.name && purchaseOrderNumber == other.purchaseOrderNumber && startDate == other.startDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is ContractResponse &&
+            id == other.id &&
+            accountId == other.accountId &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            customFields == other.customFields &&
+            description == other.description &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            endDate == other.endDate &&
+            lastModifiedBy == other.lastModifiedBy &&
+            name == other.name &&
+            purchaseOrderNumber == other.purchaseOrderNumber &&
+            startDate == other.startDate &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountId, code, createdBy, customFields, description, dtCreated, dtLastModified, endDate, lastModifiedBy, name, purchaseOrderNumber, startDate, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountId,
+            code,
+            createdBy,
+            customFields,
+            description,
+            dtCreated,
+            dtLastModified,
+            endDate,
+            lastModifiedBy,
+            name,
+            purchaseOrderNumber,
+            startDate,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

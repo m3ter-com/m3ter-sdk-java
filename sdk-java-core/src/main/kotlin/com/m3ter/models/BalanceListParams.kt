@@ -304,10 +304,30 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BalanceListParams && orgId == other.orgId && accountId == other.accountId && contract == other.contract && endDateEnd == other.endDateEnd && endDateStart == other.endDateStart && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BalanceListParams &&
+            orgId == other.orgId &&
+            accountId == other.accountId &&
+            contract == other.contract &&
+            endDateEnd == other.endDateEnd &&
+            endDateStart == other.endDateStart &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, contract, endDateEnd, endDateStart, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            accountId,
+            contract,
+            endDateEnd,
+            endDateStart,
+            nextToken,
+            pageSize,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "BalanceListParams{orgId=$orgId, accountId=$accountId, contract=$contract, endDateEnd=$endDateEnd, endDateStart=$endDateStart, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

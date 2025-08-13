@@ -861,12 +861,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ConfigData && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is ConfigData && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -994,7 +992,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TriggerType && value == other.value /* spotless:on */
+            return other is TriggerType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1007,12 +1005,47 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is IntegrationConfigurationUpdateResponse && id == other.id && destination == other.destination && entityType == other.entityType && version == other.version && authorized == other.authorized && configData == other.configData && createdBy == other.createdBy && destinationId == other.destinationId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && enabled == other.enabled && entityId == other.entityId && integrationCredentialsId == other.integrationCredentialsId && lastModifiedBy == other.lastModifiedBy && name == other.name && triggerType == other.triggerType && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is IntegrationConfigurationUpdateResponse &&
+            id == other.id &&
+            destination == other.destination &&
+            entityType == other.entityType &&
+            version == other.version &&
+            authorized == other.authorized &&
+            configData == other.configData &&
+            createdBy == other.createdBy &&
+            destinationId == other.destinationId &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            enabled == other.enabled &&
+            entityId == other.entityId &&
+            integrationCredentialsId == other.integrationCredentialsId &&
+            lastModifiedBy == other.lastModifiedBy &&
+            name == other.name &&
+            triggerType == other.triggerType &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, destination, entityType, version, authorized, configData, createdBy, destinationId, dtCreated, dtLastModified, enabled, entityId, integrationCredentialsId, lastModifiedBy, name, triggerType, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            destination,
+            entityType,
+            version,
+            authorized,
+            configData,
+            createdBy,
+            destinationId,
+            dtCreated,
+            dtLastModified,
+            enabled,
+            entityId,
+            integrationCredentialsId,
+            lastModifiedBy,
+            name,
+            triggerType,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -329,12 +329,18 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DerivedField && category == other.category && code == other.code && name == other.name && unit == other.unit && calculation == other.calculation && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DerivedField &&
+            category == other.category &&
+            code == other.code &&
+            name == other.name &&
+            unit == other.unit &&
+            calculation == other.calculation &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(category, code, name, unit, calculation, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(category, code, name, unit, calculation, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

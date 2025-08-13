@@ -1177,7 +1177,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AutoGenerateStatementMode && value == other.value /* spotless:on */
+            return other is AutoGenerateStatementMode && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1275,12 +1275,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ConfigData && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is ConfigData && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1410,7 +1408,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CreditApplicationOrder && value == other.value /* spotless:on */
+            return other is CreditApplicationOrder && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1519,12 +1517,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1536,12 +1532,55 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountResponse && id == other.id && address == other.address && autoGenerateStatementMode == other.autoGenerateStatementMode && billEpoch == other.billEpoch && code == other.code && configData == other.configData && createdBy == other.createdBy && creditApplicationOrder == other.creditApplicationOrder && currency == other.currency && customFields == other.customFields && daysBeforeBillDue == other.daysBeforeBillDue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && emailAddress == other.emailAddress && lastModifiedBy == other.lastModifiedBy && name == other.name && parentAccountId == other.parentAccountId && purchaseOrderNumber == other.purchaseOrderNumber && statementDefinitionId == other.statementDefinitionId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AccountResponse &&
+            id == other.id &&
+            address == other.address &&
+            autoGenerateStatementMode == other.autoGenerateStatementMode &&
+            billEpoch == other.billEpoch &&
+            code == other.code &&
+            configData == other.configData &&
+            createdBy == other.createdBy &&
+            creditApplicationOrder == other.creditApplicationOrder &&
+            currency == other.currency &&
+            customFields == other.customFields &&
+            daysBeforeBillDue == other.daysBeforeBillDue &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            emailAddress == other.emailAddress &&
+            lastModifiedBy == other.lastModifiedBy &&
+            name == other.name &&
+            parentAccountId == other.parentAccountId &&
+            purchaseOrderNumber == other.purchaseOrderNumber &&
+            statementDefinitionId == other.statementDefinitionId &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, address, autoGenerateStatementMode, billEpoch, code, configData, createdBy, creditApplicationOrder, currency, customFields, daysBeforeBillDue, dtCreated, dtLastModified, emailAddress, lastModifiedBy, name, parentAccountId, purchaseOrderNumber, statementDefinitionId, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            address,
+            autoGenerateStatementMode,
+            billEpoch,
+            code,
+            configData,
+            createdBy,
+            creditApplicationOrder,
+            currency,
+            customFields,
+            daysBeforeBillDue,
+            dtCreated,
+            dtLastModified,
+            emailAddress,
+            lastModifiedBy,
+            name,
+            parentAccountId,
+            purchaseOrderNumber,
+            statementDefinitionId,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

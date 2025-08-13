@@ -1614,12 +1614,45 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && counterId == other.counterId && pricingBands == other.pricingBands && startDate == other.startDate && accountingProductId == other.accountingProductId && code == other.code && cumulative == other.cumulative && description == other.description && endDate == other.endDate && planId == other.planId && planTemplateId == other.planTemplateId && proRateAdjustmentCredit == other.proRateAdjustmentCredit && proRateAdjustmentDebit == other.proRateAdjustmentDebit && proRateRunningTotal == other.proRateRunningTotal && runningTotalBillInAdvance == other.runningTotalBillInAdvance && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                counterId == other.counterId &&
+                pricingBands == other.pricingBands &&
+                startDate == other.startDate &&
+                accountingProductId == other.accountingProductId &&
+                code == other.code &&
+                cumulative == other.cumulative &&
+                description == other.description &&
+                endDate == other.endDate &&
+                planId == other.planId &&
+                planTemplateId == other.planTemplateId &&
+                proRateAdjustmentCredit == other.proRateAdjustmentCredit &&
+                proRateAdjustmentDebit == other.proRateAdjustmentDebit &&
+                proRateRunningTotal == other.proRateRunningTotal &&
+                runningTotalBillInAdvance == other.runningTotalBillInAdvance &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(counterId, pricingBands, startDate, accountingProductId, code, cumulative, description, endDate, planId, planTemplateId, proRateAdjustmentCredit, proRateAdjustmentDebit, proRateRunningTotal, runningTotalBillInAdvance, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                counterId,
+                pricingBands,
+                startDate,
+                accountingProductId,
+                code,
+                cumulative,
+                description,
+                endDate,
+                planId,
+                planTemplateId,
+                proRateAdjustmentCredit,
+                proRateAdjustmentDebit,
+                proRateRunningTotal,
+                runningTotalBillInAdvance,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1632,10 +1665,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterPricingCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CounterPricingCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CounterPricingCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

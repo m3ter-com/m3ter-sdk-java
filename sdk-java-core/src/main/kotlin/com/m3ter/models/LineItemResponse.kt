@@ -2038,12 +2038,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Additional && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Additional && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2562,12 +2560,35 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BandUsage && bandQuantity == other.bandQuantity && bandSubtotal == other.bandSubtotal && bandUnits == other.bandUnits && convertedBandSubtotal == other.convertedBandSubtotal && creditTypeId == other.creditTypeId && fixedPrice == other.fixedPrice && lowerLimit == other.lowerLimit && pricingBandId == other.pricingBandId && unitPrice == other.unitPrice && unitSubtotal == other.unitSubtotal && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is BandUsage &&
+                bandQuantity == other.bandQuantity &&
+                bandSubtotal == other.bandSubtotal &&
+                bandUnits == other.bandUnits &&
+                convertedBandSubtotal == other.convertedBandSubtotal &&
+                creditTypeId == other.creditTypeId &&
+                fixedPrice == other.fixedPrice &&
+                lowerLimit == other.lowerLimit &&
+                pricingBandId == other.pricingBandId &&
+                unitPrice == other.unitPrice &&
+                unitSubtotal == other.unitSubtotal &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(bandQuantity, bandSubtotal, bandUnits, convertedBandSubtotal, creditTypeId, fixedPrice, lowerLimit, pricingBandId, unitPrice, unitSubtotal, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                bandQuantity,
+                bandSubtotal,
+                bandUnits,
+                convertedBandSubtotal,
+                creditTypeId,
+                fixedPrice,
+                lowerLimit,
+                pricingBandId,
+                unitPrice,
+                unitSubtotal,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2664,12 +2685,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Group && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Group && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2891,7 +2910,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemType && value == other.value /* spotless:on */
+            return other is LineItemType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2992,12 +3011,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Segment && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Segment && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -3009,12 +3026,107 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LineItemResponse && id == other.id && accountingProductCode == other.accountingProductCode && accountingProductId == other.accountingProductId && accountingProductName == other.accountingProductName && additional == other.additional && aggregationId == other.aggregationId && averageUnitPrice == other.averageUnitPrice && balanceId == other.balanceId && bandUsage == other.bandUsage && billId == other.billId && chargeId == other.chargeId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && counterId == other.counterId && createdBy == other.createdBy && creditTypeId == other.creditTypeId && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && group == other.group && jsonUsageGenerated == other.jsonUsageGenerated && lastModifiedBy == other.lastModifiedBy && lineItemType == other.lineItemType && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && quantity == other.quantity && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && subtotal == other.subtotal && unit == other.unit && units == other.units && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is LineItemResponse &&
+            id == other.id &&
+            accountingProductCode == other.accountingProductCode &&
+            accountingProductId == other.accountingProductId &&
+            accountingProductName == other.accountingProductName &&
+            additional == other.additional &&
+            aggregationId == other.aggregationId &&
+            averageUnitPrice == other.averageUnitPrice &&
+            balanceId == other.balanceId &&
+            bandUsage == other.bandUsage &&
+            billId == other.billId &&
+            chargeId == other.chargeId &&
+            commitmentId == other.commitmentId &&
+            compoundAggregationId == other.compoundAggregationId &&
+            contractId == other.contractId &&
+            conversionRate == other.conversionRate &&
+            convertedSubtotal == other.convertedSubtotal &&
+            counterId == other.counterId &&
+            createdBy == other.createdBy &&
+            creditTypeId == other.creditTypeId &&
+            currency == other.currency &&
+            description == other.description &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            group == other.group &&
+            jsonUsageGenerated == other.jsonUsageGenerated &&
+            lastModifiedBy == other.lastModifiedBy &&
+            lineItemType == other.lineItemType &&
+            meterId == other.meterId &&
+            planGroupId == other.planGroupId &&
+            planId == other.planId &&
+            pricingId == other.pricingId &&
+            productCode == other.productCode &&
+            productId == other.productId &&
+            productName == other.productName &&
+            quantity == other.quantity &&
+            reasonId == other.reasonId &&
+            referencedBillId == other.referencedBillId &&
+            referencedLineItemId == other.referencedLineItemId &&
+            segment == other.segment &&
+            sequenceNumber == other.sequenceNumber &&
+            servicePeriodEndDate == other.servicePeriodEndDate &&
+            servicePeriodStartDate == other.servicePeriodStartDate &&
+            subtotal == other.subtotal &&
+            unit == other.unit &&
+            units == other.units &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountingProductCode, accountingProductId, accountingProductName, additional, aggregationId, averageUnitPrice, balanceId, bandUsage, billId, chargeId, commitmentId, compoundAggregationId, contractId, conversionRate, convertedSubtotal, counterId, createdBy, creditTypeId, currency, description, dtCreated, dtLastModified, group, jsonUsageGenerated, lastModifiedBy, lineItemType, meterId, planGroupId, planId, pricingId, productCode, productId, productName, quantity, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, subtotal, unit, units, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountingProductCode,
+            accountingProductId,
+            accountingProductName,
+            additional,
+            aggregationId,
+            averageUnitPrice,
+            balanceId,
+            bandUsage,
+            billId,
+            chargeId,
+            commitmentId,
+            compoundAggregationId,
+            contractId,
+            conversionRate,
+            convertedSubtotal,
+            counterId,
+            createdBy,
+            creditTypeId,
+            currency,
+            description,
+            dtCreated,
+            dtLastModified,
+            group,
+            jsonUsageGenerated,
+            lastModifiedBy,
+            lineItemType,
+            meterId,
+            planGroupId,
+            planId,
+            pricingId,
+            productCode,
+            productId,
+            productName,
+            quantity,
+            reasonId,
+            referencedBillId,
+            referencedLineItemId,
+            segment,
+            sequenceNumber,
+            servicePeriodEndDate,
+            servicePeriodStartDate,
+            subtotal,
+            unit,
+            units,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

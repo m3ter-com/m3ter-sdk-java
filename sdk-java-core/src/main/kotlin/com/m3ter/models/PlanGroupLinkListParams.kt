@@ -273,10 +273,28 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanGroupLinkListParams && orgId == other.orgId && ids == other.ids && nextToken == other.nextToken && pageSize == other.pageSize && plan == other.plan && planGroup == other.planGroup && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is PlanGroupLinkListParams &&
+            orgId == other.orgId &&
+            ids == other.ids &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            plan == other.plan &&
+            planGroup == other.planGroup &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, ids, nextToken, pageSize, plan, planGroup, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            ids,
+            nextToken,
+            pageSize,
+            plan,
+            planGroup,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "PlanGroupLinkListParams{orgId=$orgId, ids=$ids, nextToken=$nextToken, pageSize=$pageSize, plan=$plan, planGroup=$planGroup, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

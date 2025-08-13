@@ -228,10 +228,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UsageGetFailedIngestDownloadUrlParams && orgId == other.orgId && file == other.file && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is UsageGetFailedIngestDownloadUrlParams &&
+            orgId == other.orgId &&
+            file == other.file &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, file, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, file, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "UsageGetFailedIngestDownloadUrlParams{orgId=$orgId, file=$file, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

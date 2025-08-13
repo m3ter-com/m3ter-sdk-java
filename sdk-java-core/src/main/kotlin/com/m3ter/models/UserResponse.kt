@@ -792,12 +792,47 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UserResponse && id == other.id && contactNumber == other.contactNumber && createdBy == other.createdBy && dtCreated == other.dtCreated && dtEndAccess == other.dtEndAccess && dtLastModified == other.dtLastModified && email == other.email && firstAcceptedTermsAndConditions == other.firstAcceptedTermsAndConditions && firstName == other.firstName && lastAcceptedTermsAndConditions == other.lastAcceptedTermsAndConditions && lastModifiedBy == other.lastModifiedBy && lastName == other.lastName && organizations == other.organizations && permissionPolicy == other.permissionPolicy && supportUser == other.supportUser && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is UserResponse &&
+            id == other.id &&
+            contactNumber == other.contactNumber &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtEndAccess == other.dtEndAccess &&
+            dtLastModified == other.dtLastModified &&
+            email == other.email &&
+            firstAcceptedTermsAndConditions == other.firstAcceptedTermsAndConditions &&
+            firstName == other.firstName &&
+            lastAcceptedTermsAndConditions == other.lastAcceptedTermsAndConditions &&
+            lastModifiedBy == other.lastModifiedBy &&
+            lastName == other.lastName &&
+            organizations == other.organizations &&
+            permissionPolicy == other.permissionPolicy &&
+            supportUser == other.supportUser &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, contactNumber, createdBy, dtCreated, dtEndAccess, dtLastModified, email, firstAcceptedTermsAndConditions, firstName, lastAcceptedTermsAndConditions, lastModifiedBy, lastName, organizations, permissionPolicy, supportUser, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            contactNumber,
+            createdBy,
+            dtCreated,
+            dtEndAccess,
+            dtLastModified,
+            email,
+            firstAcceptedTermsAndConditions,
+            firstName,
+            lastAcceptedTermsAndConditions,
+            lastModifiedBy,
+            lastName,
+            organizations,
+            permissionPolicy,
+            supportUser,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -1702,7 +1702,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BillingFrequency && value == other.value /* spotless:on */
+            return other is BillingFrequency && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -3694,7 +3694,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is LineItemType && value == other.value /* spotless:on */
+                return other is LineItemType && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -3794,12 +3794,10 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Additional && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Additional && additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
             private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-            /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
@@ -3898,12 +3896,10 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Group && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Group && additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
             private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-            /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
@@ -4006,12 +4002,10 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Segment && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Segment && additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
             private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-            /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
@@ -4548,12 +4542,35 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is UsagePerPricingBand && bandQuantity == other.bandQuantity && bandSubtotal == other.bandSubtotal && bandUnits == other.bandUnits && convertedBandSubtotal == other.convertedBandSubtotal && creditTypeId == other.creditTypeId && fixedPrice == other.fixedPrice && lowerLimit == other.lowerLimit && pricingBandId == other.pricingBandId && unitPrice == other.unitPrice && unitSubtotal == other.unitSubtotal && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is UsagePerPricingBand &&
+                    bandQuantity == other.bandQuantity &&
+                    bandSubtotal == other.bandSubtotal &&
+                    bandUnits == other.bandUnits &&
+                    convertedBandSubtotal == other.convertedBandSubtotal &&
+                    creditTypeId == other.creditTypeId &&
+                    fixedPrice == other.fixedPrice &&
+                    lowerLimit == other.lowerLimit &&
+                    pricingBandId == other.pricingBandId &&
+                    unitPrice == other.unitPrice &&
+                    unitSubtotal == other.unitSubtotal &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(bandQuantity, bandSubtotal, bandUnits, convertedBandSubtotal, creditTypeId, fixedPrice, lowerLimit, pricingBandId, unitPrice, unitSubtotal, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(
+                    bandQuantity,
+                    bandSubtotal,
+                    bandUnits,
+                    convertedBandSubtotal,
+                    creditTypeId,
+                    fixedPrice,
+                    lowerLimit,
+                    pricingBandId,
+                    unitPrice,
+                    unitSubtotal,
+                    additionalProperties,
+                )
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -4566,12 +4583,97 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItem && averageUnitPrice == other.averageUnitPrice && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && currency == other.currency && description == other.description && lineItemType == other.lineItemType && quantity == other.quantity && subtotal == other.subtotal && unit == other.unit && units == other.units && id == other.id && accountingProductCode == other.accountingProductCode && accountingProductId == other.accountingProductId && accountingProductName == other.accountingProductName && additional == other.additional && aggregationId == other.aggregationId && balanceId == other.balanceId && chargeId == other.chargeId && childAccountCode == other.childAccountCode && childAccountId == other.childAccountId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && counterId == other.counterId && creditTypeId == other.creditTypeId && group == other.group && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && usagePerPricingBand == other.usagePerPricingBand && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is LineItem &&
+                averageUnitPrice == other.averageUnitPrice &&
+                conversionRate == other.conversionRate &&
+                convertedSubtotal == other.convertedSubtotal &&
+                currency == other.currency &&
+                description == other.description &&
+                lineItemType == other.lineItemType &&
+                quantity == other.quantity &&
+                subtotal == other.subtotal &&
+                unit == other.unit &&
+                units == other.units &&
+                id == other.id &&
+                accountingProductCode == other.accountingProductCode &&
+                accountingProductId == other.accountingProductId &&
+                accountingProductName == other.accountingProductName &&
+                additional == other.additional &&
+                aggregationId == other.aggregationId &&
+                balanceId == other.balanceId &&
+                chargeId == other.chargeId &&
+                childAccountCode == other.childAccountCode &&
+                childAccountId == other.childAccountId &&
+                commitmentId == other.commitmentId &&
+                compoundAggregationId == other.compoundAggregationId &&
+                contractId == other.contractId &&
+                counterId == other.counterId &&
+                creditTypeId == other.creditTypeId &&
+                group == other.group &&
+                meterId == other.meterId &&
+                planGroupId == other.planGroupId &&
+                planId == other.planId &&
+                pricingId == other.pricingId &&
+                productCode == other.productCode &&
+                productId == other.productId &&
+                productName == other.productName &&
+                reasonId == other.reasonId &&
+                referencedBillId == other.referencedBillId &&
+                referencedLineItemId == other.referencedLineItemId &&
+                segment == other.segment &&
+                sequenceNumber == other.sequenceNumber &&
+                servicePeriodEndDate == other.servicePeriodEndDate &&
+                servicePeriodStartDate == other.servicePeriodStartDate &&
+                usagePerPricingBand == other.usagePerPricingBand &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(averageUnitPrice, conversionRate, convertedSubtotal, currency, description, lineItemType, quantity, subtotal, unit, units, id, accountingProductCode, accountingProductId, accountingProductName, additional, aggregationId, balanceId, chargeId, childAccountCode, childAccountId, commitmentId, compoundAggregationId, contractId, counterId, creditTypeId, group, meterId, planGroupId, planId, pricingId, productCode, productId, productName, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, usagePerPricingBand, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                averageUnitPrice,
+                conversionRate,
+                convertedSubtotal,
+                currency,
+                description,
+                lineItemType,
+                quantity,
+                subtotal,
+                unit,
+                units,
+                id,
+                accountingProductCode,
+                accountingProductId,
+                accountingProductName,
+                additional,
+                aggregationId,
+                balanceId,
+                chargeId,
+                childAccountCode,
+                childAccountId,
+                commitmentId,
+                compoundAggregationId,
+                contractId,
+                counterId,
+                creditTypeId,
+                group,
+                meterId,
+                planGroupId,
+                planId,
+                pricingId,
+                productCode,
+                productId,
+                productName,
+                reasonId,
+                referencedBillId,
+                referencedLineItemId,
+                segment,
+                sequenceNumber,
+                servicePeriodEndDate,
+                servicePeriodStartDate,
+                usagePerPricingBand,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -4695,7 +4797,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -4708,12 +4810,87 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillResponse && id == other.id && accountCode == other.accountCode && accountId == other.accountId && approvedBy == other.approvedBy && billDate == other.billDate && billFrequencyInterval == other.billFrequencyInterval && billingFrequency == other.billingFrequency && billJobId == other.billJobId && billTotal == other.billTotal && createdBy == other.createdBy && createdDate == other.createdDate && csvStatementGenerated == other.csvStatementGenerated && currency == other.currency && currencyConversions == other.currencyConversions && dtApproved == other.dtApproved && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && dtLocked == other.dtLocked && dueDate == other.dueDate && endDate == other.endDate && endDateTimeUtc == other.endDateTimeUtc && externalInvoiceDate == other.externalInvoiceDate && externalInvoiceReference == other.externalInvoiceReference && jsonStatementGenerated == other.jsonStatementGenerated && lastCalculatedDate == other.lastCalculatedDate && lastModifiedBy == other.lastModifiedBy && lineItems == other.lineItems && locked == other.locked && lockedBy == other.lockedBy && purchaseOrderNumber == other.purchaseOrderNumber && sequentialInvoiceNumber == other.sequentialInvoiceNumber && startDate == other.startDate && startDateTimeUtc == other.startDateTimeUtc && status == other.status && timezone == other.timezone && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is BillResponse &&
+            id == other.id &&
+            accountCode == other.accountCode &&
+            accountId == other.accountId &&
+            approvedBy == other.approvedBy &&
+            billDate == other.billDate &&
+            billFrequencyInterval == other.billFrequencyInterval &&
+            billingFrequency == other.billingFrequency &&
+            billJobId == other.billJobId &&
+            billTotal == other.billTotal &&
+            createdBy == other.createdBy &&
+            createdDate == other.createdDate &&
+            csvStatementGenerated == other.csvStatementGenerated &&
+            currency == other.currency &&
+            currencyConversions == other.currencyConversions &&
+            dtApproved == other.dtApproved &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            dtLocked == other.dtLocked &&
+            dueDate == other.dueDate &&
+            endDate == other.endDate &&
+            endDateTimeUtc == other.endDateTimeUtc &&
+            externalInvoiceDate == other.externalInvoiceDate &&
+            externalInvoiceReference == other.externalInvoiceReference &&
+            jsonStatementGenerated == other.jsonStatementGenerated &&
+            lastCalculatedDate == other.lastCalculatedDate &&
+            lastModifiedBy == other.lastModifiedBy &&
+            lineItems == other.lineItems &&
+            locked == other.locked &&
+            lockedBy == other.lockedBy &&
+            purchaseOrderNumber == other.purchaseOrderNumber &&
+            sequentialInvoiceNumber == other.sequentialInvoiceNumber &&
+            startDate == other.startDate &&
+            startDateTimeUtc == other.startDateTimeUtc &&
+            status == other.status &&
+            timezone == other.timezone &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountCode, accountId, approvedBy, billDate, billFrequencyInterval, billingFrequency, billJobId, billTotal, createdBy, createdDate, csvStatementGenerated, currency, currencyConversions, dtApproved, dtCreated, dtLastModified, dtLocked, dueDate, endDate, endDateTimeUtc, externalInvoiceDate, externalInvoiceReference, jsonStatementGenerated, lastCalculatedDate, lastModifiedBy, lineItems, locked, lockedBy, purchaseOrderNumber, sequentialInvoiceNumber, startDate, startDateTimeUtc, status, timezone, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountCode,
+            accountId,
+            approvedBy,
+            billDate,
+            billFrequencyInterval,
+            billingFrequency,
+            billJobId,
+            billTotal,
+            createdBy,
+            createdDate,
+            csvStatementGenerated,
+            currency,
+            currencyConversions,
+            dtApproved,
+            dtCreated,
+            dtLastModified,
+            dtLocked,
+            dueDate,
+            endDate,
+            endDateTimeUtc,
+            externalInvoiceDate,
+            externalInvoiceReference,
+            jsonStatementGenerated,
+            lastCalculatedDate,
+            lastModifiedBy,
+            lineItems,
+            locked,
+            lockedBy,
+            purchaseOrderNumber,
+            sequentialInvoiceNumber,
+            startDate,
+            startDateTimeUtc,
+            status,
+            timezone,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

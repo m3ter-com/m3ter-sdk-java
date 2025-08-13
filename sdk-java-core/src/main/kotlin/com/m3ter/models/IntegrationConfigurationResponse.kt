@@ -866,7 +866,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -879,12 +879,45 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is IntegrationConfigurationResponse && id == other.id && destination == other.destination && entityId == other.entityId && entityType == other.entityType && status == other.status && createdBy == other.createdBy && dtCompleted == other.dtCompleted && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && dtStarted == other.dtStarted && error == other.error && externalId == other.externalId && lastModifiedBy == other.lastModifiedBy && url == other.url && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is IntegrationConfigurationResponse &&
+            id == other.id &&
+            destination == other.destination &&
+            entityId == other.entityId &&
+            entityType == other.entityType &&
+            status == other.status &&
+            createdBy == other.createdBy &&
+            dtCompleted == other.dtCompleted &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            dtStarted == other.dtStarted &&
+            error == other.error &&
+            externalId == other.externalId &&
+            lastModifiedBy == other.lastModifiedBy &&
+            url == other.url &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, destination, entityId, entityType, status, createdBy, dtCompleted, dtCreated, dtLastModified, dtStarted, error, externalId, lastModifiedBy, url, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            destination,
+            entityId,
+            entityType,
+            status,
+            createdBy,
+            dtCompleted,
+            dtCreated,
+            dtLastModified,
+            dtStarted,
+            error,
+            externalId,
+            lastModifiedBy,
+            url,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

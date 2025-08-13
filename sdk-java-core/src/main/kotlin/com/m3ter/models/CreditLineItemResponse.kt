@@ -699,12 +699,43 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CreditLineItemResponse && id == other.id && amount == other.amount && description == other.description && productId == other.productId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && createdBy == other.createdBy && creditReasonId == other.creditReasonId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CreditLineItemResponse &&
+            id == other.id &&
+            amount == other.amount &&
+            description == other.description &&
+            productId == other.productId &&
+            referencedBillId == other.referencedBillId &&
+            referencedLineItemId == other.referencedLineItemId &&
+            servicePeriodEndDate == other.servicePeriodEndDate &&
+            servicePeriodStartDate == other.servicePeriodStartDate &&
+            createdBy == other.createdBy &&
+            creditReasonId == other.creditReasonId &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, amount, description, productId, referencedBillId, referencedLineItemId, servicePeriodEndDate, servicePeriodStartDate, createdBy, creditReasonId, dtCreated, dtLastModified, lastModifiedBy, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            amount,
+            description,
+            productId,
+            referencedBillId,
+            referencedLineItemId,
+            servicePeriodEndDate,
+            servicePeriodStartDate,
+            createdBy,
+            creditReasonId,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

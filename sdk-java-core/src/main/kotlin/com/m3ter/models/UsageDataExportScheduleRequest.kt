@@ -692,7 +692,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SourceType && value == other.value /* spotless:on */
+            return other is SourceType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -931,7 +931,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TimePeriod && value == other.value /* spotless:on */
+            return other is TimePeriod && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1321,7 +1321,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is FieldType && value == other.value /* spotless:on */
+                return other is FieldType && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1482,7 +1482,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Function && value == other.value /* spotless:on */
+                return other is Function && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1495,12 +1495,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Aggregation && fieldCode == other.fieldCode && fieldType == other.fieldType && function == other.function && meterId == other.meterId && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Aggregation &&
+                fieldCode == other.fieldCode &&
+                fieldType == other.fieldType &&
+                function == other.function &&
+                meterId == other.meterId &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(fieldCode, fieldType, function, meterId, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(fieldCode, fieldType, function, meterId, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1745,12 +1750,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DimensionFilter && fieldCode == other.fieldCode && meterId == other.meterId && values == other.values && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is DimensionFilter &&
+                fieldCode == other.fieldCode &&
+                meterId == other.meterId &&
+                values == other.values &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(fieldCode, meterId, values, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(fieldCode, meterId, values, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1763,12 +1772,31 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UsageDataExportScheduleRequest && sourceType == other.sourceType && timePeriod == other.timePeriod && accountIds == other.accountIds && aggregations == other.aggregations && dimensionFilters == other.dimensionFilters && groups == other.groups && meterIds == other.meterIds && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is UsageDataExportScheduleRequest &&
+            sourceType == other.sourceType &&
+            timePeriod == other.timePeriod &&
+            accountIds == other.accountIds &&
+            aggregations == other.aggregations &&
+            dimensionFilters == other.dimensionFilters &&
+            groups == other.groups &&
+            meterIds == other.meterIds &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(sourceType, timePeriod, accountIds, aggregations, dimensionFilters, groups, meterIds, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            sourceType,
+            timePeriod,
+            accountIds,
+            aggregations,
+            dimensionFilters,
+            groups,
+            meterIds,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

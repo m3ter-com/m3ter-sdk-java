@@ -641,7 +641,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DestinationType && value == other.value /* spotless:on */
+            return other is DestinationType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -784,7 +784,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PartitionOrder && value == other.value /* spotless:on */
+            return other is PartitionOrder && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -797,12 +797,33 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportDestinationGoogleCloudStorageRequest && bucketName == other.bucketName && poolId == other.poolId && projectNumber == other.projectNumber && providerId == other.providerId && destinationType == other.destinationType && partitionOrder == other.partitionOrder && prefix == other.prefix && serviceAccountEmail == other.serviceAccountEmail && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DataExportDestinationGoogleCloudStorageRequest &&
+            bucketName == other.bucketName &&
+            poolId == other.poolId &&
+            projectNumber == other.projectNumber &&
+            providerId == other.providerId &&
+            destinationType == other.destinationType &&
+            partitionOrder == other.partitionOrder &&
+            prefix == other.prefix &&
+            serviceAccountEmail == other.serviceAccountEmail &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(bucketName, poolId, projectNumber, providerId, destinationType, partitionOrder, prefix, serviceAccountEmail, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            bucketName,
+            poolId,
+            projectNumber,
+            providerId,
+            destinationType,
+            partitionOrder,
+            prefix,
+            serviceAccountEmail,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

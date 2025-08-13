@@ -311,12 +311,18 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PricingBand && fixedPrice == other.fixedPrice && lowerLimit == other.lowerLimit && unitPrice == other.unitPrice && id == other.id && creditTypeId == other.creditTypeId && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PricingBand &&
+            fixedPrice == other.fixedPrice &&
+            lowerLimit == other.lowerLimit &&
+            unitPrice == other.unitPrice &&
+            id == other.id &&
+            creditTypeId == other.creditTypeId &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(fixedPrice, lowerLimit, unitPrice, id, creditTypeId, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(fixedPrice, lowerLimit, unitPrice, id, creditTypeId, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

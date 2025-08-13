@@ -643,12 +643,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && billIds == other.billIds && includeCsvFormat == other.includeCsvFormat && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                billIds == other.billIds &&
+                includeCsvFormat == other.includeCsvFormat &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(billIds, includeCsvFormat, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(billIds, includeCsvFormat, version, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -661,10 +665,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is StatementStatementJobCreateBatchParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is StatementStatementJobCreateBatchParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "StatementStatementJobCreateBatchParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

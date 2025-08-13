@@ -569,12 +569,39 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Webhook && id == other.id && active == other.active && code == other.code && createdBy == other.createdBy && credentials == other.credentials && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && url == other.url && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is Webhook &&
+            id == other.id &&
+            active == other.active &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            credentials == other.credentials &&
+            description == other.description &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            name == other.name &&
+            url == other.url &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, active, code, createdBy, credentials, description, dtCreated, dtLastModified, lastModifiedBy, name, url, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            active,
+            code,
+            createdBy,
+            credentials,
+            description,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            name,
+            url,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

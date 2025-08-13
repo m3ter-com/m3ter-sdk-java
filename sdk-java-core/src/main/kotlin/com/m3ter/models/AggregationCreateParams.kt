@@ -1740,12 +1740,45 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && aggregation == other.aggregation && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && targetField == other.targetField && unit == other.unit && accountingProductId == other.accountingProductId && code == other.code && customFields == other.customFields && customSql == other.customSql && defaultValue == other.defaultValue && segmentedFields == other.segmentedFields && segments == other.segments && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                aggregation == other.aggregation &&
+                meterId == other.meterId &&
+                name == other.name &&
+                quantityPerUnit == other.quantityPerUnit &&
+                rounding == other.rounding &&
+                targetField == other.targetField &&
+                unit == other.unit &&
+                accountingProductId == other.accountingProductId &&
+                code == other.code &&
+                customFields == other.customFields &&
+                customSql == other.customSql &&
+                defaultValue == other.defaultValue &&
+                segmentedFields == other.segmentedFields &&
+                segments == other.segments &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(aggregation, meterId, name, quantityPerUnit, rounding, targetField, unit, accountingProductId, code, customFields, customSql, defaultValue, segmentedFields, segments, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                aggregation,
+                meterId,
+                name,
+                quantityPerUnit,
+                rounding,
+                targetField,
+                unit,
+                accountingProductId,
+                code,
+                customFields,
+                customSql,
+                defaultValue,
+                segmentedFields,
+                segments,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1924,7 +1957,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Aggregation && value == other.value /* spotless:on */
+            return other is Aggregation && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2074,7 +2107,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Rounding && value == other.value /* spotless:on */
+            return other is Rounding && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2171,12 +2204,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2272,12 +2303,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Segment && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Segment && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2289,10 +2318,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AggregationCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is AggregationCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "AggregationCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

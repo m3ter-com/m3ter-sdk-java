@@ -712,12 +712,43 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvitationResponse && id == other.id && accepted == other.accepted && dtEndAccess == other.dtEndAccess && dtExpiry == other.dtExpiry && email == other.email && firstName == other.firstName && invitingPrincipalId == other.invitingPrincipalId && lastName == other.lastName && permissionPolicyIds == other.permissionPolicyIds && version == other.version && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is InvitationResponse &&
+            id == other.id &&
+            accepted == other.accepted &&
+            dtEndAccess == other.dtEndAccess &&
+            dtExpiry == other.dtExpiry &&
+            email == other.email &&
+            firstName == other.firstName &&
+            invitingPrincipalId == other.invitingPrincipalId &&
+            lastName == other.lastName &&
+            permissionPolicyIds == other.permissionPolicyIds &&
+            version == other.version &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accepted, dtEndAccess, dtExpiry, email, firstName, invitingPrincipalId, lastName, permissionPolicyIds, version, createdBy, dtCreated, dtLastModified, lastModifiedBy, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accepted,
+            dtEndAccess,
+            dtExpiry,
+            email,
+            firstName,
+            invitingPrincipalId,
+            lastName,
+            permissionPolicyIds,
+            version,
+            createdBy,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -242,10 +242,22 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PermissionPolicyRemoveFromSupportUserParams && orgId == other.orgId && permissionPolicyId == other.permissionPolicyId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return other is PermissionPolicyRemoveFromSupportUserParams &&
+            orgId == other.orgId &&
+            permissionPolicyId == other.permissionPolicyId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams &&
+            additionalBodyProperties == other.additionalBodyProperties
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, permissionPolicyId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            permissionPolicyId,
+            additionalHeaders,
+            additionalQueryParams,
+            additionalBodyProperties,
+        )
 
     override fun toString() =
         "PermissionPolicyRemoveFromSupportUserParams{orgId=$orgId, permissionPolicyId=$permissionPolicyId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"

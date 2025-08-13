@@ -220,10 +220,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BalanceTransactionSummaryParams && orgId == other.orgId && balanceId == other.balanceId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BalanceTransactionSummaryParams &&
+            orgId == other.orgId &&
+            balanceId == other.balanceId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, balanceId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, balanceId, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "BalanceTransactionSummaryParams{orgId=$orgId, balanceId=$balanceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

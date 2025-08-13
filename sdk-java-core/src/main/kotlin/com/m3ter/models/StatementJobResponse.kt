@@ -721,7 +721,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is StatementJobStatus && value == other.value /* spotless:on */
+            return other is StatementJobStatus && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -734,12 +734,37 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is StatementJobResponse && id == other.id && billId == other.billId && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && includeCsvFormat == other.includeCsvFormat && lastModifiedBy == other.lastModifiedBy && orgId == other.orgId && presignedJsonStatementUrl == other.presignedJsonStatementUrl && statementJobStatus == other.statementJobStatus && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is StatementJobResponse &&
+            id == other.id &&
+            billId == other.billId &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            includeCsvFormat == other.includeCsvFormat &&
+            lastModifiedBy == other.lastModifiedBy &&
+            orgId == other.orgId &&
+            presignedJsonStatementUrl == other.presignedJsonStatementUrl &&
+            statementJobStatus == other.statementJobStatus &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, billId, createdBy, dtCreated, dtLastModified, includeCsvFormat, lastModifiedBy, orgId, presignedJsonStatementUrl, statementJobStatus, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            billId,
+            createdBy,
+            dtCreated,
+            dtLastModified,
+            includeCsvFormat,
+            lastModifiedBy,
+            orgId,
+            presignedJsonStatementUrl,
+            statementJobStatus,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

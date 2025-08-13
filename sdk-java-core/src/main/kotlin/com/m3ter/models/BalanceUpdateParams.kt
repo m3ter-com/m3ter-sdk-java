@@ -2002,12 +2002,53 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && accountId == other.accountId && currency == other.currency && endDate == other.endDate && startDate == other.startDate && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && contractId == other.contractId && customFields == other.customFields && description == other.description && feesAccountingProductId == other.feesAccountingProductId && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                accountId == other.accountId &&
+                currency == other.currency &&
+                endDate == other.endDate &&
+                startDate == other.startDate &&
+                balanceDrawDownDescription == other.balanceDrawDownDescription &&
+                code == other.code &&
+                consumptionsAccountingProductId == other.consumptionsAccountingProductId &&
+                contractId == other.contractId &&
+                customFields == other.customFields &&
+                description == other.description &&
+                feesAccountingProductId == other.feesAccountingProductId &&
+                lineItemTypes == other.lineItemTypes &&
+                name == other.name &&
+                overageDescription == other.overageDescription &&
+                overageSurchargePercent == other.overageSurchargePercent &&
+                productIds == other.productIds &&
+                rolloverAmount == other.rolloverAmount &&
+                rolloverEndDate == other.rolloverEndDate &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountId, currency, endDate, startDate, balanceDrawDownDescription, code, consumptionsAccountingProductId, contractId, customFields, description, feesAccountingProductId, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                accountId,
+                currency,
+                endDate,
+                startDate,
+                balanceDrawDownDescription,
+                code,
+                consumptionsAccountingProductId,
+                contractId,
+                customFields,
+                description,
+                feesAccountingProductId,
+                lineItemTypes,
+                name,
+                overageDescription,
+                overageSurchargePercent,
+                productIds,
+                rolloverAmount,
+                rolloverEndDate,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2116,12 +2157,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2266,7 +2305,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemType && value == other.value /* spotless:on */
+            return other is LineItemType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2279,10 +2318,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BalanceUpdateParams && orgId == other.orgId && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BalanceUpdateParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "BalanceUpdateParams{orgId=$orgId, id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

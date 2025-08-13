@@ -132,10 +132,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportDestinationRetrieveResponse && exportDestinationS3 == other.exportDestinationS3 && exportDestinationGoogleCloudStorage == other.exportDestinationGoogleCloudStorage /* spotless:on */
+        return other is DataExportDestinationRetrieveResponse &&
+            exportDestinationS3 == other.exportDestinationS3 &&
+            exportDestinationGoogleCloudStorage == other.exportDestinationGoogleCloudStorage
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(exportDestinationS3, exportDestinationGoogleCloudStorage) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(exportDestinationS3, exportDestinationGoogleCloudStorage)
 
     override fun toString(): String =
         when {
@@ -1069,7 +1072,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is PartitionOrder && value == other.value /* spotless:on */
+                return other is PartitionOrder && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1082,12 +1085,41 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExportDestinationS3Response && id == other.id && code == other.code && createdBy == other.createdBy && destinationType == other.destinationType && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && version == other.version && bucketName == other.bucketName && iamRoleArn == other.iamRoleArn && partitionOrder == other.partitionOrder && prefix == other.prefix && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is ExportDestinationS3Response &&
+                id == other.id &&
+                code == other.code &&
+                createdBy == other.createdBy &&
+                destinationType == other.destinationType &&
+                dtCreated == other.dtCreated &&
+                dtLastModified == other.dtLastModified &&
+                lastModifiedBy == other.lastModifiedBy &&
+                name == other.name &&
+                version == other.version &&
+                bucketName == other.bucketName &&
+                iamRoleArn == other.iamRoleArn &&
+                partitionOrder == other.partitionOrder &&
+                prefix == other.prefix &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, code, createdBy, destinationType, dtCreated, dtLastModified, lastModifiedBy, name, version, bucketName, iamRoleArn, partitionOrder, prefix, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                code,
+                createdBy,
+                destinationType,
+                dtCreated,
+                dtLastModified,
+                lastModifiedBy,
+                name,
+                version,
+                bucketName,
+                iamRoleArn,
+                partitionOrder,
+                prefix,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2025,7 +2057,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is PartitionOrder && value == other.value /* spotless:on */
+                return other is PartitionOrder && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -2038,12 +2070,47 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExportDestinationGoogleCloudStorageResponse && id == other.id && code == other.code && createdBy == other.createdBy && destinationType == other.destinationType && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && version == other.version && bucketName == other.bucketName && partitionOrder == other.partitionOrder && poolId == other.poolId && prefix == other.prefix && projectNumber == other.projectNumber && providerId == other.providerId && serviceAccountEmail == other.serviceAccountEmail && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is ExportDestinationGoogleCloudStorageResponse &&
+                id == other.id &&
+                code == other.code &&
+                createdBy == other.createdBy &&
+                destinationType == other.destinationType &&
+                dtCreated == other.dtCreated &&
+                dtLastModified == other.dtLastModified &&
+                lastModifiedBy == other.lastModifiedBy &&
+                name == other.name &&
+                version == other.version &&
+                bucketName == other.bucketName &&
+                partitionOrder == other.partitionOrder &&
+                poolId == other.poolId &&
+                prefix == other.prefix &&
+                projectNumber == other.projectNumber &&
+                providerId == other.providerId &&
+                serviceAccountEmail == other.serviceAccountEmail &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, code, createdBy, destinationType, dtCreated, dtLastModified, lastModifiedBy, name, version, bucketName, partitionOrder, poolId, prefix, projectNumber, providerId, serviceAccountEmail, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                code,
+                createdBy,
+                destinationType,
+                dtCreated,
+                dtLastModified,
+                lastModifiedBy,
+                name,
+                version,
+                bucketName,
+                partitionOrder,
+                poolId,
+                prefix,
+                projectNumber,
+                providerId,
+                serviceAccountEmail,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 

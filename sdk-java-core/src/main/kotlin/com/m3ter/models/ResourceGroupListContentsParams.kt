@@ -298,10 +298,28 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ResourceGroupListContentsParams && orgId == other.orgId && type == other.type && resourceGroupId == other.resourceGroupId && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return other is ResourceGroupListContentsParams &&
+            orgId == other.orgId &&
+            type == other.type &&
+            resourceGroupId == other.resourceGroupId &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams &&
+            additionalBodyProperties == other.additionalBodyProperties
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, type, resourceGroupId, nextToken, pageSize, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            type,
+            resourceGroupId,
+            nextToken,
+            pageSize,
+            additionalHeaders,
+            additionalQueryParams,
+            additionalBodyProperties,
+        )
 
     override fun toString() =
         "ResourceGroupListContentsParams{orgId=$orgId, type=$type, resourceGroupId=$resourceGroupId, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"

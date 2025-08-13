@@ -371,10 +371,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && operationalDataExportScheduleRequest == other.operationalDataExportScheduleRequest && usageDataExportScheduleRequest == other.usageDataExportScheduleRequest /* spotless:on */
+            return other is Body &&
+                operationalDataExportScheduleRequest ==
+                    other.operationalDataExportScheduleRequest &&
+                usageDataExportScheduleRequest == other.usageDataExportScheduleRequest
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(operationalDataExportScheduleRequest, usageDataExportScheduleRequest) /* spotless:on */
+        override fun hashCode(): Int =
+            Objects.hash(operationalDataExportScheduleRequest, usageDataExportScheduleRequest)
 
         override fun toString(): String =
             when {
@@ -489,10 +493,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportScheduleCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is DataExportScheduleCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "DataExportScheduleCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

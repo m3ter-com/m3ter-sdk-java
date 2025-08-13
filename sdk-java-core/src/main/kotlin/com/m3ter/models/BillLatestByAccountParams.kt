@@ -233,10 +233,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillLatestByAccountParams && orgId == other.orgId && accountId == other.accountId && additional == other.additional && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BillLatestByAccountParams &&
+            orgId == other.orgId &&
+            accountId == other.accountId &&
+            additional == other.additional &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, additional, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, accountId, additional, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "BillLatestByAccountParams{orgId=$orgId, accountId=$accountId, additional=$additional, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

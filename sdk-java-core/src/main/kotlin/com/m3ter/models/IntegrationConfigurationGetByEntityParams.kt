@@ -250,10 +250,26 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is IntegrationConfigurationGetByEntityParams && orgId == other.orgId && entityType == other.entityType && destination == other.destination && destinationId == other.destinationId && entityId == other.entityId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is IntegrationConfigurationGetByEntityParams &&
+            orgId == other.orgId &&
+            entityType == other.entityType &&
+            destination == other.destination &&
+            destinationId == other.destinationId &&
+            entityId == other.entityId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, entityType, destination, destinationId, entityId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            entityType,
+            destination,
+            destinationId,
+            entityId,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "IntegrationConfigurationGetByEntityParams{orgId=$orgId, entityType=$entityType, destination=$destination, destinationId=$destinationId, entityId=$entityId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

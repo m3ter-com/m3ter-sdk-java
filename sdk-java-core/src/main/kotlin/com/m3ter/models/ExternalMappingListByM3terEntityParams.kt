@@ -272,10 +272,26 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ExternalMappingListByM3terEntityParams && orgId == other.orgId && entity == other.entity && m3terId == other.m3terId && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ExternalMappingListByM3terEntityParams &&
+            orgId == other.orgId &&
+            entity == other.entity &&
+            m3terId == other.m3terId &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, entity, m3terId, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            entity,
+            m3terId,
+            nextToken,
+            pageSize,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "ExternalMappingListByM3terEntityParams{orgId=$orgId, entity=$entity, m3terId=$m3terId, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

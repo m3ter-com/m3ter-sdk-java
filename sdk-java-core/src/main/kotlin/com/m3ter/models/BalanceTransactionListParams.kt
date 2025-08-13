@@ -422,7 +422,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EntityType && value == other.value /* spotless:on */
+            return other is EntityType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -435,10 +435,30 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BalanceTransactionListParams && orgId == other.orgId && balanceId == other.balanceId && entityId == other.entityId && entityType == other.entityType && nextToken == other.nextToken && pageSize == other.pageSize && transactionTypeId == other.transactionTypeId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BalanceTransactionListParams &&
+            orgId == other.orgId &&
+            balanceId == other.balanceId &&
+            entityId == other.entityId &&
+            entityType == other.entityType &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            transactionTypeId == other.transactionTypeId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, balanceId, entityId, entityType, nextToken, pageSize, transactionTypeId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            balanceId,
+            entityId,
+            entityType,
+            nextToken,
+            pageSize,
+            transactionTypeId,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "BalanceTransactionListParams{orgId=$orgId, balanceId=$balanceId, entityId=$entityId, entityType=$entityType, nextToken=$nextToken, pageSize=$pageSize, transactionTypeId=$transactionTypeId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

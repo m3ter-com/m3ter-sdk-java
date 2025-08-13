@@ -1549,7 +1549,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AutoGenerateStatementMode && value == other.value /* spotless:on */
+            return other is AutoGenerateStatementMode && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1680,7 +1680,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CreditApplicationOrder && value == other.value /* spotless:on */
+            return other is CreditApplicationOrder && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1693,12 +1693,61 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is OrganizationConfigRequest && currency == other.currency && dayEpoch == other.dayEpoch && daysBeforeBillDue == other.daysBeforeBillDue && monthEpoch == other.monthEpoch && timezone == other.timezone && weekEpoch == other.weekEpoch && yearEpoch == other.yearEpoch && autoApproveBillsGracePeriod == other.autoApproveBillsGracePeriod && autoApproveBillsGracePeriodUnit == other.autoApproveBillsGracePeriodUnit && autoGenerateStatementMode == other.autoGenerateStatementMode && billPrefix == other.billPrefix && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && consolidateBills == other.consolidateBills && creditApplicationOrder == other.creditApplicationOrder && currencyConversions == other.currencyConversions && defaultStatementDefinitionId == other.defaultStatementDefinitionId && externalInvoiceDate == other.externalInvoiceDate && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && scheduledBillInterval == other.scheduledBillInterval && sequenceStartNumber == other.sequenceStartNumber && standingChargeBillInAdvance == other.standingChargeBillInAdvance && suppressedEmptyBills == other.suppressedEmptyBills && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is OrganizationConfigRequest &&
+            currency == other.currency &&
+            dayEpoch == other.dayEpoch &&
+            daysBeforeBillDue == other.daysBeforeBillDue &&
+            monthEpoch == other.monthEpoch &&
+            timezone == other.timezone &&
+            weekEpoch == other.weekEpoch &&
+            yearEpoch == other.yearEpoch &&
+            autoApproveBillsGracePeriod == other.autoApproveBillsGracePeriod &&
+            autoApproveBillsGracePeriodUnit == other.autoApproveBillsGracePeriodUnit &&
+            autoGenerateStatementMode == other.autoGenerateStatementMode &&
+            billPrefix == other.billPrefix &&
+            commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance &&
+            consolidateBills == other.consolidateBills &&
+            creditApplicationOrder == other.creditApplicationOrder &&
+            currencyConversions == other.currencyConversions &&
+            defaultStatementDefinitionId == other.defaultStatementDefinitionId &&
+            externalInvoiceDate == other.externalInvoiceDate &&
+            minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
+            scheduledBillInterval == other.scheduledBillInterval &&
+            sequenceStartNumber == other.sequenceStartNumber &&
+            standingChargeBillInAdvance == other.standingChargeBillInAdvance &&
+            suppressedEmptyBills == other.suppressedEmptyBills &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(currency, dayEpoch, daysBeforeBillDue, monthEpoch, timezone, weekEpoch, yearEpoch, autoApproveBillsGracePeriod, autoApproveBillsGracePeriodUnit, autoGenerateStatementMode, billPrefix, commitmentFeeBillInAdvance, consolidateBills, creditApplicationOrder, currencyConversions, defaultStatementDefinitionId, externalInvoiceDate, minimumSpendBillInAdvance, scheduledBillInterval, sequenceStartNumber, standingChargeBillInAdvance, suppressedEmptyBills, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            currency,
+            dayEpoch,
+            daysBeforeBillDue,
+            monthEpoch,
+            timezone,
+            weekEpoch,
+            yearEpoch,
+            autoApproveBillsGracePeriod,
+            autoApproveBillsGracePeriodUnit,
+            autoGenerateStatementMode,
+            billPrefix,
+            commitmentFeeBillInAdvance,
+            consolidateBills,
+            creditApplicationOrder,
+            currencyConversions,
+            defaultStatementDefinitionId,
+            externalInvoiceDate,
+            minimumSpendBillInAdvance,
+            scheduledBillInterval,
+            sequenceStartNumber,
+            standingChargeBillInAdvance,
+            suppressedEmptyBills,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 
