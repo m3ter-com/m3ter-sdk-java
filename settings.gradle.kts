@@ -1,7 +1,14 @@
 rootProject.name = "sdk-java-root"
 
-include("sdk-java")
-include("sdk-java-client-okhttp")
-include("sdk-java-core")
-include("sdk-java-proguard-test")
-include("sdk-java-example")
+val projectNames = rootDir.listFiles()
+    ?.asSequence()
+    .orEmpty()
+    .filter { file ->
+        file.isDirectory &&
+        file.name.startsWith("sdk-java") &&
+        file.listFiles()?.asSequence().orEmpty().any { it.name == "build.gradle.kts" }
+    }
+    .map { it.name }
+    .toList()
+println("projects: $projectNames")
+projectNames.forEach { include(it) }
