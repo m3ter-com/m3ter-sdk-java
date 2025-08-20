@@ -339,7 +339,7 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
     override fun webhooks(): WebhookServiceAsync = webhooks
 
-    override fun close() = clientOptions.httpClient.close()
+    override fun close() = clientOptions.close()
 
     class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
         M3terClientAsync.WithRawResponse {
