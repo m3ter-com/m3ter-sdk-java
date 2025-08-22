@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.4.1 (2025-08-22)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.4.0...v0.4.1)
+
+### Bug Fixes
+
+* update singularization rules ([e8280bc](https://github.com/m3ter-com/m3ter-sdk-java/commit/e8280bceca7a852f886a3c3c06d5c23296aa83ed))
+
+
+### Performance Improvements
+
+* **internal:** make formatting faster ([e360abf](https://github.com/m3ter-com/m3ter-sdk-java/commit/e360abf5306a768307db34d79e4feb3e6bf2b104))
+
+
+### Chores
+
+* **ci:** add build job ([9b7249c](https://github.com/m3ter-com/m3ter-sdk-java/commit/9b7249c15d0fa64d8f7ac9c0f0cf659eac5666ca))
+* **ci:** reduce log noise ([d5fe8b8](https://github.com/m3ter-com/m3ter-sdk-java/commit/d5fe8b8b33b89f106dbd242ddefaeb20871f08fb))
+* **client:** refactor closing / shutdown ([ff33ce9](https://github.com/m3ter-com/m3ter-sdk-java/commit/ff33ce9bc28a2d9582b52f86a0ebc9386acc53ce))
+* **example:** fix run example comment ([f1ddcab](https://github.com/m3ter-com/m3ter-sdk-java/commit/f1ddcabb361a384d54e00ceeffa6aa373b5b774a))
+* increase max gradle JVM heap to 8GB ([db27118](https://github.com/m3ter-com/m3ter-sdk-java/commit/db2711841dfb2f2de2e32db0a219ac4f58b89b41))
+* **internal:** add async lock helper ([5acef22](https://github.com/m3ter-com/m3ter-sdk-java/commit/5acef2285613c3fab18d2dd0af966a4743dc51f9))
+* **internal:** dynamically determine included projects ([e66d9d4](https://github.com/m3ter-com/m3ter-sdk-java/commit/e66d9d4b52e4a84694a21e392de3c7f393c3ca98))
+* **internal:** format identity methods ([c4b1452](https://github.com/m3ter-com/m3ter-sdk-java/commit/c4b1452455c9dfa9bd9b6ebff2ee2891050d5851))
+* **internal:** support passing arguments to test script ([d368693](https://github.com/m3ter-com/m3ter-sdk-java/commit/d3686930e3d89035933e4554a6c6d56cfbe1bae8))
+* **internal:** support running formatters directly ([edb1400](https://github.com/m3ter-com/m3ter-sdk-java/commit/edb1400b8be6a5c63fb1036928b0ab14f013a074))
+* **internal:** update comment in script ([dbdb156](https://github.com/m3ter-com/m3ter-sdk-java/commit/dbdb156495455939477c5cdf08cbe3fb5e47cc0e))
+* remove memory upper bound from publishing step ([4565107](https://github.com/m3ter-com/m3ter-sdk-java/commit/456510759dc6924296196416d1f7c0d96c0629b5))
+* update @stainless-api/prism-cli to v5.15.0 ([57443e8](https://github.com/m3ter-com/m3ter-sdk-java/commit/57443e8a04e0f33fe0acd540b46230c8ea6928b7))
+
 ## 0.4.0 (2025-08-01)
 
 Full Changelog: [v0.3.0-alpha...v0.4.0](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.3.0-alpha...v0.4.0)
