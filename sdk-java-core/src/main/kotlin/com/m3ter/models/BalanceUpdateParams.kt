@@ -2193,6 +2193,8 @@ private constructor(
 
             @JvmField val COUNTER_ADJUSTMENT_DEBIT = of("COUNTER_ADJUSTMENT_DEBIT")
 
+            @JvmField val AD_HOC = of("AD_HOC")
+
             @JvmStatic fun of(value: String) = LineItemType(JsonField.of(value))
         }
 
@@ -2203,6 +2205,7 @@ private constructor(
             MINIMUM_SPEND,
             COUNTER_RUNNING_TOTAL_CHARGE,
             COUNTER_ADJUSTMENT_DEBIT,
+            AD_HOC,
         }
 
         /**
@@ -2220,6 +2223,7 @@ private constructor(
             MINIMUM_SPEND,
             COUNTER_RUNNING_TOTAL_CHARGE,
             COUNTER_ADJUSTMENT_DEBIT,
+            AD_HOC,
             /**
              * An enum member indicating that [LineItemType] was instantiated with an unknown value.
              */
@@ -2240,6 +2244,7 @@ private constructor(
                 MINIMUM_SPEND -> Value.MINIMUM_SPEND
                 COUNTER_RUNNING_TOTAL_CHARGE -> Value.COUNTER_RUNNING_TOTAL_CHARGE
                 COUNTER_ADJUSTMENT_DEBIT -> Value.COUNTER_ADJUSTMENT_DEBIT
+                AD_HOC -> Value.AD_HOC
                 else -> Value._UNKNOWN
             }
 
@@ -2258,6 +2263,7 @@ private constructor(
                 MINIMUM_SPEND -> Known.MINIMUM_SPEND
                 COUNTER_RUNNING_TOTAL_CHARGE -> Known.COUNTER_RUNNING_TOTAL_CHARGE
                 COUNTER_ADJUSTMENT_DEBIT -> Known.COUNTER_ADJUSTMENT_DEBIT
+                AD_HOC -> Known.AD_HOC
                 else -> throw M3terInvalidDataException("Unknown LineItemType: $value")
             }
 

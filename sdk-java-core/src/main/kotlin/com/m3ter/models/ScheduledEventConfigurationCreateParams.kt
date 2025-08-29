@@ -74,10 +74,10 @@ private constructor(
     fun offset(): Int = body.offset()
 
     /**
-     * The version number of the scheduled event configuration:
-     * - **Create entity**: Not valid for initial insertion - do not use for Create. On initial
-     *   Create, version is set at 1 and listed in the response.
-     * - **Update Entity**: On Update, version is required and must match the existing version
+     * The version number of the entity:
+     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     *   On initial Create, version is set at 1 and listed in the response.
+     * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
      *
@@ -251,10 +251,10 @@ private constructor(
         fun offset(offset: JsonField<Int>) = apply { body.offset(offset) }
 
         /**
-         * The version number of the scheduled event configuration:
-         * - **Create entity**: Not valid for initial insertion - do not use for Create. On initial
-         *   Create, version is set at 1 and listed in the response.
-         * - **Update Entity**: On Update, version is required and must match the existing version
+         * The version number of the entity:
+         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
          */
@@ -483,10 +483,10 @@ private constructor(
         fun offset(): Int = offset.getRequired("offset")
 
         /**
-         * The version number of the scheduled event configuration:
-         * - **Create entity**: Not valid for initial insertion - do not use for Create. On initial
-         *   Create, version is set at 1 and listed in the response.
-         * - **Update Entity**: On Update, version is required and must match the existing version
+         * The version number of the entity:
+         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
          *
@@ -644,10 +644,10 @@ private constructor(
             fun offset(offset: JsonField<Int>) = apply { this.offset = offset }
 
             /**
-             * The version number of the scheduled event configuration:
-             * - **Create entity**: Not valid for initial insertion - do not use for Create. On
-             *   initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity**: On Update, version is required and must match the existing
+             * The version number of the entity:
+             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
              */

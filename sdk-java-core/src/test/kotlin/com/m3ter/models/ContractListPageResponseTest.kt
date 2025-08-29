@@ -21,6 +21,7 @@ internal class ContractListPageResponseTest {
                     ContractResponse.builder()
                         .id("id")
                         .accountId("accountId")
+                        .billGroupingKey("billGroupingKey")
                         .code("code")
                         .createdBy("createdBy")
                         .customFields(
@@ -47,6 +48,7 @@ internal class ContractListPageResponseTest {
                 ContractResponse.builder()
                     .id("id")
                     .accountId("accountId")
+                    .billGroupingKey("billGroupingKey")
                     .code("code")
                     .createdBy("createdBy")
                     .customFields(
@@ -77,6 +79,7 @@ internal class ContractListPageResponseTest {
                     ContractResponse.builder()
                         .id("id")
                         .accountId("accountId")
+                        .billGroupingKey("billGroupingKey")
                         .code("code")
                         .createdBy("createdBy")
                         .customFields(

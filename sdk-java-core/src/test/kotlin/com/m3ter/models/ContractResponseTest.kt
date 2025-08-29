@@ -18,6 +18,7 @@ internal class ContractResponseTest {
             ContractResponse.builder()
                 .id("id")
                 .accountId("accountId")
+                .billGroupingKey("billGroupingKey")
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(
@@ -38,6 +39,7 @@ internal class ContractResponseTest {
 
         assertThat(contractResponse.id()).isEqualTo("id")
         assertThat(contractResponse.accountId()).contains("accountId")
+        assertThat(contractResponse.billGroupingKey()).contains("billGroupingKey")
         assertThat(contractResponse.code()).contains("code")
         assertThat(contractResponse.createdBy()).contains("createdBy")
         assertThat(contractResponse.customFields())
@@ -66,6 +68,7 @@ internal class ContractResponseTest {
             ContractResponse.builder()
                 .id("id")
                 .accountId("accountId")
+                .billGroupingKey("billGroupingKey")
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(

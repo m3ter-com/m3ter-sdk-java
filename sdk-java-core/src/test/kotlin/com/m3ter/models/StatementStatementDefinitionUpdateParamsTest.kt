@@ -13,13 +13,13 @@ internal class StatementStatementDefinitionUpdateParamsTest {
         StatementStatementDefinitionUpdateParams.builder()
             .orgId("orgId")
             .id("id")
-            .aggregationFrequency(
-                StatementStatementDefinitionUpdateParams.AggregationFrequency.ORIGINAL
-            )
+            .aggregationFrequency(StatementStatementDefinitionUpdateParams.AggregationFrequency.DAY)
             .addDimension(
                 StatementStatementDefinitionUpdateParams.Dimension.builder()
-                    .addDimensionAttribute("string")
-                    .dimensionName("dimensionName")
+                    .addFilter("string")
+                    .name("x")
+                    .addAttribute("string")
+                    .meterId("meterId")
                     .build()
             )
             .generateSlimStatements(true)
@@ -44,7 +44,7 @@ internal class StatementStatementDefinitionUpdateParamsTest {
             StatementStatementDefinitionUpdateParams.builder()
                 .id("id")
                 .aggregationFrequency(
-                    StatementStatementDefinitionUpdateParams.AggregationFrequency.ORIGINAL
+                    StatementStatementDefinitionUpdateParams.AggregationFrequency.DAY
                 )
                 .build()
 
@@ -61,12 +61,14 @@ internal class StatementStatementDefinitionUpdateParamsTest {
                 .orgId("orgId")
                 .id("id")
                 .aggregationFrequency(
-                    StatementStatementDefinitionUpdateParams.AggregationFrequency.ORIGINAL
+                    StatementStatementDefinitionUpdateParams.AggregationFrequency.DAY
                 )
                 .addDimension(
                     StatementStatementDefinitionUpdateParams.Dimension.builder()
-                        .addDimensionAttribute("string")
-                        .dimensionName("dimensionName")
+                        .addFilter("string")
+                        .name("x")
+                        .addAttribute("string")
+                        .meterId("meterId")
                         .build()
                 )
                 .generateSlimStatements(true)
@@ -87,12 +89,14 @@ internal class StatementStatementDefinitionUpdateParamsTest {
         val body = params._body()
 
         assertThat(body.aggregationFrequency())
-            .isEqualTo(StatementStatementDefinitionUpdateParams.AggregationFrequency.ORIGINAL)
+            .isEqualTo(StatementStatementDefinitionUpdateParams.AggregationFrequency.DAY)
         assertThat(body.dimensions().getOrNull())
             .containsExactly(
                 StatementStatementDefinitionUpdateParams.Dimension.builder()
-                    .addDimensionAttribute("string")
-                    .dimensionName("dimensionName")
+                    .addFilter("string")
+                    .name("x")
+                    .addAttribute("string")
+                    .meterId("meterId")
                     .build()
             )
         assertThat(body.generateSlimStatements()).contains(true)
@@ -117,13 +121,13 @@ internal class StatementStatementDefinitionUpdateParamsTest {
             StatementStatementDefinitionUpdateParams.builder()
                 .id("id")
                 .aggregationFrequency(
-                    StatementStatementDefinitionUpdateParams.AggregationFrequency.ORIGINAL
+                    StatementStatementDefinitionUpdateParams.AggregationFrequency.DAY
                 )
                 .build()
 
         val body = params._body()
 
         assertThat(body.aggregationFrequency())
-            .isEqualTo(StatementStatementDefinitionUpdateParams.AggregationFrequency.ORIGINAL)
+            .isEqualTo(StatementStatementDefinitionUpdateParams.AggregationFrequency.DAY)
     }
 }

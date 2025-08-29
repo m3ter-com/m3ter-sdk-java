@@ -233,6 +233,8 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
+     * The code of the Accounting Product associated with this line item.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -240,6 +242,8 @@ private constructor(
         accountingProductCode.getOptional("accountingProductCode")
 
     /**
+     * The unique identifier (UUID) for the associated Accounting Product.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -247,6 +251,8 @@ private constructor(
         accountingProductId.getOptional("accountingProductId")
 
     /**
+     * The name of the Accounting Product associated with this line item.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -471,6 +477,8 @@ private constructor(
     fun pricingId(): Optional<String> = pricingId.getOptional("pricingId")
 
     /**
+     * The code of the Product associated with this line item.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -1117,6 +1125,7 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
+        /** The code of the Accounting Product associated with this line item. */
         fun accountingProductCode(accountingProductCode: String) =
             accountingProductCode(JsonField.of(accountingProductCode))
 
@@ -1131,6 +1140,7 @@ private constructor(
             this.accountingProductCode = accountingProductCode
         }
 
+        /** The unique identifier (UUID) for the associated Accounting Product. */
         fun accountingProductId(accountingProductId: String) =
             accountingProductId(JsonField.of(accountingProductId))
 
@@ -1145,6 +1155,7 @@ private constructor(
             this.accountingProductId = accountingProductId
         }
 
+        /** The name of the Accounting Product associated with this line item. */
         fun accountingProductName(accountingProductName: String) =
             accountingProductName(JsonField.of(accountingProductName))
 
@@ -1535,6 +1546,7 @@ private constructor(
          */
         fun pricingId(pricingId: JsonField<String>) = apply { this.pricingId = pricingId }
 
+        /** The code of the Product associated with this line item. */
         fun productCode(productCode: String) = productCode(JsonField.of(productCode))
 
         /**

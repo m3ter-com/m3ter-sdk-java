@@ -13,6 +13,8 @@ internal class IntegrationConfigurationUpdateParamsTest {
         IntegrationConfigurationUpdateParams.builder()
             .orgId("orgId")
             .id("id")
+            .destination("Stripe")
+            .entityType("Bill")
             .configData(
                 IntegrationConfigurationUpdateParams.ConfigData.builder()
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -25,16 +27,14 @@ internal class IntegrationConfigurationUpdateParamsTest {
                         IntegrationConfigurationUpdateParams.Credentials.Destination.WEBHOOK
                     )
                     .empty(true)
-                    .name("name")
+                    .name("Integration Credentials")
                     .version(0L)
                     .build()
             )
-            .destination("destination")
-            .destinationId("destinationId")
-            .entityId("entityId")
-            .entityType("entityType")
-            .integrationCredentialsId("integrationCredentialsId")
-            .name("name")
+            .destinationId("00000000-0000-0000-0000-000000000000")
+            .entityId("00000000-0000-0000-0000-000000000000")
+            .integrationCredentialsId("00000000-0000-0000-0000-000000000000")
+            .name("My Integration")
             .version(0L)
             .build()
     }
@@ -44,22 +44,8 @@ internal class IntegrationConfigurationUpdateParamsTest {
         val params =
             IntegrationConfigurationUpdateParams.builder()
                 .id("id")
-                .configData(
-                    IntegrationConfigurationUpdateParams.ConfigData.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
-                        .build()
-                )
-                .credentials(
-                    IntegrationConfigurationUpdateParams.Credentials.builder()
-                        .type(IntegrationConfigurationUpdateParams.Credentials.Type.HTTP_BASIC)
-                        .build()
-                )
-                .destination("destination")
-                .destinationId("destinationId")
-                .entityId("entityId")
-                .entityType("entityType")
-                .integrationCredentialsId("integrationCredentialsId")
-                .name("name")
+                .destination("Stripe")
+                .entityType("Bill")
                 .build()
 
         assertThat(params._pathParam(0)).isEqualTo("")
@@ -74,6 +60,8 @@ internal class IntegrationConfigurationUpdateParamsTest {
             IntegrationConfigurationUpdateParams.builder()
                 .orgId("orgId")
                 .id("id")
+                .destination("Stripe")
+                .entityType("Bill")
                 .configData(
                     IntegrationConfigurationUpdateParams.ConfigData.builder()
                         .putAdditionalProperty("foo", JsonValue.from("bar"))
@@ -86,45 +74,43 @@ internal class IntegrationConfigurationUpdateParamsTest {
                             IntegrationConfigurationUpdateParams.Credentials.Destination.WEBHOOK
                         )
                         .empty(true)
-                        .name("name")
+                        .name("Integration Credentials")
                         .version(0L)
                         .build()
                 )
-                .destination("destination")
-                .destinationId("destinationId")
-                .entityId("entityId")
-                .entityType("entityType")
-                .integrationCredentialsId("integrationCredentialsId")
-                .name("name")
+                .destinationId("00000000-0000-0000-0000-000000000000")
+                .entityId("00000000-0000-0000-0000-000000000000")
+                .integrationCredentialsId("00000000-0000-0000-0000-000000000000")
+                .name("My Integration")
                 .version(0L)
                 .build()
 
         val body = params._body()
 
+        assertThat(body.destination()).isEqualTo("Stripe")
+        assertThat(body.entityType()).isEqualTo("Bill")
         assertThat(body.configData())
-            .isEqualTo(
+            .contains(
                 IntegrationConfigurationUpdateParams.ConfigData.builder()
                     .putAdditionalProperty("foo", JsonValue.from("bar"))
                     .build()
             )
         assertThat(body.credentials())
-            .isEqualTo(
+            .contains(
                 IntegrationConfigurationUpdateParams.Credentials.builder()
                     .type(IntegrationConfigurationUpdateParams.Credentials.Type.HTTP_BASIC)
                     .destination(
                         IntegrationConfigurationUpdateParams.Credentials.Destination.WEBHOOK
                     )
                     .empty(true)
-                    .name("name")
+                    .name("Integration Credentials")
                     .version(0L)
                     .build()
             )
-        assertThat(body.destination()).isEqualTo("destination")
-        assertThat(body.destinationId()).isEqualTo("destinationId")
-        assertThat(body.entityId()).isEqualTo("entityId")
-        assertThat(body.entityType()).isEqualTo("entityType")
-        assertThat(body.integrationCredentialsId()).isEqualTo("integrationCredentialsId")
-        assertThat(body.name()).isEqualTo("name")
+        assertThat(body.destinationId()).contains("00000000-0000-0000-0000-000000000000")
+        assertThat(body.entityId()).contains("00000000-0000-0000-0000-000000000000")
+        assertThat(body.integrationCredentialsId()).contains("00000000-0000-0000-0000-000000000000")
+        assertThat(body.name()).contains("My Integration")
         assertThat(body.version()).contains(0L)
     }
 
@@ -133,43 +119,13 @@ internal class IntegrationConfigurationUpdateParamsTest {
         val params =
             IntegrationConfigurationUpdateParams.builder()
                 .id("id")
-                .configData(
-                    IntegrationConfigurationUpdateParams.ConfigData.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
-                        .build()
-                )
-                .credentials(
-                    IntegrationConfigurationUpdateParams.Credentials.builder()
-                        .type(IntegrationConfigurationUpdateParams.Credentials.Type.HTTP_BASIC)
-                        .build()
-                )
-                .destination("destination")
-                .destinationId("destinationId")
-                .entityId("entityId")
-                .entityType("entityType")
-                .integrationCredentialsId("integrationCredentialsId")
-                .name("name")
+                .destination("Stripe")
+                .entityType("Bill")
                 .build()
 
         val body = params._body()
 
-        assertThat(body.configData())
-            .isEqualTo(
-                IntegrationConfigurationUpdateParams.ConfigData.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
-                    .build()
-            )
-        assertThat(body.credentials())
-            .isEqualTo(
-                IntegrationConfigurationUpdateParams.Credentials.builder()
-                    .type(IntegrationConfigurationUpdateParams.Credentials.Type.HTTP_BASIC)
-                    .build()
-            )
-        assertThat(body.destination()).isEqualTo("destination")
-        assertThat(body.destinationId()).isEqualTo("destinationId")
-        assertThat(body.entityId()).isEqualTo("entityId")
-        assertThat(body.entityType()).isEqualTo("entityType")
-        assertThat(body.integrationCredentialsId()).isEqualTo("integrationCredentialsId")
-        assertThat(body.name()).isEqualTo("name")
+        assertThat(body.destination()).isEqualTo("Stripe")
+        assertThat(body.entityType()).isEqualTo("Bill")
     }
 }

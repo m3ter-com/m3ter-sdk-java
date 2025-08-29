@@ -21,9 +21,9 @@ import kotlin.jvm.optionals.getOrNull
  * - Only valid for Export jobs ran in the past 24 hours.
  * - The download URL is time-bound and is only valid for 15 minutes.
  *
- * **NOTE!** This ExportDestination endpoint is available in Beta release version. Beta release
- * features are functional but may be incomplete, and there is no commitment at this stage to
- * particular functionality or timelines.
+ * **NOTE!** This ExportDestination endpoint is available in Beta release version. See
+ * [Feature Release Stages](https://www.m3ter.com/docs/guides/getting-started/feature-release-stages)
+ * for Beta release definition.
  */
 class DataExportJobGetDownloadUrlParams
 private constructor(

@@ -13,15 +13,15 @@ internal class M3terSignedCredentialsRequestTest {
     fun create() {
         val m3terSignedCredentialsRequest =
             M3terSignedCredentialsRequest.builder()
-                .apiKey("x")
-                .secret("x")
+                .apiKey("api key")
+                .secret("api secret")
                 .type(M3terSignedCredentialsRequest.Type.M3TER_SIGNED_REQUEST)
                 .empty(true)
                 .version(0L)
                 .build()
 
-        assertThat(m3terSignedCredentialsRequest.apiKey()).isEqualTo("x")
-        assertThat(m3terSignedCredentialsRequest.secret()).isEqualTo("x")
+        assertThat(m3terSignedCredentialsRequest.apiKey()).isEqualTo("api key")
+        assertThat(m3terSignedCredentialsRequest.secret()).isEqualTo("api secret")
         assertThat(m3terSignedCredentialsRequest.type())
             .isEqualTo(M3terSignedCredentialsRequest.Type.M3TER_SIGNED_REQUEST)
         assertThat(m3terSignedCredentialsRequest.empty()).contains(true)
@@ -33,8 +33,8 @@ internal class M3terSignedCredentialsRequestTest {
         val jsonMapper = jsonMapper()
         val m3terSignedCredentialsRequest =
             M3terSignedCredentialsRequest.builder()
-                .apiKey("x")
-                .secret("x")
+                .apiKey("api key")
+                .secret("api secret")
                 .type(M3terSignedCredentialsRequest.Type.M3TER_SIGNED_REQUEST)
                 .empty(true)
                 .version(0L)

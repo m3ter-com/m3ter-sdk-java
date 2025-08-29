@@ -24,6 +24,7 @@ class ContractResponse
 private constructor(
     private val id: JsonField<String>,
     private val accountId: JsonField<String>,
+    private val billGroupingKey: JsonField<String>,
     private val code: JsonField<String>,
     private val createdBy: JsonField<String>,
     private val customFields: JsonField<CustomFields>,
@@ -43,6 +44,9 @@ private constructor(
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
         @JsonProperty("accountId") @ExcludeMissing accountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("billGroupingKey")
+        @ExcludeMissing
+        billGroupingKey: JsonField<String> = JsonMissing.of(),
         @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("customFields")
@@ -72,6 +76,7 @@ private constructor(
     ) : this(
         id,
         accountId,
+        billGroupingKey,
         code,
         createdBy,
         customFields,
@@ -102,6 +107,12 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun accountId(): Optional<String> = accountId.getOptional("accountId")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun billGroupingKey(): Optional<String> = billGroupingKey.getOptional("billGroupingKey")
 
     /**
      * The short code of the Contract.
@@ -229,6 +240,15 @@ private constructor(
     @JsonProperty("accountId") @ExcludeMissing fun _accountId(): JsonField<String> = accountId
 
     /**
+     * Returns the raw JSON value of [billGroupingKey].
+     *
+     * Unlike [billGroupingKey], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("billGroupingKey")
+    @ExcludeMissing
+    fun _billGroupingKey(): JsonField<String> = billGroupingKey
+
+    /**
      * Returns the raw JSON value of [code].
      *
      * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
@@ -353,6 +373,7 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var accountId: JsonField<String> = JsonMissing.of()
+        private var billGroupingKey: JsonField<String> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var customFields: JsonField<CustomFields> = JsonMissing.of()
@@ -371,6 +392,7 @@ private constructor(
         internal fun from(contractResponse: ContractResponse) = apply {
             id = contractResponse.id
             accountId = contractResponse.accountId
+            billGroupingKey = contractResponse.billGroupingKey
             code = contractResponse.code
             createdBy = contractResponse.createdBy
             customFields = contractResponse.customFields
@@ -408,6 +430,20 @@ private constructor(
          * value.
          */
         fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
+
+        fun billGroupingKey(billGroupingKey: String) =
+            billGroupingKey(JsonField.of(billGroupingKey))
+
+        /**
+         * Sets [Builder.billGroupingKey] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.billGroupingKey] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun billGroupingKey(billGroupingKey: JsonField<String>) = apply {
+            this.billGroupingKey = billGroupingKey
+        }
 
         /** The short code of the Contract. */
         fun code(code: String) = code(JsonField.of(code))
@@ -617,6 +653,7 @@ private constructor(
             ContractResponse(
                 checkRequired("id", id),
                 accountId,
+                billGroupingKey,
                 code,
                 createdBy,
                 customFields,
@@ -642,6 +679,7 @@ private constructor(
 
         id()
         accountId()
+        billGroupingKey()
         code()
         createdBy()
         customFields().ifPresent { it.validate() }
@@ -674,6 +712,7 @@ private constructor(
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
             (if (accountId.asKnown().isPresent) 1 else 0) +
+            (if (billGroupingKey.asKnown().isPresent) 1 else 0) +
             (if (code.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
             (customFields.asKnown().getOrNull()?.validity() ?: 0) +
@@ -806,6 +845,7 @@ private constructor(
         return other is ContractResponse &&
             id == other.id &&
             accountId == other.accountId &&
+            billGroupingKey == other.billGroupingKey &&
             code == other.code &&
             createdBy == other.createdBy &&
             customFields == other.customFields &&
@@ -825,6 +865,7 @@ private constructor(
         Objects.hash(
             id,
             accountId,
+            billGroupingKey,
             code,
             createdBy,
             customFields,
@@ -844,5 +885,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ContractResponse{id=$id, accountId=$accountId, code=$code, createdBy=$createdBy, customFields=$customFields, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, lastModifiedBy=$lastModifiedBy, name=$name, purchaseOrderNumber=$purchaseOrderNumber, startDate=$startDate, version=$version, additionalProperties=$additionalProperties}"
+        "ContractResponse{id=$id, accountId=$accountId, billGroupingKey=$billGroupingKey, code=$code, createdBy=$createdBy, customFields=$customFields, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, lastModifiedBy=$lastModifiedBy, name=$name, purchaseOrderNumber=$purchaseOrderNumber, startDate=$startDate, version=$version, additionalProperties=$additionalProperties}"
 }

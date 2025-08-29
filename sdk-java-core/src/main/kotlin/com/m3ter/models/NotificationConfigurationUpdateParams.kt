@@ -120,12 +120,12 @@ private constructor(
     fun calculation(): Optional<String> = body.calculation()
 
     /**
-     * The version number for the Notification:
-     * - **Create:** Not valid for initial insertion of new entity - _do not use for Create_. On
-     *   initial Create, version is set at 1 and listed in the response.
-     * - **Update:** On Update, version is required and must match the existing version because a
-     *   check is performed to ensure sequential versioning is preserved. Version is incremented by
-     *   1 and listed in the response.
+     * The version number of the entity:
+     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     *   On initial Create, version is set at 1 and listed in the response.
+     * - **Update Entity:** On Update, version is required and must match the existing version
+     *   because a check is performed to ensure sequential versioning is preserved. Version is
+     *   incremented by 1 and listed in the response.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -382,11 +382,11 @@ private constructor(
         fun calculation(calculation: JsonField<String>) = apply { body.calculation(calculation) }
 
         /**
-         * The version number for the Notification:
-         * - **Create:** Not valid for initial insertion of new entity - _do not use for Create_. On
-         *   initial Create, version is set at 1 and listed in the response.
-         * - **Update:** On Update, version is required and must match the existing version because
-         *   a check is performed to ensure sequential versioning is preserved. Version is
+         * The version number of the entity:
+         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
+         *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
          */
         fun version(version: Long) = apply { body.version(version) }
@@ -679,11 +679,11 @@ private constructor(
         fun calculation(): Optional<String> = calculation.getOptional("calculation")
 
         /**
-         * The version number for the Notification:
-         * - **Create:** Not valid for initial insertion of new entity - _do not use for Create_. On
-         *   initial Create, version is set at 1 and listed in the response.
-         * - **Update:** On Update, version is required and must match the existing version because
-         *   a check is performed to ensure sequential versioning is preserved. Version is
+         * The version number of the entity:
+         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
+         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
+         *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -935,12 +935,12 @@ private constructor(
             }
 
             /**
-             * The version number for the Notification:
-             * - **Create:** Not valid for initial insertion of new entity - _do not use for
+             * The version number of the entity:
+             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
              *   Create_. On initial Create, version is set at 1 and listed in the response.
-             * - **Update:** On Update, version is required and must match the existing version
-             *   because a check is performed to ensure sequential versioning is preserved. Version
-             *   is incremented by 1 and listed in the response.
+             * - **Update Entity:** On Update, version is required and must match the existing
+             *   version because a check is performed to ensure sequential versioning is preserved.
+             *   Version is incremented by 1 and listed in the response.
              */
             fun version(version: Long) = version(JsonField.of(version))
 
