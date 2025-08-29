@@ -12,6 +12,7 @@ internal class IntegrationConfigurationListParamsTest {
     fun create() {
         IntegrationConfigurationListParams.builder()
             .orgId("orgId")
+            .destinationId("destinationId")
             .nextToken("nextToken")
             .pageSize(1)
             .build()
@@ -31,6 +32,7 @@ internal class IntegrationConfigurationListParamsTest {
         val params =
             IntegrationConfigurationListParams.builder()
                 .orgId("orgId")
+                .destinationId("destinationId")
                 .nextToken("nextToken")
                 .pageSize(1)
                 .build()
@@ -39,7 +41,11 @@ internal class IntegrationConfigurationListParamsTest {
 
         assertThat(queryParams)
             .isEqualTo(
-                QueryParams.builder().put("nextToken", "nextToken").put("pageSize", "1").build()
+                QueryParams.builder()
+                    .put("destinationId", "destinationId")
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .build()
             )
     }
 

@@ -734,6 +734,8 @@ private constructor(
 
             @JvmField val DISABLED = of("DISABLED")
 
+            @JvmField val TIMEOUT_LIMIT_EXCEEDED = of("TIMEOUT_LIMIT_EXCEEDED")
+
             @JvmField val RATE_LIMIT_RETRY = of("RATE_LIMIT_RETRY")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
@@ -750,6 +752,7 @@ private constructor(
             ACCOUNTING_PERIOD_CLOSED,
             INVOICE_ALREADY_PAID,
             DISABLED,
+            TIMEOUT_LIMIT_EXCEEDED,
             RATE_LIMIT_RETRY,
         }
 
@@ -772,6 +775,7 @@ private constructor(
             ACCOUNTING_PERIOD_CLOSED,
             INVOICE_ALREADY_PAID,
             DISABLED,
+            TIMEOUT_LIMIT_EXCEEDED,
             RATE_LIMIT_RETRY,
             /** An enum member indicating that [Status] was instantiated with an unknown value. */
             _UNKNOWN,
@@ -795,6 +799,7 @@ private constructor(
                 ACCOUNTING_PERIOD_CLOSED -> Value.ACCOUNTING_PERIOD_CLOSED
                 INVOICE_ALREADY_PAID -> Value.INVOICE_ALREADY_PAID
                 DISABLED -> Value.DISABLED
+                TIMEOUT_LIMIT_EXCEEDED -> Value.TIMEOUT_LIMIT_EXCEEDED
                 RATE_LIMIT_RETRY -> Value.RATE_LIMIT_RETRY
                 else -> Value._UNKNOWN
             }
@@ -818,6 +823,7 @@ private constructor(
                 ACCOUNTING_PERIOD_CLOSED -> Known.ACCOUNTING_PERIOD_CLOSED
                 INVOICE_ALREADY_PAID -> Known.INVOICE_ALREADY_PAID
                 DISABLED -> Known.DISABLED
+                TIMEOUT_LIMIT_EXCEEDED -> Known.TIMEOUT_LIMIT_EXCEEDED
                 RATE_LIMIT_RETRY -> Known.RATE_LIMIT_RETRY
                 else -> throw M3terInvalidDataException("Unknown Status: $value")
             }

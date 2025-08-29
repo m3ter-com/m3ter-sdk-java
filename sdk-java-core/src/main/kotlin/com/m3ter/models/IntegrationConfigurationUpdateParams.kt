@@ -43,22 +43,6 @@ private constructor(
     fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
-     * A flexible object to include any additional configuration data specific to the integration.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun configData(): ConfigData = body.configData()
-
-    /**
-     * Base model for defining integration credentials across different types of integrations.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun credentials(): Credentials = body.credentials()
-
-    /**
      * Denotes the integration destination. This field identifies the target platform or service for
      * the integration.
      *
@@ -66,23 +50,6 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun destination(): String = body.destination()
-
-    /**
-     * The unique identifier (UUID) for the integration destination.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun destinationId(): String = body.destinationId()
-
-    /**
-     * The unique identifier (UUID) of the entity. This field is used to specify which entity's
-     * integration configuration you're updating.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun entityId(): String = body.entityId()
 
     /**
      * Specifies the type of entity for which the integration configuration is being updated. Must
@@ -94,16 +61,49 @@ private constructor(
     fun entityType(): String = body.entityType()
 
     /**
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
+     * A flexible object to include any additional configuration data specific to the integration.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
-    fun integrationCredentialsId(): String = body.integrationCredentialsId()
+    fun configData(): Optional<ConfigData> = body.configData()
 
     /**
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
+     * Base model for defining integration credentials across different types of integrations.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
-    fun name(): String = body.name()
+    fun credentials(): Optional<Credentials> = body.credentials()
+
+    /**
+     * The unique identifier (UUID) for the integration destination.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun destinationId(): Optional<String> = body.destinationId()
+
+    /**
+     * The unique identifier (UUID) of the entity. This field is used to specify which entity's
+     * integration configuration you're updating.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun entityId(): Optional<String> = body.entityId()
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun integrationCredentialsId(): Optional<String> = body.integrationCredentialsId()
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun name(): Optional<String> = body.name()
 
     /**
      * The version number of the entity:
@@ -117,6 +117,20 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun version(): Optional<Long> = body.version()
+
+    /**
+     * Returns the raw JSON value of [destination].
+     *
+     * Unlike [destination], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _destination(): JsonField<String> = body._destination()
+
+    /**
+     * Returns the raw JSON value of [entityType].
+     *
+     * Unlike [entityType], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _entityType(): JsonField<String> = body._entityType()
 
     /**
      * Returns the raw JSON value of [configData].
@@ -133,13 +147,6 @@ private constructor(
     fun _credentials(): JsonField<Credentials> = body._credentials()
 
     /**
-     * Returns the raw JSON value of [destination].
-     *
-     * Unlike [destination], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _destination(): JsonField<String> = body._destination()
-
-    /**
      * Returns the raw JSON value of [destinationId].
      *
      * Unlike [destinationId], this method doesn't throw if the JSON field has an unexpected type.
@@ -152,13 +159,6 @@ private constructor(
      * Unlike [entityId], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _entityId(): JsonField<String> = body._entityId()
-
-    /**
-     * Returns the raw JSON value of [entityType].
-     *
-     * Unlike [entityType], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _entityType(): JsonField<String> = body._entityType()
 
     /**
      * Returns the raw JSON value of [integrationCredentialsId].
@@ -200,14 +200,8 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .configData()
-         * .credentials()
          * .destination()
-         * .destinationId()
-         * .entityId()
          * .entityType()
-         * .integrationCredentialsId()
-         * .name()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -251,14 +245,44 @@ private constructor(
          *
          * This is generally only useful if you are already constructing the body separately.
          * Otherwise, it's more convenient to use the top-level setters instead:
+         * - [destination]
+         * - [entityType]
          * - [configData]
          * - [credentials]
-         * - [destination]
          * - [destinationId]
-         * - [entityId]
          * - etc.
          */
         fun body(body: Body) = apply { this.body = body.toBuilder() }
+
+        /**
+         * Denotes the integration destination. This field identifies the target platform or service
+         * for the integration.
+         */
+        fun destination(destination: String) = apply { body.destination(destination) }
+
+        /**
+         * Sets [Builder.destination] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.destination] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun destination(destination: JsonField<String>) = apply { body.destination(destination) }
+
+        /**
+         * Specifies the type of entity for which the integration configuration is being updated.
+         * Must be a valid alphanumeric string.
+         */
+        fun entityType(entityType: String) = apply { body.entityType(entityType) }
+
+        /**
+         * Sets [Builder.entityType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.entityType] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun entityType(entityType: JsonField<String>) = apply { body.entityType(entityType) }
 
         /**
          * A flexible object to include any additional configuration data specific to the
@@ -291,21 +315,6 @@ private constructor(
             body.credentials(credentials)
         }
 
-        /**
-         * Denotes the integration destination. This field identifies the target platform or service
-         * for the integration.
-         */
-        fun destination(destination: String) = apply { body.destination(destination) }
-
-        /**
-         * Sets [Builder.destination] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.destination] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun destination(destination: JsonField<String>) = apply { body.destination(destination) }
-
         /** The unique identifier (UUID) for the integration destination. */
         fun destinationId(destinationId: String) = apply { body.destinationId(destinationId) }
 
@@ -333,21 +342,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun entityId(entityId: JsonField<String>) = apply { body.entityId(entityId) }
-
-        /**
-         * Specifies the type of entity for which the integration configuration is being updated.
-         * Must be a valid alphanumeric string.
-         */
-        fun entityType(entityType: String) = apply { body.entityType(entityType) }
-
-        /**
-         * Sets [Builder.entityType] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.entityType] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun entityType(entityType: JsonField<String>) = apply { body.entityType(entityType) }
 
         fun integrationCredentialsId(integrationCredentialsId: String) = apply {
             body.integrationCredentialsId(integrationCredentialsId)
@@ -516,14 +510,8 @@ private constructor(
          *
          * The following fields are required:
          * ```java
-         * .configData()
-         * .credentials()
          * .destination()
-         * .destinationId()
-         * .entityId()
          * .entityType()
-         * .integrationCredentialsId()
-         * .name()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -553,12 +541,12 @@ private constructor(
 
     class Body
     private constructor(
+        private val destination: JsonField<String>,
+        private val entityType: JsonField<String>,
         private val configData: JsonField<ConfigData>,
         private val credentials: JsonField<Credentials>,
-        private val destination: JsonField<String>,
         private val destinationId: JsonField<String>,
         private val entityId: JsonField<String>,
-        private val entityType: JsonField<String>,
         private val integrationCredentialsId: JsonField<String>,
         private val name: JsonField<String>,
         private val version: JsonField<Long>,
@@ -567,58 +555,41 @@ private constructor(
 
         @JsonCreator
         private constructor(
+            @JsonProperty("destination")
+            @ExcludeMissing
+            destination: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("entityType")
+            @ExcludeMissing
+            entityType: JsonField<String> = JsonMissing.of(),
             @JsonProperty("configData")
             @ExcludeMissing
             configData: JsonField<ConfigData> = JsonMissing.of(),
             @JsonProperty("credentials")
             @ExcludeMissing
             credentials: JsonField<Credentials> = JsonMissing.of(),
-            @JsonProperty("destination")
-            @ExcludeMissing
-            destination: JsonField<String> = JsonMissing.of(),
             @JsonProperty("destinationId")
             @ExcludeMissing
             destinationId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("entityId")
             @ExcludeMissing
             entityId: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("entityType")
-            @ExcludeMissing
-            entityType: JsonField<String> = JsonMissing.of(),
             @JsonProperty("integrationCredentialsId")
             @ExcludeMissing
             integrationCredentialsId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
             @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         ) : this(
+            destination,
+            entityType,
             configData,
             credentials,
-            destination,
             destinationId,
             entityId,
-            entityType,
             integrationCredentialsId,
             name,
             version,
             mutableMapOf(),
         )
-
-        /**
-         * A flexible object to include any additional configuration data specific to the
-         * integration.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun configData(): ConfigData = configData.getRequired("configData")
-
-        /**
-         * Base model for defining integration credentials across different types of integrations.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun credentials(): Credentials = credentials.getRequired("credentials")
 
         /**
          * Denotes the integration destination. This field identifies the target platform or service
@@ -630,23 +601,6 @@ private constructor(
         fun destination(): String = destination.getRequired("destination")
 
         /**
-         * The unique identifier (UUID) for the integration destination.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun destinationId(): String = destinationId.getRequired("destinationId")
-
-        /**
-         * The unique identifier (UUID) of the entity. This field is used to specify which entity's
-         * integration configuration you're updating.
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
-         */
-        fun entityId(): String = entityId.getRequired("entityId")
-
-        /**
          * Specifies the type of entity for which the integration configuration is being updated.
          * Must be a valid alphanumeric string.
          *
@@ -656,17 +610,51 @@ private constructor(
         fun entityType(): String = entityType.getRequired("entityType")
 
         /**
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         * A flexible object to include any additional configuration data specific to the
+         * integration.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
-        fun integrationCredentialsId(): String =
-            integrationCredentialsId.getRequired("integrationCredentialsId")
+        fun configData(): Optional<ConfigData> = configData.getOptional("configData")
 
         /**
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
-         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         * Base model for defining integration credentials across different types of integrations.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
          */
-        fun name(): String = name.getRequired("name")
+        fun credentials(): Optional<Credentials> = credentials.getOptional("credentials")
+
+        /**
+         * The unique identifier (UUID) for the integration destination.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun destinationId(): Optional<String> = destinationId.getOptional("destinationId")
+
+        /**
+         * The unique identifier (UUID) of the entity. This field is used to specify which entity's
+         * integration configuration you're updating.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun entityId(): Optional<String> = entityId.getOptional("entityId")
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun integrationCredentialsId(): Optional<String> =
+            integrationCredentialsId.getOptional("integrationCredentialsId")
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun name(): Optional<String> = name.getOptional("name")
 
         /**
          * The version number of the entity:
@@ -680,6 +668,24 @@ private constructor(
          *   server responded with an unexpected value).
          */
         fun version(): Optional<Long> = version.getOptional("version")
+
+        /**
+         * Returns the raw JSON value of [destination].
+         *
+         * Unlike [destination], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("destination")
+        @ExcludeMissing
+        fun _destination(): JsonField<String> = destination
+
+        /**
+         * Returns the raw JSON value of [entityType].
+         *
+         * Unlike [entityType], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("entityType")
+        @ExcludeMissing
+        fun _entityType(): JsonField<String> = entityType
 
         /**
          * Returns the raw JSON value of [configData].
@@ -700,15 +706,6 @@ private constructor(
         fun _credentials(): JsonField<Credentials> = credentials
 
         /**
-         * Returns the raw JSON value of [destination].
-         *
-         * Unlike [destination], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("destination")
-        @ExcludeMissing
-        fun _destination(): JsonField<String> = destination
-
-        /**
          * Returns the raw JSON value of [destinationId].
          *
          * Unlike [destinationId], this method doesn't throw if the JSON field has an unexpected
@@ -724,15 +721,6 @@ private constructor(
          * Unlike [entityId], this method doesn't throw if the JSON field has an unexpected type.
          */
         @JsonProperty("entityId") @ExcludeMissing fun _entityId(): JsonField<String> = entityId
-
-        /**
-         * Returns the raw JSON value of [entityType].
-         *
-         * Unlike [entityType], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("entityType")
-        @ExcludeMissing
-        fun _entityType(): JsonField<String> = entityType
 
         /**
          * Returns the raw JSON value of [integrationCredentialsId].
@@ -777,14 +765,8 @@ private constructor(
              *
              * The following fields are required:
              * ```java
-             * .configData()
-             * .credentials()
              * .destination()
-             * .destinationId()
-             * .entityId()
              * .entityType()
-             * .integrationCredentialsId()
-             * .name()
              * ```
              */
             @JvmStatic fun builder() = Builder()
@@ -793,30 +775,62 @@ private constructor(
         /** A builder for [Body]. */
         class Builder internal constructor() {
 
-            private var configData: JsonField<ConfigData>? = null
-            private var credentials: JsonField<Credentials>? = null
             private var destination: JsonField<String>? = null
-            private var destinationId: JsonField<String>? = null
-            private var entityId: JsonField<String>? = null
             private var entityType: JsonField<String>? = null
-            private var integrationCredentialsId: JsonField<String>? = null
-            private var name: JsonField<String>? = null
+            private var configData: JsonField<ConfigData> = JsonMissing.of()
+            private var credentials: JsonField<Credentials> = JsonMissing.of()
+            private var destinationId: JsonField<String> = JsonMissing.of()
+            private var entityId: JsonField<String> = JsonMissing.of()
+            private var integrationCredentialsId: JsonField<String> = JsonMissing.of()
+            private var name: JsonField<String> = JsonMissing.of()
             private var version: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(body: Body) = apply {
+                destination = body.destination
+                entityType = body.entityType
                 configData = body.configData
                 credentials = body.credentials
-                destination = body.destination
                 destinationId = body.destinationId
                 entityId = body.entityId
-                entityType = body.entityType
                 integrationCredentialsId = body.integrationCredentialsId
                 name = body.name
                 version = body.version
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
+
+            /**
+             * Denotes the integration destination. This field identifies the target platform or
+             * service for the integration.
+             */
+            fun destination(destination: String) = destination(JsonField.of(destination))
+
+            /**
+             * Sets [Builder.destination] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.destination] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun destination(destination: JsonField<String>) = apply {
+                this.destination = destination
+            }
+
+            /**
+             * Specifies the type of entity for which the integration configuration is being
+             * updated. Must be a valid alphanumeric string.
+             */
+            fun entityType(entityType: String) = entityType(JsonField.of(entityType))
+
+            /**
+             * Sets [Builder.entityType] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.entityType] with a well-typed [String] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun entityType(entityType: JsonField<String>) = apply { this.entityType = entityType }
 
             /**
              * A flexible object to include any additional configuration data specific to the
@@ -852,23 +866,6 @@ private constructor(
                 this.credentials = credentials
             }
 
-            /**
-             * Denotes the integration destination. This field identifies the target platform or
-             * service for the integration.
-             */
-            fun destination(destination: String) = destination(JsonField.of(destination))
-
-            /**
-             * Sets [Builder.destination] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.destination] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun destination(destination: JsonField<String>) = apply {
-                this.destination = destination
-            }
-
             /** The unique identifier (UUID) for the integration destination. */
             fun destinationId(destinationId: String) = destinationId(JsonField.of(destinationId))
 
@@ -897,21 +894,6 @@ private constructor(
              * supported value.
              */
             fun entityId(entityId: JsonField<String>) = apply { this.entityId = entityId }
-
-            /**
-             * Specifies the type of entity for which the integration configuration is being
-             * updated. Must be a valid alphanumeric string.
-             */
-            fun entityType(entityType: String) = entityType(JsonField.of(entityType))
-
-            /**
-             * Sets [Builder.entityType] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.entityType] with a well-typed [String] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun entityType(entityType: JsonField<String>) = apply { this.entityType = entityType }
 
             fun integrationCredentialsId(integrationCredentialsId: String) =
                 integrationCredentialsId(JsonField.of(integrationCredentialsId))
@@ -983,28 +965,22 @@ private constructor(
              *
              * The following fields are required:
              * ```java
-             * .configData()
-             * .credentials()
              * .destination()
-             * .destinationId()
-             * .entityId()
              * .entityType()
-             * .integrationCredentialsId()
-             * .name()
              * ```
              *
              * @throws IllegalStateException if any required field is unset.
              */
             fun build(): Body =
                 Body(
-                    checkRequired("configData", configData),
-                    checkRequired("credentials", credentials),
                     checkRequired("destination", destination),
-                    checkRequired("destinationId", destinationId),
-                    checkRequired("entityId", entityId),
                     checkRequired("entityType", entityType),
-                    checkRequired("integrationCredentialsId", integrationCredentialsId),
-                    checkRequired("name", name),
+                    configData,
+                    credentials,
+                    destinationId,
+                    entityId,
+                    integrationCredentialsId,
+                    name,
                     version,
                     additionalProperties.toMutableMap(),
                 )
@@ -1017,12 +993,12 @@ private constructor(
                 return@apply
             }
 
-            configData().validate()
-            credentials().validate()
             destination()
+            entityType()
+            configData().ifPresent { it.validate() }
+            credentials().ifPresent { it.validate() }
             destinationId()
             entityId()
-            entityType()
             integrationCredentialsId()
             name()
             version()
@@ -1045,12 +1021,12 @@ private constructor(
          */
         @JvmSynthetic
         internal fun validity(): Int =
-            (configData.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (destination.asKnown().isPresent) 1 else 0) +
+                (if (entityType.asKnown().isPresent) 1 else 0) +
+                (configData.asKnown().getOrNull()?.validity() ?: 0) +
                 (credentials.asKnown().getOrNull()?.validity() ?: 0) +
-                (if (destination.asKnown().isPresent) 1 else 0) +
                 (if (destinationId.asKnown().isPresent) 1 else 0) +
                 (if (entityId.asKnown().isPresent) 1 else 0) +
-                (if (entityType.asKnown().isPresent) 1 else 0) +
                 (if (integrationCredentialsId.asKnown().isPresent) 1 else 0) +
                 (if (name.asKnown().isPresent) 1 else 0) +
                 (if (version.asKnown().isPresent) 1 else 0)
@@ -1061,12 +1037,12 @@ private constructor(
             }
 
             return other is Body &&
+                destination == other.destination &&
+                entityType == other.entityType &&
                 configData == other.configData &&
                 credentials == other.credentials &&
-                destination == other.destination &&
                 destinationId == other.destinationId &&
                 entityId == other.entityId &&
-                entityType == other.entityType &&
                 integrationCredentialsId == other.integrationCredentialsId &&
                 name == other.name &&
                 version == other.version &&
@@ -1075,12 +1051,12 @@ private constructor(
 
         private val hashCode: Int by lazy {
             Objects.hash(
+                destination,
+                entityType,
                 configData,
                 credentials,
-                destination,
                 destinationId,
                 entityId,
-                entityType,
                 integrationCredentialsId,
                 name,
                 version,
@@ -1091,7 +1067,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{configData=$configData, credentials=$credentials, destination=$destination, destinationId=$destinationId, entityId=$entityId, entityType=$entityType, integrationCredentialsId=$integrationCredentialsId, name=$name, version=$version, additionalProperties=$additionalProperties}"
+            "Body{destination=$destination, entityType=$entityType, configData=$configData, credentials=$credentials, destinationId=$destinationId, entityId=$entityId, integrationCredentialsId=$integrationCredentialsId, name=$name, version=$version, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -1529,6 +1505,14 @@ private constructor(
 
                 @JvmField val STRIPE_SIGNED_REQUEST = of("STRIPE_SIGNED_REQUEST")
 
+                @JvmField val HUBSPOT_ACCESS_TOKEN = of("HUBSPOT_ACCESS_TOKEN")
+
+                @JvmField val HUBSPOT_CLIENT_SECRET = of("HUBSPOT_CLIENT_SECRET")
+
+                @JvmField val OPSGENIE_KEY = of("OPSGENIE_KEY")
+
+                @JvmField val SAP_BYD = of("SAP_BYD")
+
                 @JvmStatic fun of(value: String) = Type(JsonField.of(value))
             }
 
@@ -1543,6 +1527,10 @@ private constructor(
                 CHARGEBEE_AUTH,
                 M3TER_SERVICE_USER,
                 STRIPE_SIGNED_REQUEST,
+                HUBSPOT_ACCESS_TOKEN,
+                HUBSPOT_CLIENT_SECRET,
+                OPSGENIE_KEY,
+                SAP_BYD,
             }
 
             /**
@@ -1564,6 +1552,10 @@ private constructor(
                 CHARGEBEE_AUTH,
                 M3TER_SERVICE_USER,
                 STRIPE_SIGNED_REQUEST,
+                HUBSPOT_ACCESS_TOKEN,
+                HUBSPOT_CLIENT_SECRET,
+                OPSGENIE_KEY,
+                SAP_BYD,
                 /** An enum member indicating that [Type] was instantiated with an unknown value. */
                 _UNKNOWN,
             }
@@ -1586,6 +1578,10 @@ private constructor(
                     CHARGEBEE_AUTH -> Value.CHARGEBEE_AUTH
                     M3TER_SERVICE_USER -> Value.M3TER_SERVICE_USER
                     STRIPE_SIGNED_REQUEST -> Value.STRIPE_SIGNED_REQUEST
+                    HUBSPOT_ACCESS_TOKEN -> Value.HUBSPOT_ACCESS_TOKEN
+                    HUBSPOT_CLIENT_SECRET -> Value.HUBSPOT_CLIENT_SECRET
+                    OPSGENIE_KEY -> Value.OPSGENIE_KEY
+                    SAP_BYD -> Value.SAP_BYD
                     else -> Value._UNKNOWN
                 }
 
@@ -1609,6 +1605,10 @@ private constructor(
                     CHARGEBEE_AUTH -> Known.CHARGEBEE_AUTH
                     M3TER_SERVICE_USER -> Known.M3TER_SERVICE_USER
                     STRIPE_SIGNED_REQUEST -> Known.STRIPE_SIGNED_REQUEST
+                    HUBSPOT_ACCESS_TOKEN -> Known.HUBSPOT_ACCESS_TOKEN
+                    HUBSPOT_CLIENT_SECRET -> Known.HUBSPOT_CLIENT_SECRET
+                    OPSGENIE_KEY -> Known.OPSGENIE_KEY
+                    SAP_BYD -> Known.SAP_BYD
                     else -> throw M3terInvalidDataException("Unknown Type: $value")
                 }
 

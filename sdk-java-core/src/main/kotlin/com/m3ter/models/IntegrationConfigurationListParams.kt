@@ -18,6 +18,7 @@ import kotlin.jvm.optionals.getOrNull
 class IntegrationConfigurationListParams
 private constructor(
     private val orgId: String?,
+    private val destinationId: String?,
     private val nextToken: String?,
     private val pageSize: Int?,
     private val additionalHeaders: Headers,
@@ -26,6 +27,9 @@ private constructor(
 
     @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
+
+    /** optional filter for a specific destination */
+    fun destinationId(): Optional<String> = Optional.ofNullable(destinationId)
 
     /**
      * The `nextToken` for multi-page retrievals. It is used to fetch the next page of integration
@@ -59,6 +63,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var orgId: String? = null
+        private var destinationId: String? = null
         private var nextToken: String? = null
         private var pageSize: Int? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -68,6 +73,7 @@ private constructor(
         internal fun from(integrationConfigurationListParams: IntegrationConfigurationListParams) =
             apply {
                 orgId = integrationConfigurationListParams.orgId
+                destinationId = integrationConfigurationListParams.destinationId
                 nextToken = integrationConfigurationListParams.nextToken
                 pageSize = integrationConfigurationListParams.pageSize
                 additionalHeaders = integrationConfigurationListParams.additionalHeaders.toBuilder()
@@ -81,6 +87,13 @@ private constructor(
         /** Alias for calling [Builder.orgId] with `orgId.orElse(null)`. */
         @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
+
+        /** optional filter for a specific destination */
+        fun destinationId(destinationId: String?) = apply { this.destinationId = destinationId }
+
+        /** Alias for calling [Builder.destinationId] with `destinationId.orElse(null)`. */
+        fun destinationId(destinationId: Optional<String>) =
+            destinationId(destinationId.getOrNull())
 
         /**
          * The `nextToken` for multi-page retrievals. It is used to fetch the next page of
@@ -210,6 +223,7 @@ private constructor(
         fun build(): IntegrationConfigurationListParams =
             IntegrationConfigurationListParams(
                 orgId,
+                destinationId,
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -228,6 +242,7 @@ private constructor(
     override fun _queryParams(): QueryParams =
         QueryParams.builder()
             .apply {
+                destinationId?.let { put("destinationId", it) }
                 nextToken?.let { put("nextToken", it) }
                 pageSize?.let { put("pageSize", it.toString()) }
                 putAll(additionalQueryParams)
@@ -241,6 +256,7 @@ private constructor(
 
         return other is IntegrationConfigurationListParams &&
             orgId == other.orgId &&
+            destinationId == other.destinationId &&
             nextToken == other.nextToken &&
             pageSize == other.pageSize &&
             additionalHeaders == other.additionalHeaders &&
@@ -248,8 +264,15 @@ private constructor(
     }
 
     override fun hashCode(): Int =
-        Objects.hash(orgId, nextToken, pageSize, additionalHeaders, additionalQueryParams)
+        Objects.hash(
+            orgId,
+            destinationId,
+            nextToken,
+            pageSize,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
-        "IntegrationConfigurationListParams{orgId=$orgId, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "IntegrationConfigurationListParams{orgId=$orgId, destinationId=$destinationId, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -34,8 +34,8 @@ internal class WebhookServiceTest {
                     .orgId("orgId")
                     .credentials(
                         M3terSignedCredentialsRequest.builder()
-                            .apiKey("x")
-                            .secret("x")
+                            .apiKey("api key")
+                            .secret("api secret")
                             .type(M3terSignedCredentialsRequest.Type.M3TER_SIGNED_REQUEST)
                             .empty(true)
                             .version(0L)
@@ -90,8 +90,8 @@ internal class WebhookServiceTest {
                     .id("id")
                     .credentials(
                         M3terSignedCredentialsRequest.builder()
-                            .apiKey("x")
-                            .secret("x")
+                            .apiKey("api key")
+                            .secret("api secret")
                             .type(M3terSignedCredentialsRequest.Type.M3TER_SIGNED_REQUEST)
                             .empty(true)
                             .version(0L)
