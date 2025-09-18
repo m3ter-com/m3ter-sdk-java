@@ -7,6 +7,7 @@ import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.DownloadUrlResponse
+import com.m3ter.models.SubmitMeasurementsRequest
 import com.m3ter.models.SubmitMeasurementsResponse
 import com.m3ter.models.UsageGetFailedIngestDownloadUrlParams
 import com.m3ter.models.UsageQueryParams
@@ -150,6 +151,22 @@ interface UsageService {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): SubmitMeasurementsResponse
 
+    /** @see submit */
+    fun submit(
+        submitMeasurementsRequest: SubmitMeasurementsRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): SubmitMeasurementsResponse =
+        submit(
+            UsageSubmitParams.builder()
+                .submitMeasurementsRequest(submitMeasurementsRequest)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see submit */
+    fun submit(submitMeasurementsRequest: SubmitMeasurementsRequest): SubmitMeasurementsResponse =
+        submit(submitMeasurementsRequest, RequestOptions.none())
+
     /** A view of [UsageService] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
@@ -233,5 +250,25 @@ interface UsageService {
             params: UsageSubmitParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<SubmitMeasurementsResponse>
+
+        /** @see submit */
+        @MustBeClosed
+        fun submit(
+            submitMeasurementsRequest: SubmitMeasurementsRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<SubmitMeasurementsResponse> =
+            submit(
+                UsageSubmitParams.builder()
+                    .submitMeasurementsRequest(submitMeasurementsRequest)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see submit */
+        @MustBeClosed
+        fun submit(
+            submitMeasurementsRequest: SubmitMeasurementsRequest
+        ): HttpResponseFor<SubmitMeasurementsResponse> =
+            submit(submitMeasurementsRequest, RequestOptions.none())
     }
 }

@@ -6,6 +6,7 @@ import com.google.errorprone.annotations.MustBeClosed
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
+import com.m3ter.models.OrganizationConfigRequest
 import com.m3ter.models.OrganizationConfigResponse
 import com.m3ter.models.OrganizationConfigRetrieveParams
 import com.m3ter.models.OrganizationConfigUpdateParams
@@ -52,6 +53,22 @@ interface OrganizationConfigService {
         params: OrganizationConfigUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): OrganizationConfigResponse
+
+    /** @see update */
+    fun update(
+        organizationConfigRequest: OrganizationConfigRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): OrganizationConfigResponse =
+        update(
+            OrganizationConfigUpdateParams.builder()
+                .organizationConfigRequest(organizationConfigRequest)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see update */
+    fun update(organizationConfigRequest: OrganizationConfigRequest): OrganizationConfigResponse =
+        update(organizationConfigRequest, RequestOptions.none())
 
     /**
      * A view of [OrganizationConfigService] that provides access to raw HTTP responses for each
@@ -109,5 +126,25 @@ interface OrganizationConfigService {
             params: OrganizationConfigUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): HttpResponseFor<OrganizationConfigResponse>
+
+        /** @see update */
+        @MustBeClosed
+        fun update(
+            organizationConfigRequest: OrganizationConfigRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<OrganizationConfigResponse> =
+            update(
+                OrganizationConfigUpdateParams.builder()
+                    .organizationConfigRequest(organizationConfigRequest)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see update */
+        @MustBeClosed
+        fun update(
+            organizationConfigRequest: OrganizationConfigRequest
+        ): HttpResponseFor<OrganizationConfigResponse> =
+            update(organizationConfigRequest, RequestOptions.none())
     }
 }
