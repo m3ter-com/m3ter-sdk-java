@@ -6,6 +6,7 @@ import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
 import com.m3ter.models.DownloadUrlResponse
+import com.m3ter.models.SubmitMeasurementsRequest
 import com.m3ter.models.SubmitMeasurementsResponse
 import com.m3ter.models.UsageGetFailedIngestDownloadUrlParams
 import com.m3ter.models.UsageQueryParams
@@ -154,6 +155,24 @@ interface UsageServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<SubmitMeasurementsResponse>
 
+    /** @see submit */
+    fun submit(
+        submitMeasurementsRequest: SubmitMeasurementsRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<SubmitMeasurementsResponse> =
+        submit(
+            UsageSubmitParams.builder()
+                .submitMeasurementsRequest(submitMeasurementsRequest)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see submit */
+    fun submit(
+        submitMeasurementsRequest: SubmitMeasurementsRequest
+    ): CompletableFuture<SubmitMeasurementsResponse> =
+        submit(submitMeasurementsRequest, RequestOptions.none())
+
     /** A view of [UsageServiceAsync] that provides access to raw HTTP responses for each method. */
     interface WithRawResponse {
 
@@ -235,5 +254,23 @@ interface UsageServiceAsync {
             params: UsageSubmitParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<SubmitMeasurementsResponse>>
+
+        /** @see submit */
+        fun submit(
+            submitMeasurementsRequest: SubmitMeasurementsRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<SubmitMeasurementsResponse>> =
+            submit(
+                UsageSubmitParams.builder()
+                    .submitMeasurementsRequest(submitMeasurementsRequest)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see submit */
+        fun submit(
+            submitMeasurementsRequest: SubmitMeasurementsRequest
+        ): CompletableFuture<HttpResponseFor<SubmitMeasurementsResponse>> =
+            submit(submitMeasurementsRequest, RequestOptions.none())
     }
 }

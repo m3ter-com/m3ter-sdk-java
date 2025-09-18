@@ -5,6 +5,7 @@ package com.m3ter.services.async
 import com.m3ter.core.ClientOptions
 import com.m3ter.core.RequestOptions
 import com.m3ter.core.http.HttpResponseFor
+import com.m3ter.models.OrganizationConfigRequest
 import com.m3ter.models.OrganizationConfigResponse
 import com.m3ter.models.OrganizationConfigRetrieveParams
 import com.m3ter.models.OrganizationConfigUpdateParams
@@ -54,6 +55,24 @@ interface OrganizationConfigServiceAsync {
         params: OrganizationConfigUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CompletableFuture<OrganizationConfigResponse>
+
+    /** @see update */
+    fun update(
+        organizationConfigRequest: OrganizationConfigRequest,
+        requestOptions: RequestOptions = RequestOptions.none(),
+    ): CompletableFuture<OrganizationConfigResponse> =
+        update(
+            OrganizationConfigUpdateParams.builder()
+                .organizationConfigRequest(organizationConfigRequest)
+                .build(),
+            requestOptions,
+        )
+
+    /** @see update */
+    fun update(
+        organizationConfigRequest: OrganizationConfigRequest
+    ): CompletableFuture<OrganizationConfigResponse> =
+        update(organizationConfigRequest, RequestOptions.none())
 
     /**
      * A view of [OrganizationConfigServiceAsync] that provides access to raw HTTP responses for
@@ -109,5 +128,23 @@ interface OrganizationConfigServiceAsync {
             params: OrganizationConfigUpdateParams,
             requestOptions: RequestOptions = RequestOptions.none(),
         ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>>
+
+        /** @see update */
+        fun update(
+            organizationConfigRequest: OrganizationConfigRequest,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> =
+            update(
+                OrganizationConfigUpdateParams.builder()
+                    .organizationConfigRequest(organizationConfigRequest)
+                    .build(),
+                requestOptions,
+            )
+
+        /** @see update */
+        fun update(
+            organizationConfigRequest: OrganizationConfigRequest
+        ): CompletableFuture<HttpResponseFor<OrganizationConfigResponse>> =
+            update(organizationConfigRequest, RequestOptions.none())
     }
 }
