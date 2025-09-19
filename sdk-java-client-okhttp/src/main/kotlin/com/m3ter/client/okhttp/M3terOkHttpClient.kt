@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import com.m3ter.client.M3terClient
 import com.m3ter.client.M3terClientImpl
 import com.m3ter.core.ClientOptions
+import com.m3ter.core.Sleeper
 import com.m3ter.core.Timeout
 import com.m3ter.core.http.AsyncStreamResponse
 import com.m3ter.core.http.Headers
@@ -132,6 +133,17 @@ class M3terOkHttpClient private constructor() {
         fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
             clientOptions.streamHandlerExecutor(streamHandlerExecutor)
         }
+
+        /**
+         * The interface to use for delaying execution, like during retries.
+         *
+         * This is primarily useful for using fake delays in tests.
+         *
+         * Defaults to real execution delays.
+         *
+         * This class takes ownership of the sleeper and closes it when closed.
+         */
+        fun sleeper(sleeper: Sleeper) = apply { clientOptions.sleeper(sleeper) }
 
         /**
          * The clock to use for operations that require timing, like retries.
