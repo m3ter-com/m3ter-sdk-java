@@ -14,9 +14,9 @@ import kotlin.jvm.optionals.getOrNull
  * the list returned by date, Account ID, or Counter ID.
  *
  * **CONSTRAINTS:**
- * - The `counterId` query parameter is always required when calling this endpoint, used either as a
+ * * The `counterId` query parameter is always required when calling this endpoint, used either as a
  *   single query parameter or in combination with any of the other query parameters.
- * - If you want to use the `date`, `dateStart`, or `dateEnd` query parameters, you must also use
+ * * If you want to use the `date`, `dateStart`, or `dateEnd` query parameters, you must also use
  *   the `accountId` query parameter.
  */
 class CounterAdjustmentListParams

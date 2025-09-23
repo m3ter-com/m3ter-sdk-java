@@ -11,7 +11,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieve a Data Export Schedule for the given UUID. Each Schedule can be configured for exporting
- * _only one_ of either Usage or Operational data.
+ * *only one* of either Usage or Operational data.
  */
 class DataExportScheduleRetrieveParams
 private constructor(

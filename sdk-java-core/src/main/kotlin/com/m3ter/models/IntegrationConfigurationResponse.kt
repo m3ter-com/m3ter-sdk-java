@@ -117,8 +117,8 @@ private constructor(
 
     /**
      * The type of entity the integration run is for. Two options:
-     * - Bill
-     * - Notification
+     * * Bill
+     * * Notification
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -140,7 +140,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The date and time the integration was completed. _(in ISO-8601 format)_.
+     * The date and time the integration was completed. *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -148,7 +148,7 @@ private constructor(
     fun dtCompleted(): Optional<OffsetDateTime> = dtCompleted.getOptional("dtCompleted")
 
     /**
-     * The DateTime when this item was created _(in ISO-8601 format)_.
+     * The DateTime when this item was created *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -156,7 +156,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when this item was last modified _(in ISO-8601 format)_.
+     * The DateTime when this item was last modified *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -164,7 +164,7 @@ private constructor(
     fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
-     * The date and time the integration run was started _(in ISO-8601 format)_.
+     * The date and time the integration run was started *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -437,8 +437,8 @@ private constructor(
 
         /**
          * The type of entity the integration run is for. Two options:
-         * - Bill
-         * - Notification
+         * * Bill
+         * * Notification
          */
         fun entityType(entityType: String) = entityType(JsonField.of(entityType))
 
@@ -473,7 +473,7 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The date and time the integration was completed. _(in ISO-8601 format)_. */
+        /** The date and time the integration was completed. *(in ISO-8601 format)*. */
         fun dtCompleted(dtCompleted: OffsetDateTime) = dtCompleted(JsonField.of(dtCompleted))
 
         /**
@@ -487,7 +487,7 @@ private constructor(
             this.dtCompleted = dtCompleted
         }
 
-        /** The DateTime when this item was created _(in ISO-8601 format)_. */
+        /** The DateTime when this item was created *(in ISO-8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -499,7 +499,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+        /** The DateTime when this item was last modified *(in ISO-8601 format)*. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -514,7 +514,7 @@ private constructor(
             this.dtLastModified = dtLastModified
         }
 
-        /** The date and time the integration run was started _(in ISO-8601 format)_. */
+        /** The date and time the integration run was started *(in ISO-8601 format)*. */
         fun dtStarted(dtStarted: OffsetDateTime) = dtStarted(JsonField.of(dtStarted))
 
         /**

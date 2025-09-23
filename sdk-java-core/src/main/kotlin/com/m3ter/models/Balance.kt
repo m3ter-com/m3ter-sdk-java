@@ -237,7 +237,7 @@ private constructor(
     fun description(): Optional<String> = description.getOptional("description")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the Balance was first created.
+     * The date and time *(in ISO 8601 format)* when the Balance was first created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -245,7 +245,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the Balance was last modified.
+     * The date and time *(in ISO 8601 format)* when the Balance was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -253,7 +253,7 @@ private constructor(
     fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
-     * The date _(in ISO 8601 format)_ after which the Balance will no longer be active.
+     * The date *(in ISO 8601 format)* after which the Balance will no longer be active.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -301,7 +301,7 @@ private constructor(
         overageDescription.getOptional("overageDescription")
 
     /**
-     * The percentage surcharge applied to overage charges _(usage above the Balance)_.
+     * The percentage surcharge applied to overage charges *(usage above the Balance)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -329,7 +329,7 @@ private constructor(
     fun rolloverAmount(): Optional<Double> = rolloverAmount.getOptional("rolloverAmount")
 
     /**
-     * The end date _(in ISO 8601 format)_ for the rollover grace period, which is the period that
+     * The end date *(in ISO 8601 format)* for the rollover grace period, which is the period that
      * unused Balance amounts can be carried over beyond the specified Balance `endDate` and
      * continue to be drawn-down against for billing.
      *
@@ -339,7 +339,7 @@ private constructor(
     fun rolloverEndDate(): Optional<OffsetDateTime> = rolloverEndDate.getOptional("rolloverEndDate")
 
     /**
-     * The date _(in ISO 8601 format)_ when the Balance becomes active.
+     * The date *(in ISO 8601 format)* when the Balance becomes active.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -796,7 +796,7 @@ private constructor(
          */
         fun description(description: JsonField<String>) = apply { this.description = description }
 
-        /** The date and time _(in ISO 8601 format)_ when the Balance was first created. */
+        /** The date and time *(in ISO 8601 format)* when the Balance was first created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -808,7 +808,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The date and time _(in ISO 8601 format)_ when the Balance was last modified. */
+        /** The date and time *(in ISO 8601 format)* when the Balance was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -823,7 +823,7 @@ private constructor(
             this.dtLastModified = dtLastModified
         }
 
-        /** The date _(in ISO 8601 format)_ after which the Balance will no longer be active. */
+        /** The date *(in ISO 8601 format)* after which the Balance will no longer be active. */
         fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
         /**
@@ -919,7 +919,7 @@ private constructor(
             this.overageDescription = overageDescription
         }
 
-        /** The percentage surcharge applied to overage charges _(usage above the Balance)_. */
+        /** The percentage surcharge applied to overage charges *(usage above the Balance)*. */
         fun overageSurchargePercent(overageSurchargePercent: Double) =
             overageSurchargePercent(JsonField.of(overageSurchargePercent))
 
@@ -982,7 +982,7 @@ private constructor(
         }
 
         /**
-         * The end date _(in ISO 8601 format)_ for the rollover grace period, which is the period
+         * The end date *(in ISO 8601 format)* for the rollover grace period, which is the period
          * that unused Balance amounts can be carried over beyond the specified Balance `endDate`
          * and continue to be drawn-down against for billing.
          */
@@ -1000,7 +1000,7 @@ private constructor(
             this.rolloverEndDate = rolloverEndDate
         }
 
-        /** The date _(in ISO 8601 format)_ when the Balance becomes active. */
+        /** The date *(in ISO 8601 format)* when the Balance becomes active. */
         fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
         /**

@@ -64,7 +64,7 @@ private constructor(
     fun contactNumber(): Optional<String> = body.contactNumber()
 
     /**
-     * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no end
+     * The date when access will end for the user *(in ISO-8601 format)*. Leave blank for no end
      * date, which gives the user permanent access.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -73,7 +73,7 @@ private constructor(
     fun dtEndAccess(): Optional<OffsetDateTime> = body.dtEndAccess()
 
     /**
-     * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user can
+     * The date when the invite expires *(in ISO-8601 format)*. After this date the invited user can
      * no longer accept the invite. By default, any invite is valid for 30 days from the date the
      * invite is sent.
      *
@@ -274,7 +274,7 @@ private constructor(
         }
 
         /**
-         * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no end
+         * The date when access will end for the user *(in ISO-8601 format)*. Leave blank for no end
          * date, which gives the user permanent access.
          */
         fun dtEndAccess(dtEndAccess: OffsetDateTime) = apply { body.dtEndAccess(dtEndAccess) }
@@ -291,7 +291,7 @@ private constructor(
         }
 
         /**
-         * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user
+         * The date when the invite expires *(in ISO-8601 format)*. After this date the invited user
          * can no longer accept the invite. By default, any invite is valid for 30 days from the
          * date the invite is sent.
          */
@@ -585,7 +585,7 @@ private constructor(
         fun contactNumber(): Optional<String> = contactNumber.getOptional("contactNumber")
 
         /**
-         * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no end
+         * The date when access will end for the user *(in ISO-8601 format)*. Leave blank for no end
          * date, which gives the user permanent access.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -594,7 +594,7 @@ private constructor(
         fun dtEndAccess(): Optional<OffsetDateTime> = dtEndAccess.getOptional("dtEndAccess")
 
         /**
-         * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user
+         * The date when the invite expires *(in ISO-8601 format)*. After this date the invited user
          * can no longer accept the invite. By default, any invite is valid for 30 days from the
          * date the invite is sent.
          *
@@ -801,7 +801,7 @@ private constructor(
             }
 
             /**
-             * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no
+             * The date when access will end for the user *(in ISO-8601 format)*. Leave blank for no
              * end date, which gives the user permanent access.
              */
             fun dtEndAccess(dtEndAccess: OffsetDateTime) = dtEndAccess(JsonField.of(dtEndAccess))
@@ -818,7 +818,7 @@ private constructor(
             }
 
             /**
-             * The date when the invite expires _(in ISO-8601 format)_. After this date the invited
+             * The date when the invite expires *(in ISO-8601 format)*. After this date the invited
              * user can no longer accept the invite. By default, any invite is valid for 30 days
              * from the date the invite is sent.
              */

@@ -56,7 +56,7 @@ private constructor(
     fun billingEntities(): List<BillingEntity> = body.billingEntities()
 
     /**
-     * The end date and time applied to the specified billing entities _(in ISO 8601 format)_.
+     * The end date and time applied to the specified billing entities *(in ISO 8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -65,7 +65,7 @@ private constructor(
 
     /**
      * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
-     * end-date to be applied to any billing entities associated with Child Accounts. _(Optional)_
+     * end-date to be applied to any billing entities associated with Child Accounts. *(Optional)*
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -192,7 +192,7 @@ private constructor(
         }
 
         /**
-         * The end date and time applied to the specified billing entities _(in ISO 8601 format)_.
+         * The end date and time applied to the specified billing entities *(in ISO 8601 format)*.
          */
         fun endDate(endDate: OffsetDateTime) = apply { body.endDate(endDate) }
 
@@ -208,7 +208,7 @@ private constructor(
         /**
          * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
          * end-date to be applied to any billing entities associated with Child Accounts.
-         * _(Optional)_
+         * *(Optional)*
          */
         fun applyToChildren(applyToChildren: Boolean) = apply {
             body.applyToChildren(applyToChildren)
@@ -410,7 +410,7 @@ private constructor(
         fun billingEntities(): List<BillingEntity> = billingEntities.getRequired("billingEntities")
 
         /**
-         * The end date and time applied to the specified billing entities _(in ISO 8601 format)_.
+         * The end date and time applied to the specified billing entities *(in ISO 8601 format)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -420,7 +420,7 @@ private constructor(
         /**
          * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
          * end-date to be applied to any billing entities associated with Child Accounts.
-         * _(Optional)_
+         * *(Optional)*
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -528,8 +528,8 @@ private constructor(
             }
 
             /**
-             * The end date and time applied to the specified billing entities _(in ISO 8601
-             * format)_.
+             * The end date and time applied to the specified billing entities *(in ISO 8601
+             * format)*.
              */
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
@@ -545,7 +545,7 @@ private constructor(
             /**
              * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
              * end-date to be applied to any billing entities associated with Child Accounts.
-             * _(Optional)_
+             * *(Optional)*
              */
             fun applyToChildren(applyToChildren: Boolean) =
                 applyToChildren(JsonField.of(applyToChildren))

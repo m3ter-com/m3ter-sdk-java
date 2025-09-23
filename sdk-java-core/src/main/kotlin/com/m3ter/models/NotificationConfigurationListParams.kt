@@ -34,14 +34,14 @@ private constructor(
 
     /**
      * A Boolean flag indicating whether to retrieve only active or only inactive Notifications.
-     * - **TRUE** - only active Notifications are returned.
-     * - **FALSE** - only inactive Notifications are returned.
+     * * **TRUE** - only active Notifications are returned.
+     * * **FALSE** - only inactive Notifications are returned.
      */
     fun active(): Optional<Boolean> = Optional.ofNullable(active)
 
     /**
      * Use this to filter the Notifications returned - only those Notifications that are based on
-     * the _Event type_ specified by `eventName` are returned.
+     * the *Event type* specified by `eventName` are returned.
      */
     fun eventName(): Optional<String> = Optional.ofNullable(eventName)
 
@@ -112,8 +112,8 @@ private constructor(
 
         /**
          * A Boolean flag indicating whether to retrieve only active or only inactive Notifications.
-         * - **TRUE** - only active Notifications are returned.
-         * - **FALSE** - only inactive Notifications are returned.
+         * * **TRUE** - only active Notifications are returned.
+         * * **FALSE** - only inactive Notifications are returned.
          */
         fun active(active: Boolean?) = apply { this.active = active }
 
@@ -129,7 +129,7 @@ private constructor(
 
         /**
          * Use this to filter the Notifications returned - only those Notifications that are based
-         * on the _Event type_ specified by `eventName` are returned.
+         * on the *Event type* specified by `eventName` are returned.
          */
         fun eventName(eventName: String?) = apply { this.eventName = eventName }
 

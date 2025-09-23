@@ -33,8 +33,8 @@ private constructor(
     /**
      * Boolean filter to retrieve only active BillJobs and exclude completed or cancelled BillJobs
      * from the results.
-     * - TRUE - only active BillJobs.
-     * - FALSE - all BillJobs including completed and cancelled BillJobs.
+     * * TRUE - only active BillJobs.
+     * * FALSE - all BillJobs including completed and cancelled BillJobs.
      */
     fun active(): Optional<String> = Optional.ofNullable(active)
 
@@ -52,11 +52,11 @@ private constructor(
      * current processing status.
      *
      * Possible states are:
-     * - PENDING
-     * - INITIALIZING
-     * - RUNNING
-     * - COMPLETE
-     * - CANCELLED
+     * * PENDING
+     * * INITIALIZING
+     * * RUNNING
+     * * COMPLETE
+     * * CANCELLED
      */
     fun status(): Optional<String> = Optional.ofNullable(status)
 
@@ -108,8 +108,8 @@ private constructor(
         /**
          * Boolean filter to retrieve only active BillJobs and exclude completed or cancelled
          * BillJobs from the results.
-         * - TRUE - only active BillJobs.
-         * - FALSE - all BillJobs including completed and cancelled BillJobs.
+         * * TRUE - only active BillJobs.
+         * * FALSE - all BillJobs including completed and cancelled BillJobs.
          */
         fun active(active: String?) = apply { this.active = active }
 
@@ -143,11 +143,11 @@ private constructor(
          * their current processing status.
          *
          * Possible states are:
-         * - PENDING
-         * - INITIALIZING
-         * - RUNNING
-         * - COMPLETE
-         * - CANCELLED
+         * * PENDING
+         * * INITIALIZING
+         * * RUNNING
+         * * COMPLETE
+         * * CANCELLED
          */
         fun status(status: String?) = apply { this.status = status }
 

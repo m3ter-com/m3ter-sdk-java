@@ -312,7 +312,7 @@ private constructor(
     fun chargeId(): Optional<String> = chargeId.getOptional("chargeId")
 
     /**
-     * The unique identifier (UUID) of the Commitment _(if this is used)_.
+     * The unique identifier (UUID) of the Commitment *(if this is used)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -337,7 +337,7 @@ private constructor(
     fun contractId(): Optional<String> = contractId.getOptional("contractId")
 
     /**
-     * The currency conversion rate _(if used)_ for the line item.
+     * The currency conversion rate *(if used)* for the line item.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -392,7 +392,7 @@ private constructor(
     fun description(): Optional<String> = description.getOptional("description")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the Bill line item was first created.
+     * The date and time *(in ISO 8601 format)* when the Bill line item was first created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -400,7 +400,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the Bill line item was last modified.
+     * The date and time *(in ISO 8601 format)* when the Bill line item was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -554,7 +554,7 @@ private constructor(
     fun sequenceNumber(): Optional<Int> = sequenceNumber.getOptional("sequenceNumber")
 
     /**
-     * The _(exclusive)_ end date for the service period in ISO 68601 format.
+     * The *(exclusive)* end date for the service period in ISO 68601 format.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -563,7 +563,7 @@ private constructor(
         servicePeriodEndDate.getOptional("servicePeriodEndDate")
 
     /**
-     * The _(inclusive)_ start date for the service period in ISO 8601 format.
+     * The *(inclusive)* start date for the service period in ISO 8601 format.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -572,8 +572,8 @@ private constructor(
         servicePeriodStartDate.getOptional("servicePeriodStartDate")
 
     /**
-     * The subtotal amount when not currency converted _(in the cases where currency conversion is
-     * required)_.
+     * The subtotal amount when not currency converted *(in the cases where currency conversion is
+     * required)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -1276,7 +1276,7 @@ private constructor(
          */
         fun chargeId(chargeId: JsonField<String>) = apply { this.chargeId = chargeId }
 
-        /** The unique identifier (UUID) of the Commitment _(if this is used)_. */
+        /** The unique identifier (UUID) of the Commitment *(if this is used)*. */
         fun commitmentId(commitmentId: String) = commitmentId(JsonField.of(commitmentId))
 
         /**
@@ -1317,7 +1317,7 @@ private constructor(
          */
         fun contractId(contractId: JsonField<String>) = apply { this.contractId = contractId }
 
-        /** The currency conversion rate _(if used)_ for the line item. */
+        /** The currency conversion rate *(if used)* for the line item. */
         fun conversionRate(conversionRate: Double) = conversionRate(JsonField.of(conversionRate))
 
         /**
@@ -1409,7 +1409,7 @@ private constructor(
          */
         fun description(description: JsonField<String>) = apply { this.description = description }
 
-        /** The date and time _(in ISO 8601 format)_ when the Bill line item was first created. */
+        /** The date and time *(in ISO 8601 format)* when the Bill line item was first created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -1421,7 +1421,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The date and time _(in ISO 8601 format)_ when the Bill line item was last modified. */
+        /** The date and time *(in ISO 8601 format)* when the Bill line item was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -1673,7 +1673,7 @@ private constructor(
             this.sequenceNumber = sequenceNumber
         }
 
-        /** The _(exclusive)_ end date for the service period in ISO 68601 format. */
+        /** The *(exclusive)* end date for the service period in ISO 68601 format. */
         fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
             servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
 
@@ -1688,7 +1688,7 @@ private constructor(
             this.servicePeriodEndDate = servicePeriodEndDate
         }
 
-        /** The _(inclusive)_ start date for the service period in ISO 8601 format. */
+        /** The *(inclusive)* start date for the service period in ISO 8601 format. */
         fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) =
             servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
 
@@ -1704,8 +1704,8 @@ private constructor(
         }
 
         /**
-         * The subtotal amount when not currency converted _(in the cases where currency conversion
-         * is required)_.
+         * The subtotal amount when not currency converted *(in the cases where currency conversion
+         * is required)*.
          */
         fun subtotal(subtotal: Double) = subtotal(JsonField.of(subtotal))
 
@@ -2174,7 +2174,7 @@ private constructor(
         fun fixedPrice(): Optional<Double> = fixedPrice.getOptional("fixedPrice")
 
         /**
-         * The lower limit _(start)_ of the pricing band.
+         * The lower limit *(start)* of the pricing band.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -2428,7 +2428,7 @@ private constructor(
              */
             fun fixedPrice(fixedPrice: JsonField<Double>) = apply { this.fixedPrice = fixedPrice }
 
-            /** The lower limit _(start)_ of the pricing band. */
+            /** The lower limit *(start)* of the pricing band. */
             fun lowerLimit(lowerLimit: Double) = lowerLimit(JsonField.of(lowerLimit))
 
             /**

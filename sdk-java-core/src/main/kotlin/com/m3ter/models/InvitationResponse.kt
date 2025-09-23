@@ -97,8 +97,8 @@ private constructor(
 
     /**
      * Boolean indicating whether the user has accepted the invitation.
-     * - TRUE - the invite has been accepted.
-     * - FALSE - the invite has not yet been accepted.
+     * * TRUE - the invite has been accepted.
+     * * FALSE - the invite has not yet been accepted.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -106,7 +106,7 @@ private constructor(
     fun accepted(): Boolean = accepted.getRequired("accepted")
 
     /**
-     * The date that access will end for the user _(in ISO-8601 format)_. If this is blank, there is
+     * The date that access will end for the user *(in ISO-8601 format)*. If this is blank, there is
      * no end date meaning that the user has permanent access.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -115,7 +115,7 @@ private constructor(
     fun dtEndAccess(): OffsetDateTime = dtEndAccess.getRequired("dtEndAccess")
 
     /**
-     * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user can
+     * The date when the invite expires *(in ISO-8601 format)*. After this date the invited user can
      * no longer accept the invite. By default, any invite is valid for 30 days from the date the
      * invite is sent.
      *
@@ -182,7 +182,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The DateTime when the invitation was created _(in ISO-8601 format)_.
+     * The DateTime when the invitation was created *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -190,7 +190,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when the invitation was last modified _(in ISO-8601 format)_.
+     * The DateTime when the invitation was last modified *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -402,8 +402,8 @@ private constructor(
 
         /**
          * Boolean indicating whether the user has accepted the invitation.
-         * - TRUE - the invite has been accepted.
-         * - FALSE - the invite has not yet been accepted.
+         * * TRUE - the invite has been accepted.
+         * * FALSE - the invite has not yet been accepted.
          */
         fun accepted(accepted: Boolean) = accepted(JsonField.of(accepted))
 
@@ -417,7 +417,7 @@ private constructor(
         fun accepted(accepted: JsonField<Boolean>) = apply { this.accepted = accepted }
 
         /**
-         * The date that access will end for the user _(in ISO-8601 format)_. If this is blank,
+         * The date that access will end for the user *(in ISO-8601 format)*. If this is blank,
          * there is no end date meaning that the user has permanent access.
          */
         fun dtEndAccess(dtEndAccess: OffsetDateTime) = dtEndAccess(JsonField.of(dtEndAccess))
@@ -434,7 +434,7 @@ private constructor(
         }
 
         /**
-         * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user
+         * The date when the invite expires *(in ISO-8601 format)*. After this date the invited user
          * can no longer accept the invite. By default, any invite is valid for 30 days from the
          * date the invite is sent.
          */
@@ -552,7 +552,7 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The DateTime when the invitation was created _(in ISO-8601 format)_. */
+        /** The DateTime when the invitation was created *(in ISO-8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -564,7 +564,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when the invitation was last modified _(in ISO-8601 format)_. */
+        /** The DateTime when the invitation was last modified *(in ISO-8601 format)*. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 

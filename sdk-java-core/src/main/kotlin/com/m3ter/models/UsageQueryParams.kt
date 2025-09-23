@@ -28,20 +28,20 @@ import kotlin.jvm.optionals.getOrNull
  * Query and filter usage data collected for your Organization.
  *
  * You can use several parameters to filter the range of usage data returned:
- * - **Time period.** Use `startDate` and `endDate` to define a period. The query references the
+ * * **Time period.** Use `startDate` and `endDate` to define a period. The query references the
  *   `timestamp` values of usage data submissions for applying the defined time period, and not the
  *   time submissions were `receivedAt` by the platform. Only usage data with a `timestamp` that
  *   falls in the defined time period are returned.(Required)
- * - **Meters.** Specify the Meters you want the query to return data for.
- * - **Accounts.** Specify the Accounts you want the query to return data for.
- * - **Dimension Filters.** Specify values for Dimension data fields on included Meters. Only data
+ * * **Meters.** Specify the Meters you want the query to return data for.
+ * * **Accounts.** Specify the Accounts you want the query to return data for.
+ * * **Dimension Filters.** Specify values for Dimension data fields on included Meters. Only data
  *   that match the specified Dimension field values will be returned for the query.
  *
  * You can apply Aggregations functions to the usage data returned for the query. If you apply
  * Aggregations, you can select to group the data by:
- * - **Account**
- * - **Time**
- * - **Dimension**
+ * * **Account**
+ * * **Time**
+ * * **Dimension**
  */
 class UsageQueryParams
 private constructor(
@@ -64,13 +64,13 @@ private constructor(
 
     /**
      * Define the Aggregation functions you want to apply to data fields on included Meters:
-     * - **SUM**. Adds the values.
-     * - **MIN**. Uses the minimum value.
-     * - **MAX**. Uses the maximum value.
-     * - **COUNT**. Counts the number of values.
-     * - **LATEST**. Uses the most recent value.
-     * - **MEAN**. Uses the arithmetic mean of the values.
-     * - **UNIQUE**. Uses a count of the number of unique values.
+     * * **SUM**. Adds the values.
+     * * **MIN**. Uses the minimum value.
+     * * **MAX**. Uses the maximum value.
+     * * **COUNT**. Counts the number of values.
+     * * **LATEST**. Uses the most recent value.
+     * * **MEAN**. Uses the arithmetic mean of the values.
+     * * **UNIQUE**. Uses a count of the number of unique values.
      *
      * **NOTE!** The Aggregation functions that can be applied depend on the data field type:
      * - **Measure** fields. `SUM`, `MIN`, `MAX`, `COUNT`, `LATEST`, or `MEAN` functions can be
@@ -94,7 +94,7 @@ private constructor(
     fun dimensionFilters(): Optional<List<DimensionFilter>> = body.dimensionFilters()
 
     /**
-     * The exclusive end date to define a time period to filter by. (_ISO 8601 formatted_)
+     * The exclusive end date to define a time period to filter by. (*ISO 8601 formatted*)
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -134,7 +134,7 @@ private constructor(
     fun meterIds(): Optional<List<String>> = body.meterIds()
 
     /**
-     * The inclusive start date to define a time period to filter by. (_ISO 8601 formatted_)
+     * The inclusive start date to define a time period to filter by. (*ISO 8601 formatted*)
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -274,13 +274,13 @@ private constructor(
 
         /**
          * Define the Aggregation functions you want to apply to data fields on included Meters:
-         * - **SUM**. Adds the values.
-         * - **MIN**. Uses the minimum value.
-         * - **MAX**. Uses the maximum value.
-         * - **COUNT**. Counts the number of values.
-         * - **LATEST**. Uses the most recent value.
-         * - **MEAN**. Uses the arithmetic mean of the values.
-         * - **UNIQUE**. Uses a count of the number of unique values.
+         * * **SUM**. Adds the values.
+         * * **MIN**. Uses the minimum value.
+         * * **MAX**. Uses the maximum value.
+         * * **COUNT**. Counts the number of values.
+         * * **LATEST**. Uses the most recent value.
+         * * **MEAN**. Uses the arithmetic mean of the values.
+         * * **UNIQUE**. Uses a count of the number of unique values.
          *
          * **NOTE!** The Aggregation functions that can be applied depend on the data field type:
          * - **Measure** fields. `SUM`, `MIN`, `MAX`, `COUNT`, `LATEST`, or `MEAN` functions can be
@@ -339,7 +339,7 @@ private constructor(
             body.addDimensionFilter(dimensionFilter)
         }
 
-        /** The exclusive end date to define a time period to filter by. (_ISO 8601 formatted_) */
+        /** The exclusive end date to define a time period to filter by. (*ISO 8601 formatted*) */
         fun endDate(endDate: OffsetDateTime) = apply { body.endDate(endDate) }
 
         /**
@@ -413,7 +413,7 @@ private constructor(
          */
         fun addMeterId(meterId: String) = apply { body.addMeterId(meterId) }
 
-        /** The inclusive start date to define a time period to filter by. (_ISO 8601 formatted_) */
+        /** The inclusive start date to define a time period to filter by. (*ISO 8601 formatted*) */
         fun startDate(startDate: OffsetDateTime) = apply { body.startDate(startDate) }
 
         /**
@@ -627,13 +627,13 @@ private constructor(
 
         /**
          * Define the Aggregation functions you want to apply to data fields on included Meters:
-         * - **SUM**. Adds the values.
-         * - **MIN**. Uses the minimum value.
-         * - **MAX**. Uses the maximum value.
-         * - **COUNT**. Counts the number of values.
-         * - **LATEST**. Uses the most recent value.
-         * - **MEAN**. Uses the arithmetic mean of the values.
-         * - **UNIQUE**. Uses a count of the number of unique values.
+         * * **SUM**. Adds the values.
+         * * **MIN**. Uses the minimum value.
+         * * **MAX**. Uses the maximum value.
+         * * **COUNT**. Counts the number of values.
+         * * **LATEST**. Uses the most recent value.
+         * * **MEAN**. Uses the arithmetic mean of the values.
+         * * **UNIQUE**. Uses a count of the number of unique values.
          *
          * **NOTE!** The Aggregation functions that can be applied depend on the data field type:
          * - **Measure** fields. `SUM`, `MIN`, `MAX`, `COUNT`, `LATEST`, or `MEAN` functions can be
@@ -658,7 +658,7 @@ private constructor(
             dimensionFilters.getOptional("dimensionFilters")
 
         /**
-         * The exclusive end date to define a time period to filter by. (_ISO 8601 formatted_)
+         * The exclusive end date to define a time period to filter by. (*ISO 8601 formatted*)
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -699,7 +699,7 @@ private constructor(
         fun meterIds(): Optional<List<String>> = meterIds.getOptional("meterIds")
 
         /**
-         * The inclusive start date to define a time period to filter by. (_ISO 8601 formatted_)
+         * The inclusive start date to define a time period to filter by. (*ISO 8601 formatted*)
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -848,13 +848,13 @@ private constructor(
 
             /**
              * Define the Aggregation functions you want to apply to data fields on included Meters:
-             * - **SUM**. Adds the values.
-             * - **MIN**. Uses the minimum value.
-             * - **MAX**. Uses the maximum value.
-             * - **COUNT**. Counts the number of values.
-             * - **LATEST**. Uses the most recent value.
-             * - **MEAN**. Uses the arithmetic mean of the values.
-             * - **UNIQUE**. Uses a count of the number of unique values.
+             * * **SUM**. Adds the values.
+             * * **MIN**. Uses the minimum value.
+             * * **MAX**. Uses the maximum value.
+             * * **COUNT**. Counts the number of values.
+             * * **LATEST**. Uses the most recent value.
+             * * **MEAN**. Uses the arithmetic mean of the values.
+             * * **UNIQUE**. Uses a count of the number of unique values.
              *
              * **NOTE!** The Aggregation functions that can be applied depend on the data field
              * type:
@@ -921,7 +921,7 @@ private constructor(
             }
 
             /**
-             * The exclusive end date to define a time period to filter by. (_ISO 8601 formatted_)
+             * The exclusive end date to define a time period to filter by. (*ISO 8601 formatted*)
              */
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
@@ -1012,7 +1012,7 @@ private constructor(
             }
 
             /**
-             * The inclusive start date to define a time period to filter by. (_ISO 8601 formatted_)
+             * The inclusive start date to define a time period to filter by. (*ISO 8601 formatted*)
              */
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 

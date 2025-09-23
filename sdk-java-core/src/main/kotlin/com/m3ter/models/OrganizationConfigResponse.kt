@@ -183,8 +183,8 @@ private constructor(
         autoApproveBillsGracePeriodUnit.getOptional("autoApproveBillsGracePeriodUnit")
 
     /**
-     * Specifies whether to auto-generate statements once Bills are _approved_ or _locked_. It will
-     * not auto-generate if a bill is in _pending_ state.
+     * Specifies whether to auto-generate statements once Bills are *approved* or *locked*. It will
+     * not auto-generate if a bill is in *pending* state.
      *
      * The default value is **None**.
      * - **None**. Statements will not be auto-generated.
@@ -207,10 +207,10 @@ private constructor(
     fun billPrefix(): Optional<String> = billPrefix.getOptional("billPrefix")
 
     /**
-     * Specifies whether commitments _(prepayments)_ are billed in advance at the start of each
+     * Specifies whether commitments *(prepayments)* are billed in advance at the start of each
      * billing period, or billed in arrears at the end of each billing period.
-     * - **TRUE** - bill in advance _(start of each billing period)_.
-     * - **FALSE** - bill in arrears _(end of each billing period)_.
+     * * **TRUE** - bill in advance *(start of each billing period)*.
+     * * **FALSE** - bill in arrears *(end of each billing period)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -220,8 +220,8 @@ private constructor(
 
     /**
      * Specifies whether to consolidate different billing frequencies onto the same bill.
-     * - **TRUE** - consolidate different billing frequencies onto the same bill.
-     * - **FALSE** - bills are not consolidated.
+     * * **TRUE** - consolidate different billing frequencies onto the same bill.
+     * * **FALSE** - bills are not consolidated.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -271,7 +271,7 @@ private constructor(
         currencyConversions.getOptional("currencyConversions")
 
     /**
-     * The first bill date _(in ISO-8601 format)_ for daily billing periods.
+     * The first bill date *(in ISO-8601 format)* for daily billing periods.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -300,7 +300,7 @@ private constructor(
         defaultStatementDefinitionId.getOptional("defaultStatementDefinitionId")
 
     /**
-     * The DateTime when the organization config was created _(in ISO-8601 format)_.
+     * The DateTime when the organization config was created *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -308,7 +308,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when the organization config was last modified _(in ISO-8601 format)_.
+     * The DateTime when the organization config was last modified *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -333,8 +333,8 @@ private constructor(
     /**
      * Specifies whether minimum spend amounts are billed in advance at the start of each billing
      * period, or billed in arrears at the end of each billing period.
-     * - **TRUE** - bill in advance _(start of each billing period)_.
-     * - **FALSE** - bill in arrears _(end of each billing period)_.
+     * * **TRUE** - bill in advance *(start of each billing period)*.
+     * * **FALSE** - bill in arrears *(end of each billing period)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -343,7 +343,7 @@ private constructor(
         minimumSpendBillInAdvance.getOptional("minimumSpendBillInAdvance")
 
     /**
-     * The first bill date _(in ISO-8601 format)_ for monthly billing periods.
+     * The first bill date *(in ISO-8601 format)* for monthly billing periods.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -352,11 +352,11 @@ private constructor(
 
     /**
      * Specifies the required interval for updating bills.
-     * - **For portions of an hour (minutes)**. Two options: **0.25** (15 minutes) and **0.5** (30
+     * * **For portions of an hour (minutes)**. Two options: **0.25** (15 minutes) and **0.5** (30
      *   minutes).
-     * - **For full hours.** Eight possible values: **1**, **2**, **3**, **4**, **6**, **8**,
+     * * **For full hours.** Eight possible values: **1**, **2**, **3**, **4**, **6**, **8**,
      *   **12**, or **24**.
-     * - **Default.** The default is **0**, which disables scheduling.
+     * * **Default.** The default is **0**, which disables scheduling.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -377,8 +377,8 @@ private constructor(
     /**
      * Specifies whether the standing charge is billed in advance at the start of each billing
      * period, or billed in arrears at the end of each billing period.
-     * - **TRUE** - bill in advance _(start of each billing period)_.
-     * - **FALSE** - bill in arrears _(end of each billing period)_.
+     * * **TRUE** - bill in advance *(start of each billing period)*.
+     * * **FALSE** - bill in arrears *(end of each billing period)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -388,8 +388,8 @@ private constructor(
 
     /**
      * Specifies whether to supress generating bills that have no line items.
-     * - **TRUE** - prevents generating bills with no line items.
-     * - **FALSE** - bills are still generated even when they have no line items.
+     * * **TRUE** - prevents generating bills with no line items.
+     * * **FALSE** - bills are still generated even when they have no line items.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -417,7 +417,7 @@ private constructor(
     fun version(): Optional<Long> = version.getOptional("version")
 
     /**
-     * The first bill date _(in ISO-8601 format)_ for weekly billing periods.
+     * The first bill date *(in ISO-8601 format)* for weekly billing periods.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -425,7 +425,7 @@ private constructor(
     fun weekEpoch(): Optional<String> = weekEpoch.getOptional("weekEpoch")
 
     /**
-     * The first bill date _(in ISO-8601 format)_ for yearly billing periods.
+     * The first bill date *(in ISO-8601 format)* for yearly billing periods.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -823,8 +823,8 @@ private constructor(
         ) = apply { this.autoApproveBillsGracePeriodUnit = autoApproveBillsGracePeriodUnit }
 
         /**
-         * Specifies whether to auto-generate statements once Bills are _approved_ or _locked_. It
-         * will not auto-generate if a bill is in _pending_ state.
+         * Specifies whether to auto-generate statements once Bills are *approved* or *locked*. It
+         * will not auto-generate if a bill is in *pending* state.
          *
          * The default value is **None**.
          * - **None**. Statements will not be auto-generated.
@@ -861,10 +861,10 @@ private constructor(
         fun billPrefix(billPrefix: JsonField<String>) = apply { this.billPrefix = billPrefix }
 
         /**
-         * Specifies whether commitments _(prepayments)_ are billed in advance at the start of each
+         * Specifies whether commitments *(prepayments)* are billed in advance at the start of each
          * billing period, or billed in arrears at the end of each billing period.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * * **TRUE** - bill in advance *(start of each billing period)*.
+         * * **FALSE** - bill in arrears *(end of each billing period)*.
          */
         fun commitmentFeeBillInAdvance(commitmentFeeBillInAdvance: Boolean) =
             commitmentFeeBillInAdvance(JsonField.of(commitmentFeeBillInAdvance))
@@ -882,8 +882,8 @@ private constructor(
 
         /**
          * Specifies whether to consolidate different billing frequencies onto the same bill.
-         * - **TRUE** - consolidate different billing frequencies onto the same bill.
-         * - **FALSE** - bills are not consolidated.
+         * * **TRUE** - consolidate different billing frequencies onto the same bill.
+         * * **FALSE** - bills are not consolidated.
          */
         fun consolidateBills(consolidateBills: Boolean) =
             consolidateBills(JsonField.of(consolidateBills))
@@ -993,7 +993,7 @@ private constructor(
                 }
         }
 
-        /** The first bill date _(in ISO-8601 format)_ for daily billing periods. */
+        /** The first bill date *(in ISO-8601 format)* for daily billing periods. */
         fun dayEpoch(dayEpoch: String) = dayEpoch(JsonField.of(dayEpoch))
 
         /**
@@ -1040,7 +1040,7 @@ private constructor(
             this.defaultStatementDefinitionId = defaultStatementDefinitionId
         }
 
-        /** The DateTime when the organization config was created _(in ISO-8601 format)_. */
+        /** The DateTime when the organization config was created *(in ISO-8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -1052,7 +1052,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when the organization config was last modified _(in ISO-8601 format)_. */
+        /** The DateTime when the organization config was last modified *(in ISO-8601 format)*. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -1098,8 +1098,8 @@ private constructor(
         /**
          * Specifies whether minimum spend amounts are billed in advance at the start of each
          * billing period, or billed in arrears at the end of each billing period.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * * **TRUE** - bill in advance *(start of each billing period)*.
+         * * **FALSE** - bill in arrears *(end of each billing period)*.
          */
         fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: Boolean) =
             minimumSpendBillInAdvance(JsonField.of(minimumSpendBillInAdvance))
@@ -1115,7 +1115,7 @@ private constructor(
             this.minimumSpendBillInAdvance = minimumSpendBillInAdvance
         }
 
-        /** The first bill date _(in ISO-8601 format)_ for monthly billing periods. */
+        /** The first bill date *(in ISO-8601 format)* for monthly billing periods. */
         fun monthEpoch(monthEpoch: String) = monthEpoch(JsonField.of(monthEpoch))
 
         /**
@@ -1129,11 +1129,11 @@ private constructor(
 
         /**
          * Specifies the required interval for updating bills.
-         * - **For portions of an hour (minutes)**. Two options: **0.25** (15 minutes) and **0.5**
+         * * **For portions of an hour (minutes)**. Two options: **0.25** (15 minutes) and **0.5**
          *   (30 minutes).
-         * - **For full hours.** Eight possible values: **1**, **2**, **3**, **4**, **6**, **8**,
+         * * **For full hours.** Eight possible values: **1**, **2**, **3**, **4**, **6**, **8**,
          *   **12**, or **24**.
-         * - **Default.** The default is **0**, which disables scheduling.
+         * * **Default.** The default is **0**, which disables scheduling.
          */
         fun scheduledBillInterval(scheduledBillInterval: Double) =
             scheduledBillInterval(JsonField.of(scheduledBillInterval))
@@ -1170,8 +1170,8 @@ private constructor(
         /**
          * Specifies whether the standing charge is billed in advance at the start of each billing
          * period, or billed in arrears at the end of each billing period.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * * **TRUE** - bill in advance *(start of each billing period)*.
+         * * **FALSE** - bill in arrears *(end of each billing period)*.
          */
         fun standingChargeBillInAdvance(standingChargeBillInAdvance: Boolean) =
             standingChargeBillInAdvance(JsonField.of(standingChargeBillInAdvance))
@@ -1189,8 +1189,8 @@ private constructor(
 
         /**
          * Specifies whether to supress generating bills that have no line items.
-         * - **TRUE** - prevents generating bills with no line items.
-         * - **FALSE** - bills are still generated even when they have no line items.
+         * * **TRUE** - prevents generating bills with no line items.
+         * * **FALSE** - bills are still generated even when they have no line items.
          */
         fun suppressedEmptyBills(suppressedEmptyBills: Boolean) =
             suppressedEmptyBills(JsonField.of(suppressedEmptyBills))
@@ -1233,7 +1233,7 @@ private constructor(
          */
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
-        /** The first bill date _(in ISO-8601 format)_ for weekly billing periods. */
+        /** The first bill date *(in ISO-8601 format)* for weekly billing periods. */
         fun weekEpoch(weekEpoch: String) = weekEpoch(JsonField.of(weekEpoch))
 
         /**
@@ -1245,7 +1245,7 @@ private constructor(
          */
         fun weekEpoch(weekEpoch: JsonField<String>) = apply { this.weekEpoch = weekEpoch }
 
-        /** The first bill date _(in ISO-8601 format)_ for yearly billing periods. */
+        /** The first bill date *(in ISO-8601 format)* for yearly billing periods. */
         fun yearEpoch(yearEpoch: String) = yearEpoch(JsonField.of(yearEpoch))
 
         /**
@@ -1546,8 +1546,8 @@ private constructor(
     }
 
     /**
-     * Specifies whether to auto-generate statements once Bills are _approved_ or _locked_. It will
-     * not auto-generate if a bill is in _pending_ state.
+     * Specifies whether to auto-generate statements once Bills are *approved* or *locked*. It will
+     * not auto-generate if a bill is in *pending* state.
      *
      * The default value is **None**.
      * - **None**. Statements will not be auto-generated.

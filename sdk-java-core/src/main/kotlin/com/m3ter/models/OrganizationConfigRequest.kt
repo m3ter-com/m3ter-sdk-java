@@ -136,12 +136,12 @@ private constructor(
 
     /**
      * The currency code for the Organization. For example: USD, GBP, or EUR:
-     * - This defines the _billing currency_ for the Organization. You can override this by
+     * * This defines the *billing currency* for the Organization. You can override this by
      *   selecting a different billing currency at individual Account level.
-     * - You must first define the currencies you want to use in your Organization. See the
+     * * You must first define the currencies you want to use in your Organization. See the
      *   [Currency](https://www.m3ter.com/docs/api#tag/Currency) section in this API Reference.
      *
-     * **Note:** If you use a different currency as the _pricing currency_ for Plans to set charge
+     * **Note:** If you use a different currency as the *pricing currency* for Plans to set charge
      * rates for Product consumption by an Account, you must define a currency conversion rate from
      * the pricing currency to the billing currency before you run billing for the Account,
      * otherwise billing will fail. See below for the `currencyConversions` request parameter.
@@ -154,12 +154,12 @@ private constructor(
     /**
      * Optional setting that defines the billing cycle date for Accounts that are billed daily.
      * Defines the date of the first Bill:
-     * - For example, suppose the Plan you attach to an Account is configured for daily billing
+     * * For example, suppose the Plan you attach to an Account is configured for daily billing
      *   frequency and will apply to the Account from January 1st, 2022 until June 30th, 2022. If
      *   you set a `dayEpoch` date of January 2nd, 2022, then the first Bill is created for the
      *   Account on that date and subsequent Bills are created for the Account each day following
      *   through to the end of the billing service period.
-     * - The date is in ISO-8601 format.
+     * * The date is in ISO-8601 format.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -182,13 +182,13 @@ private constructor(
      * Optional setting that defines the billing cycle date for Accounts that are billed monthly.
      * Defines the date of the first Bill and then acts as reference for when subsequent Bills are
      * created for the Account:
-     * - For example, suppose the Plan you attach to an Account is configured for monthly billing
+     * * For example, suppose the Plan you attach to an Account is configured for monthly billing
      *   frequency and will apply to the Account from January 1st, 2022 until June 30th, 2022. If
      *   you set a `monthEpoch` date of January 15th, 2022, then the first Bill is created for the
      *   Account on that date and subsequent Bills are created for the Account on the 15th of each
      *   month following through to the end of the billing service period - February 15th, March
      *   15th, and so on.
-     * - The date is in ISO-8601 format.
+     * * The date is in ISO-8601 format.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -207,13 +207,13 @@ private constructor(
      * Optional setting that defines the billing cycle date for Accounts that are billed weekly.
      * Defines the date of the first Bill and then acts as reference for when subsequent Bills are
      * created for the Account:
-     * - For example, suppose the Plan you attach to an Account is configured for weekly billing
+     * * For example, suppose the Plan you attach to an Account is configured for weekly billing
      *   frequency and will apply to the Account from January 1st, 2022 until June 30th, 2022. If
      *   you set a `weekEpoch` date of January 15th, 2022, which falls on a Saturday, then the first
      *   Bill is created for the Account on that date and subsequent Bills are created for the
      *   Account on Saturday of each week following through to the end of the billing service
      *   period.
-     * - The date is in ISO-8601 format.
+     * * The date is in ISO-8601 format.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -224,13 +224,13 @@ private constructor(
      * Optional setting that defines the billing cycle date for Accounts that are billed yearly.
      * Defines the date of the first Bill and then acts as reference for when subsequent Bills are
      * created for the Account:
-     * - For example, suppose the Plan you attach to an Account is configured for yearly billing
+     * * For example, suppose the Plan you attach to an Account is configured for yearly billing
      *   frequency and will apply to the Account from January 1st, 2022 until January 15th, 2028. If
      *   you set a `yearEpoch` date of January 1st, 2023, then the first Bill is created for the
      *   Account on that date and subsequent Bills are created for the Account on January 1st of
      *   each year following through to the end of the billing service period - January 1st, 2023,
      *   January 1st, 2024 and so on.
-     * - The date is in ISO-8601 format.
+     * * The date is in ISO-8601 format.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -266,8 +266,8 @@ private constructor(
         autoApproveBillsGracePeriodUnit.getOptional("autoApproveBillsGracePeriodUnit")
 
     /**
-     * Specify whether to auto-generate statements once Bills are _approved_ or _locked_. It will
-     * not auto-generate if a bill is in _pending_ state.
+     * Specify whether to auto-generate statements once Bills are *approved* or *locked*. It will
+     * not auto-generate if a bill is in *pending* state.
      *
      * The default value is **None**.
      * - **None**. Statements will not be auto-generated.
@@ -285,10 +285,10 @@ private constructor(
      * `sequenceStartNumber`.
      *
      * **NOTES:**
-     * - If you do not define a `billPrefix`, a default will be used in the Console for the Bill
+     * * If you do not define a `billPrefix`, a default will be used in the Console for the Bill
      *   **REFERENCE** number. This default will concatenate **INV-** with the last four characters
      *   of the `billId`.
-     * - If you do not define a `billPrefix`, the Bill response schema for API calls that retrieve
+     * * If you do not define a `billPrefix`, the Bill response schema for API calls that retrieve
      *   Bill data will not contain a `sequentialInvoiceNumber`.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -297,10 +297,10 @@ private constructor(
     fun billPrefix(): Optional<String> = billPrefix.getOptional("billPrefix")
 
     /**
-     * Boolean setting to specify whether commitments _(prepayments)_ are billed in advance at the
+     * Boolean setting to specify whether commitments *(prepayments)* are billed in advance at the
      * start of each billing period, or billed in arrears at the end of each billing period.
-     * - **TRUE** - bill in advance _(start of each billing period)_.
-     * - **FALSE** - bill in arrears _(end of each billing period)_.
+     * * **TRUE** - bill in advance *(start of each billing period)*.
+     * * **FALSE** - bill in arrears *(end of each billing period)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -310,8 +310,8 @@ private constructor(
 
     /**
      * Boolean setting to consolidate different billing frequencies onto the same bill.
-     * - **TRUE** - consolidate different billing frequencies onto the same bill.
-     * - **FALSE** - bills are not consolidated.
+     * * **TRUE** - consolidate different billing frequencies onto the same bill.
+     * * **FALSE** - bills are not consolidated.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -327,9 +327,9 @@ private constructor(
      * - `"BALANCE"`. Only draw-down against Balance credit.
      *
      * **NOTES:**
-     * - You can override this Organization-level setting for `creditApplicationOrder` at the level
+     * * You can override this Organization-level setting for `creditApplicationOrder` at the level
      *   of an individual Account.
-     * - If the Account belongs to a Parent/Child Account hierarchy, then the
+     * * If the Account belongs to a Parent/Child Account hierarchy, then the
      *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
      *   always to Prepayment then Balance order.
      *
@@ -340,12 +340,12 @@ private constructor(
         creditApplicationOrder.getOptional("creditApplicationOrder")
 
     /**
-     * Define currency conversion rates from _pricing currency_ to _billing currency_:
-     * - You can use the `currency` request parameter with this call to define the billing currency
+     * Define currency conversion rates from *pricing currency* to *billing currency*:
+     * * You can use the `currency` request parameter with this call to define the billing currency
      *   for your Organization - see above.
-     * - You can also define a billing currency at the individual Account level and this will
+     * * You can also define a billing currency at the individual Account level and this will
      *   override the Organization billing currency.
-     * - A Plan used to set Product consumption charge rates on an Account might use a different
+     * * A Plan used to set Product consumption charge rates on an Account might use a different
      *   pricing currency. At billing, charges are calculated in the pricing currency and then
      *   converted into billing currency amounts to appear on Bills. If you haven't defined a
      *   currency conversion rate from pricing to billing currency, billing will fail for the
@@ -383,8 +383,8 @@ private constructor(
     /**
      * Boolean setting to specify whether minimum spend amounts are billed in advance at the start
      * of each billing period, or billed in arrears at the end of each billing period.
-     * - **TRUE** - bill in advance _(start of each billing period)_.
-     * - **FALSE** - bill in arrears _(end of each billing period)_.
+     * * **TRUE** - bill in advance *(start of each billing period)*.
+     * * **FALSE** - bill in arrears *(end of each billing period)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -395,11 +395,11 @@ private constructor(
     /**
      * Sets the required interval for updating bills. It is an optional parameter that can be set
      * as:
-     * - **For portions of an hour (minutes)**. Two options: **0.25** (15 minutes) and **0.5** (30
+     * * **For portions of an hour (minutes)**. Two options: **0.25** (15 minutes) and **0.5** (30
      *   minutes).
-     * - **For full hours.** Enter **1** for every hour, **2** for every two hours, and so on. Eight
+     * * **For full hours.** Enter **1** for every hour, **2** for every two hours, and so on. Eight
      *   options: **1**, **2**, **3**, **4**, **6**, **8**, **12**, or **24**.
-     * - **Default.** The default is **0**, which disables scheduling.
+     * * **Default.** The default is **0**, which disables scheduling.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -425,8 +425,8 @@ private constructor(
     /**
      * Boolean setting to specify whether the standing charge is billed in advance at the start of
      * each billing period, or billed in arrears at the end of each billing period.
-     * - **TRUE** - bill in advance _(start of each billing period)_.
-     * - **FALSE** - bill in arrears _(end of each billing period)_.
+     * * **TRUE** - bill in advance *(start of each billing period)*.
+     * * **FALSE** - bill in arrears *(end of each billing period)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -436,8 +436,8 @@ private constructor(
 
     /**
      * Boolean setting that supresses generating bills that have no line items.
-     * - **TRUE** - prevents generating bills with no line items.
-     * - **FALSE** - bills are still generated even when they have no line items.
+     * * **TRUE** - prevents generating bills with no line items.
+     * * **FALSE** - bills are still generated even when they have no line items.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -447,7 +447,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -758,12 +758,12 @@ private constructor(
 
         /**
          * The currency code for the Organization. For example: USD, GBP, or EUR:
-         * - This defines the _billing currency_ for the Organization. You can override this by
+         * * This defines the *billing currency* for the Organization. You can override this by
          *   selecting a different billing currency at individual Account level.
-         * - You must first define the currencies you want to use in your Organization. See the
+         * * You must first define the currencies you want to use in your Organization. See the
          *   [Currency](https://www.m3ter.com/docs/api#tag/Currency) section in this API Reference.
          *
-         * **Note:** If you use a different currency as the _pricing currency_ for Plans to set
+         * **Note:** If you use a different currency as the *pricing currency* for Plans to set
          * charge rates for Product consumption by an Account, you must define a currency conversion
          * rate from the pricing currency to the billing currency before you run billing for the
          * Account, otherwise billing will fail. See below for the `currencyConversions` request
@@ -782,12 +782,12 @@ private constructor(
         /**
          * Optional setting that defines the billing cycle date for Accounts that are billed daily.
          * Defines the date of the first Bill:
-         * - For example, suppose the Plan you attach to an Account is configured for daily billing
+         * * For example, suppose the Plan you attach to an Account is configured for daily billing
          *   frequency and will apply to the Account from January 1st, 2022 until June 30th, 2022.
          *   If you set a `dayEpoch` date of January 2nd, 2022, then the first Bill is created for
          *   the Account on that date and subsequent Bills are created for the Account each day
          *   following through to the end of the billing service period.
-         * - The date is in ISO-8601 format.
+         * * The date is in ISO-8601 format.
          */
         fun dayEpoch(dayEpoch: String) = dayEpoch(JsonField.of(dayEpoch))
 
@@ -824,13 +824,13 @@ private constructor(
          * Optional setting that defines the billing cycle date for Accounts that are billed
          * monthly. Defines the date of the first Bill and then acts as reference for when
          * subsequent Bills are created for the Account:
-         * - For example, suppose the Plan you attach to an Account is configured for monthly
+         * * For example, suppose the Plan you attach to an Account is configured for monthly
          *   billing frequency and will apply to the Account from January 1st, 2022 until June
          *   30th, 2022. If you set a `monthEpoch` date of January 15th, 2022, then the first Bill
          *   is created for the Account on that date and subsequent Bills are created for the
          *   Account on the 15th of each month following through to the end of the billing service
          *   period - February 15th, March 15th, and so on.
-         * - The date is in ISO-8601 format.
+         * * The date is in ISO-8601 format.
          */
         fun monthEpoch(monthEpoch: String) = monthEpoch(JsonField.of(monthEpoch))
 
@@ -858,13 +858,13 @@ private constructor(
          * Optional setting that defines the billing cycle date for Accounts that are billed weekly.
          * Defines the date of the first Bill and then acts as reference for when subsequent Bills
          * are created for the Account:
-         * - For example, suppose the Plan you attach to an Account is configured for weekly billing
+         * * For example, suppose the Plan you attach to an Account is configured for weekly billing
          *   frequency and will apply to the Account from January 1st, 2022 until June 30th, 2022.
          *   If you set a `weekEpoch` date of January 15th, 2022, which falls on a Saturday, then
          *   the first Bill is created for the Account on that date and subsequent Bills are created
          *   for the Account on Saturday of each week following through to the end of the billing
          *   service period.
-         * - The date is in ISO-8601 format.
+         * * The date is in ISO-8601 format.
          */
         fun weekEpoch(weekEpoch: String) = weekEpoch(JsonField.of(weekEpoch))
 
@@ -881,13 +881,13 @@ private constructor(
          * Optional setting that defines the billing cycle date for Accounts that are billed yearly.
          * Defines the date of the first Bill and then acts as reference for when subsequent Bills
          * are created for the Account:
-         * - For example, suppose the Plan you attach to an Account is configured for yearly billing
+         * * For example, suppose the Plan you attach to an Account is configured for yearly billing
          *   frequency and will apply to the Account from January 1st, 2022 until January
          *   15th, 2028. If you set a `yearEpoch` date of January 1st, 2023, then the first Bill is
          *   created for the Account on that date and subsequent Bills are created for the Account
          *   on January 1st of each year following through to the end of the billing service
          *   period - January 1st, 2023, January 1st, 2024 and so on.
-         * - The date is in ISO-8601 format.
+         * * The date is in ISO-8601 format.
          */
         fun yearEpoch(yearEpoch: String) = yearEpoch(JsonField.of(yearEpoch))
 
@@ -946,8 +946,8 @@ private constructor(
             }
 
         /**
-         * Specify whether to auto-generate statements once Bills are _approved_ or _locked_. It
-         * will not auto-generate if a bill is in _pending_ state.
+         * Specify whether to auto-generate statements once Bills are *approved* or *locked*. It
+         * will not auto-generate if a bill is in *pending* state.
          *
          * The default value is **None**.
          * - **None**. Statements will not be auto-generated.
@@ -973,10 +973,10 @@ private constructor(
          * `sequenceStartNumber`.
          *
          * **NOTES:**
-         * - If you do not define a `billPrefix`, a default will be used in the Console for the Bill
+         * * If you do not define a `billPrefix`, a default will be used in the Console for the Bill
          *   **REFERENCE** number. This default will concatenate **INV-** with the last four
          *   characters of the `billId`.
-         * - If you do not define a `billPrefix`, the Bill response schema for API calls that
+         * * If you do not define a `billPrefix`, the Bill response schema for API calls that
          *   retrieve Bill data will not contain a `sequentialInvoiceNumber`.
          */
         fun billPrefix(billPrefix: String) = billPrefix(JsonField.of(billPrefix))
@@ -991,10 +991,10 @@ private constructor(
         fun billPrefix(billPrefix: JsonField<String>) = apply { this.billPrefix = billPrefix }
 
         /**
-         * Boolean setting to specify whether commitments _(prepayments)_ are billed in advance at
+         * Boolean setting to specify whether commitments *(prepayments)* are billed in advance at
          * the start of each billing period, or billed in arrears at the end of each billing period.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * * **TRUE** - bill in advance *(start of each billing period)*.
+         * * **FALSE** - bill in arrears *(end of each billing period)*.
          */
         fun commitmentFeeBillInAdvance(commitmentFeeBillInAdvance: Boolean) =
             commitmentFeeBillInAdvance(JsonField.of(commitmentFeeBillInAdvance))
@@ -1012,8 +1012,8 @@ private constructor(
 
         /**
          * Boolean setting to consolidate different billing frequencies onto the same bill.
-         * - **TRUE** - consolidate different billing frequencies onto the same bill.
-         * - **FALSE** - bills are not consolidated.
+         * * **TRUE** - consolidate different billing frequencies onto the same bill.
+         * * **FALSE** - bills are not consolidated.
          */
         fun consolidateBills(consolidateBills: Boolean) =
             consolidateBills(JsonField.of(consolidateBills))
@@ -1038,9 +1038,9 @@ private constructor(
          * - `"BALANCE"`. Only draw-down against Balance credit.
          *
          * **NOTES:**
-         * - You can override this Organization-level setting for `creditApplicationOrder` at the
+         * * You can override this Organization-level setting for `creditApplicationOrder` at the
          *   level of an individual Account.
-         * - If the Account belongs to a Parent/Child Account hierarchy, then the
+         * * If the Account belongs to a Parent/Child Account hierarchy, then the
          *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
          *   always to Prepayment then Balance order.
          */
@@ -1073,12 +1073,12 @@ private constructor(
         }
 
         /**
-         * Define currency conversion rates from _pricing currency_ to _billing currency_:
-         * - You can use the `currency` request parameter with this call to define the billing
+         * Define currency conversion rates from *pricing currency* to *billing currency*:
+         * * You can use the `currency` request parameter with this call to define the billing
          *   currency for your Organization - see above.
-         * - You can also define a billing currency at the individual Account level and this will
+         * * You can also define a billing currency at the individual Account level and this will
          *   override the Organization billing currency.
-         * - A Plan used to set Product consumption charge rates on an Account might use a different
+         * * A Plan used to set Product consumption charge rates on an Account might use a different
          *   pricing currency. At billing, charges are calculated in the pricing currency and then
          *   converted into billing currency amounts to appear on Bills. If you haven't defined a
          *   currency conversion rate from pricing to billing currency, billing will fail for the
@@ -1152,8 +1152,8 @@ private constructor(
         /**
          * Boolean setting to specify whether minimum spend amounts are billed in advance at the
          * start of each billing period, or billed in arrears at the end of each billing period.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * * **TRUE** - bill in advance *(start of each billing period)*.
+         * * **FALSE** - bill in arrears *(end of each billing period)*.
          */
         fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: Boolean) =
             minimumSpendBillInAdvance(JsonField.of(minimumSpendBillInAdvance))
@@ -1172,11 +1172,11 @@ private constructor(
         /**
          * Sets the required interval for updating bills. It is an optional parameter that can be
          * set as:
-         * - **For portions of an hour (minutes)**. Two options: **0.25** (15 minutes) and **0.5**
+         * * **For portions of an hour (minutes)**. Two options: **0.25** (15 minutes) and **0.5**
          *   (30 minutes).
-         * - **For full hours.** Enter **1** for every hour, **2** for every two hours, and so on.
+         * * **For full hours.** Enter **1** for every hour, **2** for every two hours, and so on.
          *   Eight options: **1**, **2**, **3**, **4**, **6**, **8**, **12**, or **24**.
-         * - **Default.** The default is **0**, which disables scheduling.
+         * * **Default.** The default is **0**, which disables scheduling.
          */
         fun scheduledBillInterval(scheduledBillInterval: Double) =
             scheduledBillInterval(JsonField.of(scheduledBillInterval))
@@ -1219,8 +1219,8 @@ private constructor(
         /**
          * Boolean setting to specify whether the standing charge is billed in advance at the start
          * of each billing period, or billed in arrears at the end of each billing period.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * * **TRUE** - bill in advance *(start of each billing period)*.
+         * * **FALSE** - bill in arrears *(end of each billing period)*.
          */
         fun standingChargeBillInAdvance(standingChargeBillInAdvance: Boolean) =
             standingChargeBillInAdvance(JsonField.of(standingChargeBillInAdvance))
@@ -1238,8 +1238,8 @@ private constructor(
 
         /**
          * Boolean setting that supresses generating bills that have no line items.
-         * - **TRUE** - prevents generating bills with no line items.
-         * - **FALSE** - bills are still generated even when they have no line items.
+         * * **TRUE** - prevents generating bills with no line items.
+         * * **FALSE** - bills are still generated even when they have no line items.
          */
         fun suppressedEmptyBills(suppressedEmptyBills: Boolean) =
             suppressedEmptyBills(JsonField.of(suppressedEmptyBills))
@@ -1257,8 +1257,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1412,8 +1412,8 @@ private constructor(
             (if (version.asKnown().isPresent) 1 else 0)
 
     /**
-     * Specify whether to auto-generate statements once Bills are _approved_ or _locked_. It will
-     * not auto-generate if a bill is in _pending_ state.
+     * Specify whether to auto-generate statements once Bills are *approved* or *locked*. It will
+     * not auto-generate if a bill is in *pending* state.
      *
      * The default value is **None**.
      * - **None**. Statements will not be auto-generated.

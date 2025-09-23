@@ -41,8 +41,8 @@ private constructor(
 
     /**
      * The id of the item or group you want to:
-     * - _Add Item_ call: add to a Resource Group.
-     * - _Remove Item_ call: remove from the Resource Group.
+     * - *Add Item* call: add to a Resource Group.
+     * - *Remove Item* call: remove from the Resource Group.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -52,12 +52,12 @@ private constructor(
     /**
      * When adding to or removing from a Resource Group, specify whether a single item or group:
      * - `item`
-     *     - _Add Item_ call: use to add a single meter to a Resource Group
-     *     - _Remove Item_ call: use to remove a single from a Resource Group.
+     *     - *Add Item* call: use to add a single meter to a Resource Group
+     *     - *Remove Item* call: use to remove a single from a Resource Group.
      * - `group`
-     *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
+     *     - *Add Item* call: use to add a Resource Group to another Resource Group and form a
      *       nested Resource Group
-     *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+     *     - *Remove Item* call: use remove a nested Resource Group from a Resource Group.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -171,8 +171,8 @@ private constructor(
 
         /**
          * The id of the item or group you want to:
-         * - _Add Item_ call: add to a Resource Group.
-         * - _Remove Item_ call: remove from the Resource Group.
+         * - *Add Item* call: add to a Resource Group.
+         * - *Remove Item* call: remove from the Resource Group.
          */
         fun targetId(targetId: String) = apply { body.targetId(targetId) }
 
@@ -187,12 +187,12 @@ private constructor(
         /**
          * When adding to or removing from a Resource Group, specify whether a single item or group:
          * - `item`
-         *     - _Add Item_ call: use to add a single meter to a Resource Group
-         *     - _Remove Item_ call: use to remove a single from a Resource Group.
+         *     - *Add Item* call: use to add a single meter to a Resource Group
+         *     - *Remove Item* call: use to remove a single from a Resource Group.
          * - `group`
-         *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
+         *     - *Add Item* call: use to add a Resource Group to another Resource Group and form a
          *       nested Resource Group
-         *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+         *     - *Remove Item* call: use remove a nested Resource Group from a Resource Group.
          */
         fun targetType(targetType: TargetType) = apply { body.targetType(targetType) }
 
@@ -393,8 +393,8 @@ private constructor(
 
         /**
          * The id of the item or group you want to:
-         * - _Add Item_ call: add to a Resource Group.
-         * - _Remove Item_ call: remove from the Resource Group.
+         * - *Add Item* call: add to a Resource Group.
+         * - *Remove Item* call: remove from the Resource Group.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -404,12 +404,12 @@ private constructor(
         /**
          * When adding to or removing from a Resource Group, specify whether a single item or group:
          * - `item`
-         *     - _Add Item_ call: use to add a single meter to a Resource Group
-         *     - _Remove Item_ call: use to remove a single from a Resource Group.
+         *     - *Add Item* call: use to add a single meter to a Resource Group
+         *     - *Remove Item* call: use to remove a single from a Resource Group.
          * - `group`
-         *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
+         *     - *Add Item* call: use to add a Resource Group to another Resource Group and form a
          *       nested Resource Group
-         *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+         *     - *Remove Item* call: use remove a nested Resource Group from a Resource Group.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -491,8 +491,8 @@ private constructor(
 
             /**
              * The id of the item or group you want to:
-             * - _Add Item_ call: add to a Resource Group.
-             * - _Remove Item_ call: remove from the Resource Group.
+             * - *Add Item* call: add to a Resource Group.
+             * - *Remove Item* call: remove from the Resource Group.
              */
             fun targetId(targetId: String) = targetId(JsonField.of(targetId))
 
@@ -509,12 +509,12 @@ private constructor(
              * When adding to or removing from a Resource Group, specify whether a single item or
              * group:
              * - `item`
-             *     - _Add Item_ call: use to add a single meter to a Resource Group
-             *     - _Remove Item_ call: use to remove a single from a Resource Group.
+             *     - *Add Item* call: use to add a single meter to a Resource Group
+             *     - *Remove Item* call: use to remove a single from a Resource Group.
              * - `group`
-             *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form
+             *     - *Add Item* call: use to add a Resource Group to another Resource Group and form
              *       a nested Resource Group
-             *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+             *     - *Remove Item* call: use remove a nested Resource Group from a Resource Group.
              */
             fun targetType(targetType: TargetType) = targetType(JsonField.of(targetType))
 
@@ -640,12 +640,12 @@ private constructor(
     /**
      * When adding to or removing from a Resource Group, specify whether a single item or group:
      * - `item`
-     *     - _Add Item_ call: use to add a single meter to a Resource Group
-     *     - _Remove Item_ call: use to remove a single from a Resource Group.
+     *     - *Add Item* call: use to add a single meter to a Resource Group
+     *     - *Remove Item* call: use to remove a single from a Resource Group.
      * - `group`
-     *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
+     *     - *Add Item* call: use to add a Resource Group to another Resource Group and form a
      *       nested Resource Group
-     *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+     *     - *Remove Item* call: use remove a nested Resource Group from a Resource Group.
      */
     class TargetType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 

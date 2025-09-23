@@ -67,7 +67,7 @@ private constructor(
     fun id(): Optional<String> = id.getOptional("id")
 
     /**
-     * The global lock date _(in ISO 8601 format)_ when all Bills will be locked.
+     * The global lock date *(in ISO 8601 format)* when all Bills will be locked.
      *
      * For example: `"2024-03-01"`.
      *
@@ -85,7 +85,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The DateTime _(in ISO-8601 format)_ when the bill config was first created.
+     * The DateTime *(in ISO-8601 format)* when the bill config was first created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -93,7 +93,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime _(in ISO-8601 format)_ when the bill config was last modified.
+     * The DateTime *(in ISO-8601 format)* when the bill config was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -110,8 +110,8 @@ private constructor(
 
     /**
      * The version number:
-     * - Default value when newly created is one.
-     * - Incremented by 1 each time it is updated.
+     * * Default value when newly created is one.
+     * * Incremented by 1 each time it is updated.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -232,7 +232,7 @@ private constructor(
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
-         * The global lock date _(in ISO 8601 format)_ when all Bills will be locked.
+         * The global lock date *(in ISO 8601 format)* when all Bills will be locked.
          *
          * For example: `"2024-03-01"`.
          */
@@ -261,7 +261,7 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The DateTime _(in ISO-8601 format)_ when the bill config was first created. */
+        /** The DateTime *(in ISO-8601 format)* when the bill config was first created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -273,7 +273,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime _(in ISO-8601 format)_ when the bill config was last modified. */
+        /** The DateTime *(in ISO-8601 format)* when the bill config was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -304,8 +304,8 @@ private constructor(
 
         /**
          * The version number:
-         * - Default value when newly created is one.
-         * - Incremented by 1 each time it is updated.
+         * * Default value when newly created is one.
+         * * Incremented by 1 each time it is updated.
          */
         fun version(version: Long) = version(JsonField.of(version))
 

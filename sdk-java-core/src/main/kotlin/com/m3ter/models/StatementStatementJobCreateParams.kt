@@ -25,13 +25,13 @@ import kotlin.jvm.optionals.getOrNull
  * UUID.
  *
  * The Bill Statement is generated asynchronously:
- * - The default format for generating the Statement is in JSON format and according to the Bill
+ * * The default format for generating the Statement is in JSON format and according to the Bill
  *   Statement Definition you've specified at either Organization level or Account level.
- * - If you also want to generate the Statement in CSV format, use the `includeCsvFormat` request
+ * * If you also want to generate the Statement in CSV format, use the `includeCsvFormat` request
  *   body parameter.
- * - The response body provides a time-bound pre-signed URL, which you can use to download the JSON
+ * * The response body provides a time-bound pre-signed URL, which you can use to download the JSON
  *   format Statement.
- * - When you have generated a Statement for a Bill, you can also obtain a time-bound pre-signed
+ * * When you have generated a Statement for a Bill, you can also obtain a time-bound pre-signed
  *   download URL using either the
  *   [Retrieve Bill Statement in JSON Format](https://www.m3ter.com/docs/api#tag/Bill/operation/GetBillJsonStatement)
  *   and
@@ -40,12 +40,12 @@ import kotlin.jvm.optionals.getOrNull
  *   Reference.
  *
  * **Notes:**
- * - If the response to the Create StatementJob call shows the `statementJobStatus` as `PENDING` or
+ * * If the response to the Create StatementJob call shows the `statementJobStatus` as `PENDING` or
  *   `RUNNING`, you will not receive the pre-signed URL in the response. Wait a few minutes to allow
  *   the StatementJob to complete and then use the
  *   [Get StatmentJob](https://www.m3ter.com/docs/api#tag/StatementJob/operation/GetStatementJob)
  *   call in this section to obtain the pre-signed download URL for the generated Bill Statement.
- * - When you have submitted a StatementJob and a Bill Statement has been generated, you can also
+ * * When you have submitted a StatementJob and a Bill Statement has been generated, you can also
  *   download the Statement directly from a Bill Details page in the Console. See
  *   [Working with Bill Statements](https://www.m3ter.com/docs/guides/billing-and-usage-data/running-viewing-and-managing-bills/working-with-bill-statements)
  *   in our user Documentation.
@@ -71,8 +71,8 @@ private constructor(
 
     /**
      * A Boolean value indicating whether the generated statement includes a CSV format.
-     * - TRUE - includes the statement in CSV format.
-     * - FALSE - no CSV format statement.
+     * * TRUE - includes the statement in CSV format.
+     * * FALSE - no CSV format statement.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -81,7 +81,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -187,8 +187,8 @@ private constructor(
 
         /**
          * A Boolean value indicating whether the generated statement includes a CSV format.
-         * - TRUE - includes the statement in CSV format.
-         * - FALSE - no CSV format statement.
+         * * TRUE - includes the statement in CSV format.
+         * * FALSE - no CSV format statement.
          */
         fun includeCsvFormat(includeCsvFormat: Boolean) = apply {
             body.includeCsvFormat(includeCsvFormat)
@@ -207,8 +207,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -400,8 +400,8 @@ private constructor(
 
         /**
          * A Boolean value indicating whether the generated statement includes a CSV format.
-         * - TRUE - includes the statement in CSV format.
-         * - FALSE - no CSV format statement.
+         * * TRUE - includes the statement in CSV format.
+         * * FALSE - no CSV format statement.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -410,8 +410,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -500,8 +500,8 @@ private constructor(
 
             /**
              * A Boolean value indicating whether the generated statement includes a CSV format.
-             * - TRUE - includes the statement in CSV format.
-             * - FALSE - no CSV format statement.
+             * * TRUE - includes the statement in CSV format.
+             * * FALSE - no CSV format statement.
              */
             fun includeCsvFormat(includeCsvFormat: Boolean) =
                 includeCsvFormat(JsonField.of(includeCsvFormat))
@@ -519,8 +519,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.

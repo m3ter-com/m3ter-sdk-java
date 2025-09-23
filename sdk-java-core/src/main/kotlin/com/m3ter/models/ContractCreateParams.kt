@@ -48,8 +48,8 @@ private constructor(
     fun accountId(): String = body.accountId()
 
     /**
-     * The exclusive end date of the Contract _(in ISO-8601 format)_. This means the Contract is
-     * active until midnight on the day **_before_** this date.
+     * The exclusive end date of the Contract *(in ISO-8601 format)*. This means the Contract is
+     * active until midnight on the day ***before*** this date.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -65,7 +65,7 @@ private constructor(
     fun name(): String = body.name()
 
     /**
-     * The start date for the Contract _(in ISO-8601 format)_. This date is inclusive, meaning the
+     * The start date for the Contract *(in ISO-8601 format)*. This date is inclusive, meaning the
      * Contract is active from this date onward.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -116,7 +116,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -267,8 +267,8 @@ private constructor(
         fun accountId(accountId: JsonField<String>) = apply { body.accountId(accountId) }
 
         /**
-         * The exclusive end date of the Contract _(in ISO-8601 format)_. This means the Contract is
-         * active until midnight on the day **_before_** this date.
+         * The exclusive end date of the Contract *(in ISO-8601 format)*. This means the Contract is
+         * active until midnight on the day ***before*** this date.
          */
         fun endDate(endDate: LocalDate) = apply { body.endDate(endDate) }
 
@@ -293,7 +293,7 @@ private constructor(
         fun name(name: JsonField<String>) = apply { body.name(name) }
 
         /**
-         * The start date for the Contract _(in ISO-8601 format)_. This date is inclusive, meaning
+         * The start date for the Contract *(in ISO-8601 format)*. This date is inclusive, meaning
          * the Contract is active from this date onward.
          */
         fun startDate(startDate: LocalDate) = apply { body.startDate(startDate) }
@@ -373,8 +373,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -601,8 +601,8 @@ private constructor(
         fun accountId(): String = accountId.getRequired("accountId")
 
         /**
-         * The exclusive end date of the Contract _(in ISO-8601 format)_. This means the Contract is
-         * active until midnight on the day **_before_** this date.
+         * The exclusive end date of the Contract *(in ISO-8601 format)*. This means the Contract is
+         * active until midnight on the day ***before*** this date.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -618,7 +618,7 @@ private constructor(
         fun name(): String = name.getRequired("name")
 
         /**
-         * The start date for the Contract _(in ISO-8601 format)_. This date is inclusive, meaning
+         * The start date for the Contract *(in ISO-8601 format)*. This date is inclusive, meaning
          * the Contract is active from this date onward.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
@@ -670,8 +670,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -823,8 +823,8 @@ private constructor(
             fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
 
             /**
-             * The exclusive end date of the Contract _(in ISO-8601 format)_. This means the
-             * Contract is active until midnight on the day **_before_** this date.
+             * The exclusive end date of the Contract *(in ISO-8601 format)*. This means the
+             * Contract is active until midnight on the day ***before*** this date.
              */
             fun endDate(endDate: LocalDate) = endDate(JsonField.of(endDate))
 
@@ -850,7 +850,7 @@ private constructor(
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             /**
-             * The start date for the Contract _(in ISO-8601 format)_. This date is inclusive,
+             * The start date for the Contract *(in ISO-8601 format)*. This date is inclusive,
              * meaning the Contract is active from this date onward.
              */
             fun startDate(startDate: LocalDate) = startDate(JsonField.of(startDate))
@@ -932,8 +932,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.

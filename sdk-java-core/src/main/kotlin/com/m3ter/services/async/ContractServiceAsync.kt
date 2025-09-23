@@ -173,7 +173,7 @@ interface ContractServiceAsync {
      * been added to, and apply the end-date to the Contract itself.
      *
      * **NOTES:**
-     * - If you want to apply the end-date to the Contract _itself_ - the Contract `id` you use as
+     * - If you want to apply the end-date to the Contract *itself* - the Contract `id` you use as
      *   the required PATH PARAMETER - you must also specify `CONTRACT` as a `billingEntities`
      *   option in the request body schema.
      * - Only the Contract whose id you specify for the PATH PARAMETER will be end-dated. If there

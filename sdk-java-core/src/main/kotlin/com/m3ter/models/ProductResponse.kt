@@ -108,7 +108,7 @@ private constructor(
     fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the Product was created.
+     * The date and time *(in ISO-8601 format)* when the Product was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -116,7 +116,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the Product was last modified.
+     * The date and time *(in ISO-8601 format)* when the Product was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -336,7 +336,7 @@ private constructor(
             this.customFields = customFields
         }
 
-        /** The date and time _(in ISO-8601 format)_ when the Product was created. */
+        /** The date and time *(in ISO-8601 format)* when the Product was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -348,7 +348,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The date and time _(in ISO-8601 format)_ when the Product was last modified. */
+        /** The date and time *(in ISO-8601 format)* when the Product was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 

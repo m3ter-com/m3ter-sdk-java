@@ -87,7 +87,7 @@ private constructor(
     fun referencedLineItemId(): String = body.referencedLineItemId()
 
     /**
-     * The service period end date in ISO-8601 format._(exclusive of the ending date)_.
+     * The service period end date in ISO-8601 format.*(exclusive of the ending date)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -95,7 +95,7 @@ private constructor(
     fun servicePeriodEndDate(): OffsetDateTime = body.servicePeriodEndDate()
 
     /**
-     * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
+     * The service period start date in ISO-8601 format. *(inclusive of the starting date)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -126,7 +126,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -388,7 +388,7 @@ private constructor(
             body.referencedLineItemId(referencedLineItemId)
         }
 
-        /** The service period end date in ISO-8601 format._(exclusive of the ending date)_. */
+        /** The service period end date in ISO-8601 format.*(exclusive of the ending date)*. */
         fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) = apply {
             body.servicePeriodEndDate(servicePeriodEndDate)
         }
@@ -404,7 +404,7 @@ private constructor(
             body.servicePeriodEndDate(servicePeriodEndDate)
         }
 
-        /** The service period start date in ISO-8601 format. _(inclusive of the starting date)_. */
+        /** The service period start date in ISO-8601 format. *(inclusive of the starting date)*. */
         fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) = apply {
             body.servicePeriodStartDate(servicePeriodStartDate)
         }
@@ -460,8 +460,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -753,7 +753,7 @@ private constructor(
             referencedLineItemId.getRequired("referencedLineItemId")
 
         /**
-         * The service period end date in ISO-8601 format._(exclusive of the ending date)_.
+         * The service period end date in ISO-8601 format.*(exclusive of the ending date)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -762,7 +762,7 @@ private constructor(
             servicePeriodEndDate.getRequired("servicePeriodEndDate")
 
         /**
-         * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
+         * The service period start date in ISO-8601 format. *(inclusive of the starting date)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -794,8 +794,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1060,7 +1060,7 @@ private constructor(
                 this.referencedLineItemId = referencedLineItemId
             }
 
-            /** The service period end date in ISO-8601 format._(exclusive of the ending date)_. */
+            /** The service period end date in ISO-8601 format.*(exclusive of the ending date)*. */
             fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
                 servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
 
@@ -1076,7 +1076,7 @@ private constructor(
             }
 
             /**
-             * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
+             * The service period start date in ISO-8601 format. *(inclusive of the starting date)*.
              */
             fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) =
                 servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
@@ -1134,8 +1134,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.

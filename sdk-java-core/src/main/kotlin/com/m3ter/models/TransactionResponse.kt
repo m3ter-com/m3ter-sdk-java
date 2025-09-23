@@ -110,7 +110,7 @@ private constructor(
     fun amount(): Optional<Double> = amount.getOptional("amount")
 
     /**
-     * The date _(in ISO 8601 format)_ when the balance transaction was applied, i.e., when the
+     * The date *(in ISO 8601 format)* when the balance transaction was applied, i.e., when the
      * balance was affected.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -144,7 +144,7 @@ private constructor(
     fun description(): Optional<String> = description.getOptional("description")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the balance transaction was first created.
+     * The date and time *(in ISO 8601 format)* when the balance transaction was first created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -152,7 +152,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the balance transaction was last modified.
+     * The date and time *(in ISO 8601 format)* when the balance transaction was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -195,7 +195,7 @@ private constructor(
     fun paid(): Optional<Double> = paid.getOptional("paid")
 
     /**
-     * The date _(in ISO 8601 format)_ when the transaction was recorded in the system.
+     * The date *(in ISO 8601 format)* when the transaction was recorded in the system.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -432,7 +432,7 @@ private constructor(
         fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
         /**
-         * The date _(in ISO 8601 format)_ when the balance transaction was applied, i.e., when the
+         * The date *(in ISO 8601 format)* when the balance transaction was applied, i.e., when the
          * balance was affected.
          */
         fun appliedDate(appliedDate: OffsetDateTime) = appliedDate(JsonField.of(appliedDate))
@@ -490,7 +490,7 @@ private constructor(
         fun description(description: JsonField<String>) = apply { this.description = description }
 
         /**
-         * The date and time _(in ISO 8601 format)_ when the balance transaction was first created.
+         * The date and time *(in ISO 8601 format)* when the balance transaction was first created.
          */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
@@ -504,7 +504,7 @@ private constructor(
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /**
-         * The date and time _(in ISO 8601 format)_ when the balance transaction was last modified.
+         * The date and time *(in ISO 8601 format)* when the balance transaction was last modified.
          */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
@@ -575,7 +575,7 @@ private constructor(
          */
         fun paid(paid: JsonField<Double>) = apply { this.paid = paid }
 
-        /** The date _(in ISO 8601 format)_ when the transaction was recorded in the system. */
+        /** The date *(in ISO 8601 format)* when the transaction was recorded in the system. */
         fun transactionDate(transactionDate: OffsetDateTime) =
             transactionDate(JsonField.of(transactionDate))
 

@@ -18,8 +18,8 @@ import kotlin.jvm.optionals.getOrNull
  * copied to a destination but is available for you to download using the returned download URL.
  *
  * **Constraints:**
- * - Only valid for Export jobs ran in the past 24 hours.
- * - The download URL is time-bound and is only valid for 15 minutes.
+ * * Only valid for Export jobs ran in the past 24 hours.
+ * * The download URL is time-bound and is only valid for 15 minutes.
  *
  * **NOTE!** This ExportDestination endpoint is available in Beta release version. See
  * [Feature Release Stages](https://www.m3ter.com/docs/guides/getting-started/feature-release-stages)

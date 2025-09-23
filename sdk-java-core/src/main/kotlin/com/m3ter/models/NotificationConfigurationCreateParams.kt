@@ -55,7 +55,7 @@ private constructor(
     fun description(): String = body.description()
 
     /**
-     * The name of the _Event type_ that the Notification is based on. When an Event of this type
+     * The name of the *Event type* that the Notification is based on. When an Event of this type
      * occurs and any calculation built into the Notification evaluates to `True`, the Notification
      * is triggered.
      *
@@ -79,8 +79,8 @@ private constructor(
     /**
      * Boolean flag that sets the Notification as active or inactive. Only active Notifications are
      * sent when triggered by the Event they are based on:
-     * - **TRUE** - set Notification as active.
-     * - **FALSE** - set Notification as inactive.
+     * * **TRUE** - set Notification as active.
+     * * **FALSE** - set Notification as inactive.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -92,9 +92,9 @@ private constructor(
      * conditions and omitting reference to any calculation. This means the Notification will be
      * triggered simply by the Event it is based on occurring and with no further conditions having
      * to be met.
-     * - **TRUE** - the Notification is always triggered and omits any reference to the calculation
+     * * **TRUE** - the Notification is always triggered and omits any reference to the calculation
      *   to check for other conditions being true before triggering the Notification.
-     * - **FALSE** - the Notification is only triggered when the Event it is based on occurs and any
+     * * **FALSE** - the Notification is only triggered when the Event it is based on occurs and any
      *   calculation is checked and all conditions defined by the calculation are met.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -118,7 +118,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -279,7 +279,7 @@ private constructor(
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /**
-         * The name of the _Event type_ that the Notification is based on. When an Event of this
+         * The name of the *Event type* that the Notification is based on. When an Event of this
          * type occurs and any calculation built into the Notification evaluates to `True`, the
          * Notification is triggered.
          *
@@ -312,8 +312,8 @@ private constructor(
         /**
          * Boolean flag that sets the Notification as active or inactive. Only active Notifications
          * are sent when triggered by the Event they are based on:
-         * - **TRUE** - set Notification as active.
-         * - **FALSE** - set Notification as inactive.
+         * * **TRUE** - set Notification as active.
+         * * **FALSE** - set Notification as inactive.
          */
         fun active(active: Boolean) = apply { body.active(active) }
 
@@ -330,10 +330,10 @@ private constructor(
          * other conditions and omitting reference to any calculation. This means the Notification
          * will be triggered simply by the Event it is based on occurring and with no further
          * conditions having to be met.
-         * - **TRUE** - the Notification is always triggered and omits any reference to the
+         * * **TRUE** - the Notification is always triggered and omits any reference to the
          *   calculation to check for other conditions being true before triggering the
          *   Notification.
-         * - **FALSE** - the Notification is only triggered when the Event it is based on occurs and
+         * * **FALSE** - the Notification is only triggered when the Event it is based on occurs and
          *   any calculation is checked and all conditions defined by the calculation are met.
          */
         fun alwaysFireEvent(alwaysFireEvent: Boolean) = apply {
@@ -373,8 +373,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -604,7 +604,7 @@ private constructor(
         fun description(): String = description.getRequired("description")
 
         /**
-         * The name of the _Event type_ that the Notification is based on. When an Event of this
+         * The name of the *Event type* that the Notification is based on. When an Event of this
          * type occurs and any calculation built into the Notification evaluates to `True`, the
          * Notification is triggered.
          *
@@ -628,8 +628,8 @@ private constructor(
         /**
          * Boolean flag that sets the Notification as active or inactive. Only active Notifications
          * are sent when triggered by the Event they are based on:
-         * - **TRUE** - set Notification as active.
-         * - **FALSE** - set Notification as inactive.
+         * * **TRUE** - set Notification as active.
+         * * **FALSE** - set Notification as inactive.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -641,10 +641,10 @@ private constructor(
          * other conditions and omitting reference to any calculation. This means the Notification
          * will be triggered simply by the Event it is based on occurring and with no further
          * conditions having to be met.
-         * - **TRUE** - the Notification is always triggered and omits any reference to the
+         * * **TRUE** - the Notification is always triggered and omits any reference to the
          *   calculation to check for other conditions being true before triggering the
          *   Notification.
-         * - **FALSE** - the Notification is only triggered when the Event it is based on occurs and
+         * * **FALSE** - the Notification is only triggered when the Event it is based on occurs and
          *   any calculation is checked and all conditions defined by the calculation are met.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -668,8 +668,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -826,7 +826,7 @@ private constructor(
             }
 
             /**
-             * The name of the _Event type_ that the Notification is based on. When an Event of this
+             * The name of the *Event type* that the Notification is based on. When an Event of this
              * type occurs and any calculation built into the Notification evaluates to `True`, the
              * Notification is triggered.
              *
@@ -860,8 +860,8 @@ private constructor(
             /**
              * Boolean flag that sets the Notification as active or inactive. Only active
              * Notifications are sent when triggered by the Event they are based on:
-             * - **TRUE** - set Notification as active.
-             * - **FALSE** - set Notification as inactive.
+             * * **TRUE** - set Notification as active.
+             * * **FALSE** - set Notification as inactive.
              */
             fun active(active: Boolean) = active(JsonField.of(active))
 
@@ -879,10 +879,10 @@ private constructor(
              * other conditions and omitting reference to any calculation. This means the
              * Notification will be triggered simply by the Event it is based on occurring and with
              * no further conditions having to be met.
-             * - **TRUE** - the Notification is always triggered and omits any reference to the
+             * * **TRUE** - the Notification is always triggered and omits any reference to the
              *   calculation to check for other conditions being true before triggering the
              *   Notification.
-             * - **FALSE** - the Notification is only triggered when the Event it is based on occurs
+             * * **FALSE** - the Notification is only triggered when the Event it is based on occurs
              *   and any calculation is checked and all conditions defined by the calculation are
              *   met.
              */
@@ -924,8 +924,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.

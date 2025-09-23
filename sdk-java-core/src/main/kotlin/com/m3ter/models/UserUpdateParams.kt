@@ -44,7 +44,7 @@ private constructor(
     fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to set or
+     * The date and time *(in ISO 8601 format)* when the user's access will end. Use this to set or
      * update the expiration of the user's access.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -160,7 +160,7 @@ private constructor(
         fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /**
-         * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to set
+         * The date and time *(in ISO 8601 format)* when the user's access will end. Use this to set
          * or update the expiration of the user's access.
          */
         fun dtEndAccess(dtEndAccess: OffsetDateTime) = apply { body.dtEndAccess(dtEndAccess) }
@@ -392,7 +392,7 @@ private constructor(
         ) : this(dtEndAccess, permissionPolicy, version, mutableMapOf())
 
         /**
-         * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to set
+         * The date and time *(in ISO 8601 format)* when the user's access will end. Use this to set
          * or update the expiration of the user's access.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -489,7 +489,7 @@ private constructor(
             }
 
             /**
-             * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to
+             * The date and time *(in ISO 8601 format)* when the user's access will end. Use this to
              * set or update the expiration of the user's access.
              */
             fun dtEndAccess(dtEndAccess: OffsetDateTime) = dtEndAccess(JsonField.of(dtEndAccess))

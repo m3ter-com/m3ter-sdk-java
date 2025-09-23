@@ -51,19 +51,19 @@ private constructor(
 
     /**
      * Query for data using special syntax:
-     * - Query parameters should be delimited using $ (dollar sign).
-     * - Allowed comparators are:
-     *     - (greater than) >
-     *     - (greater than or equal to) >=
-     *     - (equal to) :
-     *     - (less than) <
-     *     - (less than or equal to) <=
-     *     - (match phrase/prefix) ~
-     * - Allowed parameters: startDate, endDate, contractId, accountId, productId, productIds, id,
+     * * Query parameters should be delimited using $ (dollar sign).
+     * * Allowed comparators are:
+     *     * (greater than) >
+     *     * (greater than or equal to) >=
+     *     * (equal to) :
+     *     * (less than) <
+     *     * (less than or equal to) <=
+     *     * (match phrase/prefix) ~
+     * * Allowed parameters: startDate, endDate, contractId, accountId, productId, productIds, id,
      *   createdBy, dtCreated, lastModifiedBy, ids.
-     * - Query example:
-     *     - searchQuery=startDate>2023-01-01$accountId:062085ab-a301-4f21-a081-411020864452.
-     *     - This query is translated into: find commitments where the startDate is older than
+     * * Query example:
+     *     * searchQuery=startDate>2023-01-01$accountId:062085ab-a301-4f21-a081-411020864452.
+     *     * This query is translated into: find commitments where the startDate is older than
      *       2023-01-01 AND the accountId is equal to 062085ab-a301-4f21-a081-411020864452.
      *
      * **Note:** Using the ~ match phrase/prefix comparator. For best results, we recommend treating
@@ -167,19 +167,19 @@ private constructor(
 
         /**
          * Query for data using special syntax:
-         * - Query parameters should be delimited using $ (dollar sign).
-         * - Allowed comparators are:
-         *     - (greater than) >
-         *     - (greater than or equal to) >=
-         *     - (equal to) :
-         *     - (less than) <
-         *     - (less than or equal to) <=
-         *     - (match phrase/prefix) ~
-         * - Allowed parameters: startDate, endDate, contractId, accountId, productId, productIds,
+         * * Query parameters should be delimited using $ (dollar sign).
+         * * Allowed comparators are:
+         *     * (greater than) >
+         *     * (greater than or equal to) >=
+         *     * (equal to) :
+         *     * (less than) <
+         *     * (less than or equal to) <=
+         *     * (match phrase/prefix) ~
+         * * Allowed parameters: startDate, endDate, contractId, accountId, productId, productIds,
          *   id, createdBy, dtCreated, lastModifiedBy, ids.
-         * - Query example:
-         *     - searchQuery=startDate>2023-01-01$accountId:062085ab-a301-4f21-a081-411020864452.
-         *     - This query is translated into: find commitments where the startDate is older than
+         * * Query example:
+         *     * searchQuery=startDate>2023-01-01$accountId:062085ab-a301-4f21-a081-411020864452.
+         *     * This query is translated into: find commitments where the startDate is older than
          *       2023-01-01 AND the accountId is equal to 062085ab-a301-4f21-a081-411020864452.
          *
          * **Note:** Using the ~ match phrase/prefix comparator. For best results, we recommend

@@ -74,9 +74,9 @@ interface EventService {
      * classified under a specific kind of Event.
      *
      * **NOTES:** You can:
-     * - Use `eventName` as a valid Query parameter to filter the list of Events returned. For
+     * * Use `eventName` as a valid Query parameter to filter the list of Events returned. For
      *   example: `.../organizations/{orgId}/events?eventName=configuration.commitment.created`
-     * - Use the
+     * * Use the
      *   [List Notification Events](https://www.m3ter.com/docs/api#tag/Events/operation/ListEventTypes)
      *   endpoint in this section. The response lists the valid Query parameters.
      */

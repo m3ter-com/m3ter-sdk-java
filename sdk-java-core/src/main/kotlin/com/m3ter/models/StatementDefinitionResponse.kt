@@ -110,8 +110,8 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * An array of objects, each representing a Dimension data field from a Meter _(for Meters that
-     * have Dimensions setup)_.
+     * An array of objects, each representing a Dimension data field from a Meter *(for Meters that
+     * have Dimensions setup)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -119,7 +119,7 @@ private constructor(
     fun dimensions(): Optional<List<Dimension>> = dimensions.getOptional("dimensions")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the StatementDefinition was created.
+     * The date and time *(in ISO-8601 format)* when the StatementDefinition was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -127,7 +127,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the StatementDefinition was last modified.
+     * The date and time *(in ISO-8601 format)* when the StatementDefinition was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -143,8 +143,8 @@ private constructor(
 
     /**
      * A Boolean indicating whether to include the price per unit in the Statement.
-     * - TRUE - includes the price per unit.
-     * - FALSE - excludes the price per unit.
+     * * TRUE - includes the price per unit.
+     * * FALSE - excludes the price per unit.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -386,8 +386,8 @@ private constructor(
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /**
-         * An array of objects, each representing a Dimension data field from a Meter _(for Meters
-         * that have Dimensions setup)_.
+         * An array of objects, each representing a Dimension data field from a Meter *(for Meters
+         * that have Dimensions setup)*.
          */
         fun dimensions(dimensions: List<Dimension>) = dimensions(JsonField.of(dimensions))
 
@@ -414,7 +414,7 @@ private constructor(
                 }
         }
 
-        /** The date and time _(in ISO-8601 format)_ when the StatementDefinition was created. */
+        /** The date and time *(in ISO-8601 format)* when the StatementDefinition was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -427,7 +427,7 @@ private constructor(
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /**
-         * The date and time _(in ISO-8601 format)_ when the StatementDefinition was last modified.
+         * The date and time *(in ISO-8601 format)* when the StatementDefinition was last modified.
          */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
@@ -459,8 +459,8 @@ private constructor(
 
         /**
          * A Boolean indicating whether to include the price per unit in the Statement.
-         * - TRUE - includes the price per unit.
-         * - FALSE - excludes the price per unit.
+         * * TRUE - includes the price per unit.
+         * * FALSE - excludes the price per unit.
          */
         fun includePricePerUnit(includePricePerUnit: Boolean) =
             includePricePerUnit(JsonField.of(includePricePerUnit))
@@ -820,7 +820,7 @@ private constructor(
         ) : this(filter, name, attributes, meterId, mutableMapOf())
 
         /**
-         * The value of a Dimension to use as a filter. Use "\*" as a wildcard to filter on all
+         * The value of a Dimension to use as a filter. Use "*" as a wildcard to filter on all
          * Dimension values.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
@@ -927,7 +927,7 @@ private constructor(
             }
 
             /**
-             * The value of a Dimension to use as a filter. Use "\*" as a wildcard to filter on all
+             * The value of a Dimension to use as a filter. Use "*" as a wildcard to filter on all
              * Dimension values.
              */
             fun filter(filter: List<String>) = filter(JsonField.of(filter))
@@ -1139,7 +1139,7 @@ private constructor(
         fun meterId(): Optional<String> = meterId.getOptional("meterId")
 
         /**
-         * The name of a Measure data field _(or blank to indicate a wildcard, i.e. all fields)_.
+         * The name of a Measure data field *(or blank to indicate a wildcard, i.e. all fields)*.
          * Default value is blank.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1245,8 +1245,8 @@ private constructor(
             fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
 
             /**
-             * The name of a Measure data field _(or blank to indicate a wildcard, i.e. all
-             * fields)_. Default value is blank.
+             * The name of a Measure data field *(or blank to indicate a wildcard, i.e. all
+             * fields)*. Default value is blank.
              */
             fun name(name: String) = name(JsonField.of(name))
 
@@ -1329,21 +1329,21 @@ private constructor(
          * Specifies the computation method applied to usage data collected in `targetField`.
          * Aggregation unit value depends on the **Category** configured for the selected
          * targetField.
-         * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
+         * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
          *   `targetField`.
-         * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
+         * * **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
+         * * **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
+         * * **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         * * **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`. Note: Based on the timestamp `ts` value of usage data
-         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
+         *   measurement submissions. If using this method, please ensure *distinct* `ts` values are
          *   used for usage data measurement submissions.
-         * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
+         * * **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
          *   **Income**, or **Cost** `targetField`.
-         * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
+         * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
          */
         class Aggregation @JsonCreator private constructor(private val value: JsonField<String>) :

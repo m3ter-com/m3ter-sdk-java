@@ -32,8 +32,8 @@ private constructor(
     /**
      * TRUE / FALSE archived flag to filter the list. CreditReasons can be archived once they are
      * obsolete.
-     * - TRUE includes archived CreditReasons.
-     * - FALSE excludes CreditReasons that are archived.
+     * * TRUE includes archived CreditReasons.
+     * * FALSE excludes CreditReasons that are archived.
      */
     fun archived(): Optional<Boolean> = Optional.ofNullable(archived)
 
@@ -99,8 +99,8 @@ private constructor(
         /**
          * TRUE / FALSE archived flag to filter the list. CreditReasons can be archived once they
          * are obsolete.
-         * - TRUE includes archived CreditReasons.
-         * - FALSE excludes CreditReasons that are archived.
+         * * TRUE includes archived CreditReasons.
+         * * FALSE excludes CreditReasons that are archived.
          */
         fun archived(archived: Boolean?) = apply { this.archived = archived }
 

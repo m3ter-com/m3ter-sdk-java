@@ -123,7 +123,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the user was created.
+     * The date and time *(in ISO-8601 format)* when the user was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -131,7 +131,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the user's access will end. Used to set or
+     * The date and time *(in ISO 8601 format)* when the user's access will end. Used to set or
      * update the date and time a user's access expires.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -140,7 +140,7 @@ private constructor(
     fun dtEndAccess(): Optional<OffsetDateTime> = dtEndAccess.getOptional("dtEndAccess")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the user was last modified.
+     * The date and time *(in ISO-8601 format)* when the user was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -156,7 +156,7 @@ private constructor(
     fun email(): Optional<String> = email.getOptional("email")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when this user first accepted the the m3ter terms
+     * The date and time *(in ISO 8601 format)* when this user first accepted the the m3ter terms
      * and conditions.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -174,7 +174,7 @@ private constructor(
     fun firstName(): Optional<String> = firstName.getOptional("firstName")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when this user last accepted the the m3ter terms and
+     * The date and time *(in ISO 8601 format)* when this user last accepted the the m3ter terms and
      * conditions.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -470,7 +470,7 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The date and time _(in ISO-8601 format)_ when the user was created. */
+        /** The date and time *(in ISO-8601 format)* when the user was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -483,7 +483,7 @@ private constructor(
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /**
-         * The date and time _(in ISO 8601 format)_ when the user's access will end. Used to set or
+         * The date and time *(in ISO 8601 format)* when the user's access will end. Used to set or
          * update the date and time a user's access expires.
          */
         fun dtEndAccess(dtEndAccess: OffsetDateTime) = dtEndAccess(JsonField.of(dtEndAccess))
@@ -499,7 +499,7 @@ private constructor(
             this.dtEndAccess = dtEndAccess
         }
 
-        /** The date and time _(in ISO-8601 format)_ when the user was last modified. */
+        /** The date and time *(in ISO-8601 format)* when the user was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -526,7 +526,7 @@ private constructor(
         fun email(email: JsonField<String>) = apply { this.email = email }
 
         /**
-         * The date and time _(in ISO 8601 format)_ when this user first accepted the the m3ter
+         * The date and time *(in ISO 8601 format)* when this user first accepted the the m3ter
          * terms and conditions.
          */
         fun firstAcceptedTermsAndConditions(firstAcceptedTermsAndConditions: OffsetDateTime) =
@@ -556,7 +556,7 @@ private constructor(
         fun firstName(firstName: JsonField<String>) = apply { this.firstName = firstName }
 
         /**
-         * The date and time _(in ISO 8601 format)_ when this user last accepted the the m3ter terms
+         * The date and time *(in ISO 8601 format)* when this user last accepted the the m3ter terms
          * and conditions.
          */
         fun lastAcceptedTermsAndConditions(lastAcceptedTermsAndConditions: OffsetDateTime) =

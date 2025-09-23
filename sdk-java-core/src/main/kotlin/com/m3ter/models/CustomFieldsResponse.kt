@@ -152,7 +152,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The DateTime when the Organization was created _(in ISO-8601 format)_.
+     * The DateTime when the Organization was created *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -161,7 +161,7 @@ private constructor(
 
     /**
      * The DateTime when a custom field was last modified - created, modified, or deleted - for the
-     * Organization _(in ISO-8601 format)_.
+     * Organization *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -512,7 +512,7 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The DateTime when the Organization was created _(in ISO-8601 format)_. */
+        /** The DateTime when the Organization was created *(in ISO-8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -526,7 +526,7 @@ private constructor(
 
         /**
          * The DateTime when a custom field was last modified - created, modified, or deleted - for
-         * the Organization _(in ISO-8601 format)_.
+         * the Organization *(in ISO-8601 format)*.
          */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))

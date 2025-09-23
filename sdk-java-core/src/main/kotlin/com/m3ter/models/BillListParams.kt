@@ -80,8 +80,8 @@ private constructor(
 
     /**
      * Boolean flag specifying whether to include Bills with "locked" status.
-     * - **TRUE** - the list inlcudes "locked" Bills.
-     * - **FALSE** - excludes "locked" Bills from the list.
+     * * **TRUE** - the list inlcudes "locked" Bills.
+     * * **FALSE** - excludes "locked" Bills from the list.
      */
     fun locked(): Optional<Boolean> = Optional.ofNullable(locked)
 
@@ -287,8 +287,8 @@ private constructor(
 
         /**
          * Boolean flag specifying whether to include Bills with "locked" status.
-         * - **TRUE** - the list inlcudes "locked" Bills.
-         * - **FALSE** - excludes "locked" Bills from the list.
+         * * **TRUE** - the list inlcudes "locked" Bills.
+         * * **FALSE** - excludes "locked" Bills from the list.
          */
         fun locked(locked: Boolean?) = apply { this.locked = locked }
 

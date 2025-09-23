@@ -156,7 +156,7 @@ private constructor(
     fun description(): Optional<String> = description.getOptional("description")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the Contract was created.
+     * The date and time *(in ISO-8601 format)* when the Contract was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -164,7 +164,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the Contract was last modified.
+     * The date and time *(in ISO-8601 format)* when the Contract was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -172,8 +172,8 @@ private constructor(
     fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
-     * The exclusive end date of the Contract _(in ISO-8601 format)_. This means the Contract is
-     * active until midnight on the day **_before_** this date.
+     * The exclusive end date of the Contract *(in ISO-8601 format)*. This means the Contract is
+     * active until midnight on the day ***before*** this date.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -206,7 +206,7 @@ private constructor(
         purchaseOrderNumber.getOptional("purchaseOrderNumber")
 
     /**
-     * The start date for the Contract _(in ISO-8601 format)_. This date is inclusive, meaning the
+     * The start date for the Contract *(in ISO-8601 format)*. This date is inclusive, meaning the
      * Contract is active from this date onward.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -505,7 +505,7 @@ private constructor(
          */
         fun description(description: JsonField<String>) = apply { this.description = description }
 
-        /** The date and time _(in ISO-8601 format)_ when the Contract was created. */
+        /** The date and time *(in ISO-8601 format)* when the Contract was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -517,7 +517,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The date and time _(in ISO-8601 format)_ when the Contract was last modified. */
+        /** The date and time *(in ISO-8601 format)* when the Contract was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -533,8 +533,8 @@ private constructor(
         }
 
         /**
-         * The exclusive end date of the Contract _(in ISO-8601 format)_. This means the Contract is
-         * active until midnight on the day **_before_** this date.
+         * The exclusive end date of the Contract *(in ISO-8601 format)*. This means the Contract is
+         * active until midnight on the day ***before*** this date.
          */
         fun endDate(endDate: LocalDate) = endDate(JsonField.of(endDate))
 
@@ -588,7 +588,7 @@ private constructor(
         }
 
         /**
-         * The start date for the Contract _(in ISO-8601 format)_. This date is inclusive, meaning
+         * The start date for the Contract *(in ISO-8601 format)*. This date is inclusive, meaning
          * the Contract is active from this date onward.
          */
         fun startDate(startDate: LocalDate) = startDate(JsonField.of(startDate))

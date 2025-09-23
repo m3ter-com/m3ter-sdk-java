@@ -31,8 +31,8 @@ private constructor(
 
     /**
      * Filter with this Boolean flag whether to include TransactionTypes that are archived.
-     * - TRUE - include archived TransactionTypes in the list.
-     * - FALSE - exclude archived TransactionTypes.
+     * * TRUE - include archived TransactionTypes in the list.
+     * * FALSE - exclude archived TransactionTypes.
      */
     fun archived(): Optional<Boolean> = Optional.ofNullable(archived)
 
@@ -102,8 +102,8 @@ private constructor(
 
         /**
          * Filter with this Boolean flag whether to include TransactionTypes that are archived.
-         * - TRUE - include archived TransactionTypes in the list.
-         * - FALSE - exclude archived TransactionTypes.
+         * * TRUE - include archived TransactionTypes in the list.
+         * * FALSE - exclude archived TransactionTypes.
          */
         fun archived(archived: Boolean?) = apply { this.archived = archived }
 
