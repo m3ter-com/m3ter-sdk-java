@@ -71,7 +71,7 @@ private constructor(
     fun name(): String = name.getRequired("name")
 
     /**
-     * The units to measure the data with. Should conform to _Unified Code for Units of Measure_
+     * The units to measure the data with. Should conform to *Unified Code for Units of Measure*
      * (UCUM). Required only for numeric field categories.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -82,7 +82,7 @@ private constructor(
     /**
      * The calculation used to transform the value of submitted `dataFields` in usage data.
      * Calculation can reference `dataFields`, `customFields`, or system `Timestamp` fields.
-     * _(Example: datafieldms datafieldgb)_
+     * *(Example: datafieldms datafieldgb)*
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -214,7 +214,7 @@ private constructor(
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
-         * The units to measure the data with. Should conform to _Unified Code for Units of Measure_
+         * The units to measure the data with. Should conform to *Unified Code for Units of Measure*
          * (UCUM). Required only for numeric field categories.
          */
         fun unit(unit: String) = unit(JsonField.of(unit))
@@ -230,7 +230,7 @@ private constructor(
         /**
          * The calculation used to transform the value of submitted `dataFields` in usage data.
          * Calculation can reference `dataFields`, `customFields`, or system `Timestamp` fields.
-         * _(Example: datafieldms datafieldgb)_
+         * *(Example: datafieldms datafieldgb)*
          */
         fun calculation(calculation: String) = calculation(JsonField.of(calculation))
 

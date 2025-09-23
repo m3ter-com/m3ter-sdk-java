@@ -33,10 +33,10 @@ interface CounterAdjustmentServiceAsync {
      * Create a new CounterAdjustment for an Account using a Counter.
      *
      * **Notes:**
-     * - Use the new absolute value for the Counter for the selected date - if it was 15 and has
-     *   increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. _Do not enter_
+     * * Use the new absolute value for the Counter for the selected date - if it was 15 and has
+     *   increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. *Do not enter*
      *   the plus or minus value relative to the previous Counter value on the Account.
-     * - CounterAdjustments on Accounts are supported down to a _specific day_ of granularity - you
+     * * CounterAdjustments on Accounts are supported down to a *specific day* of granularity - you
      *   cannot create more than one CounterAdjustment for any given day using the same Counter and
      *   you'll receive an error if you try to do this.
      */
@@ -116,9 +116,9 @@ interface CounterAdjustmentServiceAsync {
      * filter the list returned by date, Account ID, or Counter ID.
      *
      * **CONSTRAINTS:**
-     * - The `counterId` query parameter is always required when calling this endpoint, used either
+     * * The `counterId` query parameter is always required when calling this endpoint, used either
      *   as a single query parameter or in combination with any of the other query parameters.
-     * - If you want to use the `date`, `dateStart`, or `dateEnd` query parameters, you must also
+     * * If you want to use the `date`, `dateStart`, or `dateEnd` query parameters, you must also
      *   use the `accountId` query parameter.
      */
     fun list(): CompletableFuture<CounterAdjustmentListPageAsync> =

@@ -86,7 +86,7 @@ private constructor(
     fun meter(): String = meter.getRequired("meter")
 
     /**
-     * Timestamp for the measurement _(in ISO 8601 format)_.
+     * Timestamp for the measurement *(in ISO 8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -102,7 +102,7 @@ private constructor(
     fun cost(): Optional<Cost> = cost.getOptional("cost")
 
     /**
-     * End timestamp for the measurement _(in ISO 8601 format)_. _(Optional)_.
+     * End timestamp for the measurement *(in ISO 8601 format)*. *(Optional)*.
      *
      * Can be used in the case a usage event needs to have an explicit start and end rather than
      * being instantaneous.
@@ -352,7 +352,7 @@ private constructor(
          */
         fun meter(meter: JsonField<String>) = apply { this.meter = meter }
 
-        /** Timestamp for the measurement _(in ISO 8601 format)_. */
+        /** Timestamp for the measurement *(in ISO 8601 format)*. */
         fun ts(ts: OffsetDateTime) = ts(JsonField.of(ts))
 
         /**
@@ -376,7 +376,7 @@ private constructor(
         fun cost(cost: JsonField<Cost>) = apply { this.cost = cost }
 
         /**
-         * End timestamp for the measurement _(in ISO 8601 format)_. _(Optional)_.
+         * End timestamp for the measurement *(in ISO 8601 format)*. *(Optional)*.
          *
          * Can be used in the case a usage event needs to have an explicit start and end rather than
          * being instantaneous.

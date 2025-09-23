@@ -31,8 +31,8 @@ import kotlin.jvm.optionals.getOrNull
  *   follow-up or troubleshooting.
  *
  * **Important:**
- * - The `contentLength` request parameter is required.
- * - The upload URL is time limited - it is valid for **_one_** minute.
+ * * The `contentLength` request parameter is required.
+ * * The upload URL is time limited - it is valid for ***one*** minute.
  *
  * Part of the file upload service for submitting measurements data files.
  */

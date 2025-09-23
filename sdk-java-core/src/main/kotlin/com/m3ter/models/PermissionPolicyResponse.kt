@@ -84,7 +84,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the Permission Policy was created.
+     * The date and time *(in ISO-8601 format)* when the Permission Policy was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -92,7 +92,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the Permission Policy was last modified.
+     * The date and time *(in ISO-8601 format)* when the Permission Policy was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -283,7 +283,7 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The date and time _(in ISO-8601 format)_ when the Permission Policy was created. */
+        /** The date and time *(in ISO-8601 format)* when the Permission Policy was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -296,7 +296,7 @@ private constructor(
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /**
-         * The date and time _(in ISO-8601 format)_ when the Permission Policy was last modified.
+         * The date and time *(in ISO-8601 format)* when the Permission Policy was last modified.
          */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))

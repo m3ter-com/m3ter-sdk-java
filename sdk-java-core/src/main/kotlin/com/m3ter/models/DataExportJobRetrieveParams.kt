@@ -13,8 +13,8 @@ import kotlin.jvm.optionals.getOrNull
  * Retrieve an Export Job for the given UUID.
  *
  * The response returns:
- * - The source type for the data exported by the Export Job: one of USAGE or OPERATIONAL.
- * - The status of the Export Job.
+ * * The source type for the data exported by the Export Job: one of USAGE or OPERATIONAL.
+ * * The status of the Export Job.
  */
 class DataExportJobRetrieveParams
 private constructor(

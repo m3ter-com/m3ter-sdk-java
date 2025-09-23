@@ -263,8 +263,8 @@ private constructor(
 
     /**
      * Flag to indicate that the statement in CSV format has been generated for the Bill.
-     * - **TRUE** - CSV statement has been generated.
-     * - **FALSE** - no CSV statement generated.
+     * * **TRUE** - CSV statement has been generated.
+     * * **FALSE** - no CSV statement generated.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -294,7 +294,7 @@ private constructor(
     fun dtApproved(): Optional<OffsetDateTime> = dtApproved.getOptional("dtApproved")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the Bill was first created.
+     * The date and time *(in ISO 8601 format)* when the Bill was first created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -302,7 +302,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the Bill was last modified.
+     * The date and time *(in ISO 8601 format)* when the Bill was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -338,11 +338,11 @@ private constructor(
     /**
      * For accounting purposes, the date set at Organization level to use for external invoicing
      * with respect to billing periods - two options:
-     * - `FIRST_DAY_OF_NEXT_PERIOD` _(Default)_.
-     * - `LAST_DAY_OF_ARREARS`
+     * * `FIRST_DAY_OF_NEXT_PERIOD` *(Default)*.
+     * * `LAST_DAY_OF_ARREARS`
      *
      * For example, if the retrieved Bill was on a monthly billing frequency and the billing period
-     * for the Bill is September 2023 and the _External invoice date_ is set at
+     * for the Bill is September 2023 and the *External invoice date* is set at
      * `FIRST_DAY_OF_NEXT_PERIOD`, then the `externalInvoiceDate` will be `"2023-10-01"`.
      *
      * **NOTE:** To change the `externalInvoiceDate` setting for your Organization, you can use the
@@ -366,8 +366,8 @@ private constructor(
 
     /**
      * Flag to indicate that the statement in JSON format has been generated for the Bill.
-     * - **TRUE** - JSON statement has been generated.
-     * - **FALSE** - no JSON statement generated.
+     * * **TRUE** - JSON statement has been generated.
+     * * **FALSE** - no JSON statement generated.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -1010,8 +1010,8 @@ private constructor(
 
         /**
          * Flag to indicate that the statement in CSV format has been generated for the Bill.
-         * - **TRUE** - CSV statement has been generated.
-         * - **FALSE** - no CSV statement generated.
+         * * **TRUE** - CSV statement has been generated.
+         * * **FALSE** - no CSV statement generated.
          */
         fun csvStatementGenerated(csvStatementGenerated: Boolean) =
             csvStatementGenerated(JsonField.of(csvStatementGenerated))
@@ -1077,7 +1077,7 @@ private constructor(
             this.dtApproved = dtApproved
         }
 
-        /** The date and time _(in ISO 8601 format)_ when the Bill was first created. */
+        /** The date and time *(in ISO 8601 format)* when the Bill was first created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -1089,7 +1089,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The date and time _(in ISO 8601 format)_ when the Bill was last modified. */
+        /** The date and time *(in ISO 8601 format)* when the Bill was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -1155,11 +1155,11 @@ private constructor(
         /**
          * For accounting purposes, the date set at Organization level to use for external invoicing
          * with respect to billing periods - two options:
-         * - `FIRST_DAY_OF_NEXT_PERIOD` _(Default)_.
-         * - `LAST_DAY_OF_ARREARS`
+         * * `FIRST_DAY_OF_NEXT_PERIOD` *(Default)*.
+         * * `LAST_DAY_OF_ARREARS`
          *
          * For example, if the retrieved Bill was on a monthly billing frequency and the billing
-         * period for the Bill is September 2023 and the _External invoice date_ is set at
+         * period for the Bill is September 2023 and the *External invoice date* is set at
          * `FIRST_DAY_OF_NEXT_PERIOD`, then the `externalInvoiceDate` will be `"2023-10-01"`.
          *
          * **NOTE:** To change the `externalInvoiceDate` setting for your Organization, you can use
@@ -1198,8 +1198,8 @@ private constructor(
 
         /**
          * Flag to indicate that the statement in JSON format has been generated for the Bill.
-         * - **TRUE** - JSON statement has been generated.
-         * - **FALSE** - no JSON statement generated.
+         * * **TRUE** - JSON statement has been generated.
+         * * **FALSE** - no JSON statement generated.
          */
         fun jsonStatementGenerated(jsonStatementGenerated: Boolean) =
             jsonStatementGenerated(JsonField.of(jsonStatementGenerated))
@@ -2063,7 +2063,7 @@ private constructor(
         fun childAccountId(): Optional<String> = childAccountId.getOptional("childAccountId")
 
         /**
-         * If Commitments _(prepayments)_ are used in the line item, this shows the Commitment UUID.
+         * If Commitments *(prepayments)* are used in the line item, this shows the Commitment UUID.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -2196,7 +2196,7 @@ private constructor(
         fun sequenceNumber(): Optional<Int> = sequenceNumber.getOptional("sequenceNumber")
 
         /**
-         * The ending date _(exclusive)_ for the service period _(in ISO 8601 format)_.
+         * The ending date *(exclusive)* for the service period *(in ISO 8601 format)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -2205,7 +2205,7 @@ private constructor(
             servicePeriodEndDate.getOptional("servicePeriodEndDate")
 
         /**
-         * The starting date _(inclusive)_ for the service period _(in ISO 8601 format)_.
+         * The starting date *(inclusive)* for the service period *(in ISO 8601 format)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -2983,7 +2983,7 @@ private constructor(
             }
 
             /**
-             * If Commitments _(prepayments)_ are used in the line item, this shows the Commitment
+             * If Commitments *(prepayments)* are used in the line item, this shows the Commitment
              * UUID.
              */
             fun commitmentId(commitmentId: String) = commitmentId(JsonField.of(commitmentId))
@@ -3221,7 +3221,7 @@ private constructor(
                 this.sequenceNumber = sequenceNumber
             }
 
-            /** The ending date _(exclusive)_ for the service period _(in ISO 8601 format)_. */
+            /** The ending date *(exclusive)* for the service period *(in ISO 8601 format)*. */
             fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
                 servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
 
@@ -3236,7 +3236,7 @@ private constructor(
                 this.servicePeriodEndDate = servicePeriodEndDate
             }
 
-            /** The starting date _(inclusive)_ for the service period _(in ISO 8601 format)_. */
+            /** The starting date *(inclusive)* for the service period *(in ISO 8601 format)*. */
             fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) =
                 servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
 
@@ -4126,7 +4126,7 @@ private constructor(
             fun fixedPrice(): Optional<Double> = fixedPrice.getOptional("fixedPrice")
 
             /**
-             * The lower limit _(start)_ of the pricing band.
+             * The lower limit *(start)* of the pricing band.
              *
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
@@ -4392,7 +4392,7 @@ private constructor(
                     this.fixedPrice = fixedPrice
                 }
 
-                /** The lower limit _(start)_ of the pricing band. */
+                /** The lower limit *(start)* of the pricing band. */
                 fun lowerLimit(lowerLimit: Double) = lowerLimit(JsonField.of(lowerLimit))
 
                 /**

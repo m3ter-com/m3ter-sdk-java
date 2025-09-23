@@ -27,15 +27,15 @@ import kotlin.jvm.optionals.getOrNull
  * Create a new Export Destination to use for your Data Export Schedules or Ad-Hoc Data Exports.
  *
  * Currently, two options for setting up Data Export Destinations are available:
- * - S3 buckets on your AWS account.
- * - Buckets in your Google Cloud Storage account.
+ * * S3 buckets on your AWS account.
+ * * Buckets in your Google Cloud Storage account.
  *
  * Request and Response schema:
- * - Use the selector under the `destinationType` parameter to expose the relevant request and
+ * * Use the selector under the `destinationType` parameter to expose the relevant request and
  *   response schema for the type of Destination.
  *
  * Request and Response samples:
- * - Use the **Example** selector to show the relevant request and response samples for the type of
+ * * Use the **Example** selector to show the relevant request and response samples for the type of
  *   Destination.
  */
 class DataExportDestinationCreateParams

@@ -63,7 +63,7 @@ private constructor(
     fun name(): String = name.getRequired("name")
 
     /**
-     * The units to measure the data with. Should conform to _Unified Code for Units of Measure_
+     * The units to measure the data with. Should conform to *Unified Code for Units of Measure*
      * (UCUM). Required only for numeric field categories.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -184,7 +184,7 @@ private constructor(
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
-         * The units to measure the data with. Should conform to _Unified Code for Units of Measure_
+         * The units to measure the data with. Should conform to *Unified Code for Units of Measure*
          * (UCUM). Required only for numeric field categories.
          */
         fun unit(unit: String) = unit(JsonField.of(unit))

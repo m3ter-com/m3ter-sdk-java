@@ -61,7 +61,7 @@ private constructor(
     fun currency(): String = body.currency()
 
     /**
-     * The date _(in ISO 8601 format)_ after which the Balance will no longer be active for the
+     * The date *(in ISO 8601 format)* after which the Balance will no longer be active for the
      * Account.
      *
      * **Note:** You can use the `rolloverEndDate` request parameter to define an extended grace
@@ -74,7 +74,7 @@ private constructor(
     fun endDate(): OffsetDateTime = body.endDate()
 
     /**
-     * The date _(in ISO 8601 format)_ when the Balance becomes active.
+     * The date *(in ISO 8601 format)* when the Balance becomes active.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -83,7 +83,7 @@ private constructor(
 
     /**
      * A description for the bill line items for draw-down charges against the Balance.
-     * _(Optional)._
+     * *(Optional).*
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -154,7 +154,7 @@ private constructor(
      * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
      * - `"COUNTER_ADJUSTMENT_DEBIT"`
      *
-     * **NOTE:** If no charge types are specified, by default _all types_ can draw-down against the
+     * **NOTE:** If no charge types are specified, by default *all types* can draw-down against the
      * Balance amount at billing.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -180,7 +180,7 @@ private constructor(
 
     /**
      * Define a surcharge level, as a percentage of regular usage rating, applied to overages
-     * _(usage charges that exceed the Balance amount)_. For example, if the regular usage rate is
+     * *(usage charges that exceed the Balance amount)*. For example, if the regular usage rate is
      * $10 per unit of usage consumed and `overageSurchargePercent` is set at 10%, then any usage
      * charged above the original Balance amount is charged at $11 per unit of usage.
      *
@@ -204,7 +204,7 @@ private constructor(
     /**
      * The maximum amount that can be carried over past the Balance end date for draw-down at
      * billing if there is any unused Balance amount when the end date is reached. Works with
-     * `rolloverEndDate` to define the amount and duration of a Balance "grace period". _(Optional)_
+     * `rolloverEndDate` to define the amount and duration of a Balance "grace period". *(Optional)*
      *
      * **Notes:**
      * - If you leave `rolloverAmount` empty and only enter a `rolloverEndDate`, any amount left
@@ -221,7 +221,7 @@ private constructor(
     fun rolloverAmount(): Optional<Double> = body.rolloverAmount()
 
     /**
-     * The end date _(in ISO 8601 format)_ for the grace period during which unused Balance amounts
+     * The end date *(in ISO 8601 format)* for the grace period during which unused Balance amounts
      * can be carried over and drawn-down against at billing.
      *
      * **Note:** Use `rolloverAmount` if you want to specify a maximum amount that can be carried
@@ -234,7 +234,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -478,7 +478,7 @@ private constructor(
         fun currency(currency: JsonField<String>) = apply { body.currency(currency) }
 
         /**
-         * The date _(in ISO 8601 format)_ after which the Balance will no longer be active for the
+         * The date *(in ISO 8601 format)* after which the Balance will no longer be active for the
          * Account.
          *
          * **Note:** You can use the `rolloverEndDate` request parameter to define an extended grace
@@ -496,7 +496,7 @@ private constructor(
          */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { body.endDate(endDate) }
 
-        /** The date _(in ISO 8601 format)_ when the Balance becomes active. */
+        /** The date *(in ISO 8601 format)* when the Balance becomes active. */
         fun startDate(startDate: OffsetDateTime) = apply { body.startDate(startDate) }
 
         /**
@@ -510,7 +510,7 @@ private constructor(
 
         /**
          * A description for the bill line items for draw-down charges against the Balance.
-         * _(Optional)._
+         * *(Optional).*
          */
         fun balanceDrawDownDescription(balanceDrawDownDescription: String) = apply {
             body.balanceDrawDownDescription(balanceDrawDownDescription)
@@ -631,7 +631,7 @@ private constructor(
          * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
          * - `"COUNTER_ADJUSTMENT_DEBIT"`
          *
-         * **NOTE:** If no charge types are specified, by default _all types_ can draw-down against
+         * **NOTE:** If no charge types are specified, by default *all types* can draw-down against
          * the Balance amount at billing.
          */
         fun lineItemTypes(lineItemTypes: List<LineItemType>) = apply {
@@ -687,7 +687,7 @@ private constructor(
 
         /**
          * Define a surcharge level, as a percentage of regular usage rating, applied to overages
-         * _(usage charges that exceed the Balance amount)_. For example, if the regular usage rate
+         * *(usage charges that exceed the Balance amount)*. For example, if the regular usage rate
          * is $10 per unit of usage consumed and `overageSurchargePercent` is set at 10%, then any
          * usage charged above the original Balance amount is charged at $11 per unit of usage.
          */
@@ -736,7 +736,7 @@ private constructor(
          * The maximum amount that can be carried over past the Balance end date for draw-down at
          * billing if there is any unused Balance amount when the end date is reached. Works with
          * `rolloverEndDate` to define the amount and duration of a Balance "grace period".
-         * _(Optional)_
+         * *(Optional)*
          *
          * **Notes:**
          * - If you leave `rolloverAmount` empty and only enter a `rolloverEndDate`, any amount left
@@ -762,7 +762,7 @@ private constructor(
         }
 
         /**
-         * The end date _(in ISO 8601 format)_ for the grace period during which unused Balance
+         * The end date *(in ISO 8601 format)* for the grace period during which unused Balance
          * amounts can be carried over and drawn-down against at billing.
          *
          * **Note:** Use `rolloverAmount` if you want to specify a maximum amount that can be
@@ -785,8 +785,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1073,7 +1073,7 @@ private constructor(
         fun currency(): String = currency.getRequired("currency")
 
         /**
-         * The date _(in ISO 8601 format)_ after which the Balance will no longer be active for the
+         * The date *(in ISO 8601 format)* after which the Balance will no longer be active for the
          * Account.
          *
          * **Note:** You can use the `rolloverEndDate` request parameter to define an extended grace
@@ -1086,7 +1086,7 @@ private constructor(
         fun endDate(): OffsetDateTime = endDate.getRequired("endDate")
 
         /**
-         * The date _(in ISO 8601 format)_ when the Balance becomes active.
+         * The date *(in ISO 8601 format)* when the Balance becomes active.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -1095,7 +1095,7 @@ private constructor(
 
         /**
          * A description for the bill line items for draw-down charges against the Balance.
-         * _(Optional)._
+         * *(Optional).*
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1170,7 +1170,7 @@ private constructor(
          * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
          * - `"COUNTER_ADJUSTMENT_DEBIT"`
          *
-         * **NOTE:** If no charge types are specified, by default _all types_ can draw-down against
+         * **NOTE:** If no charge types are specified, by default *all types* can draw-down against
          * the Balance amount at billing.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1198,7 +1198,7 @@ private constructor(
 
         /**
          * Define a surcharge level, as a percentage of regular usage rating, applied to overages
-         * _(usage charges that exceed the Balance amount)_. For example, if the regular usage rate
+         * *(usage charges that exceed the Balance amount)*. For example, if the regular usage rate
          * is $10 per unit of usage consumed and `overageSurchargePercent` is set at 10%, then any
          * usage charged above the original Balance amount is charged at $11 per unit of usage.
          *
@@ -1225,7 +1225,7 @@ private constructor(
          * The maximum amount that can be carried over past the Balance end date for draw-down at
          * billing if there is any unused Balance amount when the end date is reached. Works with
          * `rolloverEndDate` to define the amount and duration of a Balance "grace period".
-         * _(Optional)_
+         * *(Optional)*
          *
          * **Notes:**
          * - If you leave `rolloverAmount` empty and only enter a `rolloverEndDate`, any amount left
@@ -1243,7 +1243,7 @@ private constructor(
         fun rolloverAmount(): Optional<Double> = rolloverAmount.getOptional("rolloverAmount")
 
         /**
-         * The end date _(in ISO 8601 format)_ for the grace period during which unused Balance
+         * The end date *(in ISO 8601 format)* for the grace period during which unused Balance
          * amounts can be carried over and drawn-down against at billing.
          *
          * **Note:** Use `rolloverAmount` if you want to specify a maximum amount that can be
@@ -1257,8 +1257,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1537,7 +1537,7 @@ private constructor(
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             /**
-             * The date _(in ISO 8601 format)_ after which the Balance will no longer be active for
+             * The date *(in ISO 8601 format)* after which the Balance will no longer be active for
              * the Account.
              *
              * **Note:** You can use the `rolloverEndDate` request parameter to define an extended
@@ -1555,7 +1555,7 @@ private constructor(
              */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
-            /** The date _(in ISO 8601 format)_ when the Balance becomes active. */
+            /** The date *(in ISO 8601 format)* when the Balance becomes active. */
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
             /**
@@ -1571,7 +1571,7 @@ private constructor(
 
             /**
              * A description for the bill line items for draw-down charges against the Balance.
-             * _(Optional)._
+             * *(Optional).*
              */
             fun balanceDrawDownDescription(balanceDrawDownDescription: String) =
                 balanceDrawDownDescription(JsonField.of(balanceDrawDownDescription))
@@ -1693,7 +1693,7 @@ private constructor(
              * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
              * - `"COUNTER_ADJUSTMENT_DEBIT"`
              *
-             * **NOTE:** If no charge types are specified, by default _all types_ can draw-down
+             * **NOTE:** If no charge types are specified, by default *all types* can draw-down
              * against the Balance amount at billing.
              */
             fun lineItemTypes(lineItemTypes: List<LineItemType>) =
@@ -1751,7 +1751,7 @@ private constructor(
 
             /**
              * Define a surcharge level, as a percentage of regular usage rating, applied to
-             * overages _(usage charges that exceed the Balance amount)_. For example, if the
+             * overages *(usage charges that exceed the Balance amount)*. For example, if the
              * regular usage rate is $10 per unit of usage consumed and `overageSurchargePercent` is
              * set at 10%, then any usage charged above the original Balance amount is charged at
              * $11 per unit of usage.
@@ -1807,7 +1807,7 @@ private constructor(
              * The maximum amount that can be carried over past the Balance end date for draw-down
              * at billing if there is any unused Balance amount when the end date is reached. Works
              * with `rolloverEndDate` to define the amount and duration of a Balance "grace period".
-             * _(Optional)_
+             * *(Optional)*
              *
              * **Notes:**
              * - If you leave `rolloverAmount` empty and only enter a `rolloverEndDate`, any amount
@@ -1834,7 +1834,7 @@ private constructor(
             }
 
             /**
-             * The end date _(in ISO 8601 format)_ for the grace period during which unused Balance
+             * The end date *(in ISO 8601 format)* for the grace period during which unused Balance
              * amounts can be carried over and drawn-down against at billing.
              *
              * **Note:** Use `rolloverAmount` if you want to specify a maximum amount that can be
@@ -1856,8 +1856,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.

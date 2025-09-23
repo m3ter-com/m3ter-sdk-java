@@ -53,8 +53,8 @@ private constructor(
     fun aggregationFrequency(): AggregationFrequency = body.aggregationFrequency()
 
     /**
-     * An array of objects, each representing a Dimension data field from a Meter _(for Meters that
-     * have Dimensions setup)_.
+     * An array of objects, each representing a Dimension data field from a Meter *(for Meters that
+     * have Dimensions setup)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -69,8 +69,8 @@ private constructor(
 
     /**
      * A Boolean indicating whether to include the price per unit in the Statement.
-     * - TRUE - includes the price per unit.
-     * - FALSE - excludes the price per unit.
+     * * TRUE - includes the price per unit.
+     * * FALSE - excludes the price per unit.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -95,7 +95,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -247,8 +247,8 @@ private constructor(
         }
 
         /**
-         * An array of objects, each representing a Dimension data field from a Meter _(for Meters
-         * that have Dimensions setup)_.
+         * An array of objects, each representing a Dimension data field from a Meter *(for Meters
+         * that have Dimensions setup)*.
          */
         fun dimensions(dimensions: List<Dimension>) = apply { body.dimensions(dimensions) }
 
@@ -287,8 +287,8 @@ private constructor(
 
         /**
          * A Boolean indicating whether to include the price per unit in the Statement.
-         * - TRUE - includes the price per unit.
-         * - FALSE - excludes the price per unit.
+         * * TRUE - includes the price per unit.
+         * * FALSE - excludes the price per unit.
          */
         fun includePricePerUnit(includePricePerUnit: Boolean) = apply {
             body.includePricePerUnit(includePricePerUnit)
@@ -337,8 +337,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -557,8 +557,8 @@ private constructor(
             aggregationFrequency.getRequired("aggregationFrequency")
 
         /**
-         * An array of objects, each representing a Dimension data field from a Meter _(for Meters
-         * that have Dimensions setup)_.
+         * An array of objects, each representing a Dimension data field from a Meter *(for Meters
+         * that have Dimensions setup)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -574,8 +574,8 @@ private constructor(
 
         /**
          * A Boolean indicating whether to include the price per unit in the Statement.
-         * - TRUE - includes the price per unit.
-         * - FALSE - excludes the price per unit.
+         * * TRUE - includes the price per unit.
+         * * FALSE - excludes the price per unit.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -601,8 +601,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -740,8 +740,8 @@ private constructor(
                 }
 
             /**
-             * An array of objects, each representing a Dimension data field from a Meter _(for
-             * Meters that have Dimensions setup)_.
+             * An array of objects, each representing a Dimension data field from a Meter *(for
+             * Meters that have Dimensions setup)*.
              */
             fun dimensions(dimensions: List<Dimension>) = dimensions(JsonField.of(dimensions))
 
@@ -784,8 +784,8 @@ private constructor(
 
             /**
              * A Boolean indicating whether to include the price per unit in the Statement.
-             * - TRUE - includes the price per unit.
-             * - FALSE - excludes the price per unit.
+             * * TRUE - includes the price per unit.
+             * * FALSE - excludes the price per unit.
              */
             fun includePricePerUnit(includePricePerUnit: Boolean) =
                 includePricePerUnit(JsonField.of(includePricePerUnit))
@@ -841,8 +841,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -1156,7 +1156,7 @@ private constructor(
         ) : this(filter, name, attributes, meterId, mutableMapOf())
 
         /**
-         * The value of a Dimension to use as a filter. Use "\*" as a wildcard to filter on all
+         * The value of a Dimension to use as a filter. Use "*" as a wildcard to filter on all
          * Dimension values.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
@@ -1263,7 +1263,7 @@ private constructor(
             }
 
             /**
-             * The value of a Dimension to use as a filter. Use "\*" as a wildcard to filter on all
+             * The value of a Dimension to use as a filter. Use "*" as a wildcard to filter on all
              * Dimension values.
              */
             fun filter(filter: List<String>) = filter(JsonField.of(filter))
@@ -1475,7 +1475,7 @@ private constructor(
         fun meterId(): Optional<String> = meterId.getOptional("meterId")
 
         /**
-         * The name of a Measure data field _(or blank to indicate a wildcard, i.e. all fields)_.
+         * The name of a Measure data field *(or blank to indicate a wildcard, i.e. all fields)*.
          * Default value is blank.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1581,8 +1581,8 @@ private constructor(
             fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
 
             /**
-             * The name of a Measure data field _(or blank to indicate a wildcard, i.e. all
-             * fields)_. Default value is blank.
+             * The name of a Measure data field *(or blank to indicate a wildcard, i.e. all
+             * fields)*. Default value is blank.
              */
             fun name(name: String) = name(JsonField.of(name))
 
@@ -1665,21 +1665,21 @@ private constructor(
          * Specifies the computation method applied to usage data collected in `targetField`.
          * Aggregation unit value depends on the **Category** configured for the selected
          * targetField.
-         * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
+         * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
          *   `targetField`.
-         * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
+         * * **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
+         * * **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
+         * * **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         * * **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`. Note: Based on the timestamp `ts` value of usage data
-         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
+         *   measurement submissions. If using this method, please ensure *distinct* `ts` values are
          *   used for usage data measurement submissions.
-         * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
+         * * **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
          *   **Income**, or **Cost** `targetField`.
-         * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
+         * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
          */
         class Aggregation @JsonCreator private constructor(private val value: JsonField<String>) :

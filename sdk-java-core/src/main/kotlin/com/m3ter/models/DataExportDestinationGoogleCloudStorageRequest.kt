@@ -114,14 +114,14 @@ private constructor(
      * first (Default) or Type first.
      *
      * Type is dependent on whether the Export is for Usage data or Operational data:
-     * - **Usage.** Type is `measurements`.
-     * - **Operational.** Type is one of the entities for which operational data exports are
+     * * **Usage.** Type is `measurements`.
+     * * **Operational.** Type is one of the entities for which operational data exports are
      *   available, such as `account`, `commitment`, `meter`, and so on.
      *
      * Example for Usage Data Export using .CSV format:
-     * - Time first:
+     * * Time first:
      *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-     * - Type first:
+     * * Type first:
      *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -148,7 +148,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -361,14 +361,14 @@ private constructor(
          * first (Default) or Type first.
          *
          * Type is dependent on whether the Export is for Usage data or Operational data:
-         * - **Usage.** Type is `measurements`.
-         * - **Operational.** Type is one of the entities for which operational data exports are
+         * * **Usage.** Type is `measurements`.
+         * * **Operational.** Type is one of the entities for which operational data exports are
          *   available, such as `account`, `commitment`, `meter`, and so on.
          *
          * Example for Usage Data Export using .CSV format:
-         * - Time first:
+         * * Time first:
          *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-         * - Type first:
+         * * Type first:
          *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
          */
         fun partitionOrder(partitionOrder: PartitionOrder?) =
@@ -417,8 +417,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -654,14 +654,14 @@ private constructor(
      * first (Default) or Type first.
      *
      * Type is dependent on whether the Export is for Usage data or Operational data:
-     * - **Usage.** Type is `measurements`.
-     * - **Operational.** Type is one of the entities for which operational data exports are
+     * * **Usage.** Type is `measurements`.
+     * * **Operational.** Type is one of the entities for which operational data exports are
      *   available, such as `account`, `commitment`, `meter`, and so on.
      *
      * Example for Usage Data Export using .CSV format:
-     * - Time first:
+     * * Time first:
      *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-     * - Type first:
+     * * Type first:
      *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
      */
     class PartitionOrder @JsonCreator private constructor(private val value: JsonField<String>) :

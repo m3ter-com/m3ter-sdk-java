@@ -134,21 +134,21 @@ private constructor(
      * Aggregation unit value depends on the **Category** configured for the selected targetField.
      *
      * Enum:
-     * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
+     * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or **Cost**
+     * * **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
+     * * **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
+     * * **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`.
-     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     * * **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data measurement
-     *   submissions. If using this method, please ensure _distinct_ `ts` values are used for usage
+     *   submissions. If using this method, please ensure *distinct* `ts` values are used for usage
      *   data measurment submissions.
-     * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
+     * * **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
      *   **Income**, or **Cost** `targetField`.
-     * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
+     * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -185,7 +185,7 @@ private constructor(
     fun customSql(): Optional<String> = customSql.getOptional("customSql")
 
     /**
-     * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
+     * Aggregation value used when no usage data is available to be aggregated. *(Optional)*.
      *
      * **Note:** Set to 0, if you expect to reference the Aggregation in a Compound Aggregation.
      * This ensures that any null values are passed in correctly to the Compound Aggregation
@@ -197,7 +197,7 @@ private constructor(
     fun defaultValue(): Optional<Double> = defaultValue.getOptional("defaultValue")
 
     /**
-     * The DateTime when the aggregation was created _(in ISO 8601 format)_.
+     * The DateTime when the aggregation was created *(in ISO 8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -205,7 +205,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when the aggregation was last modified _(in ISO 8601 format)_.
+     * The DateTime when the aggregation was last modified *(in ISO 8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -254,13 +254,13 @@ private constructor(
      * Specifies how you want to deal with non-integer, fractional number Aggregation values.
      *
      * **NOTES:**
-     * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-     * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+     * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+     * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
      *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one, you
      *   would typically set Rounding to **UP**. For example, suppose you charge by kilobytes per
      *   second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at $0.25 per unit used.
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
-     *   97.8 rounded up to 98 \* 0.25 = $2.45.
+     *   97.8 rounded up to 98 * 0.25 = $2.45.
      *
      * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      *
@@ -270,7 +270,7 @@ private constructor(
     fun rounding(): Optional<Rounding> = rounding.getOptional("rounding")
 
     /**
-     * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
+     * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage data
      * collected by a single Meter. Works together with `segments`.
      *
      * The `Codes` of the fields in the target Meter to use for segmentation purposes.
@@ -284,7 +284,7 @@ private constructor(
     fun segmentedFields(): Optional<List<String>> = segmentedFields.getOptional("segmentedFields")
 
     /**
-     * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
+     * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage data
      * collected by a single Meter. Works together with `segmentedFields`.
      *
      * Contains the values that are to be used as the segments, read from the fields in the meter
@@ -305,7 +305,7 @@ private constructor(
     fun targetField(): Optional<String> = targetField.getOptional("targetField")
 
     /**
-     * User defined or following the _Unified Code for Units of Measure_ (UCUM).
+     * User defined or following the *Unified Code for Units of Measure* (UCUM).
      *
      * Used as the label for billing, indicating to your customers what they are being charged for.
      *
@@ -590,21 +590,21 @@ private constructor(
          * targetField.
          *
          * Enum:
-         * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
+         * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
          *   `targetField`.
-         * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
+         * * **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
+         * * **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
+         * * **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         * * **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data
-         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
+         *   measurement submissions. If using this method, please ensure *distinct* `ts` values are
          *   used for usage data measurment submissions.
-         * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
+         * * **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
          *   **Income**, or **Cost** `targetField`.
-         * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
+         * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
          */
         fun aggregation(aggregation: Aggregation) = aggregation(JsonField.of(aggregation))
@@ -668,7 +668,7 @@ private constructor(
         fun customSql(customSql: JsonField<String>) = apply { this.customSql = customSql }
 
         /**
-         * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
+         * Aggregation value used when no usage data is available to be aggregated. *(Optional)*.
          *
          * **Note:** Set to 0, if you expect to reference the Aggregation in a Compound Aggregation.
          * This ensures that any null values are passed in correctly to the Compound Aggregation
@@ -687,7 +687,7 @@ private constructor(
             this.defaultValue = defaultValue
         }
 
-        /** The DateTime when the aggregation was created _(in ISO 8601 format)_. */
+        /** The DateTime when the aggregation was created *(in ISO 8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -699,7 +699,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when the aggregation was last modified _(in ISO 8601 format)_. */
+        /** The DateTime when the aggregation was last modified *(in ISO 8601 format)*. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -779,13 +779,13 @@ private constructor(
          * Specifies how you want to deal with non-integer, fractional number Aggregation values.
          *
          * **NOTES:**
-         * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-         * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+         * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+         * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
          *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one,
          *   you would typically set Rounding to **UP**. For example, suppose you charge by
          *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
+         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 * 0.25 = $2.45.
          *
          * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
@@ -801,7 +801,7 @@ private constructor(
         fun rounding(rounding: JsonField<Rounding>) = apply { this.rounding = rounding }
 
         /**
-         * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
+         * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage data
          * collected by a single Meter. Works together with `segments`.
          *
          * The `Codes` of the fields in the target Meter to use for segmentation purposes.
@@ -837,7 +837,7 @@ private constructor(
         }
 
         /**
-         * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
+         * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage data
          * collected by a single Meter. Works together with `segmentedFields`.
          *
          * Contains the values that are to be used as the segments, read from the fields in the
@@ -884,7 +884,7 @@ private constructor(
         fun targetField(targetField: JsonField<String>) = apply { this.targetField = targetField }
 
         /**
-         * User defined or following the _Unified Code for Units of Measure_ (UCUM).
+         * User defined or following the *Unified Code for Units of Measure* (UCUM).
          *
          * Used as the label for billing, indicating to your customers what they are being charged
          * for.
@@ -1043,21 +1043,21 @@ private constructor(
      * Aggregation unit value depends on the **Category** configured for the selected targetField.
      *
      * Enum:
-     * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
+     * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or **Cost**
+     * * **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
+     * * **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
+     * * **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`.
-     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     * * **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data measurement
-     *   submissions. If using this method, please ensure _distinct_ `ts` values are used for usage
+     *   submissions. If using this method, please ensure *distinct* `ts` values are used for usage
      *   data measurment submissions.
-     * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
+     * * **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
      *   **Income**, or **Cost** `targetField`.
-     * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
+     * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
      */
     class Aggregation @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -1326,13 +1326,13 @@ private constructor(
      * Specifies how you want to deal with non-integer, fractional number Aggregation values.
      *
      * **NOTES:**
-     * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-     * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+     * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+     * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
      *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one, you
      *   would typically set Rounding to **UP**. For example, suppose you charge by kilobytes per
      *   second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at $0.25 per unit used.
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
-     *   97.8 rounded up to 98 \* 0.25 = $2.45.
+     *   97.8 rounded up to 98 * 0.25 = $2.45.
      *
      * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */

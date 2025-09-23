@@ -18,9 +18,9 @@ import kotlin.jvm.optionals.getOrNull
  * under a specific kind of Event.
  *
  * **NOTES:** You can:
- * - Use `eventName` as a valid Query parameter to filter the list of Events returned. For example:
+ * * Use `eventName` as a valid Query parameter to filter the list of Events returned. For example:
  *   `.../organizations/{orgId}/events?eventName=configuration.commitment.created`
- * - Use the
+ * * Use the
  *   [List Notification Events](https://www.m3ter.com/docs/api#tag/Events/operation/ListEventTypes)
  *   endpoint in this section. The response lists the valid Query parameters.
  */
@@ -54,10 +54,10 @@ private constructor(
 
     /**
      * The category of Events to filter the results by. Options:
-     * - Notification
-     * - IntegrationEvent
-     * - IngestValidationFailure
-     * - DataExportJobFailure
+     * * Notification
+     * * IntegrationEvent
+     * * IngestValidationFailure
+     * * DataExportJobFailure
      */
     fun eventType(): Optional<String> = Optional.ofNullable(eventType)
 
@@ -70,8 +70,8 @@ private constructor(
 
     /**
      * A Boolean flag indicating whether to return Events that have been actioned.
-     * - **TRUE** - include actioned Events.
-     * - **FALSE** - exclude actioned Events.
+     * * **TRUE** - include actioned Events.
+     * * **FALSE** - exclude actioned Events.
      */
     fun includeActioned(): Optional<Boolean> = Optional.ofNullable(includeActioned)
 
@@ -171,10 +171,10 @@ private constructor(
 
         /**
          * The category of Events to filter the results by. Options:
-         * - Notification
-         * - IntegrationEvent
-         * - IngestValidationFailure
-         * - DataExportJobFailure
+         * * Notification
+         * * IntegrationEvent
+         * * IngestValidationFailure
+         * * DataExportJobFailure
          */
         fun eventType(eventType: String?) = apply { this.eventType = eventType }
 
@@ -200,8 +200,8 @@ private constructor(
 
         /**
          * A Boolean flag indicating whether to return Events that have been actioned.
-         * - **TRUE** - include actioned Events.
-         * - **FALSE** - exclude actioned Events.
+         * * **TRUE** - include actioned Events.
+         * * **FALSE** - exclude actioned Events.
          */
         fun includeActioned(includeActioned: Boolean?) = apply {
             this.includeActioned = includeActioned

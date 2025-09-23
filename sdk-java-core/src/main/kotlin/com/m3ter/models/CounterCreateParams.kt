@@ -58,7 +58,7 @@ private constructor(
     fun code(): Optional<String> = body.code()
 
     /**
-     * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
+     * UUID of the product the Counter belongs to. *(Optional)* - if left blank, the Counter is
      * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
      * Product.
      *
@@ -69,7 +69,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -213,7 +213,7 @@ private constructor(
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /**
-         * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
+         * UUID of the product the Counter belongs to. *(Optional)* - if left blank, the Counter is
          * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
          * Product.
          */
@@ -230,8 +230,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -444,7 +444,7 @@ private constructor(
         fun code(): Optional<String> = code.getOptional("code")
 
         /**
-         * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
+         * UUID of the product the Counter belongs to. *(Optional)* - if left blank, the Counter is
          * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
          * Product.
          *
@@ -455,8 +455,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -587,7 +587,7 @@ private constructor(
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /**
-             * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter
+             * UUID of the product the Counter belongs to. *(Optional)* - if left blank, the Counter
              * is Global. A Global Counter can be used to price Plans or Plan Templates belonging to
              * any Product.
              */
@@ -604,8 +604,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.

@@ -77,20 +77,20 @@ interface UsageService {
      * Query and filter usage data collected for your Organization.
      *
      * You can use several parameters to filter the range of usage data returned:
-     * - **Time period.** Use `startDate` and `endDate` to define a period. The query references the
+     * * **Time period.** Use `startDate` and `endDate` to define a period. The query references the
      *   `timestamp` values of usage data submissions for applying the defined time period, and not
      *   the time submissions were `receivedAt` by the platform. Only usage data with a `timestamp`
      *   that falls in the defined time period are returned.(Required)
-     * - **Meters.** Specify the Meters you want the query to return data for.
-     * - **Accounts.** Specify the Accounts you want the query to return data for.
-     * - **Dimension Filters.** Specify values for Dimension data fields on included Meters. Only
+     * * **Meters.** Specify the Meters you want the query to return data for.
+     * * **Accounts.** Specify the Accounts you want the query to return data for.
+     * * **Dimension Filters.** Specify values for Dimension data fields on included Meters. Only
      *   data that match the specified Dimension field values will be returned for the query.
      *
      * You can apply Aggregations functions to the usage data returned for the query. If you apply
      * Aggregations, you can select to group the data by:
-     * - **Account**
-     * - **Time**
-     * - **Dimension**
+     * * **Account**
+     * * **Time**
+     * * **Dimension**
      */
     fun query(): UsageQueryResponse = query(UsageQueryParams.none())
 
@@ -113,7 +113,7 @@ interface UsageService {
      * payload needs to be less than 512,000 bytes.
      *
      * **NOTES:**
-     * - **Non-existent Accounts.** The `account` request parameter is required. However, if you
+     * * **Non-existent Accounts.** The `account` request parameter is required. However, if you
      *   want to submit a usage data measurement for an Account which does not yet exist in your
      *   Organization, you can use an `account` code for a non-existent Account. A new skeleton
      *   Account will be automatically created. The usage data measurement is accepted and ingested
@@ -121,17 +121,17 @@ interface UsageService {
      *   Account's Code,??Name, and??e-mail address. For more details, see
      *   [Submitting Usage Data for Non-Existent Accounts](https://www.m3ter.com/docs/guides/billing-and-usage-data/submitting-usage-data/submitting-usage-data-for-non-existent-accounts)
      *   in our main documentation.
-     * - **Usage Data Adjustments.** If you need to make corrections for billing retrospectively
+     * * **Usage Data Adjustments.** If you need to make corrections for billing retrospectively
      *   against an Account, you can use date/time values in the past for the `ts` (timestamp)
      *   request parameter to submit positive or negative usage data amounts to correct and
      *   reconcile earlier billing anomalies. For more details, see
      *   [Submitting Usage Data Adjustments Using Timestamp](https://www.m3ter.com/docs/guides/billing-and-usage-data/submitting-usage-data/submitting-usage-data-adjustments-using-timestamp)
      *   in our main documentation.
-     * - **Ingest Validation Failure Events.** After the intial submission of a usage data
+     * * **Ingest Validation Failure Events.** After the intial submission of a usage data
      *   measurement to the Ingest API, a data enrichment stage is performed to check for any errors
      *   in the usage data measurement, such as a missing field. If an error is identified, this
-     *   might result in the submission being rejected. In these cases, an _ingest validation
-     *   failure_ Event is generated, which you can review on the
+     *   might result in the submission being rejected. In these cases, an *ingest validation
+     *   failure* Event is generated, which you can review on the
      *   [Ingest Events](https://www.m3ter.com/docs/guides/billing-and-usage-data/submitting-usage-data/reviewing-and-resolving-ingest-events)
      *   page in the Console. See also the [Events](https://www.m3ter.com/docs/api#tag/Events)
      *   section in this API Reference.

@@ -136,7 +136,7 @@ private constructor(
     /**
      * Used to submit usage data values for ingest into the platform that are the result of a
      * calculation performed on `dataFields`, `customFields`, or system `Timestamp` fields. Raw
-     * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. _(Optional)_.
+     * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. *(Optional)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -144,7 +144,7 @@ private constructor(
     fun derivedFields(): Optional<List<DerivedField>> = derivedFields.getOptional("derivedFields")
 
     /**
-     * The DateTime when the meter was created _(in ISO-8601 format)_.
+     * The DateTime when the meter was created *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -152,7 +152,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when the meter was last modified _(in ISO-8601 format)_.
+     * The DateTime when the meter was last modified *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -160,7 +160,7 @@ private constructor(
     fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
-     * UUID of the MeterGroup the Meter belongs to. _(Optional)_.
+     * UUID of the MeterGroup the Meter belongs to. *(Optional)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -184,7 +184,7 @@ private constructor(
     fun name(): Optional<String> = name.getOptional("name")
 
     /**
-     * UUID of the Product the Meter belongs to. _(Optional)_ - if blank, the Meter is global.
+     * UUID of the Product the Meter belongs to. *(Optional)* - if blank, the Meter is global.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -458,7 +458,7 @@ private constructor(
         /**
          * Used to submit usage data values for ingest into the platform that are the result of a
          * calculation performed on `dataFields`, `customFields`, or system `Timestamp` fields. Raw
-         * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. _(Optional)_.
+         * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. *(Optional)*.
          */
         fun derivedFields(derivedFields: List<DerivedField>) =
             derivedFields(JsonField.of(derivedFields))
@@ -486,7 +486,7 @@ private constructor(
                 }
         }
 
-        /** The DateTime when the meter was created _(in ISO-8601 format)_. */
+        /** The DateTime when the meter was created *(in ISO-8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -498,7 +498,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when the meter was last modified _(in ISO-8601 format)_. */
+        /** The DateTime when the meter was last modified *(in ISO-8601 format)*. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -513,7 +513,7 @@ private constructor(
             this.dtLastModified = dtLastModified
         }
 
-        /** UUID of the MeterGroup the Meter belongs to. _(Optional)_. */
+        /** UUID of the MeterGroup the Meter belongs to. *(Optional)*. */
         fun groupId(groupId: String) = groupId(JsonField.of(groupId))
 
         /**
@@ -550,7 +550,7 @@ private constructor(
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
-         * UUID of the Product the Meter belongs to. _(Optional)_ - if blank, the Meter is global.
+         * UUID of the Product the Meter belongs to. *(Optional)* - if blank, the Meter is global.
          */
         fun productId(productId: String) = productId(JsonField.of(productId))
 

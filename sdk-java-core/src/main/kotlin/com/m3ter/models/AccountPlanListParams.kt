@@ -69,9 +69,9 @@ private constructor(
     /**
      * A Boolean flag that specifies whether to include both active and inactive AccountPlans and
      * AccountPlanGroups in the list.
-     * - **TRUE** - both active and inactive AccountPlans and AccountPlanGroups are included in the
+     * * **TRUE** - both active and inactive AccountPlans and AccountPlanGroups are included in the
      *   list.
-     * - **FALSE** - only active AccountPlans and AccountPlanGroups are retrieved in the list.
+     * * **FALSE** - only active AccountPlans and AccountPlanGroups are retrieved in the list.
      */
     fun includeall(): Optional<Boolean> = Optional.ofNullable(includeall)
 
@@ -209,9 +209,9 @@ private constructor(
         /**
          * A Boolean flag that specifies whether to include both active and inactive AccountPlans
          * and AccountPlanGroups in the list.
-         * - **TRUE** - both active and inactive AccountPlans and AccountPlanGroups are included in
+         * * **TRUE** - both active and inactive AccountPlans and AccountPlanGroups are included in
          *   the list.
-         * - **FALSE** - only active AccountPlans and AccountPlanGroups are retrieved in the list.
+         * * **FALSE** - only active AccountPlans and AccountPlanGroups are retrieved in the list.
          */
         fun includeall(includeall: Boolean?) = apply { this.includeall = includeall }
 

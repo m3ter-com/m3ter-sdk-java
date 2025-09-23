@@ -25,7 +25,7 @@ import kotlin.jvm.optionals.getOrNull
 /**
  * Approve multiple Bills for the specified Organization based on the given criteria.
  *
- * This endpoint allows you to change currently _Pending_ Bills to _Approved_ status for further
+ * This endpoint allows you to change currently *Pending* Bills to *Approved* status for further
  * processing.
  *
  * Query Parameters:

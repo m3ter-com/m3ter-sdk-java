@@ -120,7 +120,7 @@ private constructor(
     fun totalRows(): Optional<Long> = totalRows.getOptional("totalRows")
 
     /**
-     * The upload date for the upload job _(in ISO-8601 format)_.
+     * The upload date for the upload job *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -334,7 +334,7 @@ private constructor(
          */
         fun totalRows(totalRows: JsonField<Long>) = apply { this.totalRows = totalRows }
 
-        /** The upload date for the upload job _(in ISO-8601 format)_. */
+        /** The upload date for the upload job *(in ISO-8601 format)*. */
         fun uploadDate(uploadDate: String) = uploadDate(JsonField.of(uploadDate))
 
         /**

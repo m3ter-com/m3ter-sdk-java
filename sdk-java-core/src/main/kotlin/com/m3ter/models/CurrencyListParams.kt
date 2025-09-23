@@ -34,9 +34,9 @@ private constructor(
 
     /**
      * Filter by archived flag. A True / False flag indicating whether to return Currencies that are
-     * archived _(obsolete)_.
-     * - TRUE - return archived Currencies.
-     * - FALSE - archived Currencies are not returned.
+     * archived *(obsolete)*.
+     * * TRUE - return archived Currencies.
+     * * FALSE - archived Currencies are not returned.
      */
     fun archived(): Optional<Boolean> = Optional.ofNullable(archived)
 
@@ -107,9 +107,9 @@ private constructor(
 
         /**
          * Filter by archived flag. A True / False flag indicating whether to return Currencies that
-         * are archived _(obsolete)_.
-         * - TRUE - return archived Currencies.
-         * - FALSE - archived Currencies are not returned.
+         * are archived *(obsolete)*.
+         * * TRUE - return archived Currencies.
+         * * FALSE - archived Currencies are not returned.
          */
         fun archived(archived: Boolean?) = apply { this.archived = archived }
 

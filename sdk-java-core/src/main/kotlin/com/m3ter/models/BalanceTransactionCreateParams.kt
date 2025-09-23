@@ -61,7 +61,7 @@ private constructor(
     fun amount(): Double = body.amount()
 
     /**
-     * The date _(in ISO 8601 format)_ when the Balance transaction was applied.
+     * The date *(in ISO 8601 format)* when the Balance transaction was applied.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -94,7 +94,7 @@ private constructor(
     fun paid(): Optional<Double> = body.paid()
 
     /**
-     * The date _(in ISO 8601 format)_ when the transaction occurred.
+     * The date *(in ISO 8601 format)* when the transaction occurred.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -112,7 +112,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -259,7 +259,7 @@ private constructor(
          */
         fun amount(amount: JsonField<Double>) = apply { body.amount(amount) }
 
-        /** The date _(in ISO 8601 format)_ when the Balance transaction was applied. */
+        /** The date *(in ISO 8601 format)* when the Balance transaction was applied. */
         fun appliedDate(appliedDate: OffsetDateTime) = apply { body.appliedDate(appliedDate) }
 
         /**
@@ -313,7 +313,7 @@ private constructor(
          */
         fun paid(paid: JsonField<Double>) = apply { body.paid(paid) }
 
-        /** The date _(in ISO 8601 format)_ when the transaction occurred. */
+        /** The date *(in ISO 8601 format)* when the transaction occurred. */
         fun transactionDate(transactionDate: OffsetDateTime) = apply {
             body.transactionDate(transactionDate)
         }
@@ -350,8 +350,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -572,7 +572,7 @@ private constructor(
         fun amount(): Double = amount.getRequired("amount")
 
         /**
-         * The date _(in ISO 8601 format)_ when the Balance transaction was applied.
+         * The date *(in ISO 8601 format)* when the Balance transaction was applied.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -605,7 +605,7 @@ private constructor(
         fun paid(): Optional<Double> = paid.getOptional("paid")
 
         /**
-         * The date _(in ISO 8601 format)_ when the transaction occurred.
+         * The date *(in ISO 8601 format)* when the transaction occurred.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -625,8 +625,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -768,7 +768,7 @@ private constructor(
              */
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
-            /** The date _(in ISO 8601 format)_ when the Balance transaction was applied. */
+            /** The date *(in ISO 8601 format)* when the Balance transaction was applied. */
             fun appliedDate(appliedDate: OffsetDateTime) = appliedDate(JsonField.of(appliedDate))
 
             /**
@@ -825,7 +825,7 @@ private constructor(
              */
             fun paid(paid: JsonField<Double>) = apply { this.paid = paid }
 
-            /** The date _(in ISO 8601 format)_ when the transaction occurred. */
+            /** The date *(in ISO 8601 format)* when the transaction occurred. */
             fun transactionDate(transactionDate: OffsetDateTime) =
                 transactionDate(JsonField.of(transactionDate))
 
@@ -860,8 +860,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.

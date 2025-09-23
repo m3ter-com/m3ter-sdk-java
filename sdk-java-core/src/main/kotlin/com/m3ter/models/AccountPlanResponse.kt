@@ -135,9 +135,9 @@ private constructor(
      * If the Account is either a Parent or a Child Account, this specifies the Account hierarchy
      * billing mode. The mode determines how billing will be handled and shown on bills for charges
      * due on the Parent Account, and charges due on Child Accounts:
-     * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-     * - **Parent Summary** - single bill line item for all Accounts.
-     * - **Child** - the Child Account is billed.
+     * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+     * * **Parent Summary** - single bill line item for all Accounts.
+     * * **Child** - the Child Account is billed.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -188,7 +188,7 @@ private constructor(
     fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the AccountPlan or AccountPlanGroup was first
+     * The date and time *(in ISO 8601 format)* when the AccountPlan or AccountPlanGroup was first
      * created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -197,7 +197,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the AccountPlan or AccountPlanGroup was last
+     * The date and time *(in ISO 8601 format)* when the AccountPlan or AccountPlanGroup was last
      * modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -206,7 +206,7 @@ private constructor(
     fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
-     * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup ceases to be
+     * The end date *(in ISO-8601 format)* for when the AccountPlan or AccountPlanGroup ceases to be
      * active for the Account. If not specified, the AccountPlan or AccountPlanGroup remains active
      * indefinitely.
      *
@@ -254,7 +254,7 @@ private constructor(
     fun productId(): Optional<String> = productId.getOptional("productId")
 
     /**
-     * The start date _(in ISO-8601 format)_ for the when the AccountPlan or AccountPlanGroup starts
+     * The start date *(in ISO-8601 format)* for the when the AccountPlan or AccountPlanGroup starts
      * to be active for the Account.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -521,9 +521,9 @@ private constructor(
          * If the Account is either a Parent or a Child Account, this specifies the Account
          * hierarchy billing mode. The mode determines how billing will be handled and shown on
          * bills for charges due on the Parent Account, and charges due on Child Accounts:
-         * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-         * - **Parent Summary** - single bill line item for all Accounts.
-         * - **Child** - the Child Account is billed.
+         * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+         * * **Parent Summary** - single bill line item for all Accounts.
+         * * **Child** - the Child Account is billed.
          */
         fun childBillingMode(childBillingMode: ChildBillingMode) =
             childBillingMode(JsonField.of(childBillingMode))
@@ -606,7 +606,7 @@ private constructor(
         }
 
         /**
-         * The date and time _(in ISO 8601 format)_ when the AccountPlan or AccountPlanGroup was
+         * The date and time *(in ISO 8601 format)* when the AccountPlan or AccountPlanGroup was
          * first created.
          */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
@@ -621,7 +621,7 @@ private constructor(
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /**
-         * The date and time _(in ISO 8601 format)_ when the AccountPlan or AccountPlanGroup was
+         * The date and time *(in ISO 8601 format)* when the AccountPlan or AccountPlanGroup was
          * last modified.
          */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
@@ -639,7 +639,7 @@ private constructor(
         }
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup ceases
+         * The end date *(in ISO-8601 format)* for when the AccountPlan or AccountPlanGroup ceases
          * to be active for the Account. If not specified, the AccountPlan or AccountPlanGroup
          * remains active indefinitely.
          */
@@ -718,7 +718,7 @@ private constructor(
         fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
         /**
-         * The start date _(in ISO-8601 format)_ for the when the AccountPlan or AccountPlanGroup
+         * The start date *(in ISO-8601 format)* for the when the AccountPlan or AccountPlanGroup
          * starts to be active for the Account.
          */
         fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
@@ -866,9 +866,9 @@ private constructor(
      * If the Account is either a Parent or a Child Account, this specifies the Account hierarchy
      * billing mode. The mode determines how billing will be handled and shown on bills for charges
      * due on the Parent Account, and charges due on Child Accounts:
-     * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-     * - **Parent Summary** - single bill line item for all Accounts.
-     * - **Child** - the Child Account is billed.
+     * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+     * * **Parent Summary** - single bill line item for all Accounts.
+     * * **Child** - the Child Account is billed.
      */
     class ChildBillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {

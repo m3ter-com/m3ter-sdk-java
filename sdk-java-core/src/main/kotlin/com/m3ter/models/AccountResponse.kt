@@ -241,7 +241,7 @@ private constructor(
     fun daysBeforeBillDue(): Optional<Int> = daysBeforeBillDue.getOptional("daysBeforeBillDue")
 
     /**
-     * The DateTime when the Account was created _(in ISO 8601 format)_.
+     * The DateTime when the Account was created *(in ISO 8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -249,7 +249,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when the Account was last modified _(in ISO 8601 format)_.
+     * The DateTime when the Account was last modified *(in ISO 8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -773,7 +773,7 @@ private constructor(
             this.daysBeforeBillDue = daysBeforeBillDue
         }
 
-        /** The DateTime when the Account was created _(in ISO 8601 format)_. */
+        /** The DateTime when the Account was created *(in ISO 8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -785,7 +785,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when the Account was last modified _(in ISO 8601 format)_. */
+        /** The DateTime when the Account was last modified *(in ISO 8601 format)*. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 

@@ -108,7 +108,7 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
-     * The type of destination _(e.g. Netsuite, webhooks)_.
+     * The type of destination *(e.g. Netsuite, webhooks)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -116,7 +116,7 @@ private constructor(
     fun destination(): String = destination.getRequired("destination")
 
     /**
-     * The type of entity the integration is for _(e.g. Bill)_.
+     * The type of entity the integration is for *(e.g. Bill)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -125,8 +125,8 @@ private constructor(
 
     /**
      * A flag indicating whether the integration configuration is authorized.
-     * - TRUE - authorized.
-     * - FALSE - not authorized.
+     * * TRUE - authorized.
+     * * FALSE - not authorized.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -158,7 +158,7 @@ private constructor(
     fun destinationId(): Optional<String> = destinationId.getOptional("destinationId")
 
     /**
-     * The DateTime when this item was created _(in ISO-8601 format)_.
+     * The DateTime when this item was created *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -166,7 +166,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when this item was last modified _(in ISO-8601 format)_.
+     * The DateTime when this item was last modified *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -175,8 +175,8 @@ private constructor(
 
     /**
      * A flag indicating whether the integration configuration is currently enabled or disabled.
-     * - TRUE - enabled.
-     * - FALSE - disabled.
+     * * TRUE - enabled.
+     * * FALSE - disabled.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -184,8 +184,8 @@ private constructor(
     fun enabled(): Optional<Boolean> = enabled.getOptional("enabled")
 
     /**
-     * The unique identifier (UUID) of the entity this integration is for _(e.g. the ID of a
-     * notification configuration. Optional.)_
+     * The unique identifier (UUID) of the entity this integration is for *(e.g. the ID of a
+     * notification configuration. Optional.)*
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -449,7 +449,7 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        /** The type of destination _(e.g. Netsuite, webhooks)_. */
+        /** The type of destination *(e.g. Netsuite, webhooks)*. */
         fun destination(destination: String) = destination(JsonField.of(destination))
 
         /**
@@ -461,7 +461,7 @@ private constructor(
          */
         fun destination(destination: JsonField<String>) = apply { this.destination = destination }
 
-        /** The type of entity the integration is for _(e.g. Bill)_. */
+        /** The type of entity the integration is for *(e.g. Bill)*. */
         fun entityType(entityType: String) = entityType(JsonField.of(entityType))
 
         /**
@@ -475,8 +475,8 @@ private constructor(
 
         /**
          * A flag indicating whether the integration configuration is authorized.
-         * - TRUE - authorized.
-         * - FALSE - not authorized.
+         * * TRUE - authorized.
+         * * FALSE - not authorized.
          */
         fun authorized(authorized: Boolean) = authorized(JsonField.of(authorized))
 
@@ -527,7 +527,7 @@ private constructor(
             this.destinationId = destinationId
         }
 
-        /** The DateTime when this item was created _(in ISO-8601 format)_. */
+        /** The DateTime when this item was created *(in ISO-8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -539,7 +539,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+        /** The DateTime when this item was last modified *(in ISO-8601 format)*. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -556,8 +556,8 @@ private constructor(
 
         /**
          * A flag indicating whether the integration configuration is currently enabled or disabled.
-         * - TRUE - enabled.
-         * - FALSE - disabled.
+         * * TRUE - enabled.
+         * * FALSE - disabled.
          */
         fun enabled(enabled: Boolean) = enabled(JsonField.of(enabled))
 
@@ -570,8 +570,8 @@ private constructor(
         fun enabled(enabled: JsonField<Boolean>) = apply { this.enabled = enabled }
 
         /**
-         * The unique identifier (UUID) of the entity this integration is for _(e.g. the ID of a
-         * notification configuration. Optional.)_
+         * The unique identifier (UUID) of the entity this integration is for *(e.g. the ID of a
+         * notification configuration. Optional.)*
          */
         fun entityId(entityId: String) = entityId(JsonField.of(entityId))
 

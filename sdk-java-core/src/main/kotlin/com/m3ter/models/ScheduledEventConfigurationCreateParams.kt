@@ -54,10 +54,10 @@ private constructor(
      * The name of the custom Scheduled Event Configuration.
      *
      * This must be in the format:
-     * - scheduled._name of entity_._custom event name_
+     * * scheduled.*name of entity*.*custom event name*
      *
      * For example:
-     * - `scheduled.bill.endDateEvent`
+     * * `scheduled.bill.endDateEvent`
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -75,7 +75,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -221,10 +221,10 @@ private constructor(
          * The name of the custom Scheduled Event Configuration.
          *
          * This must be in the format:
-         * - scheduled._name of entity_._custom event name_
+         * * scheduled.*name of entity*.*custom event name*
          *
          * For example:
-         * - `scheduled.bill.endDateEvent`
+         * * `scheduled.bill.endDateEvent`
          */
         fun name(name: String) = apply { body.name(name) }
 
@@ -252,8 +252,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -463,10 +463,10 @@ private constructor(
          * The name of the custom Scheduled Event Configuration.
          *
          * This must be in the format:
-         * - scheduled._name of entity_._custom event name_
+         * * scheduled.*name of entity*.*custom event name*
          *
          * For example:
-         * - `scheduled.bill.endDateEvent`
+         * * `scheduled.bill.endDateEvent`
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -484,8 +484,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -612,10 +612,10 @@ private constructor(
              * The name of the custom Scheduled Event Configuration.
              *
              * This must be in the format:
-             * - scheduled._name of entity_._custom event name_
+             * * scheduled.*name of entity*.*custom event name*
              *
              * For example:
-             * - `scheduled.bill.endDateEvent`
+             * * `scheduled.bill.endDateEvent`
              */
             fun name(name: String) = name(JsonField.of(name))
 
@@ -645,8 +645,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.

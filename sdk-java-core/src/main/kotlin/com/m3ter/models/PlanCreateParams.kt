@@ -58,10 +58,10 @@ private constructor(
     fun planTemplateId(): String = body.planTemplateId()
 
     /**
-     * _(Optional)_. Used to specify an Account for which the Plan will be a custom/bespoke Plan:
-     * - Use when first creating a Plan.
-     * - A custom/bespoke Plan can only be attached to the specified Account.
-     * - Once created, a custom/bespoke Plan cannot be updated to be made a custom/bespoke Plan for
+     * *(Optional)*. Used to specify an Account for which the Plan will be a custom/bespoke Plan:
+     * * Use when first creating a Plan.
+     * * A custom/bespoke Plan can only be attached to the specified Account.
+     * * Once created, a custom/bespoke Plan cannot be updated to be made a custom/bespoke Plan for
      *   a different Account.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -72,9 +72,9 @@ private constructor(
     /**
      * TRUE/FALSE flag indicating whether the plan is a custom/bespoke Plan for a particular
      * Account:
-     * - When creating a Plan, use the `accountId` request parameter to specify the Account for
+     * * When creating a Plan, use the `accountId` request parameter to specify the Account for
      *   which the Plan will be custom/bespoke.
-     * - A custom/bespoke Plan can only be attached to the specified Account.
+     * * A custom/bespoke Plan can only be attached to the specified Account.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -102,7 +102,7 @@ private constructor(
      * The product minimum spend amount per billing cycle for end customer Accounts on a priced
      * Plan.
      *
-     * _(Optional)_. Overrides PlanTemplate value.
+     * *(Optional)*. Overrides PlanTemplate value.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -122,7 +122,7 @@ private constructor(
      *
      * When FALSE, minimum spend is billed at the end of each billing period.
      *
-     * _(Optional)_. Overrides the setting at PlanTemplate level for minimum spend billing in
+     * *(Optional)*. Overrides the setting at PlanTemplate level for minimum spend billing in
      * arrears/in advance.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -131,7 +131,7 @@ private constructor(
     fun minimumSpendBillInAdvance(): Optional<Boolean> = body.minimumSpendBillInAdvance()
 
     /**
-     * Minimum spend description _(displayed on the bill line item)_.
+     * Minimum spend description *(displayed on the bill line item)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -142,7 +142,7 @@ private constructor(
      * Assigns a rank or position to the Plan in your order of pricing plans - lower numbers
      * represent more basic pricing plans; higher numbers represent more premium pricing plans.
      *
-     * _(Optional)_. Overrides PlanTemplate value.
+     * *(Optional)*. Overrides PlanTemplate value.
      *
      * **NOTE: DEPRECATED** - do not use.
      *
@@ -154,7 +154,7 @@ private constructor(
     /**
      * The standing charge applied to bills for end customers. This is prorated.
      *
-     * _(Optional)_. Overrides PlanTemplate value.
+     * *(Optional)*. Overrides PlanTemplate value.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -176,7 +176,7 @@ private constructor(
      *
      * When FALSE, standing charge is billed at the end of each billing period.
      *
-     * _(Optional)_. Overrides the setting at PlanTemplate level for standing charge billing in
+     * *(Optional)*. Overrides the setting at PlanTemplate level for standing charge billing in
      * arrears/in advance.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -185,7 +185,7 @@ private constructor(
     fun standingChargeBillInAdvance(): Optional<Boolean> = body.standingChargeBillInAdvance()
 
     /**
-     * Standing charge description _(displayed on the bill line item)_.
+     * Standing charge description *(displayed on the bill line item)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -194,7 +194,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -424,11 +424,11 @@ private constructor(
         }
 
         /**
-         * _(Optional)_. Used to specify an Account for which the Plan will be a custom/bespoke
+         * *(Optional)*. Used to specify an Account for which the Plan will be a custom/bespoke
          * Plan:
-         * - Use when first creating a Plan.
-         * - A custom/bespoke Plan can only be attached to the specified Account.
-         * - Once created, a custom/bespoke Plan cannot be updated to be made a custom/bespoke Plan
+         * * Use when first creating a Plan.
+         * * A custom/bespoke Plan can only be attached to the specified Account.
+         * * Once created, a custom/bespoke Plan cannot be updated to be made a custom/bespoke Plan
          *   for a different Account.
          */
         fun accountId(accountId: String) = apply { body.accountId(accountId) }
@@ -445,9 +445,9 @@ private constructor(
         /**
          * TRUE/FALSE flag indicating whether the plan is a custom/bespoke Plan for a particular
          * Account:
-         * - When creating a Plan, use the `accountId` request parameter to specify the Account for
+         * * When creating a Plan, use the `accountId` request parameter to specify the Account for
          *   which the Plan will be custom/bespoke.
-         * - A custom/bespoke Plan can only be attached to the specified Account.
+         * * A custom/bespoke Plan can only be attached to the specified Account.
          */
         fun bespoke(bespoke: Boolean) = apply { body.bespoke(bespoke) }
 
@@ -488,7 +488,7 @@ private constructor(
          * The product minimum spend amount per billing cycle for end customer Accounts on a priced
          * Plan.
          *
-         * _(Optional)_. Overrides PlanTemplate value.
+         * *(Optional)*. Overrides PlanTemplate value.
          */
         fun minimumSpend(minimumSpend: Double) = apply { body.minimumSpend(minimumSpend) }
 
@@ -528,7 +528,7 @@ private constructor(
          *
          * When FALSE, minimum spend is billed at the end of each billing period.
          *
-         * _(Optional)_. Overrides the setting at PlanTemplate level for minimum spend billing in
+         * *(Optional)*. Overrides the setting at PlanTemplate level for minimum spend billing in
          * arrears/in advance.
          */
         fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: Boolean) = apply {
@@ -546,7 +546,7 @@ private constructor(
             body.minimumSpendBillInAdvance(minimumSpendBillInAdvance)
         }
 
-        /** Minimum spend description _(displayed on the bill line item)_. */
+        /** Minimum spend description *(displayed on the bill line item)*. */
         fun minimumSpendDescription(minimumSpendDescription: String) = apply {
             body.minimumSpendDescription(minimumSpendDescription)
         }
@@ -566,7 +566,7 @@ private constructor(
          * Assigns a rank or position to the Plan in your order of pricing plans - lower numbers
          * represent more basic pricing plans; higher numbers represent more premium pricing plans.
          *
-         * _(Optional)_. Overrides PlanTemplate value.
+         * *(Optional)*. Overrides PlanTemplate value.
          *
          * **NOTE: DEPRECATED** - do not use.
          */
@@ -583,7 +583,7 @@ private constructor(
         /**
          * The standing charge applied to bills for end customers. This is prorated.
          *
-         * _(Optional)_. Overrides PlanTemplate value.
+         * *(Optional)*. Overrides PlanTemplate value.
          */
         fun standingCharge(standingCharge: Double) = apply { body.standingCharge(standingCharge) }
 
@@ -622,7 +622,7 @@ private constructor(
          *
          * When FALSE, standing charge is billed at the end of each billing period.
          *
-         * _(Optional)_. Overrides the setting at PlanTemplate level for standing charge billing in
+         * *(Optional)*. Overrides the setting at PlanTemplate level for standing charge billing in
          * arrears/in advance.
          */
         fun standingChargeBillInAdvance(standingChargeBillInAdvance: Boolean) = apply {
@@ -640,7 +640,7 @@ private constructor(
             body.standingChargeBillInAdvance(standingChargeBillInAdvance)
         }
 
-        /** Standing charge description _(displayed on the bill line item)_. */
+        /** Standing charge description *(displayed on the bill line item)*. */
         fun standingChargeDescription(standingChargeDescription: String) = apply {
             body.standingChargeDescription(standingChargeDescription)
         }
@@ -658,8 +658,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -932,11 +932,11 @@ private constructor(
         fun planTemplateId(): String = planTemplateId.getRequired("planTemplateId")
 
         /**
-         * _(Optional)_. Used to specify an Account for which the Plan will be a custom/bespoke
+         * *(Optional)*. Used to specify an Account for which the Plan will be a custom/bespoke
          * Plan:
-         * - Use when first creating a Plan.
-         * - A custom/bespoke Plan can only be attached to the specified Account.
-         * - Once created, a custom/bespoke Plan cannot be updated to be made a custom/bespoke Plan
+         * * Use when first creating a Plan.
+         * * A custom/bespoke Plan can only be attached to the specified Account.
+         * * Once created, a custom/bespoke Plan cannot be updated to be made a custom/bespoke Plan
          *   for a different Account.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -947,9 +947,9 @@ private constructor(
         /**
          * TRUE/FALSE flag indicating whether the plan is a custom/bespoke Plan for a particular
          * Account:
-         * - When creating a Plan, use the `accountId` request parameter to specify the Account for
+         * * When creating a Plan, use the `accountId` request parameter to specify the Account for
          *   which the Plan will be custom/bespoke.
-         * - A custom/bespoke Plan can only be attached to the specified Account.
+         * * A custom/bespoke Plan can only be attached to the specified Account.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -977,7 +977,7 @@ private constructor(
          * The product minimum spend amount per billing cycle for end customer Accounts on a priced
          * Plan.
          *
-         * _(Optional)_. Overrides PlanTemplate value.
+         * *(Optional)*. Overrides PlanTemplate value.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -999,7 +999,7 @@ private constructor(
          *
          * When FALSE, minimum spend is billed at the end of each billing period.
          *
-         * _(Optional)_. Overrides the setting at PlanTemplate level for minimum spend billing in
+         * *(Optional)*. Overrides the setting at PlanTemplate level for minimum spend billing in
          * arrears/in advance.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1009,7 +1009,7 @@ private constructor(
             minimumSpendBillInAdvance.getOptional("minimumSpendBillInAdvance")
 
         /**
-         * Minimum spend description _(displayed on the bill line item)_.
+         * Minimum spend description *(displayed on the bill line item)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1021,7 +1021,7 @@ private constructor(
          * Assigns a rank or position to the Plan in your order of pricing plans - lower numbers
          * represent more basic pricing plans; higher numbers represent more premium pricing plans.
          *
-         * _(Optional)_. Overrides PlanTemplate value.
+         * *(Optional)*. Overrides PlanTemplate value.
          *
          * **NOTE: DEPRECATED** - do not use.
          *
@@ -1033,7 +1033,7 @@ private constructor(
         /**
          * The standing charge applied to bills for end customers. This is prorated.
          *
-         * _(Optional)_. Overrides PlanTemplate value.
+         * *(Optional)*. Overrides PlanTemplate value.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1055,7 +1055,7 @@ private constructor(
          *
          * When FALSE, standing charge is billed at the end of each billing period.
          *
-         * _(Optional)_. Overrides the setting at PlanTemplate level for standing charge billing in
+         * *(Optional)*. Overrides the setting at PlanTemplate level for standing charge billing in
          * arrears/in advance.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1065,7 +1065,7 @@ private constructor(
             standingChargeBillInAdvance.getOptional("standingChargeBillInAdvance")
 
         /**
-         * Standing charge description _(displayed on the bill line item)_.
+         * Standing charge description *(displayed on the bill line item)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1075,8 +1075,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1338,11 +1338,11 @@ private constructor(
             }
 
             /**
-             * _(Optional)_. Used to specify an Account for which the Plan will be a custom/bespoke
+             * *(Optional)*. Used to specify an Account for which the Plan will be a custom/bespoke
              * Plan:
-             * - Use when first creating a Plan.
-             * - A custom/bespoke Plan can only be attached to the specified Account.
-             * - Once created, a custom/bespoke Plan cannot be updated to be made a custom/bespoke
+             * * Use when first creating a Plan.
+             * * A custom/bespoke Plan can only be attached to the specified Account.
+             * * Once created, a custom/bespoke Plan cannot be updated to be made a custom/bespoke
              *   Plan for a different Account.
              */
             fun accountId(accountId: String) = accountId(JsonField.of(accountId))
@@ -1359,9 +1359,9 @@ private constructor(
             /**
              * TRUE/FALSE flag indicating whether the plan is a custom/bespoke Plan for a particular
              * Account:
-             * - When creating a Plan, use the `accountId` request parameter to specify the Account
+             * * When creating a Plan, use the `accountId` request parameter to specify the Account
              *   for which the Plan will be custom/bespoke.
-             * - A custom/bespoke Plan can only be attached to the specified Account.
+             * * A custom/bespoke Plan can only be attached to the specified Account.
              */
             fun bespoke(bespoke: Boolean) = bespoke(JsonField.of(bespoke))
 
@@ -1403,7 +1403,7 @@ private constructor(
              * The product minimum spend amount per billing cycle for end customer Accounts on a
              * priced Plan.
              *
-             * _(Optional)_. Overrides PlanTemplate value.
+             * *(Optional)*. Overrides PlanTemplate value.
              */
             fun minimumSpend(minimumSpend: Double) = minimumSpend(JsonField.of(minimumSpend))
 
@@ -1441,7 +1441,7 @@ private constructor(
              *
              * When FALSE, minimum spend is billed at the end of each billing period.
              *
-             * _(Optional)_. Overrides the setting at PlanTemplate level for minimum spend billing
+             * *(Optional)*. Overrides the setting at PlanTemplate level for minimum spend billing
              * in arrears/in advance.
              */
             fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: Boolean) =
@@ -1458,7 +1458,7 @@ private constructor(
                 this.minimumSpendBillInAdvance = minimumSpendBillInAdvance
             }
 
-            /** Minimum spend description _(displayed on the bill line item)_. */
+            /** Minimum spend description *(displayed on the bill line item)*. */
             fun minimumSpendDescription(minimumSpendDescription: String) =
                 minimumSpendDescription(JsonField.of(minimumSpendDescription))
 
@@ -1478,7 +1478,7 @@ private constructor(
              * represent more basic pricing plans; higher numbers represent more premium pricing
              * plans.
              *
-             * _(Optional)_. Overrides PlanTemplate value.
+             * *(Optional)*. Overrides PlanTemplate value.
              *
              * **NOTE: DEPRECATED** - do not use.
              */
@@ -1496,7 +1496,7 @@ private constructor(
             /**
              * The standing charge applied to bills for end customers. This is prorated.
              *
-             * _(Optional)_. Overrides PlanTemplate value.
+             * *(Optional)*. Overrides PlanTemplate value.
              */
             fun standingCharge(standingCharge: Double) =
                 standingCharge(JsonField.of(standingCharge))
@@ -1535,7 +1535,7 @@ private constructor(
              *
              * When FALSE, standing charge is billed at the end of each billing period.
              *
-             * _(Optional)_. Overrides the setting at PlanTemplate level for standing charge billing
+             * *(Optional)*. Overrides the setting at PlanTemplate level for standing charge billing
              * in arrears/in advance.
              */
             fun standingChargeBillInAdvance(standingChargeBillInAdvance: Boolean) =
@@ -1553,7 +1553,7 @@ private constructor(
                     this.standingChargeBillInAdvance = standingChargeBillInAdvance
                 }
 
-            /** Standing charge description _(displayed on the bill line item)_. */
+            /** Standing charge description *(displayed on the bill line item)*. */
             fun standingChargeDescription(standingChargeDescription: String) =
                 standingChargeDescription(JsonField.of(standingChargeDescription))
 
@@ -1570,8 +1570,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.

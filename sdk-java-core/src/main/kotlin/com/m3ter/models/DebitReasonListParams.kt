@@ -31,8 +31,8 @@ private constructor(
 
     /**
      * Filter using the boolean archived flag. DebitReasons can be archived if they are obsolete.
-     * - TRUE includes DebitReasons that have been archived.
-     * - FALSE excludes archived DebitReasons.
+     * * TRUE includes DebitReasons that have been archived.
+     * * FALSE excludes archived DebitReasons.
      */
     fun archived(): Optional<Boolean> = Optional.ofNullable(archived)
 
@@ -98,8 +98,8 @@ private constructor(
         /**
          * Filter using the boolean archived flag. DebitReasons can be archived if they are
          * obsolete.
-         * - TRUE includes DebitReasons that have been archived.
-         * - FALSE excludes archived DebitReasons.
+         * * TRUE includes DebitReasons that have been archived.
+         * * FALSE excludes archived DebitReasons.
          */
         fun archived(archived: Boolean?) = apply { this.archived = archived }
 

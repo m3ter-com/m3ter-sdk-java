@@ -41,9 +41,9 @@ interface CommitmentServiceAsync {
      * **Note:** If some of the agreed Commitment amount remains unpaid at the start of an
      * end-customer contract period, when you create a Commitment for an Account you can set up
      * billing for the outstanding amount in one of two ways:
-     * - Select a Product _Plan to bill with_. Use the `billingPlanId` request parameter to select
+     * - Select a Product *Plan to bill with*. Use the `billingPlanId` request parameter to select
      *   the Plan used for billing.
-     * - Define a _schedule of billing dates_. Omit a `billingPlanId` and use the `feeDates` request
+     * - Define a *schedule of billing dates*. Omit a `billingPlanId` and use the `feeDates` request
      *   parameter to define a precise schedule of bill dates and amounts.
      */
     fun create(params: CommitmentCreateParams): CompletableFuture<CommitmentResponse> =
