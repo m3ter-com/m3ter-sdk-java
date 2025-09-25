@@ -22,6 +22,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class LineItemResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accountingProductCode: JsonField<String>,
@@ -2065,6 +2066,7 @@ private constructor(
      * or tier.
      */
     class BandUsage
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val bandQuantity: JsonField<Double>,
         private val bandSubtotal: JsonField<Double>,

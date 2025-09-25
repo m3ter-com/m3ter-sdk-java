@@ -20,6 +20,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /** Group by time */
 class DataExplorerTimeGroup
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val groupType: JsonField<DataExplorerGroup.GroupType>,
     private val frequency: JsonField<Frequency>,

@@ -23,6 +23,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class BillResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accountCode: JsonField<String>,
@@ -1711,6 +1712,7 @@ private constructor(
     }
 
     class LineItem
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val averageUnitPrice: JsonField<Double>,
         private val conversionRate: JsonField<Double>,
@@ -4017,6 +4019,7 @@ private constructor(
          * band or tier.
          */
         class UsagePerPricingBand
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val bandQuantity: JsonField<Double>,
             private val bandSubtotal: JsonField<Double>,

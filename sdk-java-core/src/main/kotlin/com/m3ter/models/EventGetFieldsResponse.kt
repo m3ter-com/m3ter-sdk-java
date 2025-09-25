@@ -19,6 +19,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /** Response containing the list of Fields for an Event Type. */
 class EventGetFieldsResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val events: JsonField<Events>,
     private val additionalProperties: MutableMap<String, JsonValue>,

@@ -17,6 +17,7 @@ import java.util.Optional
 
 /** Contact address. */
 class Address
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val addressLine1: JsonField<String>,
     private val addressLine2: JsonField<String>,

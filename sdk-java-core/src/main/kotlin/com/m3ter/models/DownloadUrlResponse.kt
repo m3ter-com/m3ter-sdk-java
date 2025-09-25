@@ -17,6 +17,7 @@ import java.util.Optional
 
 /** It contains details for downloading a file */
 class DownloadUrlResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val url: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,

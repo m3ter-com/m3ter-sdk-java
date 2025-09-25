@@ -21,6 +21,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class AdHocOperationalDataRequest
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val operationalDataTypes: JsonField<List<OperationalDataType>>,
     private val sourceType: JsonField<SourceType>,

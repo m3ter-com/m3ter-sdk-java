@@ -16,6 +16,7 @@ import java.util.Objects
 import java.util.Optional
 
 class SetString
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val empty: JsonField<Boolean>,
     private val additionalProperties: MutableMap<String, JsonValue>,

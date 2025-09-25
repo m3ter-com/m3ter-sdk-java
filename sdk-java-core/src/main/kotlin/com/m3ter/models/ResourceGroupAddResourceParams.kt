@@ -371,6 +371,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val targetId: JsonField<String>,
         private val targetType: JsonField<TargetType>,

@@ -261,6 +261,7 @@ private constructor(
     }
 
     class ExportDestinationS3Response
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val code: JsonField<String>,
@@ -1129,6 +1130,7 @@ private constructor(
 
     /** The response containing the details of an Google Cloud Storage export destination. */
     class ExportDestinationGoogleCloudStorageResponse
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val code: JsonField<String>,

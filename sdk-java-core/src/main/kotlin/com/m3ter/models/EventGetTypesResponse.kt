@@ -20,6 +20,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /** Response containing list of Event Types that can have Notification rules configured. */
 class EventGetTypesResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val events: JsonField<List<String>>,
     private val additionalProperties: MutableMap<String, JsonValue>,

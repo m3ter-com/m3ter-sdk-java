@@ -569,6 +569,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val accountIds: JsonField<List<String>>,
         private val aggregations: JsonField<List<Aggregation>>,
@@ -1146,6 +1147,7 @@ private constructor(
     }
 
     class Aggregation
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val fieldCode: JsonField<String>,
         private val fieldType: JsonField<FieldType>,
@@ -1720,6 +1722,7 @@ private constructor(
     }
 
     class DimensionFilter
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val fieldCode: JsonField<String>,
         private val meterId: JsonField<String>,

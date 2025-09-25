@@ -365,6 +365,7 @@ private constructor(
             .build()
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val billIds: JsonField<List<String>>,
         private val additionalProperties: MutableMap<String, JsonValue>,

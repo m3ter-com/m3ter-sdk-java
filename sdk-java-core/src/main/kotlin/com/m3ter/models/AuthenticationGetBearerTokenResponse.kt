@@ -17,6 +17,7 @@ import java.util.Objects
 import java.util.Optional
 
 class AuthenticationGetBearerTokenResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val accessToken: JsonField<String>,
     private val expiresIn: JsonField<Long>,

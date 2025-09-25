@@ -18,6 +18,7 @@ import java.util.Optional
 
 /** It contains details for downloading an export file */
 class DataExportJobGetDownloadUrlResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val expirationTime: JsonField<OffsetDateTime>,
     private val url: JsonField<String>,

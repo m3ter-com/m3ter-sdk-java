@@ -363,6 +363,7 @@ private constructor(
 
     /** Request containing the file details when generating an upload URL. */
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val contentLength: JsonField<Long>,
         private val contentType: JsonField<ContentType>,

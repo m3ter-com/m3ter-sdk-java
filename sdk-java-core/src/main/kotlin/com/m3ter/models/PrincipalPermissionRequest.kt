@@ -17,6 +17,7 @@ import java.util.Objects
 import java.util.Optional
 
 class PrincipalPermissionRequest
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val principalId: JsonField<String>,
     private val version: JsonField<Long>,

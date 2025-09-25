@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class CommitmentFee
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val amount: JsonField<Double>,
     private val date: JsonField<LocalDate>,

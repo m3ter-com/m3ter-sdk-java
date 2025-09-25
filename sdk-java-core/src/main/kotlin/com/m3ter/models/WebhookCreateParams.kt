@@ -444,6 +444,7 @@ private constructor(
      * URL and credentials required for webhook activation.
      */
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val credentials: JsonField<M3terSignedCredentialsRequest>,
         private val description: JsonField<String>,

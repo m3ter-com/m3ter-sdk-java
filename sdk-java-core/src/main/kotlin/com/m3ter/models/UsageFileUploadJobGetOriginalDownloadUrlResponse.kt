@@ -19,6 +19,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /** It contains details for downloading a file */
 class UsageFileUploadJobGetOriginalDownloadUrlResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val headers: JsonField<Headers>,
     private val jobId: JsonField<String>,

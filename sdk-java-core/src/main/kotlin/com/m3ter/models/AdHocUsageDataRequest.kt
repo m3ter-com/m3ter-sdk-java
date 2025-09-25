@@ -22,6 +22,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class AdHocUsageDataRequest
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val sourceType: JsonField<SourceType>,
     private val accountIds: JsonField<List<String>>,
@@ -640,6 +641,7 @@ private constructor(
     }
 
     class Aggregation
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val fieldCode: JsonField<String>,
         private val fieldType: JsonField<FieldType>,
@@ -1214,6 +1216,7 @@ private constructor(
     }
 
     class DimensionFilter
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val fieldCode: JsonField<String>,
         private val meterId: JsonField<String>,

@@ -16,6 +16,7 @@ import java.util.Objects
 import java.util.Optional
 
 class ObjectUrlResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val downloadUrl: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,

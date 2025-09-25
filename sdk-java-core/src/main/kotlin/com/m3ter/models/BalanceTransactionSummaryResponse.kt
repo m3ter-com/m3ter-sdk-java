@@ -16,6 +16,7 @@ import java.util.Objects
 import java.util.Optional
 
 class BalanceTransactionSummaryResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val balanceConsumed: JsonField<Double>,
     private val expiredBalanceAmount: JsonField<Double>,
