@@ -17,6 +17,7 @@ import java.util.Optional
 
 /** Response containing data export ad-hoc jobId */
 class AdHocResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val jobId: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,

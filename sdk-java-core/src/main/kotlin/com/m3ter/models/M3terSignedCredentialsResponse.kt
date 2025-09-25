@@ -18,6 +18,7 @@ import java.util.Objects
 import java.util.Optional
 
 class M3terSignedCredentialsResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val destination: JsonField<String>,

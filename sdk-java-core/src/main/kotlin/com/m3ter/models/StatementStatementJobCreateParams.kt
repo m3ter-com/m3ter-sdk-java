@@ -374,6 +374,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val billId: JsonField<String>,
         private val includeCsvFormat: JsonField<Boolean>,

@@ -20,6 +20,7 @@ import java.util.Objects
 import kotlin.jvm.optionals.getOrNull
 
 class PermissionStatementResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val action: JsonField<List<Action>>,
     private val effect: JsonField<Effect>,

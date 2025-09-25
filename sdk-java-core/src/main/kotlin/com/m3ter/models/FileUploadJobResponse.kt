@@ -19,6 +19,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /** Response containing the upload job details. */
 class FileUploadJobResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val contentLength: JsonField<Long>,

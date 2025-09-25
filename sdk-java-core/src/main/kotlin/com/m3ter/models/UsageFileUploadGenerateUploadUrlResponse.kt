@@ -19,6 +19,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /** Response containing the upload job URL details */
 class UsageFileUploadGenerateUploadUrlResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val headers: JsonField<Headers>,
     private val jobId: JsonField<String>,

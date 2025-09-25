@@ -19,6 +19,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /** Group by account */
 class DataExplorerAccountGroup
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val groupType: JsonField<DataExplorerGroup.GroupType>,
     private val additionalProperties: MutableMap<String, JsonValue>,

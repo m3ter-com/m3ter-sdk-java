@@ -22,6 +22,7 @@ import java.util.Optional
  * and then converted to USD using the defined rate.
  */
 class CurrencyConversion
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val from: JsonField<String>,
     private val to: JsonField<String>,

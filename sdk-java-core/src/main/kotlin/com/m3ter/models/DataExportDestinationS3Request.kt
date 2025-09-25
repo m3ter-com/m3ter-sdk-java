@@ -19,6 +19,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class DataExportDestinationS3Request
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val bucketName: JsonField<String>,
     private val iamRoleArn: JsonField<String>,

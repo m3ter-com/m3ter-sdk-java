@@ -857,6 +857,7 @@ private constructor(
 
     /** Account request for operations such as Create or Update Account. */
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val code: JsonField<String>,
         private val emailAddress: JsonField<String>,

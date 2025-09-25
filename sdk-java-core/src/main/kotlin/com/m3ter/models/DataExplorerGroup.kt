@@ -19,6 +19,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /** Group by a field */
 class DataExplorerGroup
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val groupType: JsonField<GroupType>,
     private val additionalProperties: MutableMap<String, JsonValue>,

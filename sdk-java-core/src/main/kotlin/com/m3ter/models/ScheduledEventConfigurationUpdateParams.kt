@@ -435,6 +435,7 @@ private constructor(
 
     /** Request containing a ScheduledEventConfiguration entity */
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val entity: JsonField<String>,
         private val field: JsonField<String>,

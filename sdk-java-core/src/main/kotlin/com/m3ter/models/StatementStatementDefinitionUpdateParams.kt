@@ -506,6 +506,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val aggregationFrequency: JsonField<AggregationFrequency>,
         private val dimensions: JsonField<List<Dimension>>,
@@ -1135,6 +1136,7 @@ private constructor(
 
     /** A Dimension belonging to a Meter. */
     class Dimension
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val filter: JsonField<List<String>>,
         private val name: JsonField<String>,
@@ -1442,6 +1444,7 @@ private constructor(
     }
 
     class Measure
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val aggregations: JsonField<List<Aggregation>>,
         private val meterId: JsonField<String>,

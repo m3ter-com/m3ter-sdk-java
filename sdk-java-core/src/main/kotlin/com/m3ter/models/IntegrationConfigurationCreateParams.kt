@@ -523,6 +523,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val destination: JsonField<String>,
         private val entityType: JsonField<String>,
@@ -1157,6 +1158,7 @@ private constructor(
 
     /** Base model for defining integration credentials across different types of integrations. */
     class Credentials
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val type: JsonField<Type>,
         private val destination: JsonField<Destination>,

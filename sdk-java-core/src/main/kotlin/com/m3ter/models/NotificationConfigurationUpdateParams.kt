@@ -556,6 +556,7 @@ private constructor(
 
     /** Request containing a Notification entity. */
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val code: JsonField<String>,
         private val description: JsonField<String>,

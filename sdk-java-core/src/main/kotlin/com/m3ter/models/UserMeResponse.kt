@@ -22,6 +22,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class UserMeResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val organization: JsonField<Organization>,
     private val serviceUser: JsonField<ServiceUser>,
@@ -214,6 +215,7 @@ private constructor(
             (user.asKnown().getOrNull()?.validity() ?: 0)
 
     class Organization
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val addressLine1: JsonField<String>,
@@ -1627,6 +1629,7 @@ private constructor(
     }
 
     class ServiceUser
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val createdBy: JsonField<String>,
@@ -2019,6 +2022,7 @@ private constructor(
     }
 
     class User
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val contactNumber: JsonField<String>,

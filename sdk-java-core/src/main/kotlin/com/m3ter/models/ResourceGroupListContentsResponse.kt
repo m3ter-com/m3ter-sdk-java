@@ -19,6 +19,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class ResourceGroupListContentsResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val createdBy: JsonField<String>,
     private val dtCreated: JsonField<OffsetDateTime>,

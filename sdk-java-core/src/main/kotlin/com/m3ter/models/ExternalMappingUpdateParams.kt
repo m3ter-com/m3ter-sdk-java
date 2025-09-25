@@ -485,6 +485,7 @@ private constructor(
 
     /** Request containing an External Mapping entity. */
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val externalId: JsonField<String>,
         private val externalSystem: JsonField<String>,

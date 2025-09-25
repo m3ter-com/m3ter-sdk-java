@@ -18,6 +18,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class DerivedField
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val category: JsonField<DataField.Category>,
     private val code: JsonField<String>,

@@ -20,6 +20,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class MeasurementRequest
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val account: JsonField<String>,
     private val meter: JsonField<String>,

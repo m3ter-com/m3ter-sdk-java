@@ -17,6 +17,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class ContractEndDateBillingEntitiesResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val failedEntities: JsonField<FailedEntities>,
     private val statusMessage: JsonField<String>,
@@ -251,6 +252,7 @@ private constructor(
      * details of the entities for which the update failed.
      */
     class FailedEntities
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val accountplan: JsonField<SetString>,
         private val contract: JsonField<SetString>,
@@ -559,6 +561,7 @@ private constructor(
      * details of the updated entities.
      */
     class UpdatedEntities
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val accountplan: JsonField<SetString>,
         private val contract: JsonField<SetString>,
