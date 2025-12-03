@@ -23,7 +23,7 @@ internal class ResourceGroupResponseTest {
                 .version(0L)
                 .build()
 
-        assertThat(resourceGroupResponse.id()).contains("id")
+        assertThat(resourceGroupResponse.id()).isEqualTo("id")
         assertThat(resourceGroupResponse.createdBy()).contains("createdBy")
         assertThat(resourceGroupResponse.dtCreated())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

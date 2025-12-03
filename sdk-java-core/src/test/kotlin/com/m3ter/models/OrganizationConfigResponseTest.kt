@@ -16,6 +16,8 @@ internal class OrganizationConfigResponseTest {
         val organizationConfigResponse =
             OrganizationConfigResponse.builder()
                 .id("id")
+                .allowNegativeBalances(true)
+                .allowOverlappingPlans(true)
                 .autoApproveBillsGracePeriod(0)
                 .autoApproveBillsGracePeriodUnit(
                     OrganizationConfigResponse.AutoApproveBillsGracePeriodUnit.MINUTES
@@ -56,6 +58,8 @@ internal class OrganizationConfigResponseTest {
                 .build()
 
         assertThat(organizationConfigResponse.id()).isEqualTo("id")
+        assertThat(organizationConfigResponse.allowNegativeBalances()).contains(true)
+        assertThat(organizationConfigResponse.allowOverlappingPlans()).contains(true)
         assertThat(organizationConfigResponse.autoApproveBillsGracePeriod()).contains(0)
         assertThat(organizationConfigResponse.autoApproveBillsGracePeriodUnit())
             .contains(OrganizationConfigResponse.AutoApproveBillsGracePeriodUnit.MINUTES)
@@ -101,6 +105,8 @@ internal class OrganizationConfigResponseTest {
         val organizationConfigResponse =
             OrganizationConfigResponse.builder()
                 .id("id")
+                .allowNegativeBalances(true)
+                .allowOverlappingPlans(true)
                 .autoApproveBillsGracePeriod(0)
                 .autoApproveBillsGracePeriodUnit(
                     OrganizationConfigResponse.AutoApproveBillsGracePeriodUnit.MINUTES

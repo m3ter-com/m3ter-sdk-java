@@ -32,11 +32,11 @@ private constructor(
     private val invitingPrincipalId: JsonField<String>,
     private val lastName: JsonField<String>,
     private val permissionPolicyIds: JsonField<List<String>>,
-    private val version: JsonField<Long>,
     private val createdBy: JsonField<String>,
     private val dtCreated: JsonField<OffsetDateTime>,
     private val dtLastModified: JsonField<OffsetDateTime>,
     private val lastModifiedBy: JsonField<String>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -59,7 +59,6 @@ private constructor(
         @JsonProperty("permissionPolicyIds")
         @ExcludeMissing
         permissionPolicyIds: JsonField<List<String>> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("dtCreated")
         @ExcludeMissing
@@ -70,6 +69,7 @@ private constructor(
         @JsonProperty("lastModifiedBy")
         @ExcludeMissing
         lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
         accepted,
@@ -80,16 +80,16 @@ private constructor(
         invitingPrincipalId,
         lastName,
         permissionPolicyIds,
-        version,
         createdBy,
         dtCreated,
         dtLastModified,
         lastModifiedBy,
+        version,
         mutableMapOf(),
     )
 
     /**
-     * The UUID of the invitation.
+     * The UUID of the entity.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -167,14 +167,6 @@ private constructor(
     fun permissionPolicyIds(): List<String> = permissionPolicyIds.getRequired("permissionPolicyIds")
 
     /**
-     * The version number. Default value when newly created is one.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
-
-    /**
      * The UUID of the user who created the invitation.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -205,6 +197,17 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
+
+    /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
 
     /**
      * Returns the raw JSON value of [id].
@@ -278,13 +281,6 @@ private constructor(
     fun _permissionPolicyIds(): JsonField<List<String>> = permissionPolicyIds
 
     /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
-
-    /**
      * Returns the raw JSON value of [createdBy].
      *
      * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
@@ -318,6 +314,13 @@ private constructor(
     @ExcludeMissing
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -346,7 +349,6 @@ private constructor(
          * .invitingPrincipalId()
          * .lastName()
          * .permissionPolicyIds()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -364,11 +366,11 @@ private constructor(
         private var invitingPrincipalId: JsonField<String>? = null
         private var lastName: JsonField<String>? = null
         private var permissionPolicyIds: JsonField<MutableList<String>>? = null
-        private var version: JsonField<Long>? = null
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -382,15 +384,15 @@ private constructor(
             invitingPrincipalId = invitationResponse.invitingPrincipalId
             lastName = invitationResponse.lastName
             permissionPolicyIds = invitationResponse.permissionPolicyIds.map { it.toMutableList() }
-            version = invitationResponse.version
             createdBy = invitationResponse.createdBy
             dtCreated = invitationResponse.dtCreated
             dtLastModified = invitationResponse.dtLastModified
             lastModifiedBy = invitationResponse.lastModifiedBy
+            version = invitationResponse.version
             additionalProperties = invitationResponse.additionalProperties.toMutableMap()
         }
 
-        /** The UUID of the invitation. */
+        /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
         /**
@@ -530,17 +532,6 @@ private constructor(
                 }
         }
 
-        /** The version number. Default value when newly created is one. */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
-
         /** The UUID of the user who created the invitation. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
@@ -594,6 +585,22 @@ private constructor(
             this.lastModifiedBy = lastModifiedBy
         }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -629,7 +636,6 @@ private constructor(
          * .invitingPrincipalId()
          * .lastName()
          * .permissionPolicyIds()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -645,11 +651,11 @@ private constructor(
                 checkRequired("invitingPrincipalId", invitingPrincipalId),
                 checkRequired("lastName", lastName),
                 checkRequired("permissionPolicyIds", permissionPolicyIds).map { it.toImmutable() },
-                checkRequired("version", version),
                 createdBy,
                 dtCreated,
                 dtLastModified,
                 lastModifiedBy,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -670,11 +676,11 @@ private constructor(
         invitingPrincipalId()
         lastName()
         permissionPolicyIds()
-        version()
         createdBy()
         dtCreated()
         dtLastModified()
         lastModifiedBy()
+        version()
         validated = true
     }
 
@@ -702,11 +708,11 @@ private constructor(
             (if (invitingPrincipalId.asKnown().isPresent) 1 else 0) +
             (if (lastName.asKnown().isPresent) 1 else 0) +
             (permissionPolicyIds.asKnown().getOrNull()?.size ?: 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
             (if (dtCreated.asKnown().isPresent) 1 else 0) +
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
-            (if (lastModifiedBy.asKnown().isPresent) 1 else 0)
+            (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -723,11 +729,11 @@ private constructor(
             invitingPrincipalId == other.invitingPrincipalId &&
             lastName == other.lastName &&
             permissionPolicyIds == other.permissionPolicyIds &&
-            version == other.version &&
             createdBy == other.createdBy &&
             dtCreated == other.dtCreated &&
             dtLastModified == other.dtLastModified &&
             lastModifiedBy == other.lastModifiedBy &&
+            version == other.version &&
             additionalProperties == other.additionalProperties
     }
 
@@ -742,11 +748,11 @@ private constructor(
             invitingPrincipalId,
             lastName,
             permissionPolicyIds,
-            version,
             createdBy,
             dtCreated,
             dtLastModified,
             lastModifiedBy,
+            version,
             additionalProperties,
         )
     }
@@ -754,5 +760,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "InvitationResponse{id=$id, accepted=$accepted, dtEndAccess=$dtEndAccess, dtExpiry=$dtExpiry, email=$email, firstName=$firstName, invitingPrincipalId=$invitingPrincipalId, lastName=$lastName, permissionPolicyIds=$permissionPolicyIds, version=$version, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, additionalProperties=$additionalProperties}"
+        "InvitationResponse{id=$id, accepted=$accepted, dtEndAccess=$dtEndAccess, dtExpiry=$dtExpiry, email=$email, firstName=$firstName, invitingPrincipalId=$invitingPrincipalId, lastName=$lastName, permissionPolicyIds=$permissionPolicyIds, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, version=$version, additionalProperties=$additionalProperties}"
 }

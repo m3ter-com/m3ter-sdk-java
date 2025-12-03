@@ -25,11 +25,14 @@ private constructor(
     private val id: JsonField<String>,
     private val billId: JsonField<String>,
     private val createdBy: JsonField<String>,
+    private val csvStatementStatus: JsonField<CsvStatementStatus>,
     private val dtCreated: JsonField<OffsetDateTime>,
     private val dtLastModified: JsonField<OffsetDateTime>,
     private val includeCsvFormat: JsonField<Boolean>,
+    private val jsonStatementStatus: JsonField<JsonStatementStatus>,
     private val lastModifiedBy: JsonField<String>,
     private val orgId: JsonField<String>,
+    private val presignedCsvStatementUrl: JsonField<String>,
     private val presignedJsonStatementUrl: JsonField<String>,
     private val statementJobStatus: JsonField<StatementJobStatus>,
     private val version: JsonField<Long>,
@@ -41,6 +44,9 @@ private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
         @JsonProperty("billId") @ExcludeMissing billId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("csvStatementStatus")
+        @ExcludeMissing
+        csvStatementStatus: JsonField<CsvStatementStatus> = JsonMissing.of(),
         @JsonProperty("dtCreated")
         @ExcludeMissing
         dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -50,10 +56,16 @@ private constructor(
         @JsonProperty("includeCsvFormat")
         @ExcludeMissing
         includeCsvFormat: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("jsonStatementStatus")
+        @ExcludeMissing
+        jsonStatementStatus: JsonField<JsonStatementStatus> = JsonMissing.of(),
         @JsonProperty("lastModifiedBy")
         @ExcludeMissing
         lastModifiedBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("orgId") @ExcludeMissing orgId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("presignedCsvStatementUrl")
+        @ExcludeMissing
+        presignedCsvStatementUrl: JsonField<String> = JsonMissing.of(),
         @JsonProperty("presignedJsonStatementUrl")
         @ExcludeMissing
         presignedJsonStatementUrl: JsonField<String> = JsonMissing.of(),
@@ -65,11 +77,14 @@ private constructor(
         id,
         billId,
         createdBy,
+        csvStatementStatus,
         dtCreated,
         dtLastModified,
         includeCsvFormat,
+        jsonStatementStatus,
         lastModifiedBy,
         orgId,
+        presignedCsvStatementUrl,
         presignedJsonStatementUrl,
         statementJobStatus,
         version,
@@ -101,6 +116,13 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun csvStatementStatus(): Optional<CsvStatementStatus> =
+        csvStatementStatus.getOptional("csvStatementStatus")
+
+    /**
      * The date and time *(in ISO-8601 format)* when the StatementJob was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -127,6 +149,13 @@ private constructor(
     fun includeCsvFormat(): Optional<Boolean> = includeCsvFormat.getOptional("includeCsvFormat")
 
     /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun jsonStatementStatus(): Optional<JsonStatementStatus> =
+        jsonStatementStatus.getOptional("jsonStatementStatus")
+
+    /**
      * The unique identifier (UUID) of the user who last modified this StatementJob.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -142,6 +171,13 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun orgId(): Optional<String> = orgId.getOptional("orgId")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun presignedCsvStatementUrl(): Optional<String> =
+        presignedCsvStatementUrl.getOptional("presignedCsvStatementUrl")
 
     /**
      * The URL to access the generated statement in JSON format. This URL is temporary and has a
@@ -196,6 +232,16 @@ private constructor(
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
     /**
+     * Returns the raw JSON value of [csvStatementStatus].
+     *
+     * Unlike [csvStatementStatus], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("csvStatementStatus")
+    @ExcludeMissing
+    fun _csvStatementStatus(): JsonField<CsvStatementStatus> = csvStatementStatus
+
+    /**
      * Returns the raw JSON value of [dtCreated].
      *
      * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
@@ -224,6 +270,16 @@ private constructor(
     fun _includeCsvFormat(): JsonField<Boolean> = includeCsvFormat
 
     /**
+     * Returns the raw JSON value of [jsonStatementStatus].
+     *
+     * Unlike [jsonStatementStatus], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("jsonStatementStatus")
+    @ExcludeMissing
+    fun _jsonStatementStatus(): JsonField<JsonStatementStatus> = jsonStatementStatus
+
+    /**
      * Returns the raw JSON value of [lastModifiedBy].
      *
      * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
@@ -238,6 +294,16 @@ private constructor(
      * Unlike [orgId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("orgId") @ExcludeMissing fun _orgId(): JsonField<String> = orgId
+
+    /**
+     * Returns the raw JSON value of [presignedCsvStatementUrl].
+     *
+     * Unlike [presignedCsvStatementUrl], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @JsonProperty("presignedCsvStatementUrl")
+    @ExcludeMissing
+    fun _presignedCsvStatementUrl(): JsonField<String> = presignedCsvStatementUrl
 
     /**
      * Returns the raw JSON value of [presignedJsonStatementUrl].
@@ -297,11 +363,14 @@ private constructor(
         private var id: JsonField<String>? = null
         private var billId: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
+        private var csvStatementStatus: JsonField<CsvStatementStatus> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var includeCsvFormat: JsonField<Boolean> = JsonMissing.of()
+        private var jsonStatementStatus: JsonField<JsonStatementStatus> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var orgId: JsonField<String> = JsonMissing.of()
+        private var presignedCsvStatementUrl: JsonField<String> = JsonMissing.of()
         private var presignedJsonStatementUrl: JsonField<String> = JsonMissing.of()
         private var statementJobStatus: JsonField<StatementJobStatus> = JsonMissing.of()
         private var version: JsonField<Long> = JsonMissing.of()
@@ -312,11 +381,14 @@ private constructor(
             id = statementJobResponse.id
             billId = statementJobResponse.billId
             createdBy = statementJobResponse.createdBy
+            csvStatementStatus = statementJobResponse.csvStatementStatus
             dtCreated = statementJobResponse.dtCreated
             dtLastModified = statementJobResponse.dtLastModified
             includeCsvFormat = statementJobResponse.includeCsvFormat
+            jsonStatementStatus = statementJobResponse.jsonStatementStatus
             lastModifiedBy = statementJobResponse.lastModifiedBy
             orgId = statementJobResponse.orgId
+            presignedCsvStatementUrl = statementJobResponse.presignedCsvStatementUrl
             presignedJsonStatementUrl = statementJobResponse.presignedJsonStatementUrl
             statementJobStatus = statementJobResponse.statementJobStatus
             version = statementJobResponse.version
@@ -356,6 +428,20 @@ private constructor(
          * value.
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
+
+        fun csvStatementStatus(csvStatementStatus: CsvStatementStatus) =
+            csvStatementStatus(JsonField.of(csvStatementStatus))
+
+        /**
+         * Sets [Builder.csvStatementStatus] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.csvStatementStatus] with a well-typed
+         * [CsvStatementStatus] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
+        fun csvStatementStatus(csvStatementStatus: JsonField<CsvStatementStatus>) = apply {
+            this.csvStatementStatus = csvStatementStatus
+        }
 
         /** The date and time *(in ISO-8601 format)* when the StatementJob was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
@@ -403,6 +489,20 @@ private constructor(
             this.includeCsvFormat = includeCsvFormat
         }
 
+        fun jsonStatementStatus(jsonStatementStatus: JsonStatementStatus) =
+            jsonStatementStatus(JsonField.of(jsonStatementStatus))
+
+        /**
+         * Sets [Builder.jsonStatementStatus] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.jsonStatementStatus] with a well-typed
+         * [JsonStatementStatus] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
+        fun jsonStatementStatus(jsonStatementStatus: JsonField<JsonStatementStatus>) = apply {
+            this.jsonStatementStatus = jsonStatementStatus
+        }
+
         /** The unique identifier (UUID) of the user who last modified this StatementJob. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
@@ -430,6 +530,20 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun orgId(orgId: JsonField<String>) = apply { this.orgId = orgId }
+
+        fun presignedCsvStatementUrl(presignedCsvStatementUrl: String) =
+            presignedCsvStatementUrl(JsonField.of(presignedCsvStatementUrl))
+
+        /**
+         * Sets [Builder.presignedCsvStatementUrl] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.presignedCsvStatementUrl] with a well-typed [String]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun presignedCsvStatementUrl(presignedCsvStatementUrl: JsonField<String>) = apply {
+            this.presignedCsvStatementUrl = presignedCsvStatementUrl
+        }
 
         /**
          * The URL to access the generated statement in JSON format. This URL is temporary and has a
@@ -519,11 +633,14 @@ private constructor(
                 checkRequired("id", id),
                 billId,
                 createdBy,
+                csvStatementStatus,
                 dtCreated,
                 dtLastModified,
                 includeCsvFormat,
+                jsonStatementStatus,
                 lastModifiedBy,
                 orgId,
+                presignedCsvStatementUrl,
                 presignedJsonStatementUrl,
                 statementJobStatus,
                 version,
@@ -541,11 +658,14 @@ private constructor(
         id()
         billId()
         createdBy()
+        csvStatementStatus().ifPresent { it.validate() }
         dtCreated()
         dtLastModified()
         includeCsvFormat()
+        jsonStatementStatus().ifPresent { it.validate() }
         lastModifiedBy()
         orgId()
+        presignedCsvStatementUrl()
         presignedJsonStatementUrl()
         statementJobStatus().ifPresent { it.validate() }
         version()
@@ -570,14 +690,287 @@ private constructor(
         (if (id.asKnown().isPresent) 1 else 0) +
             (if (billId.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
+            (csvStatementStatus.asKnown().getOrNull()?.validity() ?: 0) +
             (if (dtCreated.asKnown().isPresent) 1 else 0) +
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
             (if (includeCsvFormat.asKnown().isPresent) 1 else 0) +
+            (jsonStatementStatus.asKnown().getOrNull()?.validity() ?: 0) +
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (if (orgId.asKnown().isPresent) 1 else 0) +
+            (if (presignedCsvStatementUrl.asKnown().isPresent) 1 else 0) +
             (if (presignedJsonStatementUrl.asKnown().isPresent) 1 else 0) +
             (statementJobStatus.asKnown().getOrNull()?.validity() ?: 0) +
             (if (version.asKnown().isPresent) 1 else 0)
+
+    class CsvStatementStatus
+    @JsonCreator
+    private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            @JvmField val LATEST = of("LATEST")
+
+            @JvmField val STALE = of("STALE")
+
+            @JvmField val INVALIDATED = of("INVALIDATED")
+
+            @JvmStatic fun of(value: String) = CsvStatementStatus(JsonField.of(value))
+        }
+
+        /** An enum containing [CsvStatementStatus]'s known values. */
+        enum class Known {
+            LATEST,
+            STALE,
+            INVALIDATED,
+        }
+
+        /**
+         * An enum containing [CsvStatementStatus]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [CsvStatementStatus] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            LATEST,
+            STALE,
+            INVALIDATED,
+            /**
+             * An enum member indicating that [CsvStatementStatus] was instantiated with an unknown
+             * value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                LATEST -> Value.LATEST
+                STALE -> Value.STALE
+                INVALIDATED -> Value.INVALIDATED
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws M3terInvalidDataException if this class instance's value is a not a known member.
+         */
+        fun known(): Known =
+            when (this) {
+                LATEST -> Known.LATEST
+                STALE -> Known.STALE
+                INVALIDATED -> Known.INVALIDATED
+                else -> throw M3terInvalidDataException("Unknown CsvStatementStatus: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws M3terInvalidDataException if this class instance's value does not have the
+         *   expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): CsvStatementStatus = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is CsvStatementStatus && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
+
+    class JsonStatementStatus
+    @JsonCreator
+    private constructor(private val value: JsonField<String>) : Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            @JvmField val LATEST = of("LATEST")
+
+            @JvmField val STALE = of("STALE")
+
+            @JvmField val INVALIDATED = of("INVALIDATED")
+
+            @JvmStatic fun of(value: String) = JsonStatementStatus(JsonField.of(value))
+        }
+
+        /** An enum containing [JsonStatementStatus]'s known values. */
+        enum class Known {
+            LATEST,
+            STALE,
+            INVALIDATED,
+        }
+
+        /**
+         * An enum containing [JsonStatementStatus]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [JsonStatementStatus] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            LATEST,
+            STALE,
+            INVALIDATED,
+            /**
+             * An enum member indicating that [JsonStatementStatus] was instantiated with an unknown
+             * value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                LATEST -> Value.LATEST
+                STALE -> Value.STALE
+                INVALIDATED -> Value.INVALIDATED
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws M3terInvalidDataException if this class instance's value is a not a known member.
+         */
+        fun known(): Known =
+            when (this) {
+                LATEST -> Known.LATEST
+                STALE -> Known.STALE
+                INVALIDATED -> Known.INVALIDATED
+                else -> throw M3terInvalidDataException("Unknown JsonStatementStatus: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws M3terInvalidDataException if this class instance's value does not have the
+         *   expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): JsonStatementStatus = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is JsonStatementStatus && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
 
     /**
      * The current status of the StatementJob. The status helps track the progress and outcome of a
@@ -739,11 +1132,14 @@ private constructor(
             id == other.id &&
             billId == other.billId &&
             createdBy == other.createdBy &&
+            csvStatementStatus == other.csvStatementStatus &&
             dtCreated == other.dtCreated &&
             dtLastModified == other.dtLastModified &&
             includeCsvFormat == other.includeCsvFormat &&
+            jsonStatementStatus == other.jsonStatementStatus &&
             lastModifiedBy == other.lastModifiedBy &&
             orgId == other.orgId &&
+            presignedCsvStatementUrl == other.presignedCsvStatementUrl &&
             presignedJsonStatementUrl == other.presignedJsonStatementUrl &&
             statementJobStatus == other.statementJobStatus &&
             version == other.version &&
@@ -755,11 +1151,14 @@ private constructor(
             id,
             billId,
             createdBy,
+            csvStatementStatus,
             dtCreated,
             dtLastModified,
             includeCsvFormat,
+            jsonStatementStatus,
             lastModifiedBy,
             orgId,
+            presignedCsvStatementUrl,
             presignedJsonStatementUrl,
             statementJobStatus,
             version,
@@ -770,5 +1169,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "StatementJobResponse{id=$id, billId=$billId, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, includeCsvFormat=$includeCsvFormat, lastModifiedBy=$lastModifiedBy, orgId=$orgId, presignedJsonStatementUrl=$presignedJsonStatementUrl, statementJobStatus=$statementJobStatus, version=$version, additionalProperties=$additionalProperties}"
+        "StatementJobResponse{id=$id, billId=$billId, createdBy=$createdBy, csvStatementStatus=$csvStatementStatus, dtCreated=$dtCreated, dtLastModified=$dtLastModified, includeCsvFormat=$includeCsvFormat, jsonStatementStatus=$jsonStatementStatus, lastModifiedBy=$lastModifiedBy, orgId=$orgId, presignedCsvStatementUrl=$presignedCsvStatementUrl, presignedJsonStatementUrl=$presignedJsonStatementUrl, statementJobStatus=$statementJobStatus, version=$version, additionalProperties=$additionalProperties}"
 }

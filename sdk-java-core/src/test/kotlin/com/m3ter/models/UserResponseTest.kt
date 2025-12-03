@@ -39,7 +39,7 @@ internal class UserResponseTest {
                 .version(0L)
                 .build()
 
-        assertThat(userResponse.id()).contains("id")
+        assertThat(userResponse.id()).isEqualTo("id")
         assertThat(userResponse.contactNumber()).contains("contactNumber")
         assertThat(userResponse.createdBy()).contains("createdBy")
         assertThat(userResponse.dtCreated())

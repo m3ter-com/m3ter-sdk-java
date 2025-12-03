@@ -105,6 +105,12 @@ private constructor(
     fun servicePeriodStartDate(): OffsetDateTime = body.servicePeriodStartDate()
 
     /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun amountToApplyOnBill(): Optional<Double> = body.amountToApplyOnBill()
+
+    /**
      * The UUID of the credit reason.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -199,6 +205,14 @@ private constructor(
      * unexpected type.
      */
     fun _servicePeriodStartDate(): JsonField<OffsetDateTime> = body._servicePeriodStartDate()
+
+    /**
+     * Returns the raw JSON value of [amountToApplyOnBill].
+     *
+     * Unlike [amountToApplyOnBill], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    fun _amountToApplyOnBill(): JsonField<Double> = body._amountToApplyOnBill()
 
     /**
      * Returns the raw JSON value of [creditReasonId].
@@ -415,6 +429,21 @@ private constructor(
          */
         fun servicePeriodStartDate(servicePeriodStartDate: JsonField<OffsetDateTime>) = apply {
             body.servicePeriodStartDate(servicePeriodStartDate)
+        }
+
+        fun amountToApplyOnBill(amountToApplyOnBill: Double) = apply {
+            body.amountToApplyOnBill(amountToApplyOnBill)
+        }
+
+        /**
+         * Sets [Builder.amountToApplyOnBill] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amountToApplyOnBill] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun amountToApplyOnBill(amountToApplyOnBill: JsonField<Double>) = apply {
+            body.amountToApplyOnBill(amountToApplyOnBill)
         }
 
         /** The UUID of the credit reason. */
@@ -643,6 +672,7 @@ private constructor(
         private val referencedLineItemId: JsonField<String>,
         private val servicePeriodEndDate: JsonField<OffsetDateTime>,
         private val servicePeriodStartDate: JsonField<OffsetDateTime>,
+        private val amountToApplyOnBill: JsonField<Double>,
         private val creditReasonId: JsonField<String>,
         private val lineItemType: JsonField<LineItemType>,
         private val reasonId: JsonField<String>,
@@ -674,6 +704,9 @@ private constructor(
             @JsonProperty("servicePeriodStartDate")
             @ExcludeMissing
             servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("amountToApplyOnBill")
+            @ExcludeMissing
+            amountToApplyOnBill: JsonField<Double> = JsonMissing.of(),
             @JsonProperty("creditReasonId")
             @ExcludeMissing
             creditReasonId: JsonField<String> = JsonMissing.of(),
@@ -693,6 +726,7 @@ private constructor(
             referencedLineItemId,
             servicePeriodEndDate,
             servicePeriodStartDate,
+            amountToApplyOnBill,
             creditReasonId,
             lineItemType,
             reasonId,
@@ -764,6 +798,13 @@ private constructor(
          */
         fun servicePeriodStartDate(): OffsetDateTime =
             servicePeriodStartDate.getRequired("servicePeriodStartDate")
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun amountToApplyOnBill(): Optional<Double> =
+            amountToApplyOnBill.getOptional("amountToApplyOnBill")
 
         /**
          * The UUID of the credit reason.
@@ -874,6 +915,16 @@ private constructor(
         fun _servicePeriodStartDate(): JsonField<OffsetDateTime> = servicePeriodStartDate
 
         /**
+         * Returns the raw JSON value of [amountToApplyOnBill].
+         *
+         * Unlike [amountToApplyOnBill], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("amountToApplyOnBill")
+        @ExcludeMissing
+        fun _amountToApplyOnBill(): JsonField<Double> = amountToApplyOnBill
+
+        /**
          * Returns the raw JSON value of [creditReasonId].
          *
          * Unlike [creditReasonId], this method doesn't throw if the JSON field has an unexpected
@@ -950,6 +1001,7 @@ private constructor(
             private var referencedLineItemId: JsonField<String>? = null
             private var servicePeriodEndDate: JsonField<OffsetDateTime>? = null
             private var servicePeriodStartDate: JsonField<OffsetDateTime>? = null
+            private var amountToApplyOnBill: JsonField<Double> = JsonMissing.of()
             private var creditReasonId: JsonField<String> = JsonMissing.of()
             private var lineItemType: JsonField<LineItemType> = JsonMissing.of()
             private var reasonId: JsonField<String> = JsonMissing.of()
@@ -966,6 +1018,7 @@ private constructor(
                 referencedLineItemId = body.referencedLineItemId
                 servicePeriodEndDate = body.servicePeriodEndDate
                 servicePeriodStartDate = body.servicePeriodStartDate
+                amountToApplyOnBill = body.amountToApplyOnBill
                 creditReasonId = body.creditReasonId
                 lineItemType = body.lineItemType
                 reasonId = body.reasonId
@@ -1087,6 +1140,20 @@ private constructor(
                 this.servicePeriodStartDate = servicePeriodStartDate
             }
 
+            fun amountToApplyOnBill(amountToApplyOnBill: Double) =
+                amountToApplyOnBill(JsonField.of(amountToApplyOnBill))
+
+            /**
+             * Sets [Builder.amountToApplyOnBill] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amountToApplyOnBill] with a well-typed [Double]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun amountToApplyOnBill(amountToApplyOnBill: JsonField<Double>) = apply {
+                this.amountToApplyOnBill = amountToApplyOnBill
+            }
+
             /** The UUID of the credit reason. */
             fun creditReasonId(creditReasonId: String) =
                 creditReasonId(JsonField.of(creditReasonId))
@@ -1194,6 +1261,7 @@ private constructor(
                     checkRequired("referencedLineItemId", referencedLineItemId),
                     checkRequired("servicePeriodEndDate", servicePeriodEndDate),
                     checkRequired("servicePeriodStartDate", servicePeriodStartDate),
+                    amountToApplyOnBill,
                     creditReasonId,
                     lineItemType,
                     reasonId,
@@ -1217,6 +1285,7 @@ private constructor(
             referencedLineItemId()
             servicePeriodEndDate()
             servicePeriodStartDate()
+            amountToApplyOnBill()
             creditReasonId()
             lineItemType().ifPresent { it.validate() }
             reasonId()
@@ -1248,6 +1317,7 @@ private constructor(
                 (if (referencedLineItemId.asKnown().isPresent) 1 else 0) +
                 (if (servicePeriodEndDate.asKnown().isPresent) 1 else 0) +
                 (if (servicePeriodStartDate.asKnown().isPresent) 1 else 0) +
+                (if (amountToApplyOnBill.asKnown().isPresent) 1 else 0) +
                 (if (creditReasonId.asKnown().isPresent) 1 else 0) +
                 (lineItemType.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (reasonId.asKnown().isPresent) 1 else 0) +
@@ -1267,6 +1337,7 @@ private constructor(
                 referencedLineItemId == other.referencedLineItemId &&
                 servicePeriodEndDate == other.servicePeriodEndDate &&
                 servicePeriodStartDate == other.servicePeriodStartDate &&
+                amountToApplyOnBill == other.amountToApplyOnBill &&
                 creditReasonId == other.creditReasonId &&
                 lineItemType == other.lineItemType &&
                 reasonId == other.reasonId &&
@@ -1284,6 +1355,7 @@ private constructor(
                 referencedLineItemId,
                 servicePeriodEndDate,
                 servicePeriodStartDate,
+                amountToApplyOnBill,
                 creditReasonId,
                 lineItemType,
                 reasonId,
@@ -1295,7 +1367,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{accountingProductId=$accountingProductId, amount=$amount, description=$description, productId=$productId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, creditReasonId=$creditReasonId, lineItemType=$lineItemType, reasonId=$reasonId, version=$version, additionalProperties=$additionalProperties}"
+            "Body{accountingProductId=$accountingProductId, amount=$amount, description=$description, productId=$productId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, amountToApplyOnBill=$amountToApplyOnBill, creditReasonId=$creditReasonId, lineItemType=$lineItemType, reasonId=$reasonId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     class LineItemType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -1349,6 +1421,8 @@ private constructor(
 
             @JvmField val BALANCE_FEE = of("BALANCE_FEE")
 
+            @JvmField val AD_HOC = of("AD_HOC")
+
             @JvmStatic fun of(value: String) = LineItemType(JsonField.of(value))
         }
 
@@ -1372,6 +1446,7 @@ private constructor(
             OVERAGE_USAGE,
             BALANCE_CONSUMED,
             BALANCE_FEE,
+            AD_HOC,
         }
 
         /**
@@ -1402,6 +1477,7 @@ private constructor(
             OVERAGE_USAGE,
             BALANCE_CONSUMED,
             BALANCE_FEE,
+            AD_HOC,
             /**
              * An enum member indicating that [LineItemType] was instantiated with an unknown value.
              */
@@ -1435,6 +1511,7 @@ private constructor(
                 OVERAGE_USAGE -> Value.OVERAGE_USAGE
                 BALANCE_CONSUMED -> Value.BALANCE_CONSUMED
                 BALANCE_FEE -> Value.BALANCE_FEE
+                AD_HOC -> Value.AD_HOC
                 else -> Value._UNKNOWN
             }
 
@@ -1466,6 +1543,7 @@ private constructor(
                 OVERAGE_USAGE -> Known.OVERAGE_USAGE
                 BALANCE_CONSUMED -> Known.BALANCE_CONSUMED
                 BALANCE_FEE -> Known.BALANCE_FEE
+                AD_HOC -> Known.AD_HOC
                 else -> throw M3terInvalidDataException("Unknown LineItemType: $value")
             }
 

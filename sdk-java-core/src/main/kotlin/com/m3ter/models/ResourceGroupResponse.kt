@@ -10,6 +10,7 @@ import com.m3ter.core.ExcludeMissing
 import com.m3ter.core.JsonField
 import com.m3ter.core.JsonMissing
 import com.m3ter.core.JsonValue
+import com.m3ter.core.checkRequired
 import com.m3ter.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Collections
@@ -56,12 +57,12 @@ private constructor(
     )
 
     /**
-     * The unique identifier (UUID) of the Resource Group.
+     * The UUID of the entity.
      *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun id(): Optional<String> = id.getOptional("id")
+    fun id(): String = id.getRequired("id")
 
     /**
      * The unique identifier (UUID) of the user who created this Resource Group.
@@ -104,7 +105,10 @@ private constructor(
     fun name(): Optional<String> = name.getOptional("name")
 
     /**
-     * The version number. Default value when newly created is one.
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -180,14 +184,21 @@ private constructor(
 
     companion object {
 
-        /** Returns a mutable builder for constructing an instance of [ResourceGroupResponse]. */
+        /**
+         * Returns a mutable builder for constructing an instance of [ResourceGroupResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
     /** A builder for [ResourceGroupResponse]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String> = JsonMissing.of()
+        private var id: JsonField<String>? = null
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -208,7 +219,7 @@ private constructor(
             additionalProperties = resourceGroupResponse.additionalProperties.toMutableMap()
         }
 
-        /** The unique identifier (UUID) of the Resource Group. */
+        /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
         /**
@@ -283,7 +294,12 @@ private constructor(
          */
         fun name(name: JsonField<String>) = apply { this.name = name }
 
-        /** The version number. Default value when newly created is one. */
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
@@ -317,10 +333,17 @@ private constructor(
          * Returns an immutable instance of [ResourceGroupResponse].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): ResourceGroupResponse =
             ResourceGroupResponse(
-                id,
+                checkRequired("id", id),
                 createdBy,
                 dtCreated,
                 dtLastModified,

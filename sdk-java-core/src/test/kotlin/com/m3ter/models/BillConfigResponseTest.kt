@@ -24,7 +24,7 @@ internal class BillConfigResponseTest {
                 .version(0L)
                 .build()
 
-        assertThat(billConfigResponse.id()).contains("id")
+        assertThat(billConfigResponse.id()).isEqualTo("id")
         assertThat(billConfigResponse.billLockDate()).contains(LocalDate.parse("2019-12-27"))
         assertThat(billConfigResponse.createdBy()).contains("createdBy")
         assertThat(billConfigResponse.dtCreated())

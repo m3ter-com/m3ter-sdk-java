@@ -229,7 +229,7 @@ internal class AccountServiceTest {
                 .build()
         val accountService = client.accounts()
 
-        val accountResponse =
+        val response =
             accountService.getChildren(
                 AccountGetChildrenParams.builder()
                     .orgId("orgId")
@@ -239,7 +239,7 @@ internal class AccountServiceTest {
                     .build()
             )
 
-        accountResponse.validate()
+        response.validate()
     }
 
     @Test

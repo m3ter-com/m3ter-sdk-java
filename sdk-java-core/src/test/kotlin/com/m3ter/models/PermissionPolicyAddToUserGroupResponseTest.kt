@@ -25,7 +25,7 @@ internal class PermissionPolicyAddToUserGroupResponseTest {
                 .version(0L)
                 .build()
 
-        assertThat(permissionPolicyAddToUserGroupResponse.id()).contains("id")
+        assertThat(permissionPolicyAddToUserGroupResponse.id()).isEqualTo("id")
         assertThat(permissionPolicyAddToUserGroupResponse.createdBy()).contains("createdBy")
         assertThat(permissionPolicyAddToUserGroupResponse.dtCreated())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

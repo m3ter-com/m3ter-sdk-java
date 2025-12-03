@@ -4,6 +4,7 @@ package com.m3ter.models
 
 import com.m3ter.core.JsonValue
 import java.time.LocalDate
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -18,6 +19,8 @@ internal class ContractUpdateParamsTest {
             .endDate(LocalDate.parse("2019-12-27"))
             .name("x")
             .startDate(LocalDate.parse("2019-12-27"))
+            .applyContractPeriodLimits(true)
+            .billGroupingKeyId("billGroupingKeyId")
             .code("S?oC\"\$]C] ]]]]]5]")
             .customFields(
                 ContractUpdateParams.CustomFields.builder()
@@ -26,6 +29,13 @@ internal class ContractUpdateParamsTest {
             )
             .description("description")
             .purchaseOrderNumber("purchaseOrderNumber")
+            .addUsageFilter(
+                ContractUpdateParams.UsageFilter.builder()
+                    .dimensionCode("x")
+                    .mode(ContractUpdateParams.UsageFilter.Mode.INCLUDE)
+                    .value("x")
+                    .build()
+            )
             .version(0L)
             .build()
     }
@@ -57,6 +67,8 @@ internal class ContractUpdateParamsTest {
                 .endDate(LocalDate.parse("2019-12-27"))
                 .name("x")
                 .startDate(LocalDate.parse("2019-12-27"))
+                .applyContractPeriodLimits(true)
+                .billGroupingKeyId("billGroupingKeyId")
                 .code("S?oC\"\$]C] ]]]]]5]")
                 .customFields(
                     ContractUpdateParams.CustomFields.builder()
@@ -65,6 +77,13 @@ internal class ContractUpdateParamsTest {
                 )
                 .description("description")
                 .purchaseOrderNumber("purchaseOrderNumber")
+                .addUsageFilter(
+                    ContractUpdateParams.UsageFilter.builder()
+                        .dimensionCode("x")
+                        .mode(ContractUpdateParams.UsageFilter.Mode.INCLUDE)
+                        .value("x")
+                        .build()
+                )
                 .version(0L)
                 .build()
 
@@ -74,6 +93,8 @@ internal class ContractUpdateParamsTest {
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2019-12-27"))
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.startDate()).isEqualTo(LocalDate.parse("2019-12-27"))
+        assertThat(body.applyContractPeriodLimits()).contains(true)
+        assertThat(body.billGroupingKeyId()).contains("billGroupingKeyId")
         assertThat(body.code()).contains("S?oC\"\$]C] ]]]]]5]")
         assertThat(body.customFields())
             .contains(
@@ -83,6 +104,14 @@ internal class ContractUpdateParamsTest {
             )
         assertThat(body.description()).contains("description")
         assertThat(body.purchaseOrderNumber()).contains("purchaseOrderNumber")
+        assertThat(body.usageFilters().getOrNull())
+            .containsExactly(
+                ContractUpdateParams.UsageFilter.builder()
+                    .dimensionCode("x")
+                    .mode(ContractUpdateParams.UsageFilter.Mode.INCLUDE)
+                    .value("x")
+                    .build()
+            )
         assertThat(body.version()).contains(0L)
     }
 

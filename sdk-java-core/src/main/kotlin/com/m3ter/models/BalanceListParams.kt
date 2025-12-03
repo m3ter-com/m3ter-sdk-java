@@ -5,6 +5,7 @@ package com.m3ter.models
 import com.m3ter.core.Params
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
+import com.m3ter.core.toImmutable
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -24,8 +25,10 @@ private constructor(
     private val orgId: String?,
     private val accountId: String?,
     private val contract: String?,
+    private val contractId: String?,
     private val endDateEnd: String?,
     private val endDateStart: String?,
+    private val ids: List<String>?,
     private val nextToken: String?,
     private val pageSize: Int?,
     private val additionalHeaders: Headers,
@@ -40,6 +43,9 @@ private constructor(
 
     fun contract(): Optional<String> = Optional.ofNullable(contract)
 
+    /** Filter Balances by contract id. Use '' with accountId to fetch unlinked balances. */
+    fun contractId(): Optional<String> = Optional.ofNullable(contractId)
+
     /**
      * Only include Balances with end dates earlier than this date. If a Balance has a rollover
      * amount configured, then the `rolloverEndDate` will be used as the end date.
@@ -51,6 +57,9 @@ private constructor(
      * rollover amount configured, then the `rolloverEndDate` will be used as the end date.
      */
     fun endDateStart(): Optional<String> = Optional.ofNullable(endDateStart)
+
+    /** A list of unique identifiers (UUIDs) for specific Balances to retrieve. */
+    fun ids(): Optional<List<String>> = Optional.ofNullable(ids)
 
     /**
      * The `nextToken` for retrieving the next page of Balances. It is used to fetch the next page
@@ -83,8 +92,10 @@ private constructor(
         private var orgId: String? = null
         private var accountId: String? = null
         private var contract: String? = null
+        private var contractId: String? = null
         private var endDateEnd: String? = null
         private var endDateStart: String? = null
+        private var ids: MutableList<String>? = null
         private var nextToken: String? = null
         private var pageSize: Int? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -95,8 +106,10 @@ private constructor(
             orgId = balanceListParams.orgId
             accountId = balanceListParams.accountId
             contract = balanceListParams.contract
+            contractId = balanceListParams.contractId
             endDateEnd = balanceListParams.endDateEnd
             endDateStart = balanceListParams.endDateStart
+            ids = balanceListParams.ids?.toMutableList()
             nextToken = balanceListParams.nextToken
             pageSize = balanceListParams.pageSize
             additionalHeaders = balanceListParams.additionalHeaders.toBuilder()
@@ -121,6 +134,12 @@ private constructor(
         /** Alias for calling [Builder.contract] with `contract.orElse(null)`. */
         fun contract(contract: Optional<String>) = contract(contract.getOrNull())
 
+        /** Filter Balances by contract id. Use '' with accountId to fetch unlinked balances. */
+        fun contractId(contractId: String?) = apply { this.contractId = contractId }
+
+        /** Alias for calling [Builder.contractId] with `contractId.orElse(null)`. */
+        fun contractId(contractId: Optional<String>) = contractId(contractId.getOrNull())
+
         /**
          * Only include Balances with end dates earlier than this date. If a Balance has a rollover
          * amount configured, then the `rolloverEndDate` will be used as the end date.
@@ -138,6 +157,19 @@ private constructor(
 
         /** Alias for calling [Builder.endDateStart] with `endDateStart.orElse(null)`. */
         fun endDateStart(endDateStart: Optional<String>) = endDateStart(endDateStart.getOrNull())
+
+        /** A list of unique identifiers (UUIDs) for specific Balances to retrieve. */
+        fun ids(ids: List<String>?) = apply { this.ids = ids?.toMutableList() }
+
+        /** Alias for calling [Builder.ids] with `ids.orElse(null)`. */
+        fun ids(ids: Optional<List<String>>) = ids(ids.getOrNull())
+
+        /**
+         * Adds a single [String] to [ids].
+         *
+         * @throws IllegalStateException if the field was previously set to a non-list.
+         */
+        fun addId(id: String) = apply { ids = (ids ?: mutableListOf()).apply { add(id) } }
 
         /**
          * The `nextToken` for retrieving the next page of Balances. It is used to fetch the next
@@ -269,8 +301,10 @@ private constructor(
                 orgId,
                 accountId,
                 contract,
+                contractId,
                 endDateEnd,
                 endDateStart,
+                ids?.toImmutable(),
                 nextToken,
                 pageSize,
                 additionalHeaders.build(),
@@ -291,8 +325,10 @@ private constructor(
             .apply {
                 accountId?.let { put("accountId", it) }
                 contract?.let { put("contract", it) }
+                contractId?.let { put("contractId", it) }
                 endDateEnd?.let { put("endDateEnd", it) }
                 endDateStart?.let { put("endDateStart", it) }
+                ids?.let { put("ids", it.joinToString(",")) }
                 nextToken?.let { put("nextToken", it) }
                 pageSize?.let { put("pageSize", it.toString()) }
                 putAll(additionalQueryParams)
@@ -308,8 +344,10 @@ private constructor(
             orgId == other.orgId &&
             accountId == other.accountId &&
             contract == other.contract &&
+            contractId == other.contractId &&
             endDateEnd == other.endDateEnd &&
             endDateStart == other.endDateStart &&
+            ids == other.ids &&
             nextToken == other.nextToken &&
             pageSize == other.pageSize &&
             additionalHeaders == other.additionalHeaders &&
@@ -321,8 +359,10 @@ private constructor(
             orgId,
             accountId,
             contract,
+            contractId,
             endDateEnd,
             endDateStart,
+            ids,
             nextToken,
             pageSize,
             additionalHeaders,
@@ -330,5 +370,5 @@ private constructor(
         )
 
     override fun toString() =
-        "BalanceListParams{orgId=$orgId, accountId=$accountId, contract=$contract, endDateEnd=$endDateEnd, endDateStart=$endDateStart, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "BalanceListParams{orgId=$orgId, accountId=$accountId, contract=$contract, contractId=$contractId, endDateEnd=$endDateEnd, endDateStart=$endDateStart, ids=$ids, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

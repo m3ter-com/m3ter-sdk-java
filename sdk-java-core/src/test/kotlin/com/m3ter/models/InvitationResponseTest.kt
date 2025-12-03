@@ -23,11 +23,11 @@ internal class InvitationResponseTest {
                 .invitingPrincipalId("invitingPrincipalId")
                 .lastName("lastName")
                 .addPermissionPolicyId("string")
-                .version(0L)
                 .createdBy("createdBy")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
+                .version(0L)
                 .build()
 
         assertThat(invitationResponse.id()).isEqualTo("id")
@@ -41,13 +41,13 @@ internal class InvitationResponseTest {
         assertThat(invitationResponse.invitingPrincipalId()).isEqualTo("invitingPrincipalId")
         assertThat(invitationResponse.lastName()).isEqualTo("lastName")
         assertThat(invitationResponse.permissionPolicyIds()).containsExactly("string")
-        assertThat(invitationResponse.version()).isEqualTo(0L)
         assertThat(invitationResponse.createdBy()).contains("createdBy")
         assertThat(invitationResponse.dtCreated())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(invitationResponse.dtLastModified())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(invitationResponse.lastModifiedBy()).contains("lastModifiedBy")
+        assertThat(invitationResponse.version()).contains(0L)
     }
 
     @Test
@@ -64,11 +64,11 @@ internal class InvitationResponseTest {
                 .invitingPrincipalId("invitingPrincipalId")
                 .lastName("lastName")
                 .addPermissionPolicyId("string")
-                .version(0L)
                 .createdBy("createdBy")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
+                .version(0L)
                 .build()
 
         val roundtrippedInvitationResponse =

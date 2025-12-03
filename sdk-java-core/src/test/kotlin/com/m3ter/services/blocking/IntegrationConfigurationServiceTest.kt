@@ -205,6 +205,8 @@ internal class IntegrationConfigurationServiceTest {
                     .destination("destination")
                     .destinationId("destinationId")
                     .entityId("entityId")
+                    .nextToken("nextToken")
+                    .pageSize(1)
                     .build()
             )
 
