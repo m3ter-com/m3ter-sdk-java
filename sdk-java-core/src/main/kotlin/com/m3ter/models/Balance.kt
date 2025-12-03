@@ -184,6 +184,9 @@ private constructor(
     fun code(): Optional<String> = code.getOptional("code")
 
     /**
+     * Product ID that any Balance Consumed line items will be attributed to for accounting
+     * purposes.(*Optional*)
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -191,6 +194,8 @@ private constructor(
         consumptionsAccountingProductId.getOptional("consumptionsAccountingProductId")
 
     /**
+     * The unique identifier (UUID) for a Contract on the Account the Balance has been added to.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -262,6 +267,9 @@ private constructor(
     fun endDate(): Optional<OffsetDateTime> = endDate.getOptional("endDate")
 
     /**
+     * Product ID that any Balance Fees line items will be attributed to for accounting
+     * purposes.(*Optional*)
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -711,6 +719,10 @@ private constructor(
          */
         fun code(code: JsonField<String>) = apply { this.code = code }
 
+        /**
+         * Product ID that any Balance Consumed line items will be attributed to for accounting
+         * purposes.(*Optional*)
+         */
         fun consumptionsAccountingProductId(consumptionsAccountingProductId: String) =
             consumptionsAccountingProductId(JsonField.of(consumptionsAccountingProductId))
 
@@ -726,6 +738,9 @@ private constructor(
                 this.consumptionsAccountingProductId = consumptionsAccountingProductId
             }
 
+        /**
+         * The unique identifier (UUID) for a Contract on the Account the Balance has been added to.
+         */
         fun contractId(contractId: String) = contractId(JsonField.of(contractId))
 
         /**
@@ -836,6 +851,10 @@ private constructor(
          */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
+        /**
+         * Product ID that any Balance Fees line items will be attributed to for accounting
+         * purposes.(*Optional*)
+         */
         fun feesAccountingProductId(feesAccountingProductId: String) =
             feesAccountingProductId(JsonField.of(feesAccountingProductId))
 

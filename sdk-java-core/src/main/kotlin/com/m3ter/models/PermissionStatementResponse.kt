@@ -346,6 +346,8 @@ private constructor(
 
             @JvmField val MARKETPLACE_USAGE_RETRIEVE = of("MARKETPLACE_USAGE_RETRIEVE")
 
+            @JvmField val AUDIT_RETRIEVE = of("AUDIT_RETRIEVE")
+
             @JvmStatic fun of(value: String) = Action(JsonField.of(value))
         }
 
@@ -368,6 +370,7 @@ private constructor(
             EXPORTS_DOWNLOAD,
             MARKETPLACE_USAGE_CREATE,
             MARKETPLACE_USAGE_RETRIEVE,
+            AUDIT_RETRIEVE,
         }
 
         /**
@@ -397,6 +400,7 @@ private constructor(
             EXPORTS_DOWNLOAD,
             MARKETPLACE_USAGE_CREATE,
             MARKETPLACE_USAGE_RETRIEVE,
+            AUDIT_RETRIEVE,
             /** An enum member indicating that [Action] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -427,6 +431,7 @@ private constructor(
                 EXPORTS_DOWNLOAD -> Value.EXPORTS_DOWNLOAD
                 MARKETPLACE_USAGE_CREATE -> Value.MARKETPLACE_USAGE_CREATE
                 MARKETPLACE_USAGE_RETRIEVE -> Value.MARKETPLACE_USAGE_RETRIEVE
+                AUDIT_RETRIEVE -> Value.AUDIT_RETRIEVE
                 else -> Value._UNKNOWN
             }
 
@@ -457,6 +462,7 @@ private constructor(
                 EXPORTS_DOWNLOAD -> Known.EXPORTS_DOWNLOAD
                 MARKETPLACE_USAGE_CREATE -> Known.MARKETPLACE_USAGE_CREATE
                 MARKETPLACE_USAGE_RETRIEVE -> Known.MARKETPLACE_USAGE_RETRIEVE
+                AUDIT_RETRIEVE -> Known.AUDIT_RETRIEVE
                 else -> throw M3terInvalidDataException("Unknown Action: $value")
             }
 

@@ -1670,10 +1670,12 @@ private constructor(
         )
 
         /**
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * The UUID of the entity.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun id(): Optional<String> = id.getOptional("id")
+        fun id(): String = id.getRequired("id")
 
         /**
          * The id of the user who created this service user.
@@ -1715,6 +1717,11 @@ private constructor(
         fun name(): Optional<String> = name.getOptional("name")
 
         /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
@@ -1791,14 +1798,21 @@ private constructor(
 
         companion object {
 
-            /** Returns a mutable builder for constructing an instance of [ServiceUser]. */
+            /**
+             * Returns a mutable builder for constructing an instance of [ServiceUser].
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
         /** A builder for [ServiceUser]. */
         class Builder internal constructor() {
 
-            private var id: JsonField<String> = JsonMissing.of()
+            private var id: JsonField<String>? = null
             private var createdBy: JsonField<String> = JsonMissing.of()
             private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
             private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -1819,6 +1833,7 @@ private constructor(
                 additionalProperties = serviceUser.additionalProperties.toMutableMap()
             }
 
+            /** The UUID of the entity. */
             fun id(id: String) = id(JsonField.of(id))
 
             /**
@@ -1897,6 +1912,12 @@ private constructor(
              */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
+            /**
+             * The version number:
+             * - **Create:** On initial Create to insert a new entity, the version is set at 1 in
+             *   the response.
+             * - **Update:** On successful Update, the version is incremented by 1 in the response.
+             */
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
@@ -1931,10 +1952,17 @@ private constructor(
              * Returns an immutable instance of [ServiceUser].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): ServiceUser =
                 ServiceUser(
-                    id,
+                    checkRequired("id", id),
                     createdBy,
                     dtCreated,
                     dtLastModified,
@@ -2098,12 +2126,12 @@ private constructor(
         )
 
         /**
-         * The unique identifier (UUID) of this user.
+         * The UUID of the entity.
          *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun id(): Optional<String> = id.getOptional("id")
+        fun id(): String = id.getRequired("id")
 
         /**
          * The user's contact telephone number.
@@ -2353,14 +2381,21 @@ private constructor(
 
         companion object {
 
-            /** Returns a mutable builder for constructing an instance of [User]. */
+            /**
+             * Returns a mutable builder for constructing an instance of [User].
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
         /** A builder for [User]. */
         class Builder internal constructor() {
 
-            private var id: JsonField<String> = JsonMissing.of()
+            private var id: JsonField<String>? = null
             private var contactNumber: JsonField<String> = JsonMissing.of()
             private var createdBy: JsonField<String> = JsonMissing.of()
             private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -2396,7 +2431,7 @@ private constructor(
                 additionalProperties = user.additionalProperties.toMutableMap()
             }
 
-            /** The unique identifier (UUID) of this user. */
+            /** The UUID of the entity. */
             fun id(id: String) = id(JsonField.of(id))
 
             /**
@@ -2631,10 +2666,17 @@ private constructor(
              * Returns an immutable instance of [User].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): User =
                 User(
-                    id,
+                    checkRequired("id", id),
                     contactNumber,
                     createdBy,
                     dtCreated,

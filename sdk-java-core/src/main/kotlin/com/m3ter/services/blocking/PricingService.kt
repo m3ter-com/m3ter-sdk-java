@@ -32,8 +32,11 @@ interface PricingService {
     /**
      * Create a new Pricing.
      *
-     * **Note:** Either `planId` or `planTemplateId` request parameters are required for this call
-     * to be valid. If you omit both, then you will receive a validation error.
+     * **Notes:**
+     * * Exactly one of `planId` or `planTemplateId` request parameters are required for this call
+     *   to be valid. If you omit both, then you will receive a validation error.
+     * * Exactly one of `aggregationId` or `compoundAggregationId` request parameters are required
+     *   for this call to be valid. If you omit both, then you will receive a validation error.
      */
     fun create(params: PricingCreateParams): PricingResponse = create(params, RequestOptions.none())
 
@@ -76,8 +79,11 @@ interface PricingService {
     /**
      * Update Pricing for the given UUID.
      *
-     * **Note:** Either `planId` or `planTemplateId` request parameters are required for this call
-     * to be valid. If you omit both, then you will receive a validation error.
+     * **Notes:**
+     * * Exactly one of `planId` or `planTemplateId` request parameters are required for this call
+     *   to be valid. If you omit both, then you will receive a validation error.
+     * * Exactly one of `aggregationId` or `compoundAggregationId` request parameters are required
+     *   for this call to be valid. If you omit both, then you will receive a validation error.
      */
     fun update(id: String, params: PricingUpdateParams): PricingResponse =
         update(id, params, RequestOptions.none())

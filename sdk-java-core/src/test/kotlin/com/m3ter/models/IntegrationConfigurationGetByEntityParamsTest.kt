@@ -16,6 +16,8 @@ internal class IntegrationConfigurationGetByEntityParamsTest {
             .destination("destination")
             .destinationId("destinationId")
             .entityId("entityId")
+            .nextToken("nextToken")
+            .pageSize(1)
             .build()
     }
 
@@ -39,6 +41,8 @@ internal class IntegrationConfigurationGetByEntityParamsTest {
                 .destination("destination")
                 .destinationId("destinationId")
                 .entityId("entityId")
+                .nextToken("nextToken")
+                .pageSize(1)
                 .build()
 
         val queryParams = params._queryParams()
@@ -49,6 +53,8 @@ internal class IntegrationConfigurationGetByEntityParamsTest {
                     .put("destination", "destination")
                     .put("destinationId", "destinationId")
                     .put("entityId", "entityId")
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
                     .build()
             )
     }

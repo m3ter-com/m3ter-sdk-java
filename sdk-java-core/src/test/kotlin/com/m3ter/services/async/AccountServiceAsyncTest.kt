@@ -239,7 +239,7 @@ internal class AccountServiceAsyncTest {
                 .build()
         val accountServiceAsync = client.accounts()
 
-        val accountResponseFuture =
+        val responseFuture =
             accountServiceAsync.getChildren(
                 AccountGetChildrenParams.builder()
                     .orgId("orgId")
@@ -249,8 +249,8 @@ internal class AccountServiceAsyncTest {
                     .build()
             )
 
-        val accountResponse = accountResponseFuture.get()
-        accountResponse.validate()
+        val response = responseFuture.get()
+        response.validate()
     }
 
     @Test

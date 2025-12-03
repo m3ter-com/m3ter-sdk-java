@@ -10,6 +10,7 @@ import com.m3ter.models.AccountDeleteParams
 import com.m3ter.models.AccountEndDateBillingEntitiesParams
 import com.m3ter.models.AccountEndDateBillingEntitiesResponse
 import com.m3ter.models.AccountGetChildrenParams
+import com.m3ter.models.AccountGetChildrenResponse
 import com.m3ter.models.AccountListPageAsync
 import com.m3ter.models.AccountListParams
 import com.m3ter.models.AccountResponse
@@ -191,7 +192,7 @@ interface AccountServiceAsync {
     ): CompletableFuture<AccountEndDateBillingEntitiesResponse>
 
     /** Retrieve a list of Accounts that are children of the specified Account. */
-    fun getChildren(id: String): CompletableFuture<AccountResponse> =
+    fun getChildren(id: String): CompletableFuture<AccountGetChildrenResponse> =
         getChildren(id, AccountGetChildrenParams.none())
 
     /** @see getChildren */
@@ -199,30 +200,32 @@ interface AccountServiceAsync {
         id: String,
         params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<AccountResponse> =
+    ): CompletableFuture<AccountGetChildrenResponse> =
         getChildren(params.toBuilder().id(id).build(), requestOptions)
 
     /** @see getChildren */
     fun getChildren(
         id: String,
         params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
-    ): CompletableFuture<AccountResponse> = getChildren(id, params, RequestOptions.none())
+    ): CompletableFuture<AccountGetChildrenResponse> =
+        getChildren(id, params, RequestOptions.none())
 
     /** @see getChildren */
     fun getChildren(
         params: AccountGetChildrenParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): CompletableFuture<AccountResponse>
+    ): CompletableFuture<AccountGetChildrenResponse>
 
     /** @see getChildren */
-    fun getChildren(params: AccountGetChildrenParams): CompletableFuture<AccountResponse> =
-        getChildren(params, RequestOptions.none())
+    fun getChildren(
+        params: AccountGetChildrenParams
+    ): CompletableFuture<AccountGetChildrenResponse> = getChildren(params, RequestOptions.none())
 
     /** @see getChildren */
     fun getChildren(
         id: String,
         requestOptions: RequestOptions,
-    ): CompletableFuture<AccountResponse> =
+    ): CompletableFuture<AccountGetChildrenResponse> =
         getChildren(id, AccountGetChildrenParams.none(), requestOptions)
 
     /**
@@ -450,7 +453,9 @@ interface AccountServiceAsync {
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/{id}/children`, but
          * is otherwise the same as [AccountServiceAsync.getChildren].
          */
-        fun getChildren(id: String): CompletableFuture<HttpResponseFor<AccountResponse>> =
+        fun getChildren(
+            id: String
+        ): CompletableFuture<HttpResponseFor<AccountGetChildrenResponse>> =
             getChildren(id, AccountGetChildrenParams.none())
 
         /** @see getChildren */
@@ -458,33 +463,33 @@ interface AccountServiceAsync {
             id: String,
             params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+        ): CompletableFuture<HttpResponseFor<AccountGetChildrenResponse>> =
             getChildren(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see getChildren */
         fun getChildren(
             id: String,
             params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
-        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+        ): CompletableFuture<HttpResponseFor<AccountGetChildrenResponse>> =
             getChildren(id, params, RequestOptions.none())
 
         /** @see getChildren */
         fun getChildren(
             params: AccountGetChildrenParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): CompletableFuture<HttpResponseFor<AccountResponse>>
+        ): CompletableFuture<HttpResponseFor<AccountGetChildrenResponse>>
 
         /** @see getChildren */
         fun getChildren(
             params: AccountGetChildrenParams
-        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+        ): CompletableFuture<HttpResponseFor<AccountGetChildrenResponse>> =
             getChildren(params, RequestOptions.none())
 
         /** @see getChildren */
         fun getChildren(
             id: String,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<AccountResponse>> =
+        ): CompletableFuture<HttpResponseFor<AccountGetChildrenResponse>> =
             getChildren(id, AccountGetChildrenParams.none(), requestOptions)
 
         /**

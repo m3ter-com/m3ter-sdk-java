@@ -21,6 +21,7 @@ import com.m3ter.models.AccountDeleteParams
 import com.m3ter.models.AccountEndDateBillingEntitiesParams
 import com.m3ter.models.AccountEndDateBillingEntitiesResponse
 import com.m3ter.models.AccountGetChildrenParams
+import com.m3ter.models.AccountGetChildrenResponse
 import com.m3ter.models.AccountListPage
 import com.m3ter.models.AccountListPageResponse
 import com.m3ter.models.AccountListParams
@@ -86,7 +87,7 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
     override fun getChildren(
         params: AccountGetChildrenParams,
         requestOptions: RequestOptions,
-    ): AccountResponse =
+    ): AccountGetChildrenResponse =
         // get /organizations/{orgId}/accounts/{id}/children
         withRawResponse().getChildren(params, requestOptions).parse()
 
@@ -324,13 +325,13 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val getChildrenHandler: Handler<AccountResponse> =
-            jsonHandler<AccountResponse>(clientOptions.jsonMapper)
+        private val getChildrenHandler: Handler<AccountGetChildrenResponse> =
+            jsonHandler<AccountGetChildrenResponse>(clientOptions.jsonMapper)
 
         override fun getChildren(
             params: AccountGetChildrenParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<AccountResponse> {
+        ): HttpResponseFor<AccountGetChildrenResponse> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())

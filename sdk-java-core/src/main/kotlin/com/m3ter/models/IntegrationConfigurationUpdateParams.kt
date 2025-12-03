@@ -1503,6 +1503,8 @@ private constructor(
 
                 @JvmField val CHARGEBEE_AUTH = of("CHARGEBEE_AUTH")
 
+                @JvmField val M3TER_APP_SIGNATURE = of("M3TER_APP_SIGNATURE")
+
                 @JvmField val M3TER_SERVICE_USER = of("M3TER_SERVICE_USER")
 
                 @JvmField val STRIPE_SIGNED_REQUEST = of("STRIPE_SIGNED_REQUEST")
@@ -1514,6 +1516,11 @@ private constructor(
                 @JvmField val OPSGENIE_KEY = of("OPSGENIE_KEY")
 
                 @JvmField val SAP_BYD = of("SAP_BYD")
+
+                @JvmField val SLACK_WEBHOOK = of("SLACK_WEBHOOK")
+
+                @JvmField
+                val SAGE_INTACCT_CLIENT_CREDENTIALS = of("SAGE_INTACCT_CLIENT_CREDENTIALS")
 
                 @JvmStatic fun of(value: String) = Type(JsonField.of(value))
             }
@@ -1527,12 +1534,15 @@ private constructor(
                 PADDLE_AUTH,
                 NETSUITE_AUTH,
                 CHARGEBEE_AUTH,
+                M3TER_APP_SIGNATURE,
                 M3TER_SERVICE_USER,
                 STRIPE_SIGNED_REQUEST,
                 HUBSPOT_ACCESS_TOKEN,
                 HUBSPOT_CLIENT_SECRET,
                 OPSGENIE_KEY,
                 SAP_BYD,
+                SLACK_WEBHOOK,
+                SAGE_INTACCT_CLIENT_CREDENTIALS,
             }
 
             /**
@@ -1552,12 +1562,15 @@ private constructor(
                 PADDLE_AUTH,
                 NETSUITE_AUTH,
                 CHARGEBEE_AUTH,
+                M3TER_APP_SIGNATURE,
                 M3TER_SERVICE_USER,
                 STRIPE_SIGNED_REQUEST,
                 HUBSPOT_ACCESS_TOKEN,
                 HUBSPOT_CLIENT_SECRET,
                 OPSGENIE_KEY,
                 SAP_BYD,
+                SLACK_WEBHOOK,
+                SAGE_INTACCT_CLIENT_CREDENTIALS,
                 /** An enum member indicating that [Type] was instantiated with an unknown value. */
                 _UNKNOWN,
             }
@@ -1578,12 +1591,15 @@ private constructor(
                     PADDLE_AUTH -> Value.PADDLE_AUTH
                     NETSUITE_AUTH -> Value.NETSUITE_AUTH
                     CHARGEBEE_AUTH -> Value.CHARGEBEE_AUTH
+                    M3TER_APP_SIGNATURE -> Value.M3TER_APP_SIGNATURE
                     M3TER_SERVICE_USER -> Value.M3TER_SERVICE_USER
                     STRIPE_SIGNED_REQUEST -> Value.STRIPE_SIGNED_REQUEST
                     HUBSPOT_ACCESS_TOKEN -> Value.HUBSPOT_ACCESS_TOKEN
                     HUBSPOT_CLIENT_SECRET -> Value.HUBSPOT_CLIENT_SECRET
                     OPSGENIE_KEY -> Value.OPSGENIE_KEY
                     SAP_BYD -> Value.SAP_BYD
+                    SLACK_WEBHOOK -> Value.SLACK_WEBHOOK
+                    SAGE_INTACCT_CLIENT_CREDENTIALS -> Value.SAGE_INTACCT_CLIENT_CREDENTIALS
                     else -> Value._UNKNOWN
                 }
 
@@ -1605,12 +1621,15 @@ private constructor(
                     PADDLE_AUTH -> Known.PADDLE_AUTH
                     NETSUITE_AUTH -> Known.NETSUITE_AUTH
                     CHARGEBEE_AUTH -> Known.CHARGEBEE_AUTH
+                    M3TER_APP_SIGNATURE -> Known.M3TER_APP_SIGNATURE
                     M3TER_SERVICE_USER -> Known.M3TER_SERVICE_USER
                     STRIPE_SIGNED_REQUEST -> Known.STRIPE_SIGNED_REQUEST
                     HUBSPOT_ACCESS_TOKEN -> Known.HUBSPOT_ACCESS_TOKEN
                     HUBSPOT_CLIENT_SECRET -> Known.HUBSPOT_CLIENT_SECRET
                     OPSGENIE_KEY -> Known.OPSGENIE_KEY
                     SAP_BYD -> Known.SAP_BYD
+                    SLACK_WEBHOOK -> Known.SLACK_WEBHOOK
+                    SAGE_INTACCT_CLIENT_CREDENTIALS -> Known.SAGE_INTACCT_CLIENT_CREDENTIALS
                     else -> throw M3terInvalidDataException("Unknown Type: $value")
                 }
 

@@ -10,6 +10,7 @@ import com.m3ter.core.ExcludeMissing
 import com.m3ter.core.JsonField
 import com.m3ter.core.JsonMissing
 import com.m3ter.core.JsonValue
+import com.m3ter.core.checkRequired
 import com.m3ter.errors.M3terInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -59,13 +60,12 @@ private constructor(
     )
 
     /**
-     * The Organization UUID. The Organization represents your company as a direct customer of the
-     * m3ter service.
+     * The UUID of the entity.
      *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun id(): Optional<String> = id.getOptional("id")
+    fun id(): String = id.getRequired("id")
 
     /**
      * The global lock date *(in ISO 8601 format)* when all Bills will be locked.
@@ -111,8 +111,9 @@ private constructor(
 
     /**
      * The version number:
-     * * Default value when newly created is one.
-     * * Incremented by 1 each time it is updated.
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -190,14 +191,21 @@ private constructor(
 
     companion object {
 
-        /** Returns a mutable builder for constructing an instance of [BillConfigResponse]. */
+        /**
+         * Returns a mutable builder for constructing an instance of [BillConfigResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
     /** A builder for [BillConfigResponse]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String> = JsonMissing.of()
+        private var id: JsonField<String>? = null
         private var billLockDate: JsonField<LocalDate> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -218,10 +226,7 @@ private constructor(
             additionalProperties = billConfigResponse.additionalProperties.toMutableMap()
         }
 
-        /**
-         * The Organization UUID. The Organization represents your company as a direct customer of
-         * the m3ter service.
-         */
+        /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
         /**
@@ -305,8 +310,9 @@ private constructor(
 
         /**
          * The version number:
-         * * Default value when newly created is one.
-         * * Incremented by 1 each time it is updated.
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
          */
         fun version(version: Long) = version(JsonField.of(version))
 
@@ -341,10 +347,17 @@ private constructor(
          * Returns an immutable instance of [BillConfigResponse].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): BillConfigResponse =
             BillConfigResponse(
-                id,
+                checkRequired("id", id),
                 billLockDate,
                 createdBy,
                 dtCreated,

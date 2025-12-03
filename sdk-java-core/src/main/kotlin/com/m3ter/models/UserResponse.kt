@@ -11,6 +11,7 @@ import com.m3ter.core.JsonField
 import com.m3ter.core.JsonMissing
 import com.m3ter.core.JsonValue
 import com.m3ter.core.checkKnown
+import com.m3ter.core.checkRequired
 import com.m3ter.core.toImmutable
 import com.m3ter.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
@@ -100,12 +101,12 @@ private constructor(
     )
 
     /**
-     * The unique identifier (UUID) of this user.
+     * The UUID of the entity.
      *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun id(): Optional<String> = id.getOptional("id")
+    fun id(): String = id.getRequired("id")
 
     /**
      * The user's contact telephone number.
@@ -388,14 +389,21 @@ private constructor(
 
     companion object {
 
-        /** Returns a mutable builder for constructing an instance of [UserResponse]. */
+        /**
+         * Returns a mutable builder for constructing an instance of [UserResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
     /** A builder for [UserResponse]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String> = JsonMissing.of()
+        private var id: JsonField<String>? = null
         private var contactNumber: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -434,7 +442,7 @@ private constructor(
             additionalProperties = userResponse.additionalProperties.toMutableMap()
         }
 
-        /** The unique identifier (UUID) of this user. */
+        /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
         /**
@@ -707,10 +715,17 @@ private constructor(
          * Returns an immutable instance of [UserResponse].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): UserResponse =
             UserResponse(
-                id,
+                checkRequired("id", id),
                 contactNumber,
                 createdBy,
                 dtCreated,

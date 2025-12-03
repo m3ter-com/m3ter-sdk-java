@@ -326,6 +326,8 @@ private constructor(
 
             @JvmField val TRANSACTION_TYPES = of("TRANSACTION_TYPES")
 
+            @JvmField val CHARGES = of("CHARGES")
+
             @JvmStatic fun of(value: String) = OperationalDataType(JsonField.of(value))
         }
 
@@ -350,6 +352,7 @@ private constructor(
             PLAN_TEMPLATES,
             BALANCE_TRANSACTIONS,
             TRANSACTION_TYPES,
+            CHARGES,
         }
 
         /**
@@ -381,6 +384,7 @@ private constructor(
             PLAN_TEMPLATES,
             BALANCE_TRANSACTIONS,
             TRANSACTION_TYPES,
+            CHARGES,
             /**
              * An enum member indicating that [OperationalDataType] was instantiated with an unknown
              * value.
@@ -416,6 +420,7 @@ private constructor(
                 PLAN_TEMPLATES -> Value.PLAN_TEMPLATES
                 BALANCE_TRANSACTIONS -> Value.BALANCE_TRANSACTIONS
                 TRANSACTION_TYPES -> Value.TRANSACTION_TYPES
+                CHARGES -> Value.CHARGES
                 else -> Value._UNKNOWN
             }
 
@@ -448,6 +453,7 @@ private constructor(
                 PLAN_TEMPLATES -> Known.PLAN_TEMPLATES
                 BALANCE_TRANSACTIONS -> Known.BALANCE_TRANSACTIONS
                 TRANSACTION_TYPES -> Known.TRANSACTION_TYPES
+                CHARGES -> Known.CHARGES
                 else -> throw M3terInvalidDataException("Unknown OperationalDataType: $value")
             }
 

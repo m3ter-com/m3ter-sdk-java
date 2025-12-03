@@ -11,6 +11,7 @@ import com.m3ter.core.JsonField
 import com.m3ter.core.JsonMissing
 import com.m3ter.core.JsonValue
 import com.m3ter.core.checkKnown
+import com.m3ter.core.checkRequired
 import com.m3ter.core.toImmutable
 import com.m3ter.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
@@ -69,12 +70,12 @@ private constructor(
     )
 
     /**
-     * The unique identifier (UUID) for this Permission Policy.
+     * The UUID of the entity.
      *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun id(): Optional<String> = id.getOptional("id")
+    fun id(): String = id.getRequired("id")
 
     /**
      * The unique identifier (UUID) of the user who created this Permission Policy.
@@ -134,7 +135,10 @@ private constructor(
         permissionPolicy.getOptional("permissionPolicy")
 
     /**
-     * The version number. Default value when newly created is one.
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -229,14 +233,21 @@ private constructor(
 
     companion object {
 
-        /** Returns a mutable builder for constructing an instance of [PermissionPolicyResponse]. */
+        /**
+         * Returns a mutable builder for constructing an instance of [PermissionPolicyResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
     /** A builder for [PermissionPolicyResponse]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String> = JsonMissing.of()
+        private var id: JsonField<String>? = null
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -261,7 +272,7 @@ private constructor(
             additionalProperties = permissionPolicyResponse.additionalProperties.toMutableMap()
         }
 
-        /** The unique identifier (UUID) for this Permission Policy. */
+        /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
         /**
@@ -380,7 +391,12 @@ private constructor(
                 }
         }
 
-        /** The version number. Default value when newly created is one. */
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
         fun version(version: Long) = version(JsonField.of(version))
 
         /**
@@ -414,10 +430,17 @@ private constructor(
          * Returns an immutable instance of [PermissionPolicyResponse].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): PermissionPolicyResponse =
             PermissionPolicyResponse(
-                id,
+                checkRequired("id", id),
                 createdBy,
                 dtCreated,
                 dtLastModified,

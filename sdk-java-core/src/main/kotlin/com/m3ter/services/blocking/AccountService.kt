@@ -11,6 +11,7 @@ import com.m3ter.models.AccountDeleteParams
 import com.m3ter.models.AccountEndDateBillingEntitiesParams
 import com.m3ter.models.AccountEndDateBillingEntitiesResponse
 import com.m3ter.models.AccountGetChildrenParams
+import com.m3ter.models.AccountGetChildrenResponse
 import com.m3ter.models.AccountListPage
 import com.m3ter.models.AccountListParams
 import com.m3ter.models.AccountResponse
@@ -181,33 +182,34 @@ interface AccountService {
     ): AccountEndDateBillingEntitiesResponse
 
     /** Retrieve a list of Accounts that are children of the specified Account. */
-    fun getChildren(id: String): AccountResponse = getChildren(id, AccountGetChildrenParams.none())
+    fun getChildren(id: String): AccountGetChildrenResponse =
+        getChildren(id, AccountGetChildrenParams.none())
 
     /** @see getChildren */
     fun getChildren(
         id: String,
         params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AccountResponse = getChildren(params.toBuilder().id(id).build(), requestOptions)
+    ): AccountGetChildrenResponse = getChildren(params.toBuilder().id(id).build(), requestOptions)
 
     /** @see getChildren */
     fun getChildren(
         id: String,
         params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
-    ): AccountResponse = getChildren(id, params, RequestOptions.none())
+    ): AccountGetChildrenResponse = getChildren(id, params, RequestOptions.none())
 
     /** @see getChildren */
     fun getChildren(
         params: AccountGetChildrenParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AccountResponse
+    ): AccountGetChildrenResponse
 
     /** @see getChildren */
-    fun getChildren(params: AccountGetChildrenParams): AccountResponse =
+    fun getChildren(params: AccountGetChildrenParams): AccountGetChildrenResponse =
         getChildren(params, RequestOptions.none())
 
     /** @see getChildren */
-    fun getChildren(id: String, requestOptions: RequestOptions): AccountResponse =
+    fun getChildren(id: String, requestOptions: RequestOptions): AccountGetChildrenResponse =
         getChildren(id, AccountGetChildrenParams.none(), requestOptions)
 
     /**
@@ -433,7 +435,7 @@ interface AccountService {
          * is otherwise the same as [AccountService.getChildren].
          */
         @MustBeClosed
-        fun getChildren(id: String): HttpResponseFor<AccountResponse> =
+        fun getChildren(id: String): HttpResponseFor<AccountGetChildrenResponse> =
             getChildren(id, AccountGetChildrenParams.none())
 
         /** @see getChildren */
@@ -442,7 +444,7 @@ interface AccountService {
             id: String,
             params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<AccountResponse> =
+        ): HttpResponseFor<AccountGetChildrenResponse> =
             getChildren(params.toBuilder().id(id).build(), requestOptions)
 
         /** @see getChildren */
@@ -450,26 +452,28 @@ interface AccountService {
         fun getChildren(
             id: String,
             params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
-        ): HttpResponseFor<AccountResponse> = getChildren(id, params, RequestOptions.none())
+        ): HttpResponseFor<AccountGetChildrenResponse> =
+            getChildren(id, params, RequestOptions.none())
 
         /** @see getChildren */
         @MustBeClosed
         fun getChildren(
             params: AccountGetChildrenParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<AccountResponse>
+        ): HttpResponseFor<AccountGetChildrenResponse>
 
         /** @see getChildren */
         @MustBeClosed
-        fun getChildren(params: AccountGetChildrenParams): HttpResponseFor<AccountResponse> =
-            getChildren(params, RequestOptions.none())
+        fun getChildren(
+            params: AccountGetChildrenParams
+        ): HttpResponseFor<AccountGetChildrenResponse> = getChildren(params, RequestOptions.none())
 
         /** @see getChildren */
         @MustBeClosed
         fun getChildren(
             id: String,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<AccountResponse> =
+        ): HttpResponseFor<AccountGetChildrenResponse> =
             getChildren(id, AccountGetChildrenParams.none(), requestOptions)
 
         /**

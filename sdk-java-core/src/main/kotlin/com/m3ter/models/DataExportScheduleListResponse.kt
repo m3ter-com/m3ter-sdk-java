@@ -27,12 +27,14 @@ private constructor(
     private val id: JsonField<String>,
     private val code: JsonField<String>,
     private val createdBy: JsonField<String>,
+    private val cronExpression: JsonField<String>,
     private val destinationIds: JsonField<List<String>>,
     private val dtCreated: JsonField<OffsetDateTime>,
     private val dtLastModified: JsonField<OffsetDateTime>,
     private val exportFileFormat: JsonField<ExportFileFormat>,
     private val lastModifiedBy: JsonField<String>,
     private val name: JsonField<String>,
+    private val offset: JsonField<Int>,
     private val period: JsonField<Int>,
     private val scheduleType: JsonField<ScheduleType>,
     private val sourceType: JsonField<SourceType>,
@@ -45,6 +47,9 @@ private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
         @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("cronExpression")
+        @ExcludeMissing
+        cronExpression: JsonField<String> = JsonMissing.of(),
         @JsonProperty("destinationIds")
         @ExcludeMissing
         destinationIds: JsonField<List<String>> = JsonMissing.of(),
@@ -61,6 +66,7 @@ private constructor(
         @ExcludeMissing
         lastModifiedBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("offset") @ExcludeMissing offset: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("period") @ExcludeMissing period: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("scheduleType")
         @ExcludeMissing
@@ -73,12 +79,14 @@ private constructor(
         id,
         code,
         createdBy,
+        cronExpression,
         destinationIds,
         dtCreated,
         dtLastModified,
         exportFileFormat,
         lastModifiedBy,
         name,
+        offset,
         period,
         scheduleType,
         sourceType,
@@ -109,6 +117,15 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
+
+    /**
+     * A cron expression (https://en.wikipedia.org/wiki/Cron) describing the frequency of the
+     * expression. Executions cannot be more frequent than every 15 minutes.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun cronExpression(): Optional<String> = cronExpression.getOptional("cronExpression")
 
     /**
      * The Export Destination ids.
@@ -156,6 +173,15 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun name(): Optional<String> = name.getOptional("name")
+
+    /**
+     * Offset indicating starting point of the export within the configured scheduleType. For DAY,
+     * offset is in hours. For HOUR, offset is in minutes. Offset is not valid for MINUTE.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun offset(): Optional<Int> = offset.getOptional("offset")
 
     /**
      * Defines the Schedule frequency for the Data Export to run in Hours, Days, or Minutes. Used in
@@ -211,6 +237,15 @@ private constructor(
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
     /**
+     * Returns the raw JSON value of [cronExpression].
+     *
+     * Unlike [cronExpression], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("cronExpression")
+    @ExcludeMissing
+    fun _cronExpression(): JsonField<String> = cronExpression
+
+    /**
      * Returns the raw JSON value of [destinationIds].
      *
      * Unlike [destinationIds], this method doesn't throw if the JSON field has an unexpected type.
@@ -262,6 +297,13 @@ private constructor(
      * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+    /**
+     * Returns the raw JSON value of [offset].
+     *
+     * Unlike [offset], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("offset") @ExcludeMissing fun _offset(): JsonField<Int> = offset
 
     /**
      * Returns the raw JSON value of [period].
@@ -327,12 +369,14 @@ private constructor(
         private var id: JsonField<String>? = null
         private var code: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
+        private var cronExpression: JsonField<String> = JsonMissing.of()
         private var destinationIds: JsonField<MutableList<String>>? = null
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var exportFileFormat: JsonField<ExportFileFormat> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var name: JsonField<String> = JsonMissing.of()
+        private var offset: JsonField<Int> = JsonMissing.of()
         private var period: JsonField<Int> = JsonMissing.of()
         private var scheduleType: JsonField<ScheduleType> = JsonMissing.of()
         private var sourceType: JsonField<SourceType> = JsonMissing.of()
@@ -344,6 +388,7 @@ private constructor(
             id = dataExportScheduleListResponse.id
             code = dataExportScheduleListResponse.code
             createdBy = dataExportScheduleListResponse.createdBy
+            cronExpression = dataExportScheduleListResponse.cronExpression
             destinationIds =
                 dataExportScheduleListResponse.destinationIds.map { it.toMutableList() }
             dtCreated = dataExportScheduleListResponse.dtCreated
@@ -351,6 +396,7 @@ private constructor(
             exportFileFormat = dataExportScheduleListResponse.exportFileFormat
             lastModifiedBy = dataExportScheduleListResponse.lastModifiedBy
             name = dataExportScheduleListResponse.name
+            offset = dataExportScheduleListResponse.offset
             period = dataExportScheduleListResponse.period
             scheduleType = dataExportScheduleListResponse.scheduleType
             sourceType = dataExportScheduleListResponse.sourceType
@@ -392,6 +438,23 @@ private constructor(
          * value.
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
+
+        /**
+         * A cron expression (https://en.wikipedia.org/wiki/Cron) describing the frequency of the
+         * expression. Executions cannot be more frequent than every 15 minutes.
+         */
+        fun cronExpression(cronExpression: String) = cronExpression(JsonField.of(cronExpression))
+
+        /**
+         * Sets [Builder.cronExpression] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.cronExpression] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun cronExpression(cronExpression: JsonField<String>) = apply {
+            this.cronExpression = cronExpression
+        }
 
         /** The Export Destination ids. */
         fun destinationIds(destinationIds: List<String>) =
@@ -487,6 +550,20 @@ private constructor(
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
+         * Offset indicating starting point of the export within the configured scheduleType. For
+         * DAY, offset is in hours. For HOUR, offset is in minutes. Offset is not valid for MINUTE.
+         */
+        fun offset(offset: Int) = offset(JsonField.of(offset))
+
+        /**
+         * Sets [Builder.offset] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.offset] with a well-typed [Int] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun offset(offset: JsonField<Int>) = apply { this.offset = offset }
+
+        /**
          * Defines the Schedule frequency for the Data Export to run in Hours, Days, or Minutes.
          * Used in conjunction with the `scheduleType` parameter.
          */
@@ -576,12 +653,14 @@ private constructor(
                 checkRequired("id", id),
                 code,
                 createdBy,
+                cronExpression,
                 (destinationIds ?: JsonMissing.of()).map { it.toImmutable() },
                 dtCreated,
                 dtLastModified,
                 exportFileFormat,
                 lastModifiedBy,
                 name,
+                offset,
                 period,
                 scheduleType,
                 sourceType,
@@ -600,12 +679,14 @@ private constructor(
         id()
         code()
         createdBy()
+        cronExpression()
         destinationIds()
         dtCreated()
         dtLastModified()
         exportFileFormat().ifPresent { it.validate() }
         lastModifiedBy()
         name()
+        offset()
         period()
         scheduleType().ifPresent { it.validate() }
         sourceType().ifPresent { it.validate() }
@@ -631,12 +712,14 @@ private constructor(
         (if (id.asKnown().isPresent) 1 else 0) +
             (if (code.asKnown().isPresent) 1 else 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
+            (if (cronExpression.asKnown().isPresent) 1 else 0) +
             (destinationIds.asKnown().getOrNull()?.size ?: 0) +
             (if (dtCreated.asKnown().isPresent) 1 else 0) +
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
             (exportFileFormat.asKnown().getOrNull()?.validity() ?: 0) +
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (if (name.asKnown().isPresent) 1 else 0) +
+            (if (offset.asKnown().isPresent) 1 else 0) +
             (if (period.asKnown().isPresent) 1 else 0) +
             (scheduleType.asKnown().getOrNull()?.validity() ?: 0) +
             (sourceType.asKnown().getOrNull()?.validity() ?: 0) +
@@ -659,8 +742,6 @@ private constructor(
 
             @JvmField val CSV = of("CSV")
 
-            @JvmField val JSON = of("JSON")
-
             @JvmField val JSONL = of("JSONL")
 
             @JvmStatic fun of(value: String) = ExportFileFormat(JsonField.of(value))
@@ -669,7 +750,6 @@ private constructor(
         /** An enum containing [ExportFileFormat]'s known values. */
         enum class Known {
             CSV,
-            JSON,
             JSONL,
         }
 
@@ -684,7 +764,6 @@ private constructor(
          */
         enum class Value {
             CSV,
-            JSON,
             JSONL,
             /**
              * An enum member indicating that [ExportFileFormat] was instantiated with an unknown
@@ -703,7 +782,6 @@ private constructor(
         fun value(): Value =
             when (this) {
                 CSV -> Value.CSV
-                JSON -> Value.JSON
                 JSONL -> Value.JSONL
                 else -> Value._UNKNOWN
             }
@@ -719,7 +797,6 @@ private constructor(
         fun known(): Known =
             when (this) {
                 CSV -> Known.CSV
-                JSON -> Known.JSON
                 JSONL -> Known.JSONL
                 else -> throw M3terInvalidDataException("Unknown ExportFileFormat: $value")
             }
@@ -1050,12 +1127,14 @@ private constructor(
             id == other.id &&
             code == other.code &&
             createdBy == other.createdBy &&
+            cronExpression == other.cronExpression &&
             destinationIds == other.destinationIds &&
             dtCreated == other.dtCreated &&
             dtLastModified == other.dtLastModified &&
             exportFileFormat == other.exportFileFormat &&
             lastModifiedBy == other.lastModifiedBy &&
             name == other.name &&
+            offset == other.offset &&
             period == other.period &&
             scheduleType == other.scheduleType &&
             sourceType == other.sourceType &&
@@ -1068,12 +1147,14 @@ private constructor(
             id,
             code,
             createdBy,
+            cronExpression,
             destinationIds,
             dtCreated,
             dtLastModified,
             exportFileFormat,
             lastModifiedBy,
             name,
+            offset,
             period,
             scheduleType,
             sourceType,
@@ -1085,5 +1166,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "DataExportScheduleListResponse{id=$id, code=$code, createdBy=$createdBy, destinationIds=$destinationIds, dtCreated=$dtCreated, dtLastModified=$dtLastModified, exportFileFormat=$exportFileFormat, lastModifiedBy=$lastModifiedBy, name=$name, period=$period, scheduleType=$scheduleType, sourceType=$sourceType, version=$version, additionalProperties=$additionalProperties}"
+        "DataExportScheduleListResponse{id=$id, code=$code, createdBy=$createdBy, cronExpression=$cronExpression, destinationIds=$destinationIds, dtCreated=$dtCreated, dtLastModified=$dtLastModified, exportFileFormat=$exportFileFormat, lastModifiedBy=$lastModifiedBy, name=$name, offset=$offset, period=$period, scheduleType=$scheduleType, sourceType=$sourceType, version=$version, additionalProperties=$additionalProperties}"
 }

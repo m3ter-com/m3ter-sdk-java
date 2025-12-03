@@ -25,6 +25,8 @@ class OrganizationConfigResponse
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
+    private val allowNegativeBalances: JsonField<Boolean>,
+    private val allowOverlappingPlans: JsonField<Boolean>,
     private val autoApproveBillsGracePeriod: JsonField<Int>,
     private val autoApproveBillsGracePeriodUnit: JsonField<AutoApproveBillsGracePeriodUnit>,
     private val autoGenerateStatementMode: JsonField<AutoGenerateStatementMode>,
@@ -58,6 +60,12 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("allowNegativeBalances")
+        @ExcludeMissing
+        allowNegativeBalances: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("allowOverlappingPlans")
+        @ExcludeMissing
+        allowOverlappingPlans: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("autoApproveBillsGracePeriod")
         @ExcludeMissing
         autoApproveBillsGracePeriod: JsonField<Int> = JsonMissing.of(),
@@ -128,6 +136,8 @@ private constructor(
         @JsonProperty("yearEpoch") @ExcludeMissing yearEpoch: JsonField<String> = JsonMissing.of(),
     ) : this(
         id,
+        allowNegativeBalances,
+        allowOverlappingPlans,
         autoApproveBillsGracePeriod,
         autoApproveBillsGracePeriodUnit,
         autoGenerateStatementMode,
@@ -165,6 +175,26 @@ private constructor(
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun id(): String = id.getRequired("id")
+
+    /**
+     * Allow balance amounts to fall below zero. This feature is enabled on request. Please get in
+     * touch with m3ter Support or your m3ter contact if you would like it enabling for your
+     * organization(s).
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun allowNegativeBalances(): Optional<Boolean> =
+        allowNegativeBalances.getOptional("allowNegativeBalances")
+
+    /**
+     * Allows plans to overlap time periods for different contracts.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun allowOverlappingPlans(): Optional<Boolean> =
+        allowOverlappingPlans.getOptional("allowOverlappingPlans")
 
     /**
      * Grace period before bills are auto-approved. Used in combination with the field
@@ -441,6 +471,26 @@ private constructor(
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
+     * Returns the raw JSON value of [allowNegativeBalances].
+     *
+     * Unlike [allowNegativeBalances], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("allowNegativeBalances")
+    @ExcludeMissing
+    fun _allowNegativeBalances(): JsonField<Boolean> = allowNegativeBalances
+
+    /**
+     * Returns the raw JSON value of [allowOverlappingPlans].
+     *
+     * Unlike [allowOverlappingPlans], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("allowOverlappingPlans")
+    @ExcludeMissing
+    fun _allowOverlappingPlans(): JsonField<Boolean> = allowOverlappingPlans
+
+    /**
      * Returns the raw JSON value of [autoApproveBillsGracePeriod].
      *
      * Unlike [autoApproveBillsGracePeriod], this method doesn't throw if the JSON field has an
@@ -711,6 +761,8 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
+        private var allowNegativeBalances: JsonField<Boolean> = JsonMissing.of()
+        private var allowOverlappingPlans: JsonField<Boolean> = JsonMissing.of()
         private var autoApproveBillsGracePeriod: JsonField<Int> = JsonMissing.of()
         private var autoApproveBillsGracePeriodUnit: JsonField<AutoApproveBillsGracePeriodUnit> =
             JsonMissing.of()
@@ -745,6 +797,8 @@ private constructor(
         @JvmSynthetic
         internal fun from(organizationConfigResponse: OrganizationConfigResponse) = apply {
             id = organizationConfigResponse.id
+            allowNegativeBalances = organizationConfigResponse.allowNegativeBalances
+            allowOverlappingPlans = organizationConfigResponse.allowOverlappingPlans
             autoApproveBillsGracePeriod = organizationConfigResponse.autoApproveBillsGracePeriod
             autoApproveBillsGracePeriodUnit =
                 organizationConfigResponse.autoApproveBillsGracePeriodUnit
@@ -788,6 +842,40 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
+
+        /**
+         * Allow balance amounts to fall below zero. This feature is enabled on request. Please get
+         * in touch with m3ter Support or your m3ter contact if you would like it enabling for your
+         * organization(s).
+         */
+        fun allowNegativeBalances(allowNegativeBalances: Boolean) =
+            allowNegativeBalances(JsonField.of(allowNegativeBalances))
+
+        /**
+         * Sets [Builder.allowNegativeBalances] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.allowNegativeBalances] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun allowNegativeBalances(allowNegativeBalances: JsonField<Boolean>) = apply {
+            this.allowNegativeBalances = allowNegativeBalances
+        }
+
+        /** Allows plans to overlap time periods for different contracts. */
+        fun allowOverlappingPlans(allowOverlappingPlans: Boolean) =
+            allowOverlappingPlans(JsonField.of(allowOverlappingPlans))
+
+        /**
+         * Sets [Builder.allowOverlappingPlans] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.allowOverlappingPlans] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun allowOverlappingPlans(allowOverlappingPlans: JsonField<Boolean>) = apply {
+            this.allowOverlappingPlans = allowOverlappingPlans
+        }
 
         /**
          * Grace period before bills are auto-approved. Used in combination with the field
@@ -1292,6 +1380,8 @@ private constructor(
         fun build(): OrganizationConfigResponse =
             OrganizationConfigResponse(
                 checkRequired("id", id),
+                allowNegativeBalances,
+                allowOverlappingPlans,
                 autoApproveBillsGracePeriod,
                 autoApproveBillsGracePeriodUnit,
                 autoGenerateStatementMode,
@@ -1331,6 +1421,8 @@ private constructor(
         }
 
         id()
+        allowNegativeBalances()
+        allowOverlappingPlans()
         autoApproveBillsGracePeriod()
         autoApproveBillsGracePeriodUnit().ifPresent { it.validate() }
         autoGenerateStatementMode().ifPresent { it.validate() }
@@ -1377,6 +1469,8 @@ private constructor(
     @JvmSynthetic
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
+            (if (allowNegativeBalances.asKnown().isPresent) 1 else 0) +
+            (if (allowOverlappingPlans.asKnown().isPresent) 1 else 0) +
             (if (autoApproveBillsGracePeriod.asKnown().isPresent) 1 else 0) +
             (autoApproveBillsGracePeriodUnit.asKnown().getOrNull()?.validity() ?: 0) +
             (autoGenerateStatementMode.asKnown().getOrNull()?.validity() ?: 0) +
@@ -1959,6 +2053,8 @@ private constructor(
 
         return other is OrganizationConfigResponse &&
             id == other.id &&
+            allowNegativeBalances == other.allowNegativeBalances &&
+            allowOverlappingPlans == other.allowOverlappingPlans &&
             autoApproveBillsGracePeriod == other.autoApproveBillsGracePeriod &&
             autoApproveBillsGracePeriodUnit == other.autoApproveBillsGracePeriodUnit &&
             autoGenerateStatementMode == other.autoGenerateStatementMode &&
@@ -1992,6 +2088,8 @@ private constructor(
     private val hashCode: Int by lazy {
         Objects.hash(
             id,
+            allowNegativeBalances,
+            allowOverlappingPlans,
             autoApproveBillsGracePeriod,
             autoApproveBillsGracePeriodUnit,
             autoGenerateStatementMode,
@@ -2026,5 +2124,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "OrganizationConfigResponse{id=$id, autoApproveBillsGracePeriod=$autoApproveBillsGracePeriod, autoApproveBillsGracePeriodUnit=$autoApproveBillsGracePeriodUnit, autoGenerateStatementMode=$autoGenerateStatementMode, billPrefix=$billPrefix, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, consolidateBills=$consolidateBills, createdBy=$createdBy, creditApplicationOrder=$creditApplicationOrder, currency=$currency, currencyConversions=$currencyConversions, dayEpoch=$dayEpoch, daysBeforeBillDue=$daysBeforeBillDue, defaultStatementDefinitionId=$defaultStatementDefinitionId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, externalInvoiceDate=$externalInvoiceDate, lastModifiedBy=$lastModifiedBy, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, monthEpoch=$monthEpoch, scheduledBillInterval=$scheduledBillInterval, sequenceStartNumber=$sequenceStartNumber, standingChargeBillInAdvance=$standingChargeBillInAdvance, suppressedEmptyBills=$suppressedEmptyBills, timezone=$timezone, version=$version, weekEpoch=$weekEpoch, yearEpoch=$yearEpoch, additionalProperties=$additionalProperties}"
+        "OrganizationConfigResponse{id=$id, allowNegativeBalances=$allowNegativeBalances, allowOverlappingPlans=$allowOverlappingPlans, autoApproveBillsGracePeriod=$autoApproveBillsGracePeriod, autoApproveBillsGracePeriodUnit=$autoApproveBillsGracePeriodUnit, autoGenerateStatementMode=$autoGenerateStatementMode, billPrefix=$billPrefix, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, consolidateBills=$consolidateBills, createdBy=$createdBy, creditApplicationOrder=$creditApplicationOrder, currency=$currency, currencyConversions=$currencyConversions, dayEpoch=$dayEpoch, daysBeforeBillDue=$daysBeforeBillDue, defaultStatementDefinitionId=$defaultStatementDefinitionId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, externalInvoiceDate=$externalInvoiceDate, lastModifiedBy=$lastModifiedBy, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, monthEpoch=$monthEpoch, scheduledBillInterval=$scheduledBillInterval, sequenceStartNumber=$sequenceStartNumber, standingChargeBillInAdvance=$standingChargeBillInAdvance, suppressedEmptyBills=$suppressedEmptyBills, timezone=$timezone, version=$version, weekEpoch=$weekEpoch, yearEpoch=$yearEpoch, additionalProperties=$additionalProperties}"
 }
