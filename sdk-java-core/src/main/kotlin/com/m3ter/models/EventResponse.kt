@@ -77,7 +77,14 @@ private constructor(
      */
     fun eventTime(): OffsetDateTime = eventTime.getRequired("eventTime")
 
-    /** The Data Transfer Object (DTO) containing the details of the Event. */
+    /**
+     * The Data Transfer Object (DTO) containing the details of the Event.
+     *
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```java
+     * MyClass myObject = eventResponse.m3terEvent().convert(MyClass.class);
+     * ```
+     */
     @JsonProperty("m3terEvent") @ExcludeMissing fun _m3terEvent(): JsonValue = m3terEvent
 
     /**
