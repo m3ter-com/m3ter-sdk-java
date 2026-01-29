@@ -1,5 +1,81 @@
 # Changelog
 
+## 0.5.0 (2026-01-29)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* **api:** Add examples to integrations and events ([94c9137](https://github.com/m3ter-com/m3ter-sdk-java/commit/94c91379d71627c15f6f0cf8edc1be3d321e0676))
+* **api:** spec update ([13a0444](https://github.com/m3ter-com/m3ter-sdk-java/commit/13a0444312ba456a7f3342dfe9e687301d9bde67))
+* **api:** updating api spec + fixes ([1e926aa](https://github.com/m3ter-com/m3ter-sdk-java/commit/1e926aac8d689cf643a9cb5dbc93d9cf5cf75d35))
+* **client:** add `HttpRequest#url()` method ([a575eb8](https://github.com/m3ter-com/m3ter-sdk-java/commit/a575eb81b3967f9ea497596b8ad64441f33a1cc1))
+* **client:** add convenience overloads for some methods ([25b9cc5](https://github.com/m3ter-com/m3ter-sdk-java/commit/25b9cc5fbb8210e7fae66cc829d26a8856a5a780))
+* **client:** allow configuring dispatcher executor service ([07de639](https://github.com/m3ter-com/m3ter-sdk-java/commit/07de639a1a0aee1075c3b45e2b56a0f69d481a02))
+* **client:** expose sleeper option ([70b2b21](https://github.com/m3ter-com/m3ter-sdk-java/commit/70b2b2135fa336a5621f6106f9f8093d557bcc42))
+* **client:** send `X-Stainless-Kotlin-Version` header ([2553df3](https://github.com/m3ter-com/m3ter-sdk-java/commit/2553df3dbadd33a56eb7abc62d7165a4e1975f7a))
+
+
+### Bug Fixes
+
+* **ci:** use java-version 21 for publish step ([304a0e2](https://github.com/m3ter-com/m3ter-sdk-java/commit/304a0e233b0dc92b6aaac8e6a0d9fe0ad0875ce2))
+* **client:** cancel okhttp call when future cancelled ([db745cc](https://github.com/m3ter-com/m3ter-sdk-java/commit/db745cc77bc119d71cc459bee3df07d47e11d4ed))
+* **client:** deserialization of empty objects ([9daa781](https://github.com/m3ter-com/m3ter-sdk-java/commit/9daa781709e72d243a776cad520b0105d4c8805d))
+* **client:** disallow coercion from float to int ([71f6ee1](https://github.com/m3ter-com/m3ter-sdk-java/commit/71f6ee12c8fe0aac37601e09605ea811894f1500))
+* **client:** ensure single timer is created per client ([70b2b21](https://github.com/m3ter-com/m3ter-sdk-java/commit/70b2b2135fa336a5621f6106f9f8093d557bcc42))
+* **client:** fully respect max retries ([6e16269](https://github.com/m3ter-com/m3ter-sdk-java/commit/6e16269a1d9e78493fc18eec55b7efeb82b78db1))
+* **client:** incorrect `getPackageVersion` impl ([cd97ebf](https://github.com/m3ter-com/m3ter-sdk-java/commit/cd97ebfaad48ba44707f8d14ce37f9fb19c71ab0))
+* **client:** multi-value header serialization ([e090069](https://github.com/m3ter-com/m3ter-sdk-java/commit/e090069f4a491dbbb9c2d8b92fce1b50b594f12d))
+* **client:** preserve time zone in lenient date-time parsing ([e58e52c](https://github.com/m3ter-com/m3ter-sdk-java/commit/e58e52c64cbe6f5d0bde9616d050ac89fb536aa5))
+* **client:** send retry count header for max retries 0 ([6e16269](https://github.com/m3ter-com/m3ter-sdk-java/commit/6e16269a1d9e78493fc18eec55b7efeb82b78db1))
+* date time deserialization leniency ([9f9ad65](https://github.com/m3ter-com/m3ter-sdk-java/commit/9f9ad6557d1b442fd4da0d619caf0df0a9258504))
+* fix casing issue ([84fed19](https://github.com/m3ter-com/m3ter-sdk-java/commit/84fed1918fd2a626225d79fe42c323bf31eb86ad))
+* update singularization rules ([e8280bc](https://github.com/m3ter-com/m3ter-sdk-java/commit/e8280bceca7a852f886a3c3c06d5c23296aa83ed))
+
+
+### Performance Improvements
+
+* **internal:** make formatting faster ([e360abf](https://github.com/m3ter-com/m3ter-sdk-java/commit/e360abf5306a768307db34d79e4feb3e6bf2b104))
+
+
+### Chores
+
+* **ci:** add build job ([9b7249c](https://github.com/m3ter-com/m3ter-sdk-java/commit/9b7249c15d0fa64d8f7ac9c0f0cf659eac5666ca))
+* **ci:** reduce log noise ([d5fe8b8](https://github.com/m3ter-com/m3ter-sdk-java/commit/d5fe8b8b33b89f106dbd242ddefaeb20871f08fb))
+* **ci:** upgrade `actions/github-script` ([03bbf5a](https://github.com/m3ter-com/m3ter-sdk-java/commit/03bbf5a9aba100bae967f89869b2b702f1d459c4))
+* **ci:** upgrade `actions/setup-java` ([ba2c70d](https://github.com/m3ter-com/m3ter-sdk-java/commit/ba2c70d3e2f896dca2bc95793ae9f7f74ff4c778))
+* **client:** refactor closing / shutdown ([ff33ce9](https://github.com/m3ter-com/m3ter-sdk-java/commit/ff33ce9bc28a2d9582b52f86a0ebc9386acc53ce))
+* **example:** fix run example comment ([f1ddcab](https://github.com/m3ter-com/m3ter-sdk-java/commit/f1ddcabb361a384d54e00ceeffa6aa373b5b774a))
+* improve example values ([ca883cf](https://github.com/m3ter-com/m3ter-sdk-java/commit/ca883cf16358d74c70a816fa788c94d7eb6f29a0))
+* improve formatter performance ([df596a1](https://github.com/m3ter-com/m3ter-sdk-java/commit/df596a1f0d90d69a93df6bb1a595e702e78b394b))
+* increase max gradle JVM heap to 8GB ([db27118](https://github.com/m3ter-com/m3ter-sdk-java/commit/db2711841dfb2f2de2e32db0a219ac4f58b89b41))
+* **internal:** add async lock helper ([5acef22](https://github.com/m3ter-com/m3ter-sdk-java/commit/5acef2285613c3fab18d2dd0af966a4743dc51f9))
+* **internal:** change some comment formatting ([878fab6](https://github.com/m3ter-com/m3ter-sdk-java/commit/878fab6f542d79553f3bb1ad297fb71df3cd9dd7))
+* **internal:** clean up maven repo artifact script and add html documentation to repo root ([3b6c0c0](https://github.com/m3ter-com/m3ter-sdk-java/commit/3b6c0c003a1add418b17e7dc8332ebf1d891785e))
+* **internal:** codegen related update ([3eca6e5](https://github.com/m3ter-com/m3ter-sdk-java/commit/3eca6e575fad8a5f540fb88d48967ed5e5fd5f46))
+* **internal:** codegen related update ([6f6e40b](https://github.com/m3ter-com/m3ter-sdk-java/commit/6f6e40bfc2132cc0161edf424494a0350aaba720))
+* **internal:** codegen related update ([18e944f](https://github.com/m3ter-com/m3ter-sdk-java/commit/18e944f50cdf8301614a95949b553474113c7a02))
+* **internal:** correct cache invalidation for `SKIP_MOCK_TESTS` ([9da3bf5](https://github.com/m3ter-com/m3ter-sdk-java/commit/9da3bf567712577202d13c297f39adec69562f07))
+* **internal:** depend on packages directly in example ([6e16269](https://github.com/m3ter-com/m3ter-sdk-java/commit/6e16269a1d9e78493fc18eec55b7efeb82b78db1))
+* **internal:** dynamically determine included projects ([e66d9d4](https://github.com/m3ter-com/m3ter-sdk-java/commit/e66d9d4b52e4a84694a21e392de3c7f393c3ca98))
+* **internal:** format identity methods ([c4b1452](https://github.com/m3ter-com/m3ter-sdk-java/commit/c4b1452455c9dfa9bd9b6ebff2ee2891050d5851))
+* **internal:** improve maven repo docs ([6da45ab](https://github.com/m3ter-com/m3ter-sdk-java/commit/6da45ab97f88ae57531d79200900cda0fca68285))
+* **internal:** support passing arguments to test script ([d368693](https://github.com/m3ter-com/m3ter-sdk-java/commit/d3686930e3d89035933e4554a6c6d56cfbe1bae8))
+* **internal:** support running formatters directly ([edb1400](https://github.com/m3ter-com/m3ter-sdk-java/commit/edb1400b8be6a5c63fb1036928b0ab14f013a074))
+* **internal:** support uploading Maven repo artifacts to stainless package server ([3d5bba7](https://github.com/m3ter-com/m3ter-sdk-java/commit/3d5bba71a61d49887a788d1c44f98a0e43abc41c))
+* **internal:** update `actions/checkout` version ([82b1ef8](https://github.com/m3ter-com/m3ter-sdk-java/commit/82b1ef850b5599bc4593f7f2be6b651d9c4758c4))
+* **internal:** update comment in script ([dbdb156](https://github.com/m3ter-com/m3ter-sdk-java/commit/dbdb156495455939477c5cdf08cbe3fb5e47cc0e))
+* **internal:** update maven repo doc to include authentication ([f1e391f](https://github.com/m3ter-com/m3ter-sdk-java/commit/f1e391f55a3e293ae5d18c913c2d53b9031adfc0))
+* remove memory upper bound from publishing step ([4565107](https://github.com/m3ter-com/m3ter-sdk-java/commit/456510759dc6924296196416d1f7c0d96c0629b5))
+* test on Jackson 2.14.0 to avoid encountering FasterXML/jackson-databind[#3240](https://github.com/m3ter-com/m3ter-sdk-java/issues/3240) in tests ([9f9ad65](https://github.com/m3ter-com/m3ter-sdk-java/commit/9f9ad6557d1b442fd4da0d619caf0df0a9258504))
+* update @stainless-api/prism-cli to v5.15.0 ([57443e8](https://github.com/m3ter-com/m3ter-sdk-java/commit/57443e8a04e0f33fe0acd540b46230c8ea6928b7))
+
+
+### Documentation
+
+* add comment for arbitrary value fields ([7315ee9](https://github.com/m3ter-com/m3ter-sdk-java/commit/7315ee9d351b94c6f04375bf8d163961d5b090ac))
+* remove `$` for better copy-pasteabality ([1d45813](https://github.com/m3ter-com/m3ter-sdk-java/commit/1d458135252b5a947f7ea4357fe7a0b54c276bb1))
+
 ## 0.4.0 (2025-08-01)
 
 Full Changelog: [v0.3.0-alpha...v0.4.0](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.3.0-alpha...v0.4.0)
