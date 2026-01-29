@@ -19,6 +19,7 @@ import java.util.Objects
 import java.util.Optional
 
 class CounterAdjustmentResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accountId: JsonField<String>,
@@ -103,7 +104,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The date the CounterAdjustment was created for the Account _(in ISO-8601 date format)_.
+     * The date the CounterAdjustment was created for the Account *(in ISO-8601 date format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -111,7 +112,7 @@ private constructor(
     fun date(): Optional<LocalDate> = date.getOptional("date")
 
     /**
-     * The DateTime when this item was created _(in ISO-8601 format)_.
+     * The DateTime when this item was created *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -119,7 +120,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when this item was last modified _(in ISO-8601 format)_.
+     * The DateTime when this item was last modified *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -135,7 +136,7 @@ private constructor(
     fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
-     * Purchase Order Number for the Counter Adjustment. _(Optional)_
+     * Purchase Order Number for the Counter Adjustment. *(Optional)*
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -353,7 +354,7 @@ private constructor(
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
         /**
-         * The date the CounterAdjustment was created for the Account _(in ISO-8601 date format)_.
+         * The date the CounterAdjustment was created for the Account *(in ISO-8601 date format)*.
          */
         fun date(date: LocalDate) = date(JsonField.of(date))
 
@@ -365,7 +366,7 @@ private constructor(
          */
         fun date(date: JsonField<LocalDate>) = apply { this.date = date }
 
-        /** The DateTime when this item was created _(in ISO-8601 format)_. */
+        /** The DateTime when this item was created *(in ISO-8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -377,7 +378,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+        /** The DateTime when this item was last modified *(in ISO-8601 format)*. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -406,7 +407,7 @@ private constructor(
             this.lastModifiedBy = lastModifiedBy
         }
 
-        /** Purchase Order Number for the Counter Adjustment. _(Optional)_ */
+        /** Purchase Order Number for the Counter Adjustment. *(Optional)* */
         fun purchaseOrderNumber(purchaseOrderNumber: String) =
             purchaseOrderNumber(JsonField.of(purchaseOrderNumber))
 
@@ -549,12 +550,37 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterAdjustmentResponse && id == other.id && accountId == other.accountId && counterId == other.counterId && createdBy == other.createdBy && date == other.date && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && purchaseOrderNumber == other.purchaseOrderNumber && value == other.value && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CounterAdjustmentResponse &&
+            id == other.id &&
+            accountId == other.accountId &&
+            counterId == other.counterId &&
+            createdBy == other.createdBy &&
+            date == other.date &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            purchaseOrderNumber == other.purchaseOrderNumber &&
+            value == other.value &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountId, counterId, createdBy, date, dtCreated, dtLastModified, lastModifiedBy, purchaseOrderNumber, value, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountId,
+            counterId,
+            createdBy,
+            date,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            purchaseOrderNumber,
+            value,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

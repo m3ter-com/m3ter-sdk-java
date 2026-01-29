@@ -18,14 +18,14 @@ internal class StatementStatementDefinitionListPageResponseTest {
                 .addData(
                     StatementDefinitionResponse.builder()
                         .id("id")
-                        .aggregationFrequency(
-                            StatementDefinitionResponse.AggregationFrequency.ORIGINAL
-                        )
+                        .aggregationFrequency(StatementDefinitionResponse.AggregationFrequency.DAY)
                         .createdBy("createdBy")
                         .addDimension(
                             StatementDefinitionResponse.Dimension.builder()
-                                .addDimensionAttribute("string")
-                                .dimensionName("dimensionName")
+                                .addFilter("string")
+                                .name("x")
+                                .addAttribute("string")
+                                .meterId("meterId")
                                 .build()
                         )
                         .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -51,12 +51,14 @@ internal class StatementStatementDefinitionListPageResponseTest {
             .containsExactly(
                 StatementDefinitionResponse.builder()
                     .id("id")
-                    .aggregationFrequency(StatementDefinitionResponse.AggregationFrequency.ORIGINAL)
+                    .aggregationFrequency(StatementDefinitionResponse.AggregationFrequency.DAY)
                     .createdBy("createdBy")
                     .addDimension(
                         StatementDefinitionResponse.Dimension.builder()
-                            .addDimensionAttribute("string")
-                            .dimensionName("dimensionName")
+                            .addFilter("string")
+                            .name("x")
+                            .addAttribute("string")
+                            .meterId("meterId")
                             .build()
                     )
                     .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -86,14 +88,14 @@ internal class StatementStatementDefinitionListPageResponseTest {
                 .addData(
                     StatementDefinitionResponse.builder()
                         .id("id")
-                        .aggregationFrequency(
-                            StatementDefinitionResponse.AggregationFrequency.ORIGINAL
-                        )
+                        .aggregationFrequency(StatementDefinitionResponse.AggregationFrequency.DAY)
                         .createdBy("createdBy")
                         .addDimension(
                             StatementDefinitionResponse.Dimension.builder()
-                                .addDimensionAttribute("string")
-                                .dimensionName("dimensionName")
+                                .addFilter("string")
+                                .name("x")
+                                .addAttribute("string")
+                                .meterId("meterId")
                                 .build()
                         )
                         .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

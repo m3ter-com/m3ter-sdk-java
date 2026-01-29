@@ -22,6 +22,7 @@ import java.util.Optional
  * and then converted to USD using the defined rate.
  */
 class CurrencyConversion
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val from: JsonField<String>,
     private val to: JsonField<String>,
@@ -235,12 +236,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CurrencyConversion && from == other.from && to == other.to && multiplier == other.multiplier && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CurrencyConversion &&
+            from == other.from &&
+            to == other.to &&
+            multiplier == other.multiplier &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(from, to, multiplier, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

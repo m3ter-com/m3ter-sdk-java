@@ -11,9 +11,9 @@ import kotlin.jvm.optionals.getOrNull
 
 /**
  * Lists the File Upload jobs. Part of the File Upload service for measurements ingest:
- * - You can use the `dateCreatedStart` and `dateCreatedEnd` optional Query parameters to define a
+ * * You can use the `dateCreatedStart` and `dateCreatedEnd` optional Query parameters to define a
  *   date range to filter the File Uploads jobs returned for this call.
- * - If `dateCreatedStart` and `dateCreatedEnd` Query parameters are not used, then all File Upload
+ * * If `dateCreatedStart` and `dateCreatedEnd` Query parameters are not used, then all File Upload
  *   jobs are returned.
  */
 class UsageFileUploadJobListParams
@@ -289,10 +289,28 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UsageFileUploadJobListParams && orgId == other.orgId && dateCreatedEnd == other.dateCreatedEnd && dateCreatedStart == other.dateCreatedStart && fileKey == other.fileKey && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is UsageFileUploadJobListParams &&
+            orgId == other.orgId &&
+            dateCreatedEnd == other.dateCreatedEnd &&
+            dateCreatedStart == other.dateCreatedStart &&
+            fileKey == other.fileKey &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, dateCreatedEnd, dateCreatedStart, fileKey, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            dateCreatedEnd,
+            dateCreatedStart,
+            fileKey,
+            nextToken,
+            pageSize,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "UsageFileUploadJobListParams{orgId=$orgId, dateCreatedEnd=$dateCreatedEnd, dateCreatedStart=$dateCreatedStart, fileKey=$fileKey, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -38,7 +38,7 @@ private constructor(
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
-     * The global lock date when all Bills will be locked _(in ISO 8601 format)_.
+     * The global lock date when all Bills will be locked *(in ISO 8601 format)*.
      *
      * For example: `"2024-03-01"`.
      *
@@ -49,8 +49,8 @@ private constructor(
 
     /**
      * The version number:
-     * - Default value when newly created is one.
-     * - On Update, version is required and must match the existing version because a check is
+     * * Default value when newly created is one.
+     * * On Update, version is required and must match the existing version because a check is
      *   performed to ensure sequential versioning is preserved. Version is incremented by 1 and
      *   listed in the response
      *
@@ -125,7 +125,7 @@ private constructor(
         fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /**
-         * The global lock date when all Bills will be locked _(in ISO 8601 format)_.
+         * The global lock date when all Bills will be locked *(in ISO 8601 format)*.
          *
          * For example: `"2024-03-01"`.
          */
@@ -144,8 +144,8 @@ private constructor(
 
         /**
          * The version number:
-         * - Default value when newly created is one.
-         * - On Update, version is required and must match the existing version because a check is
+         * * Default value when newly created is one.
+         * * On Update, version is required and must match the existing version because a check is
          *   performed to ensure sequential versioning is preserved. Version is incremented by 1 and
          *   listed in the response
          */
@@ -303,6 +303,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val billLockDate: JsonField<LocalDate>,
         private val version: JsonField<Long>,
@@ -318,7 +319,7 @@ private constructor(
         ) : this(billLockDate, version, mutableMapOf())
 
         /**
-         * The global lock date when all Bills will be locked _(in ISO 8601 format)_.
+         * The global lock date when all Bills will be locked *(in ISO 8601 format)*.
          *
          * For example: `"2024-03-01"`.
          *
@@ -329,8 +330,8 @@ private constructor(
 
         /**
          * The version number:
-         * - Default value when newly created is one.
-         * - On Update, version is required and must match the existing version because a check is
+         * * Default value when newly created is one.
+         * * On Update, version is required and must match the existing version because a check is
          *   performed to ensure sequential versioning is preserved. Version is incremented by 1 and
          *   listed in the response
          *
@@ -389,7 +390,7 @@ private constructor(
             }
 
             /**
-             * The global lock date when all Bills will be locked _(in ISO 8601 format)_.
+             * The global lock date when all Bills will be locked *(in ISO 8601 format)*.
              *
              * For example: `"2024-03-01"`.
              */
@@ -408,8 +409,8 @@ private constructor(
 
             /**
              * The version number:
-             * - Default value when newly created is one.
-             * - On Update, version is required and must match the existing version because a check
+             * * Default value when newly created is one.
+             * * On Update, version is required and must match the existing version because a check
              *   is performed to ensure sequential versioning is preserved. Version is incremented
              *   by 1 and listed in the response
              */
@@ -487,12 +488,15 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && billLockDate == other.billLockDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                billLockDate == other.billLockDate &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(billLockDate, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(billLockDate, version, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -505,10 +509,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillConfigUpdateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BillConfigUpdateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "BillConfigUpdateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

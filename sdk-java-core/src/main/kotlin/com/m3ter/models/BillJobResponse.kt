@@ -23,6 +23,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class BillJobResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accountIds: JsonField<List<String>>,
@@ -153,7 +154,7 @@ private constructor(
     fun accountIds(): Optional<List<String>> = accountIds.getOptional("accountIds")
 
     /**
-     * The specific billing date _(in ISO 8601 format)_, determining when the Bill was generated.
+     * The specific billing date *(in ISO 8601 format)*, determining when the Bill was generated.
      *
      * For example: `"2023-01-24"`.
      *
@@ -185,14 +186,14 @@ private constructor(
 
     /**
      * Defines how often Bills are generated.
-     * - **Daily**. Starting at midnight each day, covering a twenty-four hour period following.
-     * - **Weekly**. Starting at midnight on a Monday morning covering the seven-day period
+     * * **Daily**. Starting at midnight each day, covering a twenty-four hour period following.
+     * * **Weekly**. Starting at midnight on a Monday morning covering the seven-day period
      *   following.
-     * - **Monthly**. Starting at midnight on the morning of the first day of each month covering
+     * * **Monthly**. Starting at midnight on the morning of the first day of each month covering
      *   the entire calendar month following.
-     * - **Annually**. Starting at midnight on the morning of the first day of each year covering
+     * * **Annually**. Starting at midnight on the morning of the first day of each year covering
      *   the entire calendar year following.
-     * - **Ad_Hoc**. Use this setting when a custom billing schedule is used for billing an Account,
+     * * **Ad_Hoc**. Use this setting when a custom billing schedule is used for billing an Account,
      *   such as for billing of Prepayment/Commitment fees using a custom billing schedule.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -221,7 +222,7 @@ private constructor(
         currencyConversions.getOptional("currencyConversions")
 
     /**
-     * The starting date _(epoch)_ for Daily billing frequency _(in ISO 8601 format)_, determining
+     * The starting date *(epoch)* for Daily billing frequency *(in ISO 8601 format)*, determining
      * the first Bill date for daily Bills.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -230,7 +231,7 @@ private constructor(
     fun dayEpoch(): Optional<LocalDate> = dayEpoch.getOptional("dayEpoch")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the BillJob was first created.
+     * The date and time *(in ISO 8601 format)* when the BillJob was first created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -238,7 +239,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the BillJob was last modified.
+     * The date and time *(in ISO 8601 format)* when the BillJob was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -246,7 +247,7 @@ private constructor(
     fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
-     * The due date _(in ISO 8601 format)_ for payment of the Bill.
+     * The due date *(in ISO 8601 format)* for payment of the Bill.
      *
      * For example: `"2023-02-24"`.
      *
@@ -258,13 +259,13 @@ private constructor(
     /**
      * For accounting purposes, the date set at Organization level to use for external invoicing
      * with respect to billing periods - two options:
-     * - `FIRST_DAY_OF_NEXT_PERIOD` _(Default)_. Used when you want to recognize usage revenue in
+     * * `FIRST_DAY_OF_NEXT_PERIOD` *(Default)*. Used when you want to recognize usage revenue in
      *   the following period.
-     * - `LAST_DAY_OF_ARREARS`. Used when you want to recognize usage revenue in the same period
+     * * `LAST_DAY_OF_ARREARS`. Used when you want to recognize usage revenue in the same period
      *   that it's consumed, instead of in the following period.
      *
      * For example, if the retrieved Bill was on a monthly billing frequency and the billing period
-     * for the Bill is September 2023 and the _External invoice date_ is set at
+     * for the Bill is September 2023 and the *External invoice date* is set at
      * `FIRST_DAY_OF_NEXT_PERIOD`, then the `externalInvoiceDate` will be `"2023-10-01"`.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -274,7 +275,7 @@ private constructor(
         externalInvoiceDate.getOptional("externalInvoiceDate")
 
     /**
-     * Specifies the date _(in ISO 8601 format)_ of the last day in the billing period, defining the
+     * Specifies the date *(in ISO 8601 format)* of the last day in the billing period, defining the
      * time range for the associated Bills.
      *
      * For example: `"2023-03-24"`.
@@ -294,7 +295,7 @@ private constructor(
     fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
 
     /**
-     * The starting date _(epoch)_ for Monthly billing frequency _(in ISO 8601 format)_, determining
+     * The starting date *(epoch)* for Monthly billing frequency *(in ISO 8601 format)*, determining
      * the first Bill date for monthly Bills.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -345,8 +346,8 @@ private constructor(
 
     /**
      * Specifies the type of BillJob.
-     * - **CREATE** Returned for a _Create BillJob_ call.
-     * - **RECALCULATE** Returned for a successful _Create Recalculation BillJob_ call.
+     * * **CREATE** Returned for a *Create BillJob* call.
+     * * **RECALCULATE** Returned for a successful *Create Recalculation BillJob* call.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -365,7 +366,7 @@ private constructor(
     fun version(): Optional<Long> = version.getOptional("version")
 
     /**
-     * The starting date _(epoch)_ for Weekly billing frequency _(in ISO 8601 format)_, determining
+     * The starting date *(epoch)* for Weekly billing frequency *(in ISO 8601 format)*, determining
      * the first Bill date for weekly Bills.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -374,7 +375,7 @@ private constructor(
     fun weekEpoch(): Optional<LocalDate> = weekEpoch.getOptional("weekEpoch")
 
     /**
-     * The starting date _(epoch)_ for Yearly billing frequency _(in ISO 8601 format)_, determining
+     * The starting date *(epoch)* for Yearly billing frequency *(in ISO 8601 format)*, determining
      * the first Bill date for yearly Bills.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -705,7 +706,7 @@ private constructor(
         }
 
         /**
-         * The specific billing date _(in ISO 8601 format)_, determining when the Bill was
+         * The specific billing date *(in ISO 8601 format)*, determining when the Bill was
          * generated.
          *
          * For example: `"2023-01-24"`.
@@ -772,14 +773,14 @@ private constructor(
 
         /**
          * Defines how often Bills are generated.
-         * - **Daily**. Starting at midnight each day, covering a twenty-four hour period following.
-         * - **Weekly**. Starting at midnight on a Monday morning covering the seven-day period
+         * * **Daily**. Starting at midnight each day, covering a twenty-four hour period following.
+         * * **Weekly**. Starting at midnight on a Monday morning covering the seven-day period
          *   following.
-         * - **Monthly**. Starting at midnight on the morning of the first day of each month
+         * * **Monthly**. Starting at midnight on the morning of the first day of each month
          *   covering the entire calendar month following.
-         * - **Annually**. Starting at midnight on the morning of the first day of each year
+         * * **Annually**. Starting at midnight on the morning of the first day of each year
          *   covering the entire calendar year following.
-         * - **Ad_Hoc**. Use this setting when a custom billing schedule is used for billing an
+         * * **Ad_Hoc**. Use this setting when a custom billing schedule is used for billing an
          *   Account, such as for billing of Prepayment/Commitment fees using a custom billing
          *   schedule.
          */
@@ -841,7 +842,7 @@ private constructor(
         }
 
         /**
-         * The starting date _(epoch)_ for Daily billing frequency _(in ISO 8601 format)_,
+         * The starting date *(epoch)* for Daily billing frequency *(in ISO 8601 format)*,
          * determining the first Bill date for daily Bills.
          */
         fun dayEpoch(dayEpoch: LocalDate) = dayEpoch(JsonField.of(dayEpoch))
@@ -855,7 +856,7 @@ private constructor(
          */
         fun dayEpoch(dayEpoch: JsonField<LocalDate>) = apply { this.dayEpoch = dayEpoch }
 
-        /** The date and time _(in ISO 8601 format)_ when the BillJob was first created. */
+        /** The date and time *(in ISO 8601 format)* when the BillJob was first created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -867,7 +868,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The date and time _(in ISO 8601 format)_ when the BillJob was last modified. */
+        /** The date and time *(in ISO 8601 format)* when the BillJob was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -883,7 +884,7 @@ private constructor(
         }
 
         /**
-         * The due date _(in ISO 8601 format)_ for payment of the Bill.
+         * The due date *(in ISO 8601 format)* for payment of the Bill.
          *
          * For example: `"2023-02-24"`.
          */
@@ -901,13 +902,13 @@ private constructor(
         /**
          * For accounting purposes, the date set at Organization level to use for external invoicing
          * with respect to billing periods - two options:
-         * - `FIRST_DAY_OF_NEXT_PERIOD` _(Default)_. Used when you want to recognize usage revenue
+         * * `FIRST_DAY_OF_NEXT_PERIOD` *(Default)*. Used when you want to recognize usage revenue
          *   in the following period.
-         * - `LAST_DAY_OF_ARREARS`. Used when you want to recognize usage revenue in the same period
+         * * `LAST_DAY_OF_ARREARS`. Used when you want to recognize usage revenue in the same period
          *   that it's consumed, instead of in the following period.
          *
          * For example, if the retrieved Bill was on a monthly billing frequency and the billing
-         * period for the Bill is September 2023 and the _External invoice date_ is set at
+         * period for the Bill is September 2023 and the *External invoice date* is set at
          * `FIRST_DAY_OF_NEXT_PERIOD`, then the `externalInvoiceDate` will be `"2023-10-01"`.
          */
         fun externalInvoiceDate(externalInvoiceDate: LocalDate) =
@@ -925,7 +926,7 @@ private constructor(
         }
 
         /**
-         * Specifies the date _(in ISO 8601 format)_ of the last day in the billing period, defining
+         * Specifies the date *(in ISO 8601 format)* of the last day in the billing period, defining
          * the time range for the associated Bills.
          *
          * For example: `"2023-03-24"`.
@@ -959,7 +960,7 @@ private constructor(
         }
 
         /**
-         * The starting date _(epoch)_ for Monthly billing frequency _(in ISO 8601 format)_,
+         * The starting date *(epoch)* for Monthly billing frequency *(in ISO 8601 format)*,
          * determining the first Bill date for monthly Bills.
          */
         fun monthEpoch(monthEpoch: LocalDate) = monthEpoch(JsonField.of(monthEpoch))
@@ -1036,8 +1037,8 @@ private constructor(
 
         /**
          * Specifies the type of BillJob.
-         * - **CREATE** Returned for a _Create BillJob_ call.
-         * - **RECALCULATE** Returned for a successful _Create Recalculation BillJob_ call.
+         * * **CREATE** Returned for a *Create BillJob* call.
+         * * **RECALCULATE** Returned for a successful *Create Recalculation BillJob* call.
          */
         fun type(type: Type) = type(JsonField.of(type))
 
@@ -1066,7 +1067,7 @@ private constructor(
         fun version(version: JsonField<Long>) = apply { this.version = version }
 
         /**
-         * The starting date _(epoch)_ for Weekly billing frequency _(in ISO 8601 format)_,
+         * The starting date *(epoch)* for Weekly billing frequency *(in ISO 8601 format)*,
          * determining the first Bill date for weekly Bills.
          */
         fun weekEpoch(weekEpoch: LocalDate) = weekEpoch(JsonField.of(weekEpoch))
@@ -1081,7 +1082,7 @@ private constructor(
         fun weekEpoch(weekEpoch: JsonField<LocalDate>) = apply { this.weekEpoch = weekEpoch }
 
         /**
-         * The starting date _(epoch)_ for Yearly billing frequency _(in ISO 8601 format)_,
+         * The starting date *(epoch)* for Yearly billing frequency *(in ISO 8601 format)*,
          * determining the first Bill date for yearly Bills.
          */
         fun yearEpoch(yearEpoch: LocalDate) = yearEpoch(JsonField.of(yearEpoch))
@@ -1235,14 +1236,14 @@ private constructor(
 
     /**
      * Defines how often Bills are generated.
-     * - **Daily**. Starting at midnight each day, covering a twenty-four hour period following.
-     * - **Weekly**. Starting at midnight on a Monday morning covering the seven-day period
+     * * **Daily**. Starting at midnight each day, covering a twenty-four hour period following.
+     * * **Weekly**. Starting at midnight on a Monday morning covering the seven-day period
      *   following.
-     * - **Monthly**. Starting at midnight on the morning of the first day of each month covering
+     * * **Monthly**. Starting at midnight on the morning of the first day of each month covering
      *   the entire calendar month following.
-     * - **Annually**. Starting at midnight on the morning of the first day of each year covering
+     * * **Annually**. Starting at midnight on the morning of the first day of each year covering
      *   the entire calendar year following.
-     * - **Ad_Hoc**. Use this setting when a custom billing schedule is used for billing an Account,
+     * * **Ad_Hoc**. Use this setting when a custom billing schedule is used for billing an Account,
      *   such as for billing of Prepayment/Commitment fees using a custom billing schedule.
      */
     class BillingFrequency @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -1383,7 +1384,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BillingFrequency && value == other.value /* spotless:on */
+            return other is BillingFrequency && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1526,7 +1527,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1536,8 +1537,8 @@ private constructor(
 
     /**
      * Specifies the type of BillJob.
-     * - **CREATE** Returned for a _Create BillJob_ call.
-     * - **RECALCULATE** Returned for a successful _Create Recalculation BillJob_ call.
+     * * **CREATE** Returned for a *Create BillJob* call.
+     * * **RECALCULATE** Returned for a successful *Create Recalculation BillJob* call.
      */
     class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -1655,7 +1656,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1668,12 +1669,65 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillJobResponse && id == other.id && accountIds == other.accountIds && billDate == other.billDate && billFrequencyInterval == other.billFrequencyInterval && billIds == other.billIds && billingFrequency == other.billingFrequency && createdBy == other.createdBy && currencyConversions == other.currencyConversions && dayEpoch == other.dayEpoch && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && dueDate == other.dueDate && externalInvoiceDate == other.externalInvoiceDate && lastDateInBillingPeriod == other.lastDateInBillingPeriod && lastModifiedBy == other.lastModifiedBy && monthEpoch == other.monthEpoch && pending == other.pending && status == other.status && targetCurrency == other.targetCurrency && timezone == other.timezone && total == other.total && type == other.type && version == other.version && weekEpoch == other.weekEpoch && yearEpoch == other.yearEpoch && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is BillJobResponse &&
+            id == other.id &&
+            accountIds == other.accountIds &&
+            billDate == other.billDate &&
+            billFrequencyInterval == other.billFrequencyInterval &&
+            billIds == other.billIds &&
+            billingFrequency == other.billingFrequency &&
+            createdBy == other.createdBy &&
+            currencyConversions == other.currencyConversions &&
+            dayEpoch == other.dayEpoch &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            dueDate == other.dueDate &&
+            externalInvoiceDate == other.externalInvoiceDate &&
+            lastDateInBillingPeriod == other.lastDateInBillingPeriod &&
+            lastModifiedBy == other.lastModifiedBy &&
+            monthEpoch == other.monthEpoch &&
+            pending == other.pending &&
+            status == other.status &&
+            targetCurrency == other.targetCurrency &&
+            timezone == other.timezone &&
+            total == other.total &&
+            type == other.type &&
+            version == other.version &&
+            weekEpoch == other.weekEpoch &&
+            yearEpoch == other.yearEpoch &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountIds, billDate, billFrequencyInterval, billIds, billingFrequency, createdBy, currencyConversions, dayEpoch, dtCreated, dtLastModified, dueDate, externalInvoiceDate, lastDateInBillingPeriod, lastModifiedBy, monthEpoch, pending, status, targetCurrency, timezone, total, type, version, weekEpoch, yearEpoch, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountIds,
+            billDate,
+            billFrequencyInterval,
+            billIds,
+            billingFrequency,
+            createdBy,
+            currencyConversions,
+            dayEpoch,
+            dtCreated,
+            dtLastModified,
+            dueDate,
+            externalInvoiceDate,
+            lastDateInBillingPeriod,
+            lastModifiedBy,
+            monthEpoch,
+            pending,
+            status,
+            targetCurrency,
+            timezone,
+            total,
+            type,
+            version,
+            weekEpoch,
+            yearEpoch,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

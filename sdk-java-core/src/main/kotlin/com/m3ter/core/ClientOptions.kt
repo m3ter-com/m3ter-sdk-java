@@ -13,6 +13,7 @@ import java.time.Clock
 import java.time.Duration
 import java.util.Optional
 import java.util.concurrent.Executor
+import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.ThreadFactory
 import java.util.concurrent.atomic.AtomicLong
@@ -26,6 +27,8 @@ private constructor(
      * The HTTP client to use in the SDK.
      *
      * Use the one published in `sdk-java-client-okhttp` or implement your own.
+     *
+     * This class takes ownership of the client and closes it when closed.
      */
     @get:JvmName("httpClient") val httpClient: HttpClient,
     /**
@@ -47,8 +50,20 @@ private constructor(
      * The executor to use for running [AsyncStreamResponse.Handler] callbacks.
      *
      * Defaults to a dedicated cached thread pool.
+     *
+     * This class takes ownership of the executor and shuts it down, if possible, when closed.
      */
     @get:JvmName("streamHandlerExecutor") val streamHandlerExecutor: Executor,
+    /**
+     * The interface to use for delaying execution, like during retries.
+     *
+     * This is primarily useful for using fake delays in tests.
+     *
+     * Defaults to real execution delays.
+     *
+     * This class takes ownership of the sleeper and closes it when closed.
+     */
+    @get:JvmName("sleeper") val sleeper: Sleeper,
     /**
      * The clock to use for operations that require timing, like retries.
      *
@@ -149,6 +164,7 @@ private constructor(
         private var checkJacksonVersionCompatibility: Boolean = true
         private var jsonMapper: JsonMapper = jsonMapper()
         private var streamHandlerExecutor: Executor? = null
+        private var sleeper: Sleeper? = null
         private var clock: Clock = Clock.systemUTC()
         private var baseUrl: String? = null
         private var headers: Headers.Builder = Headers.builder()
@@ -167,6 +183,7 @@ private constructor(
             checkJacksonVersionCompatibility = clientOptions.checkJacksonVersionCompatibility
             jsonMapper = clientOptions.jsonMapper
             streamHandlerExecutor = clientOptions.streamHandlerExecutor
+            sleeper = clientOptions.sleeper
             clock = clientOptions.clock
             baseUrl = clientOptions.baseUrl
             headers = clientOptions.headers.toBuilder()
@@ -184,6 +201,8 @@ private constructor(
          * The HTTP client to use in the SDK.
          *
          * Use the one published in `sdk-java-client-okhttp` or implement your own.
+         *
+         * This class takes ownership of the client and closes it when closed.
          */
         fun httpClient(httpClient: HttpClient) = apply {
             this.httpClient = PhantomReachableClosingHttpClient(httpClient)
@@ -212,10 +231,26 @@ private constructor(
          * The executor to use for running [AsyncStreamResponse.Handler] callbacks.
          *
          * Defaults to a dedicated cached thread pool.
+         *
+         * This class takes ownership of the executor and shuts it down, if possible, when closed.
          */
         fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
-            this.streamHandlerExecutor = streamHandlerExecutor
+            this.streamHandlerExecutor =
+                if (streamHandlerExecutor is ExecutorService)
+                    PhantomReachableExecutorService(streamHandlerExecutor)
+                else streamHandlerExecutor
         }
+
+        /**
+         * The interface to use for delaying execution, like during retries.
+         *
+         * This is primarily useful for using fake delays in tests.
+         *
+         * Defaults to real execution delays.
+         *
+         * This class takes ownership of the sleeper and closes it when closed.
+         */
+        fun sleeper(sleeper: Sleeper) = apply { this.sleeper = PhantomReachableSleeper(sleeper) }
 
         /**
          * The clock to use for operations that require timing, like retries.
@@ -378,13 +413,13 @@ private constructor(
          *
          * See this table for the available options:
          *
-         * |Setter     |System property  |Environment variable|Required|Default value            |
-         * |-----------|-----------------|--------------------|--------|-------------------------|
-         * |`apiKey`   |`m3ter.apiKey`   |`M3TER_API_KEY`     |true    |-                        |
-         * |`apiSecret`|`m3ter.apiSecret`|`M3TER_API_SECRET`  |true    |-                        |
-         * |`token`    |`m3ter.apiToken` |`M3TER_API_TOKEN`   |false   |-                        |
-         * |`orgId`    |`m3ter.orgId`    |`M3TER_ORG_ID`      |true    |-                        |
-         * |`baseUrl`  |`m3ter.baseUrl`  |`M3TER_BASE_URL`    |true    |`"https://api.m3ter.com"`|
+         * |Setter     |System property       |Environment variable|Required|Default value            |
+         * |-----------|----------------------|--------------------|--------|-------------------------|
+         * |`apiKey`   |`m3ter.m3TerApiKey`   |`M3TER_API_KEY`     |true    |-                        |
+         * |`apiSecret`|`m3ter.m3TerApiSecret`|`M3TER_API_SECRET`  |true    |-                        |
+         * |`token`    |`m3ter.m3TerApiToken` |`M3TER_API_TOKEN`   |false   |-                        |
+         * |`orgId`    |`m3ter.m3TerOrgId`    |`M3TER_ORG_ID`      |true    |-                        |
+         * |`baseUrl`  |`m3ter.baseUrl`       |`M3TER_BASE_URL`    |true    |`"https://api.m3ter.com"`|
          *
          * System properties take precedence over environment variables.
          */
@@ -392,16 +427,18 @@ private constructor(
             (System.getProperty("m3ter.baseUrl") ?: System.getenv("M3TER_BASE_URL"))?.let {
                 baseUrl(it)
             }
-            (System.getProperty("m3ter.apiKey") ?: System.getenv("M3TER_API_KEY"))?.let {
+            (System.getProperty("m3ter.m3TerApiKey") ?: System.getenv("M3TER_API_KEY"))?.let {
                 apiKey(it)
             }
-            (System.getProperty("m3ter.apiSecret") ?: System.getenv("M3TER_API_SECRET"))?.let {
+            (System.getProperty("m3ter.m3TerApiSecret") ?: System.getenv("M3TER_API_SECRET"))?.let {
                 apiSecret(it)
             }
-            (System.getProperty("m3ter.apiToken") ?: System.getenv("M3TER_API_TOKEN"))?.let {
+            (System.getProperty("m3ter.m3TerApiToken") ?: System.getenv("M3TER_API_TOKEN"))?.let {
                 token(it)
             }
-            (System.getProperty("m3ter.orgId") ?: System.getenv("M3TER_ORG_ID"))?.let { orgId(it) }
+            (System.getProperty("m3ter.m3TerOrgId") ?: System.getenv("M3TER_ORG_ID"))?.let {
+                orgId(it)
+            }
         }
 
         /**
@@ -421,6 +458,25 @@ private constructor(
          */
         fun build(): ClientOptions {
             val httpClient = checkRequired("httpClient", httpClient)
+            val streamHandlerExecutor =
+                streamHandlerExecutor
+                    ?: PhantomReachableExecutorService(
+                        Executors.newCachedThreadPool(
+                            object : ThreadFactory {
+
+                                private val threadFactory: ThreadFactory =
+                                    Executors.defaultThreadFactory()
+                                private val count = AtomicLong(0)
+
+                                override fun newThread(runnable: Runnable): Thread =
+                                    threadFactory.newThread(runnable).also {
+                                        it.name =
+                                            "m3ter-stream-handler-thread-${count.getAndIncrement()}"
+                                    }
+                            }
+                        )
+                    )
+            val sleeper = sleeper ?: PhantomReachableSleeper(DefaultSleeper())
             val apiKey = checkRequired("apiKey", apiKey)
             val apiSecret = checkRequired("apiSecret", apiSecret)
             val orgId = checkRequired("orgId", orgId)
@@ -434,6 +490,7 @@ private constructor(
             headers.put("X-Stainless-Package-Version", getPackageVersion())
             headers.put("X-Stainless-Runtime", "JRE")
             headers.put("X-Stainless-Runtime-Version", getJavaVersion())
+            headers.put("X-Stainless-Kotlin-Version", KotlinVersion.CURRENT.toString())
             token?.let {
                 if (!it.isEmpty()) {
                     headers.put("Authorization", "Bearer $it")
@@ -446,26 +503,14 @@ private constructor(
                 httpClient,
                 RetryingHttpClient.builder()
                     .httpClient(httpClient)
+                    .sleeper(sleeper)
                     .clock(clock)
                     .maxRetries(maxRetries)
                     .build(),
                 checkJacksonVersionCompatibility,
                 jsonMapper,
-                streamHandlerExecutor
-                    ?: Executors.newCachedThreadPool(
-                        object : ThreadFactory {
-
-                            private val threadFactory: ThreadFactory =
-                                Executors.defaultThreadFactory()
-                            private val count = AtomicLong(0)
-
-                            override fun newThread(runnable: Runnable): Thread =
-                                threadFactory.newThread(runnable).also {
-                                    it.name =
-                                        "m3ter-stream-handler-thread-${count.getAndIncrement()}"
-                                }
-                        }
-                    ),
+                streamHandlerExecutor,
+                sleeper,
                 clock,
                 baseUrl,
                 headers.build(),
@@ -479,5 +524,21 @@ private constructor(
                 orgId,
             )
         }
+    }
+
+    /**
+     * Closes these client options, relinquishing any underlying resources.
+     *
+     * This is purposefully not inherited from [AutoCloseable] because the client options are
+     * long-lived and usually should not be synchronously closed via try-with-resources.
+     *
+     * It's also usually not necessary to call this method at all. the default client automatically
+     * releases threads and connections if they remain idle, but if you are writing an application
+     * that needs to aggressively release unused resources, then you may call this method.
+     */
+    fun close() {
+        httpClient.close()
+        (streamHandlerExecutor as? ExecutorService)?.shutdown()
+        sleeper.close()
     }
 }

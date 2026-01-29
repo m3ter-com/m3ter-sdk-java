@@ -21,6 +21,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class CounterPricingResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accountingProductId: JsonField<String>,
@@ -128,6 +129,8 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
+     * Optional Product ID this Pricing should be attributed to for accounting purposes.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -163,8 +166,8 @@ private constructor(
      * are applied according to each separate band or at the highest band reached.
      *
      * The default value is **TRUE**.
-     * - When TRUE, at billing charge rates are applied according to each separate band.
-     * - When FALSE, at billing charge rates are applied according to highest band reached.
+     * * When TRUE, at billing charge rates are applied according to each separate band.
+     * * When FALSE, at billing charge rates are applied according to highest band reached.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -180,7 +183,7 @@ private constructor(
     fun description(): Optional<String> = description.getOptional("description")
 
     /**
-     * The DateTime when this item was created _(in ISO-8601 format)_.
+     * The DateTime when this item was created *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -188,7 +191,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when this item was last modified _(in ISO-8601 format)_.
+     * The DateTime when this item was last modified *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -196,7 +199,7 @@ private constructor(
     fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
-     * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan or
+     * The end date *(in ISO-8601 format)* for when the Pricing ceases to be active for the Plan or
      * Plan Template.
      *
      * If not specified, the Pricing remains active indefinitely.
@@ -238,9 +241,9 @@ private constructor(
 
     /**
      * The default value is **TRUE**.
-     * - When TRUE, counter adjustment credits are prorated and are billed according to the number
+     * * When TRUE, counter adjustment credits are prorated and are billed according to the number
      *   of days in billing period.
-     * - When FALSE, counter adjustment credits are not prorated and are billed for the entire
+     * * When FALSE, counter adjustment credits are not prorated and are billed for the entire
      *   billing period.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -251,9 +254,9 @@ private constructor(
 
     /**
      * The default value is **TRUE**.
-     * - When TRUE, counter adjustment debits are prorated and are billed according to the number of
+     * * When TRUE, counter adjustment debits are prorated and are billed according to the number of
      *   days in billing period.
-     * - When FALSE, counter adjustment debits are not prorated and are billed for the entire
+     * * When FALSE, counter adjustment debits are not prorated and are billed for the entire
      *   billing period.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -264,9 +267,9 @@ private constructor(
 
     /**
      * The default value is **TRUE**.
-     * - When TRUE, counter running total charges are prorated and are billed according to the
+     * * When TRUE, counter running total charges are prorated and are billed according to the
      *   number of days in billing period.
-     * - When FALSE, counter running total charges are not prorated and are billed for the entire
+     * * When FALSE, counter running total charges are not prorated and are billed for the entire
      *   billing period.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -277,8 +280,8 @@ private constructor(
 
     /**
      * The default value is **TRUE**.
-     * - When TRUE, running totals are billed at the start of each billing period.
-     * - When FALSE, running totals are billed at the end of each billing period.
+     * * When TRUE, running totals are billed at the start of each billing period.
+     * * When FALSE, running totals are billed at the end of each billing period.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -287,7 +290,7 @@ private constructor(
         runningTotalBillInAdvance.getOptional("runningTotalBillInAdvance")
 
     /**
-     * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the Plan
+     * The start date *(in ISO-8601 format)* for when the Pricing starts to be active for the Plan
      * of Plan Template.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -559,6 +562,7 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
+        /** Optional Product ID this Pricing should be attributed to for accounting purposes. */
         fun accountingProductId(accountingProductId: String) =
             accountingProductId(JsonField.of(accountingProductId))
 
@@ -613,8 +617,8 @@ private constructor(
          * Pricing are applied according to each separate band or at the highest band reached.
          *
          * The default value is **TRUE**.
-         * - When TRUE, at billing charge rates are applied according to each separate band.
-         * - When FALSE, at billing charge rates are applied according to highest band reached.
+         * * When TRUE, at billing charge rates are applied according to each separate band.
+         * * When FALSE, at billing charge rates are applied according to highest band reached.
          */
         fun cumulative(cumulative: Boolean) = cumulative(JsonField.of(cumulative))
 
@@ -639,7 +643,7 @@ private constructor(
          */
         fun description(description: JsonField<String>) = apply { this.description = description }
 
-        /** The DateTime when this item was created _(in ISO-8601 format)_. */
+        /** The DateTime when this item was created *(in ISO-8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -651,7 +655,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+        /** The DateTime when this item was last modified *(in ISO-8601 format)*. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -667,7 +671,7 @@ private constructor(
         }
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan
+         * The end date *(in ISO-8601 format)* for when the Pricing ceases to be active for the Plan
          * or Plan Template.
          *
          * If not specified, the Pricing remains active indefinitely.
@@ -749,9 +753,9 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * - When TRUE, counter adjustment credits are prorated and are billed according to the
+         * * When TRUE, counter adjustment credits are prorated and are billed according to the
          *   number of days in billing period.
-         * - When FALSE, counter adjustment credits are not prorated and are billed for the entire
+         * * When FALSE, counter adjustment credits are not prorated and are billed for the entire
          *   billing period.
          */
         fun proRateAdjustmentCredit(proRateAdjustmentCredit: Boolean) =
@@ -770,9 +774,9 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * - When TRUE, counter adjustment debits are prorated and are billed according to the
+         * * When TRUE, counter adjustment debits are prorated and are billed according to the
          *   number of days in billing period.
-         * - When FALSE, counter adjustment debits are not prorated and are billed for the entire
+         * * When FALSE, counter adjustment debits are not prorated and are billed for the entire
          *   billing period.
          */
         fun proRateAdjustmentDebit(proRateAdjustmentDebit: Boolean) =
@@ -791,9 +795,9 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * - When TRUE, counter running total charges are prorated and are billed according to the
+         * * When TRUE, counter running total charges are prorated and are billed according to the
          *   number of days in billing period.
-         * - When FALSE, counter running total charges are not prorated and are billed for the
+         * * When FALSE, counter running total charges are not prorated and are billed for the
          *   entire billing period.
          */
         fun proRateRunningTotal(proRateRunningTotal: Boolean) =
@@ -812,8 +816,8 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * - When TRUE, running totals are billed at the start of each billing period.
-         * - When FALSE, running totals are billed at the end of each billing period.
+         * * When TRUE, running totals are billed at the start of each billing period.
+         * * When FALSE, running totals are billed at the end of each billing period.
          */
         fun runningTotalBillInAdvance(runningTotalBillInAdvance: Boolean) =
             runningTotalBillInAdvance(JsonField.of(runningTotalBillInAdvance))
@@ -830,7 +834,7 @@ private constructor(
         }
 
         /**
-         * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the
+         * The start date *(in ISO-8601 format)* for when the Pricing starts to be active for the
          * Plan of Plan Template.
          */
         fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
@@ -988,12 +992,55 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterPricingResponse && id == other.id && accountingProductId == other.accountingProductId && code == other.code && counterId == other.counterId && createdBy == other.createdBy && cumulative == other.cumulative && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && lastModifiedBy == other.lastModifiedBy && planId == other.planId && planTemplateId == other.planTemplateId && pricingBands == other.pricingBands && proRateAdjustmentCredit == other.proRateAdjustmentCredit && proRateAdjustmentDebit == other.proRateAdjustmentDebit && proRateRunningTotal == other.proRateRunningTotal && runningTotalBillInAdvance == other.runningTotalBillInAdvance && startDate == other.startDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CounterPricingResponse &&
+            id == other.id &&
+            accountingProductId == other.accountingProductId &&
+            code == other.code &&
+            counterId == other.counterId &&
+            createdBy == other.createdBy &&
+            cumulative == other.cumulative &&
+            description == other.description &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            endDate == other.endDate &&
+            lastModifiedBy == other.lastModifiedBy &&
+            planId == other.planId &&
+            planTemplateId == other.planTemplateId &&
+            pricingBands == other.pricingBands &&
+            proRateAdjustmentCredit == other.proRateAdjustmentCredit &&
+            proRateAdjustmentDebit == other.proRateAdjustmentDebit &&
+            proRateRunningTotal == other.proRateRunningTotal &&
+            runningTotalBillInAdvance == other.runningTotalBillInAdvance &&
+            startDate == other.startDate &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountingProductId, code, counterId, createdBy, cumulative, description, dtCreated, dtLastModified, endDate, lastModifiedBy, planId, planTemplateId, pricingBands, proRateAdjustmentCredit, proRateAdjustmentDebit, proRateRunningTotal, runningTotalBillInAdvance, startDate, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountingProductId,
+            code,
+            counterId,
+            createdBy,
+            cumulative,
+            description,
+            dtCreated,
+            dtLastModified,
+            endDate,
+            lastModifiedBy,
+            planId,
+            planTemplateId,
+            pricingBands,
+            proRateAdjustmentCredit,
+            proRateAdjustmentDebit,
+            proRateRunningTotal,
+            runningTotalBillInAdvance,
+            startDate,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

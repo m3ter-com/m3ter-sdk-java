@@ -18,6 +18,7 @@ import java.util.Objects
 import java.util.Optional
 
 class NotificationConfigurationResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val code: JsonField<String>,
@@ -114,8 +115,8 @@ private constructor(
 
     /**
      * A Boolean flag indicating whether or not the Notification is active.
-     * - **TRUE** - active Notification.
-     * - **FALSE** - inactive Notification.
+     * * **TRUE** - active Notification.
+     * * **FALSE** - inactive Notification.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -127,9 +128,9 @@ private constructor(
      * conditions and omitting reference to any calculation. This means the Notification will be
      * triggered simply by the Event it is based on occurring and with no further conditions having
      * to be met.
-     * - **TRUE** - the Notification is always triggered and omits any reference to the calculation
+     * * **TRUE** - the Notification is always triggered and omits any reference to the calculation
      *   to check for other conditions being true before triggering the Notification.
-     * - **FALSE** - the Notification is only triggered when the Event it is based on occurs and any
+     * * **FALSE** - the Notification is only triggered when the Event it is based on occurs and any
      *   calculation is checked and all conditions defined by the calculation are met.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -160,7 +161,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The DateTime when this item was created _(in ISO-8601 format)_.
+     * The DateTime when this item was created *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -168,7 +169,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when this item was last modified _(in ISO-8601 format)_.
+     * The DateTime when this item was last modified *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -423,8 +424,8 @@ private constructor(
 
         /**
          * A Boolean flag indicating whether or not the Notification is active.
-         * - **TRUE** - active Notification.
-         * - **FALSE** - inactive Notification.
+         * * **TRUE** - active Notification.
+         * * **FALSE** - inactive Notification.
          */
         fun active(active: Boolean) = active(JsonField.of(active))
 
@@ -441,10 +442,10 @@ private constructor(
          * other conditions and omitting reference to any calculation. This means the Notification
          * will be triggered simply by the Event it is based on occurring and with no further
          * conditions having to be met.
-         * - **TRUE** - the Notification is always triggered and omits any reference to the
+         * * **TRUE** - the Notification is always triggered and omits any reference to the
          *   calculation to check for other conditions being true before triggering the
          *   Notification.
-         * - **FALSE** - the Notification is only triggered when the Event it is based on occurs and
+         * * **FALSE** - the Notification is only triggered when the Event it is based on occurs and
          *   any calculation is checked and all conditions defined by the calculation are met.
          */
         fun alwaysFireEvent(alwaysFireEvent: Boolean) =
@@ -493,7 +494,7 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The DateTime when this item was created _(in ISO-8601 format)_. */
+        /** The DateTime when this item was created *(in ISO-8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -505,7 +506,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+        /** The DateTime when this item was last modified *(in ISO-8601 format)*. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -679,12 +680,41 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is NotificationConfigurationResponse && id == other.id && code == other.code && description == other.description && name == other.name && active == other.active && alwaysFireEvent == other.alwaysFireEvent && calculation == other.calculation && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && eventName == other.eventName && lastModifiedBy == other.lastModifiedBy && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is NotificationConfigurationResponse &&
+            id == other.id &&
+            code == other.code &&
+            description == other.description &&
+            name == other.name &&
+            active == other.active &&
+            alwaysFireEvent == other.alwaysFireEvent &&
+            calculation == other.calculation &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            eventName == other.eventName &&
+            lastModifiedBy == other.lastModifiedBy &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, code, description, name, active, alwaysFireEvent, calculation, createdBy, dtCreated, dtLastModified, eventName, lastModifiedBy, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            code,
+            description,
+            name,
+            active,
+            alwaysFireEvent,
+            calculation,
+            createdBy,
+            dtCreated,
+            dtLastModified,
+            eventName,
+            lastModifiedBy,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

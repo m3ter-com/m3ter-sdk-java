@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.m3ter.core.Enum
 import com.m3ter.core.ExcludeMissing
 import com.m3ter.core.JsonField
 import com.m3ter.core.JsonMissing
@@ -16,22 +17,25 @@ import java.time.OffsetDateTime
 import java.util.Collections
 import java.util.Objects
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 
 class DebitLineItemResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val amount: JsonField<Double>,
+    private val createdBy: JsonField<String>,
+    private val debitReasonId: JsonField<String>,
     private val description: JsonField<String>,
+    private val dtCreated: JsonField<OffsetDateTime>,
+    private val dtLastModified: JsonField<OffsetDateTime>,
+    private val lastModifiedBy: JsonField<String>,
+    private val lineItemType: JsonField<LineItemType>,
     private val productId: JsonField<String>,
     private val referencedBillId: JsonField<String>,
     private val referencedLineItemId: JsonField<String>,
     private val servicePeriodEndDate: JsonField<OffsetDateTime>,
     private val servicePeriodStartDate: JsonField<OffsetDateTime>,
-    private val createdBy: JsonField<String>,
-    private val debitReasonId: JsonField<String>,
-    private val dtCreated: JsonField<OffsetDateTime>,
-    private val dtLastModified: JsonField<OffsetDateTime>,
-    private val lastModifiedBy: JsonField<String>,
     private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -40,9 +44,25 @@ private constructor(
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
         @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("debitReasonId")
+        @ExcludeMissing
+        debitReasonId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("description")
         @ExcludeMissing
         description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("dtCreated")
+        @ExcludeMissing
+        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("dtLastModified")
+        @ExcludeMissing
+        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("lastModifiedBy")
+        @ExcludeMissing
+        lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("lineItemType")
+        @ExcludeMissing
+        lineItemType: JsonField<LineItemType> = JsonMissing.of(),
         @JsonProperty("productId") @ExcludeMissing productId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("referencedBillId")
         @ExcludeMissing
@@ -56,34 +76,22 @@ private constructor(
         @JsonProperty("servicePeriodStartDate")
         @ExcludeMissing
         servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("debitReasonId")
-        @ExcludeMissing
-        debitReasonId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("dtCreated")
-        @ExcludeMissing
-        dtCreated: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("dtLastModified")
-        @ExcludeMissing
-        dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("lastModifiedBy")
-        @ExcludeMissing
-        lastModifiedBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
         amount,
+        createdBy,
+        debitReasonId,
         description,
+        dtCreated,
+        dtLastModified,
+        lastModifiedBy,
+        lineItemType,
         productId,
         referencedBillId,
         referencedLineItemId,
         servicePeriodEndDate,
         servicePeriodStartDate,
-        createdBy,
-        debitReasonId,
-        dtCreated,
-        dtLastModified,
-        lastModifiedBy,
         version,
         mutableMapOf(),
     )
@@ -97,65 +105,13 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
-     * The amount for the line item.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
-    fun amount(): Double = amount.getRequired("amount")
+    fun amount(): Optional<Double> = amount.getOptional("amount")
 
     /**
-     * The description of the line item.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun description(): String = description.getRequired("description")
-
-    /**
-     * The UUID of the Product.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun productId(): String = productId.getRequired("productId")
-
-    /**
-     * The UUID of the bill for the line item.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun referencedBillId(): String = referencedBillId.getRequired("referencedBillId")
-
-    /**
-     * The UUID of the line item.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun referencedLineItemId(): String = referencedLineItemId.getRequired("referencedLineItemId")
-
-    /**
-     * The service period end date in ISO-8601 format. _(exclusive of the ending date)_.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun servicePeriodEndDate(): OffsetDateTime =
-        servicePeriodEndDate.getRequired("servicePeriodEndDate")
-
-    /**
-     * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun servicePeriodStartDate(): OffsetDateTime =
-        servicePeriodStartDate.getRequired("servicePeriodStartDate")
-
-    /**
-     * The id of the user who created this debit line item.
+     * The ID of the user who created this line item.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -171,7 +127,13 @@ private constructor(
     fun debitReasonId(): Optional<String> = debitReasonId.getOptional("debitReasonId")
 
     /**
-     * The DateTime when the debit line item was created _(in ISO-8601 format)_.
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun description(): Optional<String> = description.getOptional("description")
+
+    /**
+     * The DateTime when the line item was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -179,7 +141,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when the debit line item was last modified _(in ISO-8601 format)_.
+     * The DateTime when the line item was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -187,12 +149,51 @@ private constructor(
     fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
-     * The id of the user who last modified this debit line item.
+     * The ID of the user who last modified this line item.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun lineItemType(): Optional<LineItemType> = lineItemType.getOptional("lineItemType")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun productId(): Optional<String> = productId.getOptional("productId")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun referencedBillId(): Optional<String> = referencedBillId.getOptional("referencedBillId")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun referencedLineItemId(): Optional<String> =
+        referencedLineItemId.getOptional("referencedLineItemId")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun servicePeriodEndDate(): Optional<OffsetDateTime> =
+        servicePeriodEndDate.getOptional("servicePeriodEndDate")
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun servicePeriodStartDate(): Optional<OffsetDateTime> =
+        servicePeriodStartDate.getOptional("servicePeriodStartDate")
 
     /**
      * The version number:
@@ -220,11 +221,63 @@ private constructor(
     @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<Double> = amount
 
     /**
+     * Returns the raw JSON value of [createdBy].
+     *
+     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
+
+    /**
+     * Returns the raw JSON value of [debitReasonId].
+     *
+     * Unlike [debitReasonId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("debitReasonId")
+    @ExcludeMissing
+    fun _debitReasonId(): JsonField<String> = debitReasonId
+
+    /**
      * Returns the raw JSON value of [description].
      *
      * Unlike [description], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("description") @ExcludeMissing fun _description(): JsonField<String> = description
+
+    /**
+     * Returns the raw JSON value of [dtCreated].
+     *
+     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("dtCreated")
+    @ExcludeMissing
+    fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
+
+    /**
+     * Returns the raw JSON value of [dtLastModified].
+     *
+     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("dtLastModified")
+    @ExcludeMissing
+    fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
+
+    /**
+     * Returns the raw JSON value of [lastModifiedBy].
+     *
+     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("lastModifiedBy")
+    @ExcludeMissing
+    fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
+
+    /**
+     * Returns the raw JSON value of [lineItemType].
+     *
+     * Unlike [lineItemType], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("lineItemType")
+    @ExcludeMissing
+    fun _lineItemType(): JsonField<LineItemType> = lineItemType
 
     /**
      * Returns the raw JSON value of [productId].
@@ -274,49 +327,6 @@ private constructor(
     fun _servicePeriodStartDate(): JsonField<OffsetDateTime> = servicePeriodStartDate
 
     /**
-     * Returns the raw JSON value of [createdBy].
-     *
-     * Unlike [createdBy], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
-
-    /**
-     * Returns the raw JSON value of [debitReasonId].
-     *
-     * Unlike [debitReasonId], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("debitReasonId")
-    @ExcludeMissing
-    fun _debitReasonId(): JsonField<String> = debitReasonId
-
-    /**
-     * Returns the raw JSON value of [dtCreated].
-     *
-     * Unlike [dtCreated], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("dtCreated")
-    @ExcludeMissing
-    fun _dtCreated(): JsonField<OffsetDateTime> = dtCreated
-
-    /**
-     * Returns the raw JSON value of [dtLastModified].
-     *
-     * Unlike [dtLastModified], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("dtLastModified")
-    @ExcludeMissing
-    fun _dtLastModified(): JsonField<OffsetDateTime> = dtLastModified
-
-    /**
-     * Returns the raw JSON value of [lastModifiedBy].
-     *
-     * Unlike [lastModifiedBy], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("lastModifiedBy")
-    @ExcludeMissing
-    fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
-
-    /**
      * Returns the raw JSON value of [version].
      *
      * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
@@ -343,13 +353,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .amount()
-         * .description()
-         * .productId()
-         * .referencedBillId()
-         * .referencedLineItemId()
-         * .servicePeriodEndDate()
-         * .servicePeriodStartDate()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -359,18 +362,19 @@ private constructor(
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
-        private var amount: JsonField<Double>? = null
-        private var description: JsonField<String>? = null
-        private var productId: JsonField<String>? = null
-        private var referencedBillId: JsonField<String>? = null
-        private var referencedLineItemId: JsonField<String>? = null
-        private var servicePeriodEndDate: JsonField<OffsetDateTime>? = null
-        private var servicePeriodStartDate: JsonField<OffsetDateTime>? = null
+        private var amount: JsonField<Double> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var debitReasonId: JsonField<String> = JsonMissing.of()
+        private var description: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
+        private var lineItemType: JsonField<LineItemType> = JsonMissing.of()
+        private var productId: JsonField<String> = JsonMissing.of()
+        private var referencedBillId: JsonField<String> = JsonMissing.of()
+        private var referencedLineItemId: JsonField<String> = JsonMissing.of()
+        private var servicePeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -378,17 +382,18 @@ private constructor(
         internal fun from(debitLineItemResponse: DebitLineItemResponse) = apply {
             id = debitLineItemResponse.id
             amount = debitLineItemResponse.amount
+            createdBy = debitLineItemResponse.createdBy
+            debitReasonId = debitLineItemResponse.debitReasonId
             description = debitLineItemResponse.description
+            dtCreated = debitLineItemResponse.dtCreated
+            dtLastModified = debitLineItemResponse.dtLastModified
+            lastModifiedBy = debitLineItemResponse.lastModifiedBy
+            lineItemType = debitLineItemResponse.lineItemType
             productId = debitLineItemResponse.productId
             referencedBillId = debitLineItemResponse.referencedBillId
             referencedLineItemId = debitLineItemResponse.referencedLineItemId
             servicePeriodEndDate = debitLineItemResponse.servicePeriodEndDate
             servicePeriodStartDate = debitLineItemResponse.servicePeriodStartDate
-            createdBy = debitLineItemResponse.createdBy
-            debitReasonId = debitLineItemResponse.debitReasonId
-            dtCreated = debitLineItemResponse.dtCreated
-            dtLastModified = debitLineItemResponse.dtLastModified
-            lastModifiedBy = debitLineItemResponse.lastModifiedBy
             version = debitLineItemResponse.version
             additionalProperties = debitLineItemResponse.additionalProperties.toMutableMap()
         }
@@ -404,7 +409,6 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        /** The amount for the line item. */
         fun amount(amount: Double) = amount(JsonField.of(amount))
 
         /**
@@ -415,91 +419,7 @@ private constructor(
          */
         fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
-        /** The description of the line item. */
-        fun description(description: String) = description(JsonField.of(description))
-
-        /**
-         * Sets [Builder.description] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.description] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun description(description: JsonField<String>) = apply { this.description = description }
-
-        /** The UUID of the Product. */
-        fun productId(productId: String) = productId(JsonField.of(productId))
-
-        /**
-         * Sets [Builder.productId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.productId] with a well-typed [String] value instead.
-         * This method is primarily for setting the field to an undocumented or not yet supported
-         * value.
-         */
-        fun productId(productId: JsonField<String>) = apply { this.productId = productId }
-
-        /** The UUID of the bill for the line item. */
-        fun referencedBillId(referencedBillId: String) =
-            referencedBillId(JsonField.of(referencedBillId))
-
-        /**
-         * Sets [Builder.referencedBillId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.referencedBillId] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun referencedBillId(referencedBillId: JsonField<String>) = apply {
-            this.referencedBillId = referencedBillId
-        }
-
-        /** The UUID of the line item. */
-        fun referencedLineItemId(referencedLineItemId: String) =
-            referencedLineItemId(JsonField.of(referencedLineItemId))
-
-        /**
-         * Sets [Builder.referencedLineItemId] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.referencedLineItemId] with a well-typed [String] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun referencedLineItemId(referencedLineItemId: JsonField<String>) = apply {
-            this.referencedLineItemId = referencedLineItemId
-        }
-
-        /** The service period end date in ISO-8601 format. _(exclusive of the ending date)_. */
-        fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
-            servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
-
-        /**
-         * Sets [Builder.servicePeriodEndDate] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.servicePeriodEndDate] with a well-typed [OffsetDateTime]
-         * value instead. This method is primarily for setting the field to an undocumented or not
-         * yet supported value.
-         */
-        fun servicePeriodEndDate(servicePeriodEndDate: JsonField<OffsetDateTime>) = apply {
-            this.servicePeriodEndDate = servicePeriodEndDate
-        }
-
-        /** The service period start date in ISO-8601 format. _(inclusive of the starting date)_. */
-        fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) =
-            servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
-
-        /**
-         * Sets [Builder.servicePeriodStartDate] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.servicePeriodStartDate] with a well-typed
-         * [OffsetDateTime] value instead. This method is primarily for setting the field to an
-         * undocumented or not yet supported value.
-         */
-        fun servicePeriodStartDate(servicePeriodStartDate: JsonField<OffsetDateTime>) = apply {
-            this.servicePeriodStartDate = servicePeriodStartDate
-        }
-
-        /** The id of the user who created this debit line item. */
+        /** The ID of the user who created this line item. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
         /**
@@ -525,7 +445,18 @@ private constructor(
             this.debitReasonId = debitReasonId
         }
 
-        /** The DateTime when the debit line item was created _(in ISO-8601 format)_. */
+        fun description(description: String) = description(JsonField.of(description))
+
+        /**
+         * Sets [Builder.description] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.description] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun description(description: JsonField<String>) = apply { this.description = description }
+
+        /** The DateTime when the line item was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -537,7 +468,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when the debit line item was last modified _(in ISO-8601 format)_. */
+        /** The DateTime when the line item was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -552,7 +483,7 @@ private constructor(
             this.dtLastModified = dtLastModified
         }
 
-        /** The id of the user who last modified this debit line item. */
+        /** The ID of the user who last modified this line item. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
         /**
@@ -564,6 +495,86 @@ private constructor(
          */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
+        }
+
+        fun lineItemType(lineItemType: LineItemType) = lineItemType(JsonField.of(lineItemType))
+
+        /**
+         * Sets [Builder.lineItemType] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.lineItemType] with a well-typed [LineItemType] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun lineItemType(lineItemType: JsonField<LineItemType>) = apply {
+            this.lineItemType = lineItemType
+        }
+
+        fun productId(productId: String) = productId(JsonField.of(productId))
+
+        /**
+         * Sets [Builder.productId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.productId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun productId(productId: JsonField<String>) = apply { this.productId = productId }
+
+        fun referencedBillId(referencedBillId: String) =
+            referencedBillId(JsonField.of(referencedBillId))
+
+        /**
+         * Sets [Builder.referencedBillId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.referencedBillId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun referencedBillId(referencedBillId: JsonField<String>) = apply {
+            this.referencedBillId = referencedBillId
+        }
+
+        fun referencedLineItemId(referencedLineItemId: String) =
+            referencedLineItemId(JsonField.of(referencedLineItemId))
+
+        /**
+         * Sets [Builder.referencedLineItemId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.referencedLineItemId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun referencedLineItemId(referencedLineItemId: JsonField<String>) = apply {
+            this.referencedLineItemId = referencedLineItemId
+        }
+
+        fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
+            servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
+
+        /**
+         * Sets [Builder.servicePeriodEndDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.servicePeriodEndDate] with a well-typed [OffsetDateTime]
+         * value instead. This method is primarily for setting the field to an undocumented or not
+         * yet supported value.
+         */
+        fun servicePeriodEndDate(servicePeriodEndDate: JsonField<OffsetDateTime>) = apply {
+            this.servicePeriodEndDate = servicePeriodEndDate
+        }
+
+        fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) =
+            servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
+
+        /**
+         * Sets [Builder.servicePeriodStartDate] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.servicePeriodStartDate] with a well-typed
+         * [OffsetDateTime] value instead. This method is primarily for setting the field to an
+         * undocumented or not yet supported value.
+         */
+        fun servicePeriodStartDate(servicePeriodStartDate: JsonField<OffsetDateTime>) = apply {
+            this.servicePeriodStartDate = servicePeriodStartDate
         }
 
         /**
@@ -609,13 +620,6 @@ private constructor(
          * The following fields are required:
          * ```java
          * .id()
-         * .amount()
-         * .description()
-         * .productId()
-         * .referencedBillId()
-         * .referencedLineItemId()
-         * .servicePeriodEndDate()
-         * .servicePeriodStartDate()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -623,18 +627,19 @@ private constructor(
         fun build(): DebitLineItemResponse =
             DebitLineItemResponse(
                 checkRequired("id", id),
-                checkRequired("amount", amount),
-                checkRequired("description", description),
-                checkRequired("productId", productId),
-                checkRequired("referencedBillId", referencedBillId),
-                checkRequired("referencedLineItemId", referencedLineItemId),
-                checkRequired("servicePeriodEndDate", servicePeriodEndDate),
-                checkRequired("servicePeriodStartDate", servicePeriodStartDate),
+                amount,
                 createdBy,
                 debitReasonId,
+                description,
                 dtCreated,
                 dtLastModified,
                 lastModifiedBy,
+                lineItemType,
+                productId,
+                referencedBillId,
+                referencedLineItemId,
+                servicePeriodEndDate,
+                servicePeriodStartDate,
                 version,
                 additionalProperties.toMutableMap(),
             )
@@ -649,17 +654,18 @@ private constructor(
 
         id()
         amount()
+        createdBy()
+        debitReasonId()
         description()
+        dtCreated()
+        dtLastModified()
+        lastModifiedBy()
+        lineItemType().ifPresent { it.validate() }
         productId()
         referencedBillId()
         referencedLineItemId()
         servicePeriodEndDate()
         servicePeriodStartDate()
-        createdBy()
-        debitReasonId()
-        dtCreated()
-        dtLastModified()
-        lastModifiedBy()
         version()
         validated = true
     }
@@ -681,33 +687,296 @@ private constructor(
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
             (if (amount.asKnown().isPresent) 1 else 0) +
+            (if (createdBy.asKnown().isPresent) 1 else 0) +
+            (if (debitReasonId.asKnown().isPresent) 1 else 0) +
             (if (description.asKnown().isPresent) 1 else 0) +
+            (if (dtCreated.asKnown().isPresent) 1 else 0) +
+            (if (dtLastModified.asKnown().isPresent) 1 else 0) +
+            (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
+            (lineItemType.asKnown().getOrNull()?.validity() ?: 0) +
             (if (productId.asKnown().isPresent) 1 else 0) +
             (if (referencedBillId.asKnown().isPresent) 1 else 0) +
             (if (referencedLineItemId.asKnown().isPresent) 1 else 0) +
             (if (servicePeriodEndDate.asKnown().isPresent) 1 else 0) +
             (if (servicePeriodStartDate.asKnown().isPresent) 1 else 0) +
-            (if (createdBy.asKnown().isPresent) 1 else 0) +
-            (if (debitReasonId.asKnown().isPresent) 1 else 0) +
-            (if (dtCreated.asKnown().isPresent) 1 else 0) +
-            (if (dtLastModified.asKnown().isPresent) 1 else 0) +
-            (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (if (version.asKnown().isPresent) 1 else 0)
+
+    class LineItemType @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
+
+        /**
+         * Returns this class instance's raw value.
+         *
+         * This is usually only useful if this instance was deserialized from data that doesn't
+         * match any known member, and you want to know that value. For example, if the SDK is on an
+         * older version than the API, then the API may respond with new members that the SDK is
+         * unaware of.
+         */
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        companion object {
+
+            @JvmField val STANDING_CHARGE = of("STANDING_CHARGE")
+
+            @JvmField val USAGE = of("USAGE")
+
+            @JvmField val COUNTER_RUNNING_TOTAL_CHARGE = of("COUNTER_RUNNING_TOTAL_CHARGE")
+
+            @JvmField val COUNTER_ADJUSTMENT_DEBIT = of("COUNTER_ADJUSTMENT_DEBIT")
+
+            @JvmField val COUNTER_ADJUSTMENT_CREDIT = of("COUNTER_ADJUSTMENT_CREDIT")
+
+            @JvmField val USAGE_CREDIT = of("USAGE_CREDIT")
+
+            @JvmField val MINIMUM_SPEND = of("MINIMUM_SPEND")
+
+            @JvmField val MINIMUM_SPEND_REFUND = of("MINIMUM_SPEND_REFUND")
+
+            @JvmField val CREDIT_DEDUCTION = of("CREDIT_DEDUCTION")
+
+            @JvmField val MANUAL_ADJUSTMENT = of("MANUAL_ADJUSTMENT")
+
+            @JvmField val CREDIT_MEMO = of("CREDIT_MEMO")
+
+            @JvmField val DEBIT_MEMO = of("DEBIT_MEMO")
+
+            @JvmField val COMMITMENT_CONSUMED = of("COMMITMENT_CONSUMED")
+
+            @JvmField val COMMITMENT_FEE = of("COMMITMENT_FEE")
+
+            @JvmField val OVERAGE_SURCHARGE = of("OVERAGE_SURCHARGE")
+
+            @JvmField val OVERAGE_USAGE = of("OVERAGE_USAGE")
+
+            @JvmField val BALANCE_CONSUMED = of("BALANCE_CONSUMED")
+
+            @JvmField val BALANCE_FEE = of("BALANCE_FEE")
+
+            @JvmField val AD_HOC = of("AD_HOC")
+
+            @JvmStatic fun of(value: String) = LineItemType(JsonField.of(value))
+        }
+
+        /** An enum containing [LineItemType]'s known values. */
+        enum class Known {
+            STANDING_CHARGE,
+            USAGE,
+            COUNTER_RUNNING_TOTAL_CHARGE,
+            COUNTER_ADJUSTMENT_DEBIT,
+            COUNTER_ADJUSTMENT_CREDIT,
+            USAGE_CREDIT,
+            MINIMUM_SPEND,
+            MINIMUM_SPEND_REFUND,
+            CREDIT_DEDUCTION,
+            MANUAL_ADJUSTMENT,
+            CREDIT_MEMO,
+            DEBIT_MEMO,
+            COMMITMENT_CONSUMED,
+            COMMITMENT_FEE,
+            OVERAGE_SURCHARGE,
+            OVERAGE_USAGE,
+            BALANCE_CONSUMED,
+            BALANCE_FEE,
+            AD_HOC,
+        }
+
+        /**
+         * An enum containing [LineItemType]'s known values, as well as an [_UNKNOWN] member.
+         *
+         * An instance of [LineItemType] can contain an unknown value in a couple of cases:
+         * - It was deserialized from data that doesn't match any known member. For example, if the
+         *   SDK is on an older version than the API, then the API may respond with new members that
+         *   the SDK is unaware of.
+         * - It was constructed with an arbitrary value using the [of] method.
+         */
+        enum class Value {
+            STANDING_CHARGE,
+            USAGE,
+            COUNTER_RUNNING_TOTAL_CHARGE,
+            COUNTER_ADJUSTMENT_DEBIT,
+            COUNTER_ADJUSTMENT_CREDIT,
+            USAGE_CREDIT,
+            MINIMUM_SPEND,
+            MINIMUM_SPEND_REFUND,
+            CREDIT_DEDUCTION,
+            MANUAL_ADJUSTMENT,
+            CREDIT_MEMO,
+            DEBIT_MEMO,
+            COMMITMENT_CONSUMED,
+            COMMITMENT_FEE,
+            OVERAGE_SURCHARGE,
+            OVERAGE_USAGE,
+            BALANCE_CONSUMED,
+            BALANCE_FEE,
+            AD_HOC,
+            /**
+             * An enum member indicating that [LineItemType] was instantiated with an unknown value.
+             */
+            _UNKNOWN,
+        }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value, or [Value._UNKNOWN]
+         * if the class was instantiated with an unknown value.
+         *
+         * Use the [known] method instead if you're certain the value is always known or if you want
+         * to throw for the unknown case.
+         */
+        fun value(): Value =
+            when (this) {
+                STANDING_CHARGE -> Value.STANDING_CHARGE
+                USAGE -> Value.USAGE
+                COUNTER_RUNNING_TOTAL_CHARGE -> Value.COUNTER_RUNNING_TOTAL_CHARGE
+                COUNTER_ADJUSTMENT_DEBIT -> Value.COUNTER_ADJUSTMENT_DEBIT
+                COUNTER_ADJUSTMENT_CREDIT -> Value.COUNTER_ADJUSTMENT_CREDIT
+                USAGE_CREDIT -> Value.USAGE_CREDIT
+                MINIMUM_SPEND -> Value.MINIMUM_SPEND
+                MINIMUM_SPEND_REFUND -> Value.MINIMUM_SPEND_REFUND
+                CREDIT_DEDUCTION -> Value.CREDIT_DEDUCTION
+                MANUAL_ADJUSTMENT -> Value.MANUAL_ADJUSTMENT
+                CREDIT_MEMO -> Value.CREDIT_MEMO
+                DEBIT_MEMO -> Value.DEBIT_MEMO
+                COMMITMENT_CONSUMED -> Value.COMMITMENT_CONSUMED
+                COMMITMENT_FEE -> Value.COMMITMENT_FEE
+                OVERAGE_SURCHARGE -> Value.OVERAGE_SURCHARGE
+                OVERAGE_USAGE -> Value.OVERAGE_USAGE
+                BALANCE_CONSUMED -> Value.BALANCE_CONSUMED
+                BALANCE_FEE -> Value.BALANCE_FEE
+                AD_HOC -> Value.AD_HOC
+                else -> Value._UNKNOWN
+            }
+
+        /**
+         * Returns an enum member corresponding to this class instance's value.
+         *
+         * Use the [value] method instead if you're uncertain the value is always known and don't
+         * want to throw for the unknown case.
+         *
+         * @throws M3terInvalidDataException if this class instance's value is a not a known member.
+         */
+        fun known(): Known =
+            when (this) {
+                STANDING_CHARGE -> Known.STANDING_CHARGE
+                USAGE -> Known.USAGE
+                COUNTER_RUNNING_TOTAL_CHARGE -> Known.COUNTER_RUNNING_TOTAL_CHARGE
+                COUNTER_ADJUSTMENT_DEBIT -> Known.COUNTER_ADJUSTMENT_DEBIT
+                COUNTER_ADJUSTMENT_CREDIT -> Known.COUNTER_ADJUSTMENT_CREDIT
+                USAGE_CREDIT -> Known.USAGE_CREDIT
+                MINIMUM_SPEND -> Known.MINIMUM_SPEND
+                MINIMUM_SPEND_REFUND -> Known.MINIMUM_SPEND_REFUND
+                CREDIT_DEDUCTION -> Known.CREDIT_DEDUCTION
+                MANUAL_ADJUSTMENT -> Known.MANUAL_ADJUSTMENT
+                CREDIT_MEMO -> Known.CREDIT_MEMO
+                DEBIT_MEMO -> Known.DEBIT_MEMO
+                COMMITMENT_CONSUMED -> Known.COMMITMENT_CONSUMED
+                COMMITMENT_FEE -> Known.COMMITMENT_FEE
+                OVERAGE_SURCHARGE -> Known.OVERAGE_SURCHARGE
+                OVERAGE_USAGE -> Known.OVERAGE_USAGE
+                BALANCE_CONSUMED -> Known.BALANCE_CONSUMED
+                BALANCE_FEE -> Known.BALANCE_FEE
+                AD_HOC -> Known.AD_HOC
+                else -> throw M3terInvalidDataException("Unknown LineItemType: $value")
+            }
+
+        /**
+         * Returns this class instance's primitive wire representation.
+         *
+         * This differs from the [toString] method because that method is primarily for debugging
+         * and generally doesn't throw.
+         *
+         * @throws M3terInvalidDataException if this class instance's value does not have the
+         *   expected primitive type.
+         */
+        fun asString(): String =
+            _value().asString().orElseThrow { M3terInvalidDataException("Value is not a String") }
+
+        private var validated: Boolean = false
+
+        fun validate(): LineItemType = apply {
+            if (validated) {
+                return@apply
+            }
+
+            known()
+            validated = true
+        }
+
+        fun isValid(): Boolean =
+            try {
+                validate()
+                true
+            } catch (e: M3terInvalidDataException) {
+                false
+            }
+
+        /**
+         * Returns a score indicating how many valid values are contained in this object
+         * recursively.
+         *
+         * Used for best match union deserialization.
+         */
+        @JvmSynthetic internal fun validity(): Int = if (value() == Value._UNKNOWN) 0 else 1
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is LineItemType && value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is DebitLineItemResponse && id == other.id && amount == other.amount && description == other.description && productId == other.productId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && createdBy == other.createdBy && debitReasonId == other.debitReasonId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DebitLineItemResponse &&
+            id == other.id &&
+            amount == other.amount &&
+            createdBy == other.createdBy &&
+            debitReasonId == other.debitReasonId &&
+            description == other.description &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            lineItemType == other.lineItemType &&
+            productId == other.productId &&
+            referencedBillId == other.referencedBillId &&
+            referencedLineItemId == other.referencedLineItemId &&
+            servicePeriodEndDate == other.servicePeriodEndDate &&
+            servicePeriodStartDate == other.servicePeriodStartDate &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, amount, description, productId, referencedBillId, referencedLineItemId, servicePeriodEndDate, servicePeriodStartDate, createdBy, debitReasonId, dtCreated, dtLastModified, lastModifiedBy, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            amount,
+            createdBy,
+            debitReasonId,
+            description,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            lineItemType,
+            productId,
+            referencedBillId,
+            referencedLineItemId,
+            servicePeriodEndDate,
+            servicePeriodStartDate,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "DebitLineItemResponse{id=$id, amount=$amount, description=$description, productId=$productId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, createdBy=$createdBy, debitReasonId=$debitReasonId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, version=$version, additionalProperties=$additionalProperties}"
+        "DebitLineItemResponse{id=$id, amount=$amount, createdBy=$createdBy, debitReasonId=$debitReasonId, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, lineItemType=$lineItemType, productId=$productId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, version=$version, additionalProperties=$additionalProperties}"
 }

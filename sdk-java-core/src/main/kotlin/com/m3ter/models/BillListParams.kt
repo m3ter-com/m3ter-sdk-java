@@ -30,6 +30,7 @@ private constructor(
     private val billDateEnd: String?,
     private val billDateStart: String?,
     private val billingFrequency: String?,
+    private val billJobId: String?,
     private val excludeLineItems: Boolean?,
     private val externalInvoiceDateEnd: String?,
     private val externalInvoiceDateStart: String?,
@@ -63,6 +64,9 @@ private constructor(
 
     fun billingFrequency(): Optional<String> = Optional.ofNullable(billingFrequency)
 
+    /** List Bill entities by the bill job that last calculated them. */
+    fun billJobId(): Optional<String> = Optional.ofNullable(billJobId)
+
     /** Exclude Line Items */
     fun excludeLineItems(): Optional<Boolean> = Optional.ofNullable(excludeLineItems)
 
@@ -80,8 +84,8 @@ private constructor(
 
     /**
      * Boolean flag specifying whether to include Bills with "locked" status.
-     * - **TRUE** - the list inlcudes "locked" Bills.
-     * - **FALSE** - excludes "locked" Bills from the list.
+     * * **TRUE** - the list inlcudes "locked" Bills.
+     * * **FALSE** - excludes "locked" Bills from the list.
      */
     fun locked(): Optional<Boolean> = Optional.ofNullable(locked)
 
@@ -123,6 +127,7 @@ private constructor(
         private var billDateEnd: String? = null
         private var billDateStart: String? = null
         private var billingFrequency: String? = null
+        private var billJobId: String? = null
         private var excludeLineItems: Boolean? = null
         private var externalInvoiceDateEnd: String? = null
         private var externalInvoiceDateStart: String? = null
@@ -144,6 +149,7 @@ private constructor(
             billDateEnd = billListParams.billDateEnd
             billDateStart = billListParams.billDateStart
             billingFrequency = billListParams.billingFrequency
+            billJobId = billListParams.billJobId
             excludeLineItems = billListParams.excludeLineItems
             externalInvoiceDateEnd = billListParams.externalInvoiceDateEnd
             externalInvoiceDateStart = billListParams.externalInvoiceDateStart
@@ -213,6 +219,12 @@ private constructor(
         /** Alias for calling [Builder.billingFrequency] with `billingFrequency.orElse(null)`. */
         fun billingFrequency(billingFrequency: Optional<String>) =
             billingFrequency(billingFrequency.getOrNull())
+
+        /** List Bill entities by the bill job that last calculated them. */
+        fun billJobId(billJobId: String?) = apply { this.billJobId = billJobId }
+
+        /** Alias for calling [Builder.billJobId] with `billJobId.orElse(null)`. */
+        fun billJobId(billJobId: Optional<String>) = billJobId(billJobId.getOrNull())
 
         /** Exclude Line Items */
         fun excludeLineItems(excludeLineItems: Boolean?) = apply {
@@ -287,8 +299,8 @@ private constructor(
 
         /**
          * Boolean flag specifying whether to include Bills with "locked" status.
-         * - **TRUE** - the list inlcudes "locked" Bills.
-         * - **FALSE** - excludes "locked" Bills from the list.
+         * * **TRUE** - the list inlcudes "locked" Bills.
+         * * **FALSE** - excludes "locked" Bills from the list.
          */
         fun locked(locked: Boolean?) = apply { this.locked = locked }
 
@@ -442,6 +454,7 @@ private constructor(
                 billDateEnd,
                 billDateStart,
                 billingFrequency,
+                billJobId,
                 excludeLineItems,
                 externalInvoiceDateEnd,
                 externalInvoiceDateStart,
@@ -473,6 +486,7 @@ private constructor(
                 billDateEnd?.let { put("billDateEnd", it) }
                 billDateStart?.let { put("billDateStart", it) }
                 billingFrequency?.let { put("billingFrequency", it) }
+                billJobId?.let { put("billJobId", it) }
                 excludeLineItems?.let { put("excludeLineItems", it.toString()) }
                 externalInvoiceDateEnd?.let { put("externalInvoiceDateEnd", it) }
                 externalInvoiceDateStart?.let { put("externalInvoiceDateStart", it) }
@@ -603,7 +617,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -616,11 +630,51 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillListParams && orgId == other.orgId && accountId == other.accountId && additional == other.additional && billDate == other.billDate && billDateEnd == other.billDateEnd && billDateStart == other.billDateStart && billingFrequency == other.billingFrequency && excludeLineItems == other.excludeLineItems && externalInvoiceDateEnd == other.externalInvoiceDateEnd && externalInvoiceDateStart == other.externalInvoiceDateStart && ids == other.ids && includeBillTotal == other.includeBillTotal && locked == other.locked && nextToken == other.nextToken && pageSize == other.pageSize && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BillListParams &&
+            orgId == other.orgId &&
+            accountId == other.accountId &&
+            additional == other.additional &&
+            billDate == other.billDate &&
+            billDateEnd == other.billDateEnd &&
+            billDateStart == other.billDateStart &&
+            billingFrequency == other.billingFrequency &&
+            billJobId == other.billJobId &&
+            excludeLineItems == other.excludeLineItems &&
+            externalInvoiceDateEnd == other.externalInvoiceDateEnd &&
+            externalInvoiceDateStart == other.externalInvoiceDateStart &&
+            ids == other.ids &&
+            includeBillTotal == other.includeBillTotal &&
+            locked == other.locked &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            status == other.status &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, additional, billDate, billDateEnd, billDateStart, billingFrequency, excludeLineItems, externalInvoiceDateEnd, externalInvoiceDateStart, ids, includeBillTotal, locked, nextToken, pageSize, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            accountId,
+            additional,
+            billDate,
+            billDateEnd,
+            billDateStart,
+            billingFrequency,
+            billJobId,
+            excludeLineItems,
+            externalInvoiceDateEnd,
+            externalInvoiceDateStart,
+            ids,
+            includeBillTotal,
+            locked,
+            nextToken,
+            pageSize,
+            status,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
-        "BillListParams{orgId=$orgId, accountId=$accountId, additional=$additional, billDate=$billDate, billDateEnd=$billDateEnd, billDateStart=$billDateStart, billingFrequency=$billingFrequency, excludeLineItems=$excludeLineItems, externalInvoiceDateEnd=$externalInvoiceDateEnd, externalInvoiceDateStart=$externalInvoiceDateStart, ids=$ids, includeBillTotal=$includeBillTotal, locked=$locked, nextToken=$nextToken, pageSize=$pageSize, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "BillListParams{orgId=$orgId, accountId=$accountId, additional=$additional, billDate=$billDate, billDateEnd=$billDateEnd, billDateStart=$billDateStart, billingFrequency=$billingFrequency, billJobId=$billJobId, excludeLineItems=$excludeLineItems, externalInvoiceDateEnd=$externalInvoiceDateEnd, externalInvoiceDateStart=$externalInvoiceDateStart, ids=$ids, includeBillTotal=$includeBillTotal, locked=$locked, nextToken=$nextToken, pageSize=$pageSize, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -20,6 +20,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class MeasurementRequest
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val account: JsonField<String>,
     private val meter: JsonField<String>,
@@ -86,7 +87,7 @@ private constructor(
     fun meter(): String = meter.getRequired("meter")
 
     /**
-     * Timestamp for the measurement _(in ISO 8601 format)_.
+     * Timestamp for the measurement *(in ISO 8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -102,7 +103,7 @@ private constructor(
     fun cost(): Optional<Cost> = cost.getOptional("cost")
 
     /**
-     * End timestamp for the measurement _(in ISO 8601 format)_. _(Optional)_.
+     * End timestamp for the measurement *(in ISO 8601 format)*. *(Optional)*.
      *
      * Can be used in the case a usage event needs to have an explicit start and end rather than
      * being instantaneous.
@@ -352,7 +353,7 @@ private constructor(
          */
         fun meter(meter: JsonField<String>) = apply { this.meter = meter }
 
-        /** Timestamp for the measurement _(in ISO 8601 format)_. */
+        /** Timestamp for the measurement *(in ISO 8601 format)*. */
         fun ts(ts: OffsetDateTime) = ts(JsonField.of(ts))
 
         /**
@@ -376,7 +377,7 @@ private constructor(
         fun cost(cost: JsonField<Cost>) = apply { this.cost = cost }
 
         /**
-         * End timestamp for the measurement _(in ISO 8601 format)_. _(Optional)_.
+         * End timestamp for the measurement *(in ISO 8601 format)*. *(Optional)*.
          *
          * Can be used in the case a usage event needs to have an explicit start and end rather than
          * being instantaneous.
@@ -675,12 +676,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Cost && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Cost && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -777,12 +776,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Income && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Income && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -879,12 +876,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Measure && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Measure && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -981,12 +976,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Metadata && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1083,12 +1076,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Other && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Other && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1185,12 +1176,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is What && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is What && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1287,12 +1276,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Where && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Where && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1389,12 +1376,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Who && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Who && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1406,12 +1391,41 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is MeasurementRequest && account == other.account && meter == other.meter && ts == other.ts && cost == other.cost && ets == other.ets && income == other.income && measure == other.measure && metadata == other.metadata && this.other == other.other && uid == other.uid && what == other.what && where == other.where && who == other.who && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is MeasurementRequest &&
+            account == other.account &&
+            meter == other.meter &&
+            ts == other.ts &&
+            cost == other.cost &&
+            ets == other.ets &&
+            income == other.income &&
+            measure == other.measure &&
+            metadata == other.metadata &&
+            this.other == other.other &&
+            uid == other.uid &&
+            what == other.what &&
+            where == other.where &&
+            who == other.who &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(account, meter, ts, cost, ets, income, measure, metadata, other, uid, what, where, who, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            account,
+            meter,
+            ts,
+            cost,
+            ets,
+            income,
+            measure,
+            metadata,
+            other,
+            uid,
+            what,
+            where,
+            who,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -8,7 +8,6 @@ import com.m3ter.core.JsonValue
 import com.m3ter.models.AccountCreateParams
 import com.m3ter.models.AccountDeleteParams
 import com.m3ter.models.AccountEndDateBillingEntitiesParams
-import com.m3ter.models.AccountGetChildrenParams
 import com.m3ter.models.AccountRetrieveParams
 import com.m3ter.models.AccountSearchParams
 import com.m3ter.models.AccountUpdateParams
@@ -54,11 +53,6 @@ internal class AccountServiceTest {
                     )
                     .autoGenerateStatementMode(AccountCreateParams.AutoGenerateStatementMode.NONE)
                     .billEpoch(LocalDate.parse("2019-12-27"))
-                    .configData(
-                        AccountCreateParams.ConfigData.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
-                            .build()
-                    )
                     .addCreditApplicationOrder(
                         AccountCreateParams.CreditApplicationOrder.PREPAYMENT
                     )
@@ -131,11 +125,6 @@ internal class AccountServiceTest {
                     )
                     .autoGenerateStatementMode(AccountUpdateParams.AutoGenerateStatementMode.NONE)
                     .billEpoch(LocalDate.parse("2019-12-27"))
-                    .configData(
-                        AccountUpdateParams.ConfigData.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
-                            .build()
-                    )
                     .addCreditApplicationOrder(
                         AccountUpdateParams.CreditApplicationOrder.PREPAYMENT
                     )
@@ -218,7 +207,7 @@ internal class AccountServiceTest {
     }
 
     @Test
-    fun getChildren() {
+    fun listChildren() {
         val client =
             M3terOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -229,17 +218,9 @@ internal class AccountServiceTest {
                 .build()
         val accountService = client.accounts()
 
-        val accountResponse =
-            accountService.getChildren(
-                AccountGetChildrenParams.builder()
-                    .orgId("orgId")
-                    .id("id")
-                    .nextToken("nextToken")
-                    .pageSize(1)
-                    .build()
-            )
+        val page = accountService.listChildren("id")
 
-        accountResponse.validate()
+        page.response().validate()
     }
 
     @Test

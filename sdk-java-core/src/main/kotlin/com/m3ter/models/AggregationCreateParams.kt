@@ -37,25 +37,27 @@ private constructor(
 
     /**
      * Specifies the computation method applied to usage data collected in `targetField`.
-     * Aggregation unit value depends on the **Category** configured for the selected targetField.
+     * Aggregation unit value depends on the **Category** configured for the selected `targetField`.
      *
      * Enum:
-     * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
+     * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or **Cost**
+     * * **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
+     * * **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
+     * * **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`.
-     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     * * **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data measurement
-     *   submissions. If using this method, please ensure _distinct_ `ts` values are used for usage
+     *   submissions. If using this method, please ensure *distinct* `ts` values are used for usage
      *   data measurment submissions.
-     * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
+     * * **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
      *   **Income**, or **Cost** `targetField`.
-     * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
+     * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
+     * * **CUSTOM_SQL**. Uses an SQL query expression. If you select this Aggregation type, use the
+     *   `customSQL` request parameter to enter an SQL query.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -97,13 +99,13 @@ private constructor(
      * Specifies how you want to deal with non-integer, fractional number Aggregation values.
      *
      * **NOTES:**
-     * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-     * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+     * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+     * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
      *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one, you
      *   would typically set Rounding to **UP**. For example, suppose you charge by kilobytes per
      *   second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at $0.25 per unit used.
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
-     *   97.8 rounded up to 98 \* 0.25 = $2.45.
+     *   97.8 rounded up to 98 * 0.25 = $2.45.
      *
      * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      *
@@ -131,7 +133,7 @@ private constructor(
     fun unit(): String = body.unit()
 
     /**
-     * Optional Product ID this Aggregation should be attributed to for accounting purposes
+     * Optional Product ID this Aggregation should be attributed to for accounting purposes.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -153,9 +155,14 @@ private constructor(
     fun customFields(): Optional<CustomFields> = body.customFields()
 
     /**
-     * **NOTE:** The `customSql` Aggregation type is currently only available in Beta release and on
-     * request. If you are interested in using this feature, please get in touch with m3ter Support
-     * or your m3ter contact.
+     * Enter the SQL query expression to be used for a Custom SQL Aggregation. Custom SQL queries
+     * should be run against the Measurements table - for more details see
+     * [Custom SQL Aggregations](https://www.m3ter.com/docs/guides/usage-data-aggregations/custom-sql-aggregations)
+     * in your main User documentation.
+     *
+     * **NOTE:** The `customSql` Aggregation type is currently available in Preview release. If you
+     * are interested in using this feature, please get in touch with m3ter Support or your m3ter
+     * contact.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -163,7 +170,7 @@ private constructor(
     fun customSql(): Optional<String> = body.customSql()
 
     /**
-     * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
+     * Aggregation value used when no usage data is available to be aggregated. *(Optional)*.
      *
      * **Note:** Set to 0, if you expect to reference the Aggregation in a Compound Aggregation.
      * This ensures that any null values are passed in correctly to the Compound Aggregation
@@ -175,7 +182,7 @@ private constructor(
     fun defaultValue(): Optional<Double> = body.defaultValue()
 
     /**
-     * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
+     * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage data
      * collected by a single Meter. Works together with `segments`.
      *
      * Enter the `Codes` of the fields in the target Meter to use for segmentation purposes.
@@ -189,13 +196,13 @@ private constructor(
     fun segmentedFields(): Optional<List<String>> = body.segmentedFields()
 
     /**
-     * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
+     * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage data
      * collected by a single Meter. Works together with `segmentedFields`.
      *
      * Enter the values that are to be used as the segments, read from the fields in the meter
      * pointed at by `segmentedFields`.
      *
-     * Note that you can use _wildcards_ or _defaults_ when setting up segment values. For more
+     * Note that you can use *wildcards* or *defaults* when setting up segment values. For more
      * details on how to do this with an example, see
      * [Using Wildcards - API Calls](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/segmented-aggregations#using-wildcards---api-calls)
      * in our main User Docs.
@@ -207,7 +214,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -393,25 +400,27 @@ private constructor(
         /**
          * Specifies the computation method applied to usage data collected in `targetField`.
          * Aggregation unit value depends on the **Category** configured for the selected
-         * targetField.
+         * `targetField`.
          *
          * Enum:
-         * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
+         * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
          *   `targetField`.
-         * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
+         * * **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
+         * * **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
+         * * **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         * * **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data
-         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
+         *   measurement submissions. If using this method, please ensure *distinct* `ts` values are
          *   used for usage data measurment submissions.
-         * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
+         * * **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
          *   **Income**, or **Cost** `targetField`.
-         * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
+         * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
+         * * **CUSTOM_SQL**. Uses an SQL query expression. If you select this Aggregation type, use
+         *   the `customSQL` request parameter to enter an SQL query.
          */
         fun aggregation(aggregation: Aggregation) = apply { body.aggregation(aggregation) }
 
@@ -479,13 +488,13 @@ private constructor(
          * Specifies how you want to deal with non-integer, fractional number Aggregation values.
          *
          * **NOTES:**
-         * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-         * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+         * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+         * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
          *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one,
          *   you would typically set Rounding to **UP**. For example, suppose you charge by
          *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
+         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 * 0.25 = $2.45.
          *
          * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
@@ -529,7 +538,7 @@ private constructor(
          */
         fun unit(unit: JsonField<String>) = apply { body.unit(unit) }
 
-        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes. */
         fun accountingProductId(accountingProductId: String) = apply {
             body.accountingProductId(accountingProductId)
         }
@@ -570,9 +579,14 @@ private constructor(
         }
 
         /**
-         * **NOTE:** The `customSql` Aggregation type is currently only available in Beta release
-         * and on request. If you are interested in using this feature, please get in touch with
-         * m3ter Support or your m3ter contact.
+         * Enter the SQL query expression to be used for a Custom SQL Aggregation. Custom SQL
+         * queries should be run against the Measurements table - for more details see
+         * [Custom SQL Aggregations](https://www.m3ter.com/docs/guides/usage-data-aggregations/custom-sql-aggregations)
+         * in your main User documentation.
+         *
+         * **NOTE:** The `customSql` Aggregation type is currently available in Preview release. If
+         * you are interested in using this feature, please get in touch with m3ter Support or your
+         * m3ter contact.
          */
         fun customSql(customSql: String) = apply { body.customSql(customSql) }
 
@@ -586,7 +600,7 @@ private constructor(
         fun customSql(customSql: JsonField<String>) = apply { body.customSql(customSql) }
 
         /**
-         * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
+         * Aggregation value used when no usage data is available to be aggregated. *(Optional)*.
          *
          * **Note:** Set to 0, if you expect to reference the Aggregation in a Compound Aggregation.
          * This ensures that any null values are passed in correctly to the Compound Aggregation
@@ -606,7 +620,7 @@ private constructor(
         }
 
         /**
-         * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
+         * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage data
          * collected by a single Meter. Works together with `segments`.
          *
          * Enter the `Codes` of the fields in the target Meter to use for segmentation purposes.
@@ -640,13 +654,13 @@ private constructor(
         }
 
         /**
-         * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
+         * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage data
          * collected by a single Meter. Works together with `segmentedFields`.
          *
          * Enter the values that are to be used as the segments, read from the fields in the meter
          * pointed at by `segmentedFields`.
          *
-         * Note that you can use _wildcards_ or _defaults_ when setting up segment values. For more
+         * Note that you can use *wildcards* or *defaults* when setting up segment values. For more
          * details on how to do this with an example, see
          * [Using Wildcards - API Calls](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/segmented-aggregations#using-wildcards---api-calls)
          * in our main User Docs.
@@ -671,8 +685,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -844,6 +858,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val aggregation: JsonField<Aggregation>,
         private val meterId: JsonField<String>,
@@ -922,25 +937,27 @@ private constructor(
         /**
          * Specifies the computation method applied to usage data collected in `targetField`.
          * Aggregation unit value depends on the **Category** configured for the selected
-         * targetField.
+         * `targetField`.
          *
          * Enum:
-         * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
+         * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
          *   `targetField`.
-         * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
+         * * **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
+         * * **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
+         * * **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         * * **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data
-         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
+         *   measurement submissions. If using this method, please ensure *distinct* `ts` values are
          *   used for usage data measurment submissions.
-         * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
+         * * **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
          *   **Income**, or **Cost** `targetField`.
-         * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
+         * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
+         * * **CUSTOM_SQL**. Uses an SQL query expression. If you select this Aggregation type, use
+         *   the `customSQL` request parameter to enter an SQL query.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -982,13 +999,13 @@ private constructor(
          * Specifies how you want to deal with non-integer, fractional number Aggregation values.
          *
          * **NOTES:**
-         * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-         * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+         * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+         * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
          *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one,
          *   you would typically set Rounding to **UP**. For example, suppose you charge by
          *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
+         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 * 0.25 = $2.45.
          *
          * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          *
@@ -1016,7 +1033,7 @@ private constructor(
         fun unit(): String = unit.getRequired("unit")
 
         /**
-         * Optional Product ID this Aggregation should be attributed to for accounting purposes
+         * Optional Product ID this Aggregation should be attributed to for accounting purposes.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1039,9 +1056,14 @@ private constructor(
         fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
-         * **NOTE:** The `customSql` Aggregation type is currently only available in Beta release
-         * and on request. If you are interested in using this feature, please get in touch with
-         * m3ter Support or your m3ter contact.
+         * Enter the SQL query expression to be used for a Custom SQL Aggregation. Custom SQL
+         * queries should be run against the Measurements table - for more details see
+         * [Custom SQL Aggregations](https://www.m3ter.com/docs/guides/usage-data-aggregations/custom-sql-aggregations)
+         * in your main User documentation.
+         *
+         * **NOTE:** The `customSql` Aggregation type is currently available in Preview release. If
+         * you are interested in using this feature, please get in touch with m3ter Support or your
+         * m3ter contact.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1049,7 +1071,7 @@ private constructor(
         fun customSql(): Optional<String> = customSql.getOptional("customSql")
 
         /**
-         * Aggregation value used when no usage data is available to be aggregated. _(Optional)_.
+         * Aggregation value used when no usage data is available to be aggregated. *(Optional)*.
          *
          * **Note:** Set to 0, if you expect to reference the Aggregation in a Compound Aggregation.
          * This ensures that any null values are passed in correctly to the Compound Aggregation
@@ -1061,7 +1083,7 @@ private constructor(
         fun defaultValue(): Optional<Double> = defaultValue.getOptional("defaultValue")
 
         /**
-         * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
+         * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage data
          * collected by a single Meter. Works together with `segments`.
          *
          * Enter the `Codes` of the fields in the target Meter to use for segmentation purposes.
@@ -1077,13 +1099,13 @@ private constructor(
             segmentedFields.getOptional("segmentedFields")
 
         /**
-         * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
+         * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage data
          * collected by a single Meter. Works together with `segmentedFields`.
          *
          * Enter the values that are to be used as the segments, read from the fields in the meter
          * pointed at by `segmentedFields`.
          *
-         * Note that you can use _wildcards_ or _defaults_ when setting up segment values. For more
+         * Note that you can use *wildcards* or *defaults* when setting up segment values. For more
          * details on how to do this with an example, see
          * [Using Wildcards - API Calls](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/segmented-aggregations#using-wildcards---api-calls)
          * in our main User Docs.
@@ -1095,8 +1117,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1306,25 +1328,27 @@ private constructor(
             /**
              * Specifies the computation method applied to usage data collected in `targetField`.
              * Aggregation unit value depends on the **Category** configured for the selected
-             * targetField.
+             * `targetField`.
              *
              * Enum:
-             * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
+             * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
              *   `targetField`.
-             * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
+             * * **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
              *   **Cost** `targetField`.
-             * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
+             * * **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
              *   **Cost** `targetField`.
-             * - **COUNT**. Counts the number of values. Can be applied to a **Measure**,
+             * * **COUNT**. Counts the number of values. Can be applied to a **Measure**,
              *   **Income**, or **Cost** `targetField`.
-             * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**,
+             * * **LATEST**. Uses the most recent value. Can be applied to a **Measure**,
              *   **Income**, or **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of
-             *   usage data measurement submissions. If using this method, please ensure _distinct_
+             *   usage data measurement submissions. If using this method, please ensure *distinct*
              *   `ts` values are used for usage data measurment submissions.
-             * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
+             * * **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
              *   **Income**, or **Cost** `targetField`.
-             * - **UNIQUE**. Uses unique values and returns a count of the number of unique values.
+             * * **UNIQUE**. Uses unique values and returns a count of the number of unique values.
              *   Can be applied to a **Metadata** `targetField`.
+             * * **CUSTOM_SQL**. Uses an SQL query expression. If you select this Aggregation type,
+             *   use the `customSQL` request parameter to enter an SQL query.
              */
             fun aggregation(aggregation: Aggregation) = aggregation(JsonField.of(aggregation))
 
@@ -1395,14 +1419,14 @@ private constructor(
              * values.
              *
              * **NOTES:**
-             * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded
+             * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded
              *   to 4.
-             * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+             * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
              *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than
              *   one, you would typically set Rounding to **UP**. For example, suppose you charge by
              *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
              *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-             *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
+             *   charge would be 48,900 / 500 = 97.8 rounded up to 98 * 0.25 = $2.45.
              *
              * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
              */
@@ -1450,7 +1474,7 @@ private constructor(
             fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
             /**
-             * Optional Product ID this Aggregation should be attributed to for accounting purposes
+             * Optional Product ID this Aggregation should be attributed to for accounting purposes.
              */
             fun accountingProductId(accountingProductId: String) =
                 accountingProductId(JsonField.of(accountingProductId))
@@ -1492,9 +1516,14 @@ private constructor(
             }
 
             /**
-             * **NOTE:** The `customSql` Aggregation type is currently only available in Beta
-             * release and on request. If you are interested in using this feature, please get in
-             * touch with m3ter Support or your m3ter contact.
+             * Enter the SQL query expression to be used for a Custom SQL Aggregation. Custom SQL
+             * queries should be run against the Measurements table - for more details see
+             * [Custom SQL Aggregations](https://www.m3ter.com/docs/guides/usage-data-aggregations/custom-sql-aggregations)
+             * in your main User documentation.
+             *
+             * **NOTE:** The `customSql` Aggregation type is currently available in Preview release.
+             * If you are interested in using this feature, please get in touch with m3ter Support
+             * or your m3ter contact.
              */
             fun customSql(customSql: String) = customSql(JsonField.of(customSql))
 
@@ -1509,7 +1538,7 @@ private constructor(
 
             /**
              * Aggregation value used when no usage data is available to be aggregated.
-             * _(Optional)_.
+             * *(Optional)*.
              *
              * **Note:** Set to 0, if you expect to reference the Aggregation in a Compound
              * Aggregation. This ensures that any null values are passed in correctly to the
@@ -1529,7 +1558,7 @@ private constructor(
             }
 
             /**
-             * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage
+             * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage
              * data collected by a single Meter. Works together with `segments`.
              *
              * Enter the `Codes` of the fields in the target Meter to use for segmentation purposes.
@@ -1565,13 +1594,13 @@ private constructor(
             }
 
             /**
-             * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage
+             * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage
              * data collected by a single Meter. Works together with `segmentedFields`.
              *
              * Enter the values that are to be used as the segments, read from the fields in the
              * meter pointed at by `segmentedFields`.
              *
-             * Note that you can use _wildcards_ or _defaults_ when setting up segment values. For
+             * Note that you can use *wildcards* or *defaults* when setting up segment values. For
              * more details on how to do this with an example, see
              * [Using Wildcards - API Calls](https://www.m3ter.com/docs/guides/setting-up-usage-data-meters-and-aggregations/segmented-aggregations#using-wildcards---api-calls)
              * in our main User Docs.
@@ -1603,8 +1632,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -1740,12 +1769,45 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && aggregation == other.aggregation && meterId == other.meterId && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && targetField == other.targetField && unit == other.unit && accountingProductId == other.accountingProductId && code == other.code && customFields == other.customFields && customSql == other.customSql && defaultValue == other.defaultValue && segmentedFields == other.segmentedFields && segments == other.segments && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                aggregation == other.aggregation &&
+                meterId == other.meterId &&
+                name == other.name &&
+                quantityPerUnit == other.quantityPerUnit &&
+                rounding == other.rounding &&
+                targetField == other.targetField &&
+                unit == other.unit &&
+                accountingProductId == other.accountingProductId &&
+                code == other.code &&
+                customFields == other.customFields &&
+                customSql == other.customSql &&
+                defaultValue == other.defaultValue &&
+                segmentedFields == other.segmentedFields &&
+                segments == other.segments &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(aggregation, meterId, name, quantityPerUnit, rounding, targetField, unit, accountingProductId, code, customFields, customSql, defaultValue, segmentedFields, segments, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                aggregation,
+                meterId,
+                name,
+                quantityPerUnit,
+                rounding,
+                targetField,
+                unit,
+                accountingProductId,
+                code,
+                customFields,
+                customSql,
+                defaultValue,
+                segmentedFields,
+                segments,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1755,25 +1817,27 @@ private constructor(
 
     /**
      * Specifies the computation method applied to usage data collected in `targetField`.
-     * Aggregation unit value depends on the **Category** configured for the selected targetField.
+     * Aggregation unit value depends on the **Category** configured for the selected `targetField`.
      *
      * Enum:
-     * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
+     * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or **Cost**
+     * * **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
+     * * **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or **Cost**
      *   `targetField`.
-     * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
+     * * **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`.
-     * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+     * * **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
      *   **Cost** `targetField`. Note: Based on the timestamp (`ts`) value of usage data measurement
-     *   submissions. If using this method, please ensure _distinct_ `ts` values are used for usage
+     *   submissions. If using this method, please ensure *distinct* `ts` values are used for usage
      *   data measurment submissions.
-     * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
+     * * **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
      *   **Income**, or **Cost** `targetField`.
-     * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
+     * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
+     * * **CUSTOM_SQL**. Uses an SQL query expression. If you select this Aggregation type, use the
+     *   `customSQL` request parameter to enter an SQL query.
      */
     class Aggregation @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -1804,6 +1868,8 @@ private constructor(
 
             @JvmField val UNIQUE = of("UNIQUE")
 
+            @JvmField val CUSTOM_SQL = of("CUSTOM_SQL")
+
             @JvmStatic fun of(value: String) = Aggregation(JsonField.of(value))
         }
 
@@ -1816,6 +1882,7 @@ private constructor(
             LATEST,
             MEAN,
             UNIQUE,
+            CUSTOM_SQL,
         }
 
         /**
@@ -1835,6 +1902,7 @@ private constructor(
             LATEST,
             MEAN,
             UNIQUE,
+            CUSTOM_SQL,
             /**
              * An enum member indicating that [Aggregation] was instantiated with an unknown value.
              */
@@ -1857,6 +1925,7 @@ private constructor(
                 LATEST -> Value.LATEST
                 MEAN -> Value.MEAN
                 UNIQUE -> Value.UNIQUE
+                CUSTOM_SQL -> Value.CUSTOM_SQL
                 else -> Value._UNKNOWN
             }
 
@@ -1877,6 +1946,7 @@ private constructor(
                 LATEST -> Known.LATEST
                 MEAN -> Known.MEAN
                 UNIQUE -> Known.UNIQUE
+                CUSTOM_SQL -> Known.CUSTOM_SQL
                 else -> throw M3terInvalidDataException("Unknown Aggregation: $value")
             }
 
@@ -1924,7 +1994,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Aggregation && value == other.value /* spotless:on */
+            return other is Aggregation && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1936,13 +2006,13 @@ private constructor(
      * Specifies how you want to deal with non-integer, fractional number Aggregation values.
      *
      * **NOTES:**
-     * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-     * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+     * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+     * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
      *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one, you
      *   would typically set Rounding to **UP**. For example, suppose you charge by kilobytes per
      *   second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at $0.25 per unit used.
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
-     *   97.8 rounded up to 98 \* 0.25 = $2.45.
+     *   97.8 rounded up to 98 * 0.25 = $2.45.
      *
      * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
@@ -2074,7 +2144,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Rounding && value == other.value /* spotless:on */
+            return other is Rounding && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2171,12 +2241,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2272,12 +2340,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Segment && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Segment && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2289,10 +2355,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AggregationCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is AggregationCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "AggregationCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -41,11 +41,11 @@ private constructor(
 
     /**
      * Determines the frequency at which bills are generated.
-     * - **Daily**. Starting at midnight each day, covering the twenty-four hour period following.
-     * - **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
-     * - **Monthly**. Starting at midnight on the first day of each month, covering the entire
+     * * **Daily**. Starting at midnight each day, covering the twenty-four hour period following.
+     * * **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
+     * * **Monthly**. Starting at midnight on the first day of each month, covering the entire
      *   calendar month following.
-     * - **Annually**. Starting at midnight on first day of each year covering the entire calendar
+     * * **Annually**. Starting at midnight on first day of each year covering the entire calendar
      *   year following.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -55,17 +55,17 @@ private constructor(
 
     /**
      * The ISO currency code for the currency used to charge end users - for example USD, GBP, EUR.
-     * This defines the _pricing currency_ and is inherited by any Plans based on the Plan Template.
+     * This defines the *pricing currency* and is inherited by any Plans based on the Plan Template.
      *
      * **Notes:**
-     * - You can define a currency at Organization-level or Account-level to be used as the _billing
-     *   currency_. This can be a different currency to that used for the Plan as the _pricing
-     *   currency_.
-     * - If the billing currency for an Account is different to the pricing currency used by a Plan
-     *   attached to the Account, you must ensure a _currency conversion rate_ is defined for your
+     * * You can define a currency at Organization-level or Account-level to be used as the *billing
+     *   currency*. This can be a different currency to that used for the Plan as the *pricing
+     *   currency*.
+     * * If the billing currency for an Account is different to the pricing currency used by a Plan
+     *   attached to the Account, you must ensure a *currency conversion rate* is defined for your
      *   Organization to convert the pricing currency into the billing currency at billing,
      *   otherwise Bills will fail for the Account.
-     * - To define any required currency conversion rates, use the `currencyConversions` request
+     * * To define any required currency conversion rates, use the `currencyConversions` request
      *   body parameter for the
      *   [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/UpdateOrganizationConfig)
      *   call.
@@ -92,7 +92,7 @@ private constructor(
     fun productId(): String = body.productId()
 
     /**
-     * The fixed charge _(standing charge)_ applied to customer bills. This charge is prorated and
+     * The fixed charge *(standing charge)* applied to customer bills. This charge is prorated and
      * must be a non-negative number.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -146,8 +146,8 @@ private constructor(
 
     /**
      * A boolean that determines when the minimum spend is billed.
-     * - TRUE - minimum spend is billed at the start of each billing period.
-     * - FALSE - minimum spend is billed at the end of each billing period.
+     * * TRUE - minimum spend is billed at the start of each billing period.
+     * * FALSE - minimum spend is billed at the end of each billing period.
      *
      * Overrides the setting at Organizational level for minimum spend billing in arrears/in
      * advance.
@@ -158,7 +158,7 @@ private constructor(
     fun minimumSpendBillInAdvance(): Optional<Boolean> = body.minimumSpendBillInAdvance()
 
     /**
-     * Minimum spend description _(displayed on the bill line item)_.
+     * Minimum spend description *(displayed on the bill line item)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -178,8 +178,8 @@ private constructor(
 
     /**
      * A boolean that determines when the standing charge is billed.
-     * - TRUE - standing charge is billed at the start of each billing period.
-     * - FALSE - standing charge is billed at the end of each billing period.
+     * * TRUE - standing charge is billed at the start of each billing period.
+     * * FALSE - standing charge is billed at the end of each billing period.
      *
      * Overrides the setting at Organizational level for standing charge billing in arrears/in
      * advance.
@@ -190,7 +190,7 @@ private constructor(
     fun standingChargeBillInAdvance(): Optional<Boolean> = body.standingChargeBillInAdvance()
 
     /**
-     * Standing charge description _(displayed on the bill line item)_.
+     * Standing charge description *(displayed on the bill line item)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -210,8 +210,8 @@ private constructor(
     /**
      * Defines an offset for when the standing charge is first applied. For example, if the bill is
      * issued every three months and the `standingChargeOfset` is 0, then the charge is applied to
-     * the first bill _(at three months)_; if 1, it would be applied to the second bill _(at six
-     * months)_, and so on.
+     * the first bill *(at three months)*; if 1, it would be applied to the second bill *(at six
+     * months)*, and so on.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -220,7 +220,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -423,12 +423,12 @@ private constructor(
 
         /**
          * Determines the frequency at which bills are generated.
-         * - **Daily**. Starting at midnight each day, covering the twenty-four hour period
+         * * **Daily**. Starting at midnight each day, covering the twenty-four hour period
          *   following.
-         * - **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
-         * - **Monthly**. Starting at midnight on the first day of each month, covering the entire
+         * * **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
+         * * **Monthly**. Starting at midnight on the first day of each month, covering the entire
          *   calendar month following.
-         * - **Annually**. Starting at midnight on first day of each year covering the entire
+         * * **Annually**. Starting at midnight on first day of each year covering the entire
          *   calendar year following.
          */
         fun billFrequency(billFrequency: BillFrequency) = apply {
@@ -448,18 +448,18 @@ private constructor(
 
         /**
          * The ISO currency code for the currency used to charge end users - for example USD, GBP,
-         * EUR. This defines the _pricing currency_ and is inherited by any Plans based on the Plan
+         * EUR. This defines the *pricing currency* and is inherited by any Plans based on the Plan
          * Template.
          *
          * **Notes:**
-         * - You can define a currency at Organization-level or Account-level to be used as the
-         *   _billing currency_. This can be a different currency to that used for the Plan as the
-         *   _pricing currency_.
-         * - If the billing currency for an Account is different to the pricing currency used by a
-         *   Plan attached to the Account, you must ensure a _currency conversion rate_ is defined
+         * * You can define a currency at Organization-level or Account-level to be used as the
+         *   *billing currency*. This can be a different currency to that used for the Plan as the
+         *   *pricing currency*.
+         * * If the billing currency for an Account is different to the pricing currency used by a
+         *   Plan attached to the Account, you must ensure a *currency conversion rate* is defined
          *   for your Organization to convert the pricing currency into the billing currency at
          *   billing, otherwise Bills will fail for the Account.
-         * - To define any required currency conversion rates, use the `currencyConversions` request
+         * * To define any required currency conversion rates, use the `currencyConversions` request
          *   body parameter for the
          *   [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/UpdateOrganizationConfig)
          *   call.
@@ -498,7 +498,7 @@ private constructor(
         fun productId(productId: JsonField<String>) = apply { body.productId(productId) }
 
         /**
-         * The fixed charge _(standing charge)_ applied to customer bills. This charge is prorated
+         * The fixed charge *(standing charge)* applied to customer bills. This charge is prorated
          * and must be a non-negative number.
          */
         fun standingCharge(standingCharge: Double) = apply { body.standingCharge(standingCharge) }
@@ -591,8 +591,8 @@ private constructor(
 
         /**
          * A boolean that determines when the minimum spend is billed.
-         * - TRUE - minimum spend is billed at the start of each billing period.
-         * - FALSE - minimum spend is billed at the end of each billing period.
+         * * TRUE - minimum spend is billed at the start of each billing period.
+         * * FALSE - minimum spend is billed at the end of each billing period.
          *
          * Overrides the setting at Organizational level for minimum spend billing in arrears/in
          * advance.
@@ -612,7 +612,7 @@ private constructor(
             body.minimumSpendBillInAdvance(minimumSpendBillInAdvance)
         }
 
-        /** Minimum spend description _(displayed on the bill line item)_. */
+        /** Minimum spend description *(displayed on the bill line item)*. */
         fun minimumSpendDescription(minimumSpendDescription: String) = apply {
             body.minimumSpendDescription(minimumSpendDescription)
         }
@@ -647,8 +647,8 @@ private constructor(
 
         /**
          * A boolean that determines when the standing charge is billed.
-         * - TRUE - standing charge is billed at the start of each billing period.
-         * - FALSE - standing charge is billed at the end of each billing period.
+         * * TRUE - standing charge is billed at the start of each billing period.
+         * * FALSE - standing charge is billed at the end of each billing period.
          *
          * Overrides the setting at Organizational level for standing charge billing in arrears/in
          * advance.
@@ -668,7 +668,7 @@ private constructor(
             body.standingChargeBillInAdvance(standingChargeBillInAdvance)
         }
 
-        /** Standing charge description _(displayed on the bill line item)_. */
+        /** Standing charge description *(displayed on the bill line item)*. */
         fun standingChargeDescription(standingChargeDescription: String) = apply {
             body.standingChargeDescription(standingChargeDescription)
         }
@@ -707,8 +707,8 @@ private constructor(
         /**
          * Defines an offset for when the standing charge is first applied. For example, if the bill
          * is issued every three months and the `standingChargeOfset` is 0, then the charge is
-         * applied to the first bill _(at three months)_; if 1, it would be applied to the second
-         * bill _(at six months)_, and so on.
+         * applied to the first bill *(at three months)*; if 1, it would be applied to the second
+         * bill *(at six months)*, and so on.
          */
         fun standingChargeOffset(standingChargeOffset: Int) = apply {
             body.standingChargeOffset(standingChargeOffset)
@@ -727,8 +727,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -898,6 +898,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val billFrequency: JsonField<BillFrequency>,
         private val currency: JsonField<String>,
@@ -987,12 +988,12 @@ private constructor(
 
         /**
          * Determines the frequency at which bills are generated.
-         * - **Daily**. Starting at midnight each day, covering the twenty-four hour period
+         * * **Daily**. Starting at midnight each day, covering the twenty-four hour period
          *   following.
-         * - **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
-         * - **Monthly**. Starting at midnight on the first day of each month, covering the entire
+         * * **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
+         * * **Monthly**. Starting at midnight on the first day of each month, covering the entire
          *   calendar month following.
-         * - **Annually**. Starting at midnight on first day of each year covering the entire
+         * * **Annually**. Starting at midnight on first day of each year covering the entire
          *   calendar year following.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
@@ -1002,18 +1003,18 @@ private constructor(
 
         /**
          * The ISO currency code for the currency used to charge end users - for example USD, GBP,
-         * EUR. This defines the _pricing currency_ and is inherited by any Plans based on the Plan
+         * EUR. This defines the *pricing currency* and is inherited by any Plans based on the Plan
          * Template.
          *
          * **Notes:**
-         * - You can define a currency at Organization-level or Account-level to be used as the
-         *   _billing currency_. This can be a different currency to that used for the Plan as the
-         *   _pricing currency_.
-         * - If the billing currency for an Account is different to the pricing currency used by a
-         *   Plan attached to the Account, you must ensure a _currency conversion rate_ is defined
+         * * You can define a currency at Organization-level or Account-level to be used as the
+         *   *billing currency*. This can be a different currency to that used for the Plan as the
+         *   *pricing currency*.
+         * * If the billing currency for an Account is different to the pricing currency used by a
+         *   Plan attached to the Account, you must ensure a *currency conversion rate* is defined
          *   for your Organization to convert the pricing currency into the billing currency at
          *   billing, otherwise Bills will fail for the Account.
-         * - To define any required currency conversion rates, use the `currencyConversions` request
+         * * To define any required currency conversion rates, use the `currencyConversions` request
          *   body parameter for the
          *   [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/UpdateOrganizationConfig)
          *   call.
@@ -1040,7 +1041,7 @@ private constructor(
         fun productId(): String = productId.getRequired("productId")
 
         /**
-         * The fixed charge _(standing charge)_ applied to customer bills. This charge is prorated
+         * The fixed charge *(standing charge)* applied to customer bills. This charge is prorated
          * and must be a non-negative number.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
@@ -1095,8 +1096,8 @@ private constructor(
 
         /**
          * A boolean that determines when the minimum spend is billed.
-         * - TRUE - minimum spend is billed at the start of each billing period.
-         * - FALSE - minimum spend is billed at the end of each billing period.
+         * * TRUE - minimum spend is billed at the start of each billing period.
+         * * FALSE - minimum spend is billed at the end of each billing period.
          *
          * Overrides the setting at Organizational level for minimum spend billing in arrears/in
          * advance.
@@ -1108,7 +1109,7 @@ private constructor(
             minimumSpendBillInAdvance.getOptional("minimumSpendBillInAdvance")
 
         /**
-         * Minimum spend description _(displayed on the bill line item)_.
+         * Minimum spend description *(displayed on the bill line item)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1130,8 +1131,8 @@ private constructor(
 
         /**
          * A boolean that determines when the standing charge is billed.
-         * - TRUE - standing charge is billed at the start of each billing period.
-         * - FALSE - standing charge is billed at the end of each billing period.
+         * * TRUE - standing charge is billed at the start of each billing period.
+         * * FALSE - standing charge is billed at the end of each billing period.
          *
          * Overrides the setting at Organizational level for standing charge billing in arrears/in
          * advance.
@@ -1143,7 +1144,7 @@ private constructor(
             standingChargeBillInAdvance.getOptional("standingChargeBillInAdvance")
 
         /**
-         * Standing charge description _(displayed on the bill line item)_.
+         * Standing charge description *(displayed on the bill line item)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1165,8 +1166,8 @@ private constructor(
         /**
          * Defines an offset for when the standing charge is first applied. For example, if the bill
          * is issued every three months and the `standingChargeOfset` is 0, then the charge is
-         * applied to the first bill _(at three months)_; if 1, it would be applied to the second
-         * bill _(at six months)_, and so on.
+         * applied to the first bill *(at three months)*; if 1, it would be applied to the second
+         * bill *(at six months)*, and so on.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1176,8 +1177,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1414,13 +1415,13 @@ private constructor(
 
             /**
              * Determines the frequency at which bills are generated.
-             * - **Daily**. Starting at midnight each day, covering the twenty-four hour period
+             * * **Daily**. Starting at midnight each day, covering the twenty-four hour period
              *   following.
-             * - **Weekly**. Starting at midnight on a Monday, covering the seven-day period
+             * * **Weekly**. Starting at midnight on a Monday, covering the seven-day period
              *   following.
-             * - **Monthly**. Starting at midnight on the first day of each month, covering the
+             * * **Monthly**. Starting at midnight on the first day of each month, covering the
              *   entire calendar month following.
-             * - **Annually**. Starting at midnight on first day of each year covering the entire
+             * * **Annually**. Starting at midnight on first day of each year covering the entire
              *   calendar year following.
              */
             fun billFrequency(billFrequency: BillFrequency) =
@@ -1439,18 +1440,18 @@ private constructor(
 
             /**
              * The ISO currency code for the currency used to charge end users - for example USD,
-             * GBP, EUR. This defines the _pricing currency_ and is inherited by any Plans based on
+             * GBP, EUR. This defines the *pricing currency* and is inherited by any Plans based on
              * the Plan Template.
              *
              * **Notes:**
-             * - You can define a currency at Organization-level or Account-level to be used as the
-             *   _billing currency_. This can be a different currency to that used for the Plan as
-             *   the _pricing currency_.
-             * - If the billing currency for an Account is different to the pricing currency used by
-             *   a Plan attached to the Account, you must ensure a _currency conversion rate_ is
+             * * You can define a currency at Organization-level or Account-level to be used as the
+             *   *billing currency*. This can be a different currency to that used for the Plan as
+             *   the *pricing currency*.
+             * * If the billing currency for an Account is different to the pricing currency used by
+             *   a Plan attached to the Account, you must ensure a *currency conversion rate* is
              *   defined for your Organization to convert the pricing currency into the billing
              *   currency at billing, otherwise Bills will fail for the Account.
-             * - To define any required currency conversion rates, use the `currencyConversions`
+             * * To define any required currency conversion rates, use the `currencyConversions`
              *   request body parameter for the
              *   [Update OrganizationConfig](https://www.m3ter.com/docs/api#tag/OrganizationConfig/operation/UpdateOrganizationConfig)
              *   call.
@@ -1491,7 +1492,7 @@ private constructor(
             fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
             /**
-             * The fixed charge _(standing charge)_ applied to customer bills. This charge is
+             * The fixed charge *(standing charge)* applied to customer bills. This charge is
              * prorated and must be a non-negative number.
              */
             fun standingCharge(standingCharge: Double) =
@@ -1585,8 +1586,8 @@ private constructor(
 
             /**
              * A boolean that determines when the minimum spend is billed.
-             * - TRUE - minimum spend is billed at the start of each billing period.
-             * - FALSE - minimum spend is billed at the end of each billing period.
+             * * TRUE - minimum spend is billed at the start of each billing period.
+             * * FALSE - minimum spend is billed at the end of each billing period.
              *
              * Overrides the setting at Organizational level for minimum spend billing in arrears/in
              * advance.
@@ -1605,7 +1606,7 @@ private constructor(
                 this.minimumSpendBillInAdvance = minimumSpendBillInAdvance
             }
 
-            /** Minimum spend description _(displayed on the bill line item)_. */
+            /** Minimum spend description *(displayed on the bill line item)*. */
             fun minimumSpendDescription(minimumSpendDescription: String) =
                 minimumSpendDescription(JsonField.of(minimumSpendDescription))
 
@@ -1640,8 +1641,8 @@ private constructor(
 
             /**
              * A boolean that determines when the standing charge is billed.
-             * - TRUE - standing charge is billed at the start of each billing period.
-             * - FALSE - standing charge is billed at the end of each billing period.
+             * * TRUE - standing charge is billed at the start of each billing period.
+             * * FALSE - standing charge is billed at the end of each billing period.
              *
              * Overrides the setting at Organizational level for standing charge billing in
              * arrears/in advance.
@@ -1661,7 +1662,7 @@ private constructor(
                     this.standingChargeBillInAdvance = standingChargeBillInAdvance
                 }
 
-            /** Standing charge description _(displayed on the bill line item)_. */
+            /** Standing charge description *(displayed on the bill line item)*. */
             fun standingChargeDescription(standingChargeDescription: String) =
                 standingChargeDescription(JsonField.of(standingChargeDescription))
 
@@ -1698,8 +1699,8 @@ private constructor(
             /**
              * Defines an offset for when the standing charge is first applied. For example, if the
              * bill is issued every three months and the `standingChargeOfset` is 0, then the charge
-             * is applied to the first bill _(at three months)_; if 1, it would be applied to the
-             * second bill _(at six months)_, and so on.
+             * is applied to the first bill *(at three months)*; if 1, it would be applied to the
+             * second bill *(at six months)*, and so on.
              */
             fun standingChargeOffset(standingChargeOffset: Int) =
                 standingChargeOffset(JsonField.of(standingChargeOffset))
@@ -1717,8 +1718,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -1858,12 +1859,49 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && billFrequency == other.billFrequency && currency == other.currency && name == other.name && productId == other.productId && standingCharge == other.standingCharge && billFrequencyInterval == other.billFrequencyInterval && code == other.code && customFields == other.customFields && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && ordinal == other.ordinal && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && standingChargeInterval == other.standingChargeInterval && standingChargeOffset == other.standingChargeOffset && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                billFrequency == other.billFrequency &&
+                currency == other.currency &&
+                name == other.name &&
+                productId == other.productId &&
+                standingCharge == other.standingCharge &&
+                billFrequencyInterval == other.billFrequencyInterval &&
+                code == other.code &&
+                customFields == other.customFields &&
+                minimumSpend == other.minimumSpend &&
+                minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
+                minimumSpendDescription == other.minimumSpendDescription &&
+                ordinal == other.ordinal &&
+                standingChargeBillInAdvance == other.standingChargeBillInAdvance &&
+                standingChargeDescription == other.standingChargeDescription &&
+                standingChargeInterval == other.standingChargeInterval &&
+                standingChargeOffset == other.standingChargeOffset &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(billFrequency, currency, name, productId, standingCharge, billFrequencyInterval, code, customFields, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, ordinal, standingChargeBillInAdvance, standingChargeDescription, standingChargeInterval, standingChargeOffset, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                billFrequency,
+                currency,
+                name,
+                productId,
+                standingCharge,
+                billFrequencyInterval,
+                code,
+                customFields,
+                minimumSpend,
+                minimumSpendBillInAdvance,
+                minimumSpendDescription,
+                ordinal,
+                standingChargeBillInAdvance,
+                standingChargeDescription,
+                standingChargeInterval,
+                standingChargeOffset,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1873,11 +1911,11 @@ private constructor(
 
     /**
      * Determines the frequency at which bills are generated.
-     * - **Daily**. Starting at midnight each day, covering the twenty-four hour period following.
-     * - **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
-     * - **Monthly**. Starting at midnight on the first day of each month, covering the entire
+     * * **Daily**. Starting at midnight each day, covering the twenty-four hour period following.
+     * * **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
+     * * **Monthly**. Starting at midnight on the first day of each month, covering the entire
      *   calendar month following.
-     * - **Annually**. Starting at midnight on first day of each year covering the entire calendar
+     * * **Annually**. Starting at midnight on first day of each year covering the entire calendar
      *   year following.
      */
     class BillFrequency @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -2024,7 +2062,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BillFrequency && value == other.value /* spotless:on */
+            return other is BillFrequency && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2133,12 +2171,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2150,10 +2186,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanTemplateCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is PlanTemplateCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "PlanTemplateCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

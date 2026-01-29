@@ -45,18 +45,18 @@ private constructor(
     fun contractId(): Optional<String> = Optional.ofNullable(contractId)
 
     /**
-     * A date _(in ISO-8601 format)_ to filter Commitments which are active on this specific date.
+     * A date *(in ISO-8601 format)* to filter Commitments which are active on this specific date.
      */
     fun date(): Optional<String> = Optional.ofNullable(date)
 
     /**
-     * A date _(in ISO-8601 format)_ used to filter Commitments. Only Commitments with end dates
+     * A date *(in ISO-8601 format)* used to filter Commitments. Only Commitments with end dates
      * before this date will be included.
      */
     fun endDateEnd(): Optional<String> = Optional.ofNullable(endDateEnd)
 
     /**
-     * A date _(in ISO-8601 format)_ used to filter Commitments. Only Commitments with end dates on
+     * A date *(in ISO-8601 format)* used to filter Commitments. Only Commitments with end dates on
      * or after this date will be included.
      */
     fun endDateStart(): Optional<String> = Optional.ofNullable(endDateStart)
@@ -152,7 +152,7 @@ private constructor(
         fun contractId(contractId: Optional<String>) = contractId(contractId.getOrNull())
 
         /**
-         * A date _(in ISO-8601 format)_ to filter Commitments which are active on this specific
+         * A date *(in ISO-8601 format)* to filter Commitments which are active on this specific
          * date.
          */
         fun date(date: String?) = apply { this.date = date }
@@ -161,7 +161,7 @@ private constructor(
         fun date(date: Optional<String>) = date(date.getOrNull())
 
         /**
-         * A date _(in ISO-8601 format)_ used to filter Commitments. Only Commitments with end dates
+         * A date *(in ISO-8601 format)* used to filter Commitments. Only Commitments with end dates
          * before this date will be included.
          */
         fun endDateEnd(endDateEnd: String?) = apply { this.endDateEnd = endDateEnd }
@@ -170,7 +170,7 @@ private constructor(
         fun endDateEnd(endDateEnd: Optional<String>) = endDateEnd(endDateEnd.getOrNull())
 
         /**
-         * A date _(in ISO-8601 format)_ used to filter Commitments. Only Commitments with end dates
+         * A date *(in ISO-8601 format)* used to filter Commitments. Only Commitments with end dates
          * on or after this date will be included.
          */
         fun endDateStart(endDateStart: String?) = apply { this.endDateStart = endDateStart }
@@ -374,10 +374,36 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CommitmentListParams && orgId == other.orgId && accountId == other.accountId && contractId == other.contractId && date == other.date && endDateEnd == other.endDateEnd && endDateStart == other.endDateStart && ids == other.ids && nextToken == other.nextToken && pageSize == other.pageSize && productId == other.productId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CommitmentListParams &&
+            orgId == other.orgId &&
+            accountId == other.accountId &&
+            contractId == other.contractId &&
+            date == other.date &&
+            endDateEnd == other.endDateEnd &&
+            endDateStart == other.endDateStart &&
+            ids == other.ids &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            productId == other.productId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, contractId, date, endDateEnd, endDateStart, ids, nextToken, pageSize, productId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            accountId,
+            contractId,
+            date,
+            endDateEnd,
+            endDateStart,
+            ids,
+            nextToken,
+            pageSize,
+            productId,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "CommitmentListParams{orgId=$orgId, accountId=$accountId, contractId=$contractId, date=$date, endDateEnd=$endDateEnd, endDateStart=$endDateStart, ids=$ids, nextToken=$nextToken, pageSize=$pageSize, productId=$productId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

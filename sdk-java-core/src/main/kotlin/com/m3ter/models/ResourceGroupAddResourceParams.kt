@@ -41,8 +41,8 @@ private constructor(
 
     /**
      * The id of the item or group you want to:
-     * - _Add Item_ call: add to a Resource Group.
-     * - _Remove Item_ call: remove from the Resource Group.
+     * - *Add Item* call: add to a Resource Group.
+     * - *Remove Item* call: remove from the Resource Group.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -52,12 +52,12 @@ private constructor(
     /**
      * When adding to or removing from a Resource Group, specify whether a single item or group:
      * - `item`
-     *     - _Add Item_ call: use to add a single meter to a Resource Group
-     *     - _Remove Item_ call: use to remove a single from a Resource Group.
+     *     - *Add Item* call: use to add a single meter to a Resource Group
+     *     - *Remove Item* call: use to remove a single from a Resource Group.
      * - `group`
-     *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
+     *     - *Add Item* call: use to add a Resource Group to another Resource Group and form a
      *       nested Resource Group
-     *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+     *     - *Remove Item* call: use remove a nested Resource Group from a Resource Group.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -169,8 +169,8 @@ private constructor(
 
         /**
          * The id of the item or group you want to:
-         * - _Add Item_ call: add to a Resource Group.
-         * - _Remove Item_ call: remove from the Resource Group.
+         * - *Add Item* call: add to a Resource Group.
+         * - *Remove Item* call: remove from the Resource Group.
          */
         fun targetId(targetId: String) = apply { body.targetId(targetId) }
 
@@ -185,12 +185,12 @@ private constructor(
         /**
          * When adding to or removing from a Resource Group, specify whether a single item or group:
          * - `item`
-         *     - _Add Item_ call: use to add a single meter to a Resource Group
-         *     - _Remove Item_ call: use to remove a single from a Resource Group.
+         *     - *Add Item* call: use to add a single meter to a Resource Group
+         *     - *Remove Item* call: use to remove a single from a Resource Group.
          * - `group`
-         *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
+         *     - *Add Item* call: use to add a Resource Group to another Resource Group and form a
          *       nested Resource Group
-         *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+         *     - *Remove Item* call: use remove a nested Resource Group from a Resource Group.
          */
         fun targetType(targetType: TargetType) = apply { body.targetType(targetType) }
 
@@ -371,6 +371,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val targetId: JsonField<String>,
         private val targetType: JsonField<TargetType>,
@@ -391,8 +392,8 @@ private constructor(
 
         /**
          * The id of the item or group you want to:
-         * - _Add Item_ call: add to a Resource Group.
-         * - _Remove Item_ call: remove from the Resource Group.
+         * - *Add Item* call: add to a Resource Group.
+         * - *Remove Item* call: remove from the Resource Group.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -402,12 +403,12 @@ private constructor(
         /**
          * When adding to or removing from a Resource Group, specify whether a single item or group:
          * - `item`
-         *     - _Add Item_ call: use to add a single meter to a Resource Group
-         *     - _Remove Item_ call: use to remove a single from a Resource Group.
+         *     - *Add Item* call: use to add a single meter to a Resource Group
+         *     - *Remove Item* call: use to remove a single from a Resource Group.
          * - `group`
-         *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
+         *     - *Add Item* call: use to add a Resource Group to another Resource Group and form a
          *       nested Resource Group
-         *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+         *     - *Remove Item* call: use remove a nested Resource Group from a Resource Group.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -489,8 +490,8 @@ private constructor(
 
             /**
              * The id of the item or group you want to:
-             * - _Add Item_ call: add to a Resource Group.
-             * - _Remove Item_ call: remove from the Resource Group.
+             * - *Add Item* call: add to a Resource Group.
+             * - *Remove Item* call: remove from the Resource Group.
              */
             fun targetId(targetId: String) = targetId(JsonField.of(targetId))
 
@@ -507,12 +508,12 @@ private constructor(
              * When adding to or removing from a Resource Group, specify whether a single item or
              * group:
              * - `item`
-             *     - _Add Item_ call: use to add a single meter to a Resource Group
-             *     - _Remove Item_ call: use to remove a single from a Resource Group.
+             *     - *Add Item* call: use to add a single meter to a Resource Group
+             *     - *Remove Item* call: use to remove a single from a Resource Group.
              * - `group`
-             *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form
+             *     - *Add Item* call: use to add a Resource Group to another Resource Group and form
              *       a nested Resource Group
-             *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+             *     - *Remove Item* call: use remove a nested Resource Group from a Resource Group.
              */
             fun targetType(targetType: TargetType) = targetType(JsonField.of(targetType))
 
@@ -618,12 +619,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && targetId == other.targetId && targetType == other.targetType && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                targetId == other.targetId &&
+                targetType == other.targetType &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(targetId, targetType, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(targetId, targetType, version, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -634,12 +639,12 @@ private constructor(
     /**
      * When adding to or removing from a Resource Group, specify whether a single item or group:
      * - `item`
-     *     - _Add Item_ call: use to add a single meter to a Resource Group
-     *     - _Remove Item_ call: use to remove a single from a Resource Group.
+     *     - *Add Item* call: use to add a single meter to a Resource Group
+     *     - *Remove Item* call: use to remove a single from a Resource Group.
      * - `group`
-     *     - _Add Item_ call: use to add a Resource Group to another Resource Group and form a
+     *     - *Add Item* call: use to add a Resource Group to another Resource Group and form a
      *       nested Resource Group
-     *     - _Remove Item_ call: use remove a nested Resource Group from a Resource Group.
+     *     - *Remove Item* call: use remove a nested Resource Group from a Resource Group.
      */
     class TargetType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -759,7 +764,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TargetType && value == other.value /* spotless:on */
+            return other is TargetType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -772,10 +777,17 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ResourceGroupAddResourceParams && orgId == other.orgId && type == other.type && resourceGroupId == other.resourceGroupId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ResourceGroupAddResourceParams &&
+            orgId == other.orgId &&
+            type == other.type &&
+            resourceGroupId == other.resourceGroupId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, type, resourceGroupId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, type, resourceGroupId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "ResourceGroupAddResourceParams{orgId=$orgId, type=$type, resourceGroupId=$resourceGroupId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

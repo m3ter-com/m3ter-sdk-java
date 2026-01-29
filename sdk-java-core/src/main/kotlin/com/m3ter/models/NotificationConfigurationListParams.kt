@@ -34,14 +34,14 @@ private constructor(
 
     /**
      * A Boolean flag indicating whether to retrieve only active or only inactive Notifications.
-     * - **TRUE** - only active Notifications are returned.
-     * - **FALSE** - only inactive Notifications are returned.
+     * * **TRUE** - only active Notifications are returned.
+     * * **FALSE** - only inactive Notifications are returned.
      */
     fun active(): Optional<Boolean> = Optional.ofNullable(active)
 
     /**
      * Use this to filter the Notifications returned - only those Notifications that are based on
-     * the _Event type_ specified by `eventName` are returned.
+     * the *Event type* specified by `eventName` are returned.
      */
     fun eventName(): Optional<String> = Optional.ofNullable(eventName)
 
@@ -112,8 +112,8 @@ private constructor(
 
         /**
          * A Boolean flag indicating whether to retrieve only active or only inactive Notifications.
-         * - **TRUE** - only active Notifications are returned.
-         * - **FALSE** - only inactive Notifications are returned.
+         * * **TRUE** - only active Notifications are returned.
+         * * **FALSE** - only inactive Notifications are returned.
          */
         fun active(active: Boolean?) = apply { this.active = active }
 
@@ -129,7 +129,7 @@ private constructor(
 
         /**
          * Use this to filter the Notifications returned - only those Notifications that are based
-         * on the _Event type_ specified by `eventName` are returned.
+         * on the *Event type* specified by `eventName` are returned.
          */
         fun eventName(eventName: String?) = apply { this.eventName = eventName }
 
@@ -312,10 +312,28 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is NotificationConfigurationListParams && orgId == other.orgId && active == other.active && eventName == other.eventName && ids == other.ids && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is NotificationConfigurationListParams &&
+            orgId == other.orgId &&
+            active == other.active &&
+            eventName == other.eventName &&
+            ids == other.ids &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, active, eventName, ids, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            active,
+            eventName,
+            ids,
+            nextToken,
+            pageSize,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "NotificationConfigurationListParams{orgId=$orgId, active=$active, eventName=$eventName, ids=$ids, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

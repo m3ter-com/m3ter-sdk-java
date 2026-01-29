@@ -20,6 +20,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class CustomFieldsResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val account: JsonField<Account>,
@@ -152,7 +153,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The DateTime when the Organization was created _(in ISO-8601 format)_.
+     * The DateTime when the Organization was created *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -161,7 +162,7 @@ private constructor(
 
     /**
      * The DateTime when a custom field was last modified - created, modified, or deleted - for the
-     * Organization _(in ISO-8601 format)_.
+     * Organization *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -512,7 +513,7 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The DateTime when the Organization was created _(in ISO-8601 format)_. */
+        /** The DateTime when the Organization was created *(in ISO-8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -526,7 +527,7 @@ private constructor(
 
         /**
          * The DateTime when a custom field was last modified - created, modified, or deleted - for
-         * the Organization _(in ISO-8601 format)_.
+         * the Organization *(in ISO-8601 format)*.
          */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
@@ -834,12 +835,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Account && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Account && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -936,12 +935,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountPlan && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is AccountPlan && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1038,12 +1035,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Aggregation && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Aggregation && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1141,12 +1136,11 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CompoundAggregation && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CompoundAggregation &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1243,12 +1237,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Contract && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Contract && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1345,12 +1337,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Meter && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Meter && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1447,12 +1437,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Organization && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Organization && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1549,12 +1537,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Plan && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Plan && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1651,12 +1637,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PlanTemplate && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is PlanTemplate && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1753,12 +1737,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Product && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Product && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1770,12 +1752,47 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomFieldsResponse && id == other.id && account == other.account && accountPlan == other.accountPlan && aggregation == other.aggregation && compoundAggregation == other.compoundAggregation && contract == other.contract && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && meter == other.meter && organization == other.organization && plan == other.plan && planTemplate == other.planTemplate && product == other.product && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CustomFieldsResponse &&
+            id == other.id &&
+            account == other.account &&
+            accountPlan == other.accountPlan &&
+            aggregation == other.aggregation &&
+            compoundAggregation == other.compoundAggregation &&
+            contract == other.contract &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            meter == other.meter &&
+            organization == other.organization &&
+            plan == other.plan &&
+            planTemplate == other.planTemplate &&
+            product == other.product &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, account, accountPlan, aggregation, compoundAggregation, contract, createdBy, dtCreated, dtLastModified, lastModifiedBy, meter, organization, plan, planTemplate, product, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            account,
+            accountPlan,
+            aggregation,
+            compoundAggregation,
+            contract,
+            createdBy,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            meter,
+            organization,
+            plan,
+            planTemplate,
+            product,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import com.m3ter.client.M3terClientAsync
 import com.m3ter.client.M3terClientAsyncImpl
 import com.m3ter.core.ClientOptions
+import com.m3ter.core.Sleeper
 import com.m3ter.core.Timeout
 import com.m3ter.core.http.AsyncStreamResponse
 import com.m3ter.core.http.Headers
@@ -17,6 +18,7 @@ import java.time.Clock
 import java.time.Duration
 import java.util.Optional
 import java.util.concurrent.Executor
+import java.util.concurrent.ExecutorService
 import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.X509TrustManager
@@ -45,10 +47,30 @@ class M3terOkHttpClientAsync private constructor() {
     class Builder internal constructor() {
 
         private var clientOptions: ClientOptions.Builder = ClientOptions.builder()
+        private var dispatcherExecutorService: ExecutorService? = null
         private var proxy: Proxy? = null
         private var sslSocketFactory: SSLSocketFactory? = null
         private var trustManager: X509TrustManager? = null
         private var hostnameVerifier: HostnameVerifier? = null
+
+        /**
+         * The executor service to use for running HTTP requests.
+         *
+         * Defaults to OkHttp's
+         * [default executor service](https://github.com/square/okhttp/blob/ace792f443b2ffb17974f5c0d1cecdf589309f26/okhttp/src/commonJvmAndroid/kotlin/okhttp3/Dispatcher.kt#L98-L104).
+         *
+         * This class takes ownership of the executor service and shuts it down when closed.
+         */
+        fun dispatcherExecutorService(dispatcherExecutorService: ExecutorService?) = apply {
+            this.dispatcherExecutorService = dispatcherExecutorService
+        }
+
+        /**
+         * Alias for calling [Builder.dispatcherExecutorService] with
+         * `dispatcherExecutorService.orElse(null)`.
+         */
+        fun dispatcherExecutorService(dispatcherExecutorService: Optional<ExecutorService>) =
+            dispatcherExecutorService(dispatcherExecutorService.getOrNull())
 
         fun proxy(proxy: Proxy?) = apply { this.proxy = proxy }
 
@@ -126,10 +148,23 @@ class M3terOkHttpClientAsync private constructor() {
          * The executor to use for running [AsyncStreamResponse.Handler] callbacks.
          *
          * Defaults to a dedicated cached thread pool.
+         *
+         * This class takes ownership of the executor and shuts it down, if possible, when closed.
          */
         fun streamHandlerExecutor(streamHandlerExecutor: Executor) = apply {
             clientOptions.streamHandlerExecutor(streamHandlerExecutor)
         }
+
+        /**
+         * The interface to use for delaying execution, like during retries.
+         *
+         * This is primarily useful for using fake delays in tests.
+         *
+         * Defaults to real execution delays.
+         *
+         * This class takes ownership of the sleeper and closes it when closed.
+         */
+        fun sleeper(sleeper: Sleeper) = apply { clientOptions.sleeper(sleeper) }
 
         /**
          * The clock to use for operations that require timing, like retries.
@@ -304,6 +339,7 @@ class M3terOkHttpClientAsync private constructor() {
                         OkHttpClient.builder()
                             .timeout(clientOptions.timeout())
                             .proxy(proxy)
+                            .dispatcherExecutorService(dispatcherExecutorService)
                             .sslSocketFactory(sslSocketFactory)
                             .trustManager(trustManager)
                             .hostnameVerifier(hostnameVerifier)

@@ -23,13 +23,13 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class AccountResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val address: JsonField<Address>,
     private val autoGenerateStatementMode: JsonField<AutoGenerateStatementMode>,
     private val billEpoch: JsonField<LocalDate>,
     private val code: JsonField<String>,
-    private val configData: JsonField<ConfigData>,
     private val createdBy: JsonField<String>,
     private val creditApplicationOrder: JsonField<List<CreditApplicationOrder>>,
     private val currency: JsonField<String>,
@@ -58,9 +58,6 @@ private constructor(
         @ExcludeMissing
         billEpoch: JsonField<LocalDate> = JsonMissing.of(),
         @JsonProperty("code") @ExcludeMissing code: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("configData")
-        @ExcludeMissing
-        configData: JsonField<ConfigData> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("creditApplicationOrder")
         @ExcludeMissing
@@ -101,7 +98,6 @@ private constructor(
         autoGenerateStatementMode,
         billEpoch,
         code,
-        configData,
         createdBy,
         creditApplicationOrder,
         currency,
@@ -169,14 +165,6 @@ private constructor(
     fun code(): Optional<String> = code.getOptional("code")
 
     /**
-     * Configuration data for the Account
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
-     */
-    fun configData(): Optional<ConfigData> = configData.getOptional("configData")
-
-    /**
      * The ID of the user who created the account.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -241,7 +229,7 @@ private constructor(
     fun daysBeforeBillDue(): Optional<Int> = daysBeforeBillDue.getOptional("daysBeforeBillDue")
 
     /**
-     * The DateTime when the Account was created _(in ISO 8601 format)_.
+     * The DateTime when the Account was created *(in ISO 8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -249,7 +237,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when the Account was last modified _(in ISO 8601 format)_.
+     * The DateTime when the Account was last modified *(in ISO 8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -370,15 +358,6 @@ private constructor(
      * Unlike [code], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("code") @ExcludeMissing fun _code(): JsonField<String> = code
-
-    /**
-     * Returns the raw JSON value of [configData].
-     *
-     * Unlike [configData], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("configData")
-    @ExcludeMissing
-    fun _configData(): JsonField<ConfigData> = configData
 
     /**
      * Returns the raw JSON value of [createdBy].
@@ -536,7 +515,6 @@ private constructor(
             JsonMissing.of()
         private var billEpoch: JsonField<LocalDate> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
-        private var configData: JsonField<ConfigData> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var creditApplicationOrder: JsonField<MutableList<CreditApplicationOrder>>? = null
         private var currency: JsonField<String> = JsonMissing.of()
@@ -560,7 +538,6 @@ private constructor(
             autoGenerateStatementMode = accountResponse.autoGenerateStatementMode
             billEpoch = accountResponse.billEpoch
             code = accountResponse.code
-            configData = accountResponse.configData
             createdBy = accountResponse.createdBy
             creditApplicationOrder =
                 accountResponse.creditApplicationOrder.map { it.toMutableList() }
@@ -650,18 +627,6 @@ private constructor(
          * method is primarily for setting the field to an undocumented or not yet supported value.
          */
         fun code(code: JsonField<String>) = apply { this.code = code }
-
-        /** Configuration data for the Account */
-        fun configData(configData: ConfigData) = configData(JsonField.of(configData))
-
-        /**
-         * Sets [Builder.configData] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.configData] with a well-typed [ConfigData] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun configData(configData: JsonField<ConfigData>) = apply { this.configData = configData }
 
         /** The ID of the user who created the account. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
@@ -773,7 +738,7 @@ private constructor(
             this.daysBeforeBillDue = daysBeforeBillDue
         }
 
-        /** The DateTime when the Account was created _(in ISO 8601 format)_. */
+        /** The DateTime when the Account was created *(in ISO 8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -785,7 +750,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when the Account was last modified _(in ISO 8601 format)_. */
+        /** The DateTime when the Account was last modified *(in ISO 8601 format)*. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -957,7 +922,6 @@ private constructor(
                 autoGenerateStatementMode,
                 billEpoch,
                 code,
-                configData,
                 createdBy,
                 (creditApplicationOrder ?: JsonMissing.of()).map { it.toImmutable() },
                 currency,
@@ -988,7 +952,6 @@ private constructor(
         autoGenerateStatementMode().ifPresent { it.validate() }
         billEpoch()
         code()
-        configData().ifPresent { it.validate() }
         createdBy()
         creditApplicationOrder().ifPresent { it.forEach { it.validate() } }
         currency()
@@ -1026,7 +989,6 @@ private constructor(
             (autoGenerateStatementMode.asKnown().getOrNull()?.validity() ?: 0) +
             (if (billEpoch.asKnown().isPresent) 1 else 0) +
             (if (code.asKnown().isPresent) 1 else 0) +
-            (configData.asKnown().getOrNull()?.validity() ?: 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
             (creditApplicationOrder.asKnown().getOrNull()?.sumOf { it.validity().toInt() } ?: 0) +
             (if (currency.asKnown().isPresent) 1 else 0) +
@@ -1177,114 +1139,12 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AutoGenerateStatementMode && value == other.value /* spotless:on */
+            return other is AutoGenerateStatementMode && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
 
         override fun toString() = value.toString()
-    }
-
-    /** Configuration data for the Account */
-    class ConfigData
-    @JsonCreator
-    private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
-    ) {
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /** Returns a mutable builder for constructing an instance of [ConfigData]. */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [ConfigData]. */
-        class Builder internal constructor() {
-
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(configData: ConfigData) = apply {
-                additionalProperties = configData.additionalProperties.toMutableMap()
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [ConfigData].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): ConfigData = ConfigData(additionalProperties.toImmutable())
-        }
-
-        private var validated: Boolean = false
-
-        fun validate(): ConfigData = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: M3terInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        @JvmSynthetic
-        internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is ConfigData && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() = "ConfigData{additionalProperties=$additionalProperties}"
     }
 
     class CreditApplicationOrder
@@ -1410,7 +1270,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CreditApplicationOrder && value == other.value /* spotless:on */
+            return other is CreditApplicationOrder && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1519,12 +1379,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1536,15 +1394,56 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountResponse && id == other.id && address == other.address && autoGenerateStatementMode == other.autoGenerateStatementMode && billEpoch == other.billEpoch && code == other.code && configData == other.configData && createdBy == other.createdBy && creditApplicationOrder == other.creditApplicationOrder && currency == other.currency && customFields == other.customFields && daysBeforeBillDue == other.daysBeforeBillDue && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && emailAddress == other.emailAddress && lastModifiedBy == other.lastModifiedBy && name == other.name && parentAccountId == other.parentAccountId && purchaseOrderNumber == other.purchaseOrderNumber && statementDefinitionId == other.statementDefinitionId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AccountResponse &&
+            id == other.id &&
+            address == other.address &&
+            autoGenerateStatementMode == other.autoGenerateStatementMode &&
+            billEpoch == other.billEpoch &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            creditApplicationOrder == other.creditApplicationOrder &&
+            currency == other.currency &&
+            customFields == other.customFields &&
+            daysBeforeBillDue == other.daysBeforeBillDue &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            emailAddress == other.emailAddress &&
+            lastModifiedBy == other.lastModifiedBy &&
+            name == other.name &&
+            parentAccountId == other.parentAccountId &&
+            purchaseOrderNumber == other.purchaseOrderNumber &&
+            statementDefinitionId == other.statementDefinitionId &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, address, autoGenerateStatementMode, billEpoch, code, configData, createdBy, creditApplicationOrder, currency, customFields, daysBeforeBillDue, dtCreated, dtLastModified, emailAddress, lastModifiedBy, name, parentAccountId, purchaseOrderNumber, statementDefinitionId, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            address,
+            autoGenerateStatementMode,
+            billEpoch,
+            code,
+            createdBy,
+            creditApplicationOrder,
+            currency,
+            customFields,
+            daysBeforeBillDue,
+            dtCreated,
+            dtLastModified,
+            emailAddress,
+            lastModifiedBy,
+            name,
+            parentAccountId,
+            purchaseOrderNumber,
+            statementDefinitionId,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AccountResponse{id=$id, address=$address, autoGenerateStatementMode=$autoGenerateStatementMode, billEpoch=$billEpoch, code=$code, configData=$configData, createdBy=$createdBy, creditApplicationOrder=$creditApplicationOrder, currency=$currency, customFields=$customFields, daysBeforeBillDue=$daysBeforeBillDue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, emailAddress=$emailAddress, lastModifiedBy=$lastModifiedBy, name=$name, parentAccountId=$parentAccountId, purchaseOrderNumber=$purchaseOrderNumber, statementDefinitionId=$statementDefinitionId, version=$version, additionalProperties=$additionalProperties}"
+        "AccountResponse{id=$id, address=$address, autoGenerateStatementMode=$autoGenerateStatementMode, billEpoch=$billEpoch, code=$code, createdBy=$createdBy, creditApplicationOrder=$creditApplicationOrder, currency=$currency, customFields=$customFields, daysBeforeBillDue=$daysBeforeBillDue, dtCreated=$dtCreated, dtLastModified=$dtLastModified, emailAddress=$emailAddress, lastModifiedBy=$lastModifiedBy, name=$name, parentAccountId=$parentAccountId, purchaseOrderNumber=$purchaseOrderNumber, statementDefinitionId=$statementDefinitionId, version=$version, additionalProperties=$additionalProperties}"
 }

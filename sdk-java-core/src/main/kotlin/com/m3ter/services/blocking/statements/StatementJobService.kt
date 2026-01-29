@@ -34,13 +34,13 @@ interface StatementJobService {
      * UUID.
      *
      * The Bill Statement is generated asynchronously:
-     * - The default format for generating the Statement is in JSON format and according to the Bill
+     * * The default format for generating the Statement is in JSON format and according to the Bill
      *   Statement Definition you've specified at either Organization level or Account level.
-     * - If you also want to generate the Statement in CSV format, use the `includeCsvFormat`
+     * * If you also want to generate the Statement in CSV format, use the `includeCsvFormat`
      *   request body parameter.
-     * - The response body provides a time-bound pre-signed URL, which you can use to download the
+     * * The response body provides a time-bound pre-signed URL, which you can use to download the
      *   JSON format Statement.
-     * - When you have generated a Statement for a Bill, you can also obtain a time-bound pre-signed
+     * * When you have generated a Statement for a Bill, you can also obtain a time-bound pre-signed
      *   download URL using either the
      *   [Retrieve Bill Statement in JSON Format](https://www.m3ter.com/docs/api#tag/Bill/operation/GetBillJsonStatement)
      *   and
@@ -49,13 +49,13 @@ interface StatementJobService {
      *   Reference.
      *
      * **Notes:**
-     * - If the response to the Create StatementJob call shows the `statementJobStatus` as `PENDING`
+     * * If the response to the Create StatementJob call shows the `statementJobStatus` as `PENDING`
      *   or `RUNNING`, you will not receive the pre-signed URL in the response. Wait a few minutes
      *   to allow the StatementJob to complete and then use the
      *   [Get StatmentJob](https://www.m3ter.com/docs/api#tag/StatementJob/operation/GetStatementJob)
      *   call in this section to obtain the pre-signed download URL for the generated Bill
      *   Statement.
-     * - When you have submitted a StatementJob and a Bill Statement has been generated, you can
+     * * When you have submitted a StatementJob and a Bill Statement has been generated, you can
      *   also download the Statement directly from a Bill Details page in the Console. See
      *   [Working with Bill Statements](https://www.m3ter.com/docs/guides/billing-and-usage-data/running-viewing-and-managing-bills/working-with-bill-statements)
      *   in our user Documentation.
@@ -118,14 +118,14 @@ interface StatementJobService {
      *
      * Retrieves a list of all StatementJobs for a specific Organization. You can filter the results
      * based on:
-     * - StatementJob status.
-     * - Whether StatementJob is neither completed nor cancelled but remains active.
-     * - The ID of the Bill the StatementJob is associated with.
+     * * StatementJob status.
+     * * Whether StatementJob is neither completed nor cancelled but remains active.
+     * * The ID of the Bill the StatementJob is associated with.
      *
      * You can also paginate the results for easier management.
      *
      * **WARNING!**
-     * - You can use only one of the valid Query parameters: `active`, `status`, or `billId` in any
+     * * You can use only one of the valid Query parameters: `active`, `status`, or `billId` in any
      *   call. If you use more than one of these Query parameters in the same call, then a 400 Bad
      *   Request is returned with an error message.
      */
@@ -188,13 +188,13 @@ interface StatementJobService {
      *
      * Initiate the creation of multiple StatementJobs asynchronously for the list of bills with the
      * given UUIDs:
-     * - The default format for generating Bill Statements is in JSON format and according to the
+     * * The default format for generating Bill Statements is in JSON format and according to the
      *   Bill Statement Definition you've specified at either Organization level or Account level.
-     * - If you also want to generate the Statements in CSV format, use the `includeCsvFormat`
+     * * If you also want to generate the Statements in CSV format, use the `includeCsvFormat`
      *   request body parameter.
-     * - The response body provides a time-bound pre-signed URL, which you can use to download the
+     * * The response body provides a time-bound pre-signed URL, which you can use to download the
      *   JSON format Statement.
-     * - When you have generated a Statement for a Bill, you can also obtain a time-bound pre-signed
+     * * When you have generated a Statement for a Bill, you can also obtain a time-bound pre-signed
      *   download URL using either the
      *   [Retrieve Bill Statement in JSON Format](https://www.m3ter.com/docs/api#tag/Bill/operation/GetBillJsonStatement)
      *   and
@@ -203,13 +203,13 @@ interface StatementJobService {
      *   Reference.
      *
      * **Notes:**
-     * - If the response to the Create StatementJob call shows the `statementJobStatus` as `PENDING`
+     * * If the response to the Create StatementJob call shows the `statementJobStatus` as `PENDING`
      *   or `RUNNING`, you will not receive the pre-signed URL in the response. Wait a few minutes
      *   to allow the StatementJob to complete and then use the
      *   [Get StatmentJob](https://www.m3ter.com/docs/api#tag/StatementJob/operation/GetStatementJob)
      *   call in this section to obtain the pre-signed download URL for the generated Bill
      *   Statement.
-     * - When you have submitted a StatementJob and a Bill Statement has been generated, you can
+     * * When you have submitted a StatementJob and a Bill Statement has been generated, you can
      *   also download the Statement directly from a Bill Details page in the Console. See
      *   [Working with Bill Statements](https://www.m3ter.com/docs/guides/billing-and-usage-data/running-viewing-and-managing-bills/working-with-bill-statements)
      *   in our user Documentation.

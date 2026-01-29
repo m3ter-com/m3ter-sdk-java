@@ -11,7 +11,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /**
  * Retrieve a Data Export Schedule for the given UUID. Each Schedule can be configured for exporting
- * _only one_ of either Usage or Operational data.
+ * *only one* of either Usage or Operational data.
  */
 class DataExportScheduleRetrieveParams
 private constructor(
@@ -203,10 +203,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportScheduleRetrieveParams && orgId == other.orgId && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is DataExportScheduleRetrieveParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(orgId, id, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "DataExportScheduleRetrieveParams{orgId=$orgId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

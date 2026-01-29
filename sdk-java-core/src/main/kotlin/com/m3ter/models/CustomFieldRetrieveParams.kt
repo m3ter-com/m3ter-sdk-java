@@ -185,10 +185,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomFieldRetrieveParams && orgId == other.orgId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CustomFieldRetrieveParams &&
+            orgId == other.orgId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(orgId, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CustomFieldRetrieveParams{orgId=$orgId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

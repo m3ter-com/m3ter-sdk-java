@@ -3,19 +3,19 @@
 package com.m3ter.models
 
 import com.m3ter.core.Params
+import com.m3ter.core.checkRequired
 import com.m3ter.core.http.Headers
 import com.m3ter.core.http.QueryParams
 import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-/** Retrieve a list of Accounts that are children of the specified Account. */
-class AccountGetChildrenParams
+/** Retrieve a BalanceTransactionSchedule for the given UUID. */
+class BalanceTransactionScheduleRetrieveParams
 private constructor(
     private val orgId: String?,
+    private val balanceId: String,
     private val id: String?,
-    private val nextToken: String?,
-    private val pageSize: Int?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -23,11 +23,9 @@ private constructor(
     @Deprecated("the org id should be set at the client level instead")
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
+    fun balanceId(): String = balanceId
+
     fun id(): Optional<String> = Optional.ofNullable(id)
-
-    fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
-
-    fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
     /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -39,30 +37,38 @@ private constructor(
 
     companion object {
 
-        @JvmStatic fun none(): AccountGetChildrenParams = builder().build()
-
-        /** Returns a mutable builder for constructing an instance of [AccountGetChildrenParams]. */
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [BalanceTransactionScheduleRetrieveParams].
+         *
+         * The following fields are required:
+         * ```java
+         * .balanceId()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [AccountGetChildrenParams]. */
+    /** A builder for [BalanceTransactionScheduleRetrieveParams]. */
     class Builder internal constructor() {
 
         private var orgId: String? = null
+        private var balanceId: String? = null
         private var id: String? = null
-        private var nextToken: String? = null
-        private var pageSize: Int? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         @JvmSynthetic
-        internal fun from(accountGetChildrenParams: AccountGetChildrenParams) = apply {
-            orgId = accountGetChildrenParams.orgId
-            id = accountGetChildrenParams.id
-            nextToken = accountGetChildrenParams.nextToken
-            pageSize = accountGetChildrenParams.pageSize
-            additionalHeaders = accountGetChildrenParams.additionalHeaders.toBuilder()
-            additionalQueryParams = accountGetChildrenParams.additionalQueryParams.toBuilder()
+        internal fun from(
+            balanceTransactionScheduleRetrieveParams: BalanceTransactionScheduleRetrieveParams
+        ) = apply {
+            orgId = balanceTransactionScheduleRetrieveParams.orgId
+            balanceId = balanceTransactionScheduleRetrieveParams.balanceId
+            id = balanceTransactionScheduleRetrieveParams.id
+            additionalHeaders =
+                balanceTransactionScheduleRetrieveParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                balanceTransactionScheduleRetrieveParams.additionalQueryParams.toBuilder()
         }
 
         @Deprecated("the org id should be set at the client level instead")
@@ -72,27 +78,12 @@ private constructor(
         @Deprecated("the org id should be set at the client level instead")
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
+        fun balanceId(balanceId: String) = apply { this.balanceId = balanceId }
+
         fun id(id: String?) = apply { this.id = id }
 
         /** Alias for calling [Builder.id] with `id.orElse(null)`. */
         fun id(id: Optional<String>) = id(id.getOrNull())
-
-        fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
-
-        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
-        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
-
-        fun pageSize(pageSize: Int?) = apply { this.pageSize = pageSize }
-
-        /**
-         * Alias for [Builder.pageSize].
-         *
-         * This unboxed primitive overload exists for backwards compatibility.
-         */
-        fun pageSize(pageSize: Int) = pageSize(pageSize as Int?)
-
-        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
-        fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -193,16 +184,22 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [AccountGetChildrenParams].
+         * Returns an immutable instance of [BalanceTransactionScheduleRetrieveParams].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .balanceId()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
          */
-        fun build(): AccountGetChildrenParams =
-            AccountGetChildrenParams(
+        fun build(): BalanceTransactionScheduleRetrieveParams =
+            BalanceTransactionScheduleRetrieveParams(
                 orgId,
+                checkRequired("balanceId", balanceId),
                 id,
-                nextToken,
-                pageSize,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -211,31 +208,31 @@ private constructor(
     fun _pathParam(index: Int): String =
         when (index) {
             0 -> orgId ?: ""
-            1 -> id ?: ""
+            1 -> balanceId
+            2 -> id ?: ""
             else -> ""
         }
 
     override fun _headers(): Headers = additionalHeaders
 
-    override fun _queryParams(): QueryParams =
-        QueryParams.builder()
-            .apply {
-                nextToken?.let { put("nextToken", it) }
-                pageSize?.let { put("pageSize", it.toString()) }
-                putAll(additionalQueryParams)
-            }
-            .build()
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is AccountGetChildrenParams && orgId == other.orgId && id == other.id && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BalanceTransactionScheduleRetrieveParams &&
+            orgId == other.orgId &&
+            balanceId == other.balanceId &&
+            id == other.id &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, balanceId, id, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
-        "AccountGetChildrenParams{orgId=$orgId, id=$id, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "BalanceTransactionScheduleRetrieveParams{orgId=$orgId, balanceId=$balanceId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

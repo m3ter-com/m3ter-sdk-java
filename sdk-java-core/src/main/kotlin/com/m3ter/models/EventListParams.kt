@@ -18,9 +18,9 @@ import kotlin.jvm.optionals.getOrNull
  * under a specific kind of Event.
  *
  * **NOTES:** You can:
- * - Use `eventName` as a valid Query parameter to filter the list of Events returned. For example:
+ * * Use `eventName` as a valid Query parameter to filter the list of Events returned. For example:
  *   `.../organizations/{orgId}/events?eventName=configuration.commitment.created`
- * - Use the
+ * * Use the
  *   [List Notification Events](https://www.m3ter.com/docs/api#tag/Events/operation/ListEventTypes)
  *   endpoint in this section. The response lists the valid Query parameters.
  */
@@ -54,10 +54,10 @@ private constructor(
 
     /**
      * The category of Events to filter the results by. Options:
-     * - Notification
-     * - IntegrationEvent
-     * - IngestValidationFailure
-     * - DataExportJobFailure
+     * * Notification
+     * * IntegrationEvent
+     * * IngestValidationFailure
+     * * DataExportJobFailure
      */
     fun eventType(): Optional<String> = Optional.ofNullable(eventType)
 
@@ -70,8 +70,8 @@ private constructor(
 
     /**
      * A Boolean flag indicating whether to return Events that have been actioned.
-     * - **TRUE** - include actioned Events.
-     * - **FALSE** - exclude actioned Events.
+     * * **TRUE** - include actioned Events.
+     * * **FALSE** - exclude actioned Events.
      */
     fun includeActioned(): Optional<Boolean> = Optional.ofNullable(includeActioned)
 
@@ -171,10 +171,10 @@ private constructor(
 
         /**
          * The category of Events to filter the results by. Options:
-         * - Notification
-         * - IntegrationEvent
-         * - IngestValidationFailure
-         * - DataExportJobFailure
+         * * Notification
+         * * IntegrationEvent
+         * * IngestValidationFailure
+         * * DataExportJobFailure
          */
         fun eventType(eventType: String?) = apply { this.eventType = eventType }
 
@@ -200,8 +200,8 @@ private constructor(
 
         /**
          * A Boolean flag indicating whether to return Events that have been actioned.
-         * - **TRUE** - include actioned Events.
-         * - **FALSE** - exclude actioned Events.
+         * * **TRUE** - include actioned Events.
+         * * **FALSE** - exclude actioned Events.
          */
         fun includeActioned(includeActioned: Boolean?) = apply {
             this.includeActioned = includeActioned
@@ -418,10 +418,38 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventListParams && orgId == other.orgId && accountId == other.accountId && eventName == other.eventName && eventType == other.eventType && ids == other.ids && includeActioned == other.includeActioned && nextToken == other.nextToken && notificationCode == other.notificationCode && notificationId == other.notificationId && pageSize == other.pageSize && resourceId == other.resourceId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is EventListParams &&
+            orgId == other.orgId &&
+            accountId == other.accountId &&
+            eventName == other.eventName &&
+            eventType == other.eventType &&
+            ids == other.ids &&
+            includeActioned == other.includeActioned &&
+            nextToken == other.nextToken &&
+            notificationCode == other.notificationCode &&
+            notificationId == other.notificationId &&
+            pageSize == other.pageSize &&
+            resourceId == other.resourceId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, eventName, eventType, ids, includeActioned, nextToken, notificationCode, notificationId, pageSize, resourceId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            accountId,
+            eventName,
+            eventType,
+            ids,
+            includeActioned,
+            nextToken,
+            notificationCode,
+            notificationId,
+            pageSize,
+            resourceId,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "EventListParams{orgId=$orgId, accountId=$accountId, eventName=$eventName, eventType=$eventType, ids=$ids, includeActioned=$includeActioned, nextToken=$nextToken, notificationCode=$notificationCode, notificationId=$notificationId, pageSize=$pageSize, resourceId=$resourceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

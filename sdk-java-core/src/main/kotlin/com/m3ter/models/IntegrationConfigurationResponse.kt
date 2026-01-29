@@ -20,6 +20,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class IntegrationConfigurationResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val destination: JsonField<String>,
@@ -27,6 +28,7 @@ private constructor(
     private val entityType: JsonField<String>,
     private val status: JsonField<Status>,
     private val createdBy: JsonField<String>,
+    private val destinationId: JsonField<String>,
     private val dtCompleted: JsonField<OffsetDateTime>,
     private val dtCreated: JsonField<OffsetDateTime>,
     private val dtLastModified: JsonField<OffsetDateTime>,
@@ -34,6 +36,7 @@ private constructor(
     private val error: JsonField<String>,
     private val externalId: JsonField<String>,
     private val lastModifiedBy: JsonField<String>,
+    private val parentIntegrationRunId: JsonField<String>,
     private val url: JsonField<String>,
     private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -51,6 +54,9 @@ private constructor(
         entityType: JsonField<String> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("destinationId")
+        @ExcludeMissing
+        destinationId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("dtCompleted")
         @ExcludeMissing
         dtCompleted: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -70,6 +76,9 @@ private constructor(
         @JsonProperty("lastModifiedBy")
         @ExcludeMissing
         lastModifiedBy: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("parentIntegrationRunId")
+        @ExcludeMissing
+        parentIntegrationRunId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("url") @ExcludeMissing url: JsonField<String> = JsonMissing.of(),
         @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
@@ -79,6 +88,7 @@ private constructor(
         entityType,
         status,
         createdBy,
+        destinationId,
         dtCompleted,
         dtCreated,
         dtLastModified,
@@ -86,6 +96,7 @@ private constructor(
         error,
         externalId,
         lastModifiedBy,
+        parentIntegrationRunId,
         url,
         version,
         mutableMapOf(),
@@ -117,8 +128,8 @@ private constructor(
 
     /**
      * The type of entity the integration run is for. Two options:
-     * - Bill
-     * - Notification
+     * * Bill
+     * * Notification
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -140,7 +151,15 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The date and time the integration was completed. _(in ISO-8601 format)_.
+     * Identifier of the destination
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun destinationId(): Optional<String> = destinationId.getOptional("destinationId")
+
+    /**
+     * The date and time the integration was completed. *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -148,7 +167,7 @@ private constructor(
     fun dtCompleted(): Optional<OffsetDateTime> = dtCompleted.getOptional("dtCompleted")
 
     /**
-     * The DateTime when this item was created _(in ISO-8601 format)_.
+     * The DateTime when this item was created *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -156,7 +175,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when this item was last modified _(in ISO-8601 format)_.
+     * The DateTime when this item was last modified *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -164,7 +183,7 @@ private constructor(
     fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
-     * The date and time the integration run was started _(in ISO-8601 format)_.
+     * The date and time the integration run was started *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -194,6 +213,15 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun lastModifiedBy(): Optional<String> = lastModifiedBy.getOptional("lastModifiedBy")
+
+    /**
+     * ID of the parent integration run, or null if this is a parent integration run
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun parentIntegrationRunId(): Optional<String> =
+        parentIntegrationRunId.getOptional("parentIntegrationRunId")
 
     /**
      * The URL of the entity in the destination system if available.
@@ -257,6 +285,15 @@ private constructor(
     @JsonProperty("createdBy") @ExcludeMissing fun _createdBy(): JsonField<String> = createdBy
 
     /**
+     * Returns the raw JSON value of [destinationId].
+     *
+     * Unlike [destinationId], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("destinationId")
+    @ExcludeMissing
+    fun _destinationId(): JsonField<String> = destinationId
+
+    /**
      * Returns the raw JSON value of [dtCompleted].
      *
      * Unlike [dtCompleted], this method doesn't throw if the JSON field has an unexpected type.
@@ -316,6 +353,16 @@ private constructor(
     fun _lastModifiedBy(): JsonField<String> = lastModifiedBy
 
     /**
+     * Returns the raw JSON value of [parentIntegrationRunId].
+     *
+     * Unlike [parentIntegrationRunId], this method doesn't throw if the JSON field has an
+     * unexpected type.
+     */
+    @JsonProperty("parentIntegrationRunId")
+    @ExcludeMissing
+    fun _parentIntegrationRunId(): JsonField<String> = parentIntegrationRunId
+
+    /**
      * Returns the raw JSON value of [url].
      *
      * Unlike [url], this method doesn't throw if the JSON field has an unexpected type.
@@ -368,6 +415,7 @@ private constructor(
         private var entityType: JsonField<String>? = null
         private var status: JsonField<Status>? = null
         private var createdBy: JsonField<String> = JsonMissing.of()
+        private var destinationId: JsonField<String> = JsonMissing.of()
         private var dtCompleted: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -375,6 +423,7 @@ private constructor(
         private var error: JsonField<String> = JsonMissing.of()
         private var externalId: JsonField<String> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
+        private var parentIntegrationRunId: JsonField<String> = JsonMissing.of()
         private var url: JsonField<String> = JsonMissing.of()
         private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -388,6 +437,7 @@ private constructor(
                 entityType = integrationConfigurationResponse.entityType
                 status = integrationConfigurationResponse.status
                 createdBy = integrationConfigurationResponse.createdBy
+                destinationId = integrationConfigurationResponse.destinationId
                 dtCompleted = integrationConfigurationResponse.dtCompleted
                 dtCreated = integrationConfigurationResponse.dtCreated
                 dtLastModified = integrationConfigurationResponse.dtLastModified
@@ -395,6 +445,7 @@ private constructor(
                 error = integrationConfigurationResponse.error
                 externalId = integrationConfigurationResponse.externalId
                 lastModifiedBy = integrationConfigurationResponse.lastModifiedBy
+                parentIntegrationRunId = integrationConfigurationResponse.parentIntegrationRunId
                 url = integrationConfigurationResponse.url
                 version = integrationConfigurationResponse.version
                 additionalProperties =
@@ -437,8 +488,8 @@ private constructor(
 
         /**
          * The type of entity the integration run is for. Two options:
-         * - Bill
-         * - Notification
+         * * Bill
+         * * Notification
          */
         fun entityType(entityType: String) = entityType(JsonField.of(entityType))
 
@@ -473,7 +524,21 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The date and time the integration was completed. _(in ISO-8601 format)_. */
+        /** Identifier of the destination */
+        fun destinationId(destinationId: String) = destinationId(JsonField.of(destinationId))
+
+        /**
+         * Sets [Builder.destinationId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.destinationId] with a well-typed [String] value instead.
+         * This method is primarily for setting the field to an undocumented or not yet supported
+         * value.
+         */
+        fun destinationId(destinationId: JsonField<String>) = apply {
+            this.destinationId = destinationId
+        }
+
+        /** The date and time the integration was completed. *(in ISO-8601 format)*. */
         fun dtCompleted(dtCompleted: OffsetDateTime) = dtCompleted(JsonField.of(dtCompleted))
 
         /**
@@ -487,7 +552,7 @@ private constructor(
             this.dtCompleted = dtCompleted
         }
 
-        /** The DateTime when this item was created _(in ISO-8601 format)_. */
+        /** The DateTime when this item was created *(in ISO-8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -499,7 +564,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+        /** The DateTime when this item was last modified *(in ISO-8601 format)*. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -514,7 +579,7 @@ private constructor(
             this.dtLastModified = dtLastModified
         }
 
-        /** The date and time the integration run was started _(in ISO-8601 format)_. */
+        /** The date and time the integration run was started *(in ISO-8601 format)*. */
         fun dtStarted(dtStarted: OffsetDateTime) = dtStarted(JsonField.of(dtStarted))
 
         /**
@@ -561,6 +626,21 @@ private constructor(
          */
         fun lastModifiedBy(lastModifiedBy: JsonField<String>) = apply {
             this.lastModifiedBy = lastModifiedBy
+        }
+
+        /** ID of the parent integration run, or null if this is a parent integration run */
+        fun parentIntegrationRunId(parentIntegrationRunId: String) =
+            parentIntegrationRunId(JsonField.of(parentIntegrationRunId))
+
+        /**
+         * Sets [Builder.parentIntegrationRunId] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.parentIntegrationRunId] with a well-typed [String] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun parentIntegrationRunId(parentIntegrationRunId: JsonField<String>) = apply {
+            this.parentIntegrationRunId = parentIntegrationRunId
         }
 
         /** The URL of the entity in the destination system if available. */
@@ -633,6 +713,7 @@ private constructor(
                 checkRequired("entityType", entityType),
                 checkRequired("status", status),
                 createdBy,
+                destinationId,
                 dtCompleted,
                 dtCreated,
                 dtLastModified,
@@ -640,6 +721,7 @@ private constructor(
                 error,
                 externalId,
                 lastModifiedBy,
+                parentIntegrationRunId,
                 url,
                 version,
                 additionalProperties.toMutableMap(),
@@ -659,6 +741,7 @@ private constructor(
         entityType()
         status().validate()
         createdBy()
+        destinationId()
         dtCompleted()
         dtCreated()
         dtLastModified()
@@ -666,6 +749,7 @@ private constructor(
         error()
         externalId()
         lastModifiedBy()
+        parentIntegrationRunId()
         url()
         version()
         validated = true
@@ -692,6 +776,7 @@ private constructor(
             (if (entityType.asKnown().isPresent) 1 else 0) +
             (status.asKnown().getOrNull()?.validity() ?: 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
+            (if (destinationId.asKnown().isPresent) 1 else 0) +
             (if (dtCompleted.asKnown().isPresent) 1 else 0) +
             (if (dtCreated.asKnown().isPresent) 1 else 0) +
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
@@ -699,6 +784,7 @@ private constructor(
             (if (error.asKnown().isPresent) 1 else 0) +
             (if (externalId.asKnown().isPresent) 1 else 0) +
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
+            (if (parentIntegrationRunId.asKnown().isPresent) 1 else 0) +
             (if (url.asKnown().isPresent) 1 else 0) +
             (if (version.asKnown().isPresent) 1 else 0)
 
@@ -734,6 +820,8 @@ private constructor(
 
             @JvmField val DISABLED = of("DISABLED")
 
+            @JvmField val TIMEOUT_LIMIT_EXCEEDED = of("TIMEOUT_LIMIT_EXCEEDED")
+
             @JvmField val RATE_LIMIT_RETRY = of("RATE_LIMIT_RETRY")
 
             @JvmStatic fun of(value: String) = Status(JsonField.of(value))
@@ -750,6 +838,7 @@ private constructor(
             ACCOUNTING_PERIOD_CLOSED,
             INVOICE_ALREADY_PAID,
             DISABLED,
+            TIMEOUT_LIMIT_EXCEEDED,
             RATE_LIMIT_RETRY,
         }
 
@@ -772,6 +861,7 @@ private constructor(
             ACCOUNTING_PERIOD_CLOSED,
             INVOICE_ALREADY_PAID,
             DISABLED,
+            TIMEOUT_LIMIT_EXCEEDED,
             RATE_LIMIT_RETRY,
             /** An enum member indicating that [Status] was instantiated with an unknown value. */
             _UNKNOWN,
@@ -795,6 +885,7 @@ private constructor(
                 ACCOUNTING_PERIOD_CLOSED -> Value.ACCOUNTING_PERIOD_CLOSED
                 INVOICE_ALREADY_PAID -> Value.INVOICE_ALREADY_PAID
                 DISABLED -> Value.DISABLED
+                TIMEOUT_LIMIT_EXCEEDED -> Value.TIMEOUT_LIMIT_EXCEEDED
                 RATE_LIMIT_RETRY -> Value.RATE_LIMIT_RETRY
                 else -> Value._UNKNOWN
             }
@@ -818,6 +909,7 @@ private constructor(
                 ACCOUNTING_PERIOD_CLOSED -> Known.ACCOUNTING_PERIOD_CLOSED
                 INVOICE_ALREADY_PAID -> Known.INVOICE_ALREADY_PAID
                 DISABLED -> Known.DISABLED
+                TIMEOUT_LIMIT_EXCEEDED -> Known.TIMEOUT_LIMIT_EXCEEDED
                 RATE_LIMIT_RETRY -> Known.RATE_LIMIT_RETRY
                 else -> throw M3terInvalidDataException("Unknown Status: $value")
             }
@@ -866,7 +958,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -879,15 +971,52 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is IntegrationConfigurationResponse && id == other.id && destination == other.destination && entityId == other.entityId && entityType == other.entityType && status == other.status && createdBy == other.createdBy && dtCompleted == other.dtCompleted && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && dtStarted == other.dtStarted && error == other.error && externalId == other.externalId && lastModifiedBy == other.lastModifiedBy && url == other.url && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is IntegrationConfigurationResponse &&
+            id == other.id &&
+            destination == other.destination &&
+            entityId == other.entityId &&
+            entityType == other.entityType &&
+            status == other.status &&
+            createdBy == other.createdBy &&
+            destinationId == other.destinationId &&
+            dtCompleted == other.dtCompleted &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            dtStarted == other.dtStarted &&
+            error == other.error &&
+            externalId == other.externalId &&
+            lastModifiedBy == other.lastModifiedBy &&
+            parentIntegrationRunId == other.parentIntegrationRunId &&
+            url == other.url &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, destination, entityId, entityType, status, createdBy, dtCompleted, dtCreated, dtLastModified, dtStarted, error, externalId, lastModifiedBy, url, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            destination,
+            entityId,
+            entityType,
+            status,
+            createdBy,
+            destinationId,
+            dtCompleted,
+            dtCreated,
+            dtLastModified,
+            dtStarted,
+            error,
+            externalId,
+            lastModifiedBy,
+            parentIntegrationRunId,
+            url,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "IntegrationConfigurationResponse{id=$id, destination=$destination, entityId=$entityId, entityType=$entityType, status=$status, createdBy=$createdBy, dtCompleted=$dtCompleted, dtCreated=$dtCreated, dtLastModified=$dtLastModified, dtStarted=$dtStarted, error=$error, externalId=$externalId, lastModifiedBy=$lastModifiedBy, url=$url, version=$version, additionalProperties=$additionalProperties}"
+        "IntegrationConfigurationResponse{id=$id, destination=$destination, entityId=$entityId, entityType=$entityType, status=$status, createdBy=$createdBy, destinationId=$destinationId, dtCompleted=$dtCompleted, dtCreated=$dtCreated, dtLastModified=$dtLastModified, dtStarted=$dtStarted, error=$error, externalId=$externalId, lastModifiedBy=$lastModifiedBy, parentIntegrationRunId=$parentIntegrationRunId, url=$url, version=$version, additionalProperties=$additionalProperties}"
 }

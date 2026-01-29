@@ -25,7 +25,7 @@ import kotlin.jvm.optionals.getOrNull
 /**
  * Approve multiple Bills for the specified Organization based on the given criteria.
  *
- * This endpoint allows you to change currently _Pending_ Bills to _Approved_ status for further
+ * This endpoint allows you to change currently *Pending* Bills to *Approved* status for further
  * processing.
  *
  * Query Parameters:
@@ -365,6 +365,7 @@ private constructor(
             .build()
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val billIds: JsonField<List<String>>,
         private val additionalProperties: MutableMap<String, JsonValue>,
@@ -525,12 +526,12 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && billIds == other.billIds && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                billIds == other.billIds &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(billIds, additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -543,10 +544,26 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillApproveParams && orgId == other.orgId && accountIds == other.accountIds && externalInvoiceDateEnd == other.externalInvoiceDateEnd && externalInvoiceDateStart == other.externalInvoiceDateStart && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BillApproveParams &&
+            orgId == other.orgId &&
+            accountIds == other.accountIds &&
+            externalInvoiceDateEnd == other.externalInvoiceDateEnd &&
+            externalInvoiceDateStart == other.externalInvoiceDateStart &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountIds, externalInvoiceDateEnd, externalInvoiceDateStart, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            accountIds,
+            externalInvoiceDateEnd,
+            externalInvoiceDateStart,
+            body,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "BillApproveParams{orgId=$orgId, accountIds=$accountIds, externalInvoiceDateEnd=$externalInvoiceDateEnd, externalInvoiceDateStart=$externalInvoiceDateStart, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

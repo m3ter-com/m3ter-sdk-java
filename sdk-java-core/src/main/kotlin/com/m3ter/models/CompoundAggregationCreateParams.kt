@@ -47,8 +47,8 @@ private constructor(
      * **NOTE:** If a simple Aggregation referenced by a Compound Aggregation has a **Quantity per
      * unit** defined or a **Rounding** defined, these will not be factored into the value used by
      * the calculation. For example, if the simple Aggregation referenced has a base value of 100
-     * and has **Quantity per unit** set at 10, the Compound Aggregation calculation _will use the
-     * base value of 100 not 10_.
+     * and has **Quantity per unit** set at 10, the Compound Aggregation calculation *will use the
+     * base value of 100 not 10*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -80,13 +80,13 @@ private constructor(
      * Specifies how you want to deal with non-integer, fractional number Aggregation values.
      *
      * **NOTES:**
-     * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-     * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+     * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+     * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
      *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one, you
      *   would typically set Rounding to **UP**. For example, suppose you charge by kilobytes per
      *   second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at $0.25 per unit used.
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
-     *   97.8 rounded up to 98 \* 0.25 = $2.45.
+     *   97.8 rounded up to 98 * 0.25 = $2.45.
      *
      * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      *
@@ -105,7 +105,7 @@ private constructor(
     fun unit(): String = body.unit()
 
     /**
-     * Optional Product ID this Aggregation should be attributed to for accounting purposes
+     * Optional Product ID this Aggregation should be attributed to for accounting purposes.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -145,7 +145,7 @@ private constructor(
     /**
      * Unique identifier (UUID) of the Product the CompoundAggregation belongs to.
      *
-     * **Note:** Omit this parameter if you want to create a _Global_ CompoundAggregation.
+     * **Note:** Omit this parameter if you want to create a *Global* CompoundAggregation.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -154,7 +154,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -321,7 +321,7 @@ private constructor(
          * per unit** defined or a **Rounding** defined, these will not be factored into the value
          * used by the calculation. For example, if the simple Aggregation referenced has a base
          * value of 100 and has **Quantity per unit** set at 10, the Compound Aggregation
-         * calculation _will use the base value of 100 not 10_.
+         * calculation *will use the base value of 100 not 10*.
          */
         fun calculation(calculation: String) = apply { body.calculation(calculation) }
 
@@ -372,13 +372,13 @@ private constructor(
          * Specifies how you want to deal with non-integer, fractional number Aggregation values.
          *
          * **NOTES:**
-         * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-         * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+         * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+         * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
          *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one,
          *   you would typically set Rounding to **UP**. For example, suppose you charge by
          *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
+         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 * 0.25 = $2.45.
          *
          * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
@@ -407,7 +407,7 @@ private constructor(
          */
         fun unit(unit: JsonField<String>) = apply { body.unit(unit) }
 
-        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes. */
         fun accountingProductId(accountingProductId: String) = apply {
             body.accountingProductId(accountingProductId)
         }
@@ -477,7 +477,7 @@ private constructor(
         /**
          * Unique identifier (UUID) of the Product the CompoundAggregation belongs to.
          *
-         * **Note:** Omit this parameter if you want to create a _Global_ CompoundAggregation.
+         * **Note:** Omit this parameter if you want to create a *Global* CompoundAggregation.
          */
         fun productId(productId: String) = apply { body.productId(productId) }
 
@@ -492,8 +492,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -663,6 +663,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val calculation: JsonField<String>,
         private val name: JsonField<String>,
@@ -730,7 +731,7 @@ private constructor(
          * per unit** defined or a **Rounding** defined, these will not be factored into the value
          * used by the calculation. For example, if the simple Aggregation referenced has a base
          * value of 100 and has **Quantity per unit** set at 10, the Compound Aggregation
-         * calculation _will use the base value of 100 not 10_.
+         * calculation *will use the base value of 100 not 10*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -762,13 +763,13 @@ private constructor(
          * Specifies how you want to deal with non-integer, fractional number Aggregation values.
          *
          * **NOTES:**
-         * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-         * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+         * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+         * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
          *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one,
          *   you would typically set Rounding to **UP**. For example, suppose you charge by
          *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
+         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 * 0.25 = $2.45.
          *
          * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          *
@@ -787,7 +788,7 @@ private constructor(
         fun unit(): String = unit.getRequired("unit")
 
         /**
-         * Optional Product ID this Aggregation should be attributed to for accounting purposes
+         * Optional Product ID this Aggregation should be attributed to for accounting purposes.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -830,7 +831,7 @@ private constructor(
         /**
          * Unique identifier (UUID) of the Product the CompoundAggregation belongs to.
          *
-         * **Note:** Omit this parameter if you want to create a _Global_ CompoundAggregation.
+         * **Note:** Omit this parameter if you want to create a *Global* CompoundAggregation.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -839,8 +840,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1012,7 +1013,7 @@ private constructor(
              * **Quantity per unit** defined or a **Rounding** defined, these will not be factored
              * into the value used by the calculation. For example, if the simple Aggregation
              * referenced has a base value of 100 and has **Quantity per unit** set at 10, the
-             * Compound Aggregation calculation _will use the base value of 100 not 10_.
+             * Compound Aggregation calculation *will use the base value of 100 not 10*.
              */
             fun calculation(calculation: String) = calculation(JsonField.of(calculation))
 
@@ -1067,14 +1068,14 @@ private constructor(
              * values.
              *
              * **NOTES:**
-             * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded
+             * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded
              *   to 4.
-             * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+             * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
              *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than
              *   one, you would typically set Rounding to **UP**. For example, suppose you charge by
              *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
              *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-             *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
+             *   charge would be 48,900 / 500 = 97.8 rounded up to 98 * 0.25 = $2.45.
              *
              * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
              */
@@ -1105,7 +1106,7 @@ private constructor(
             fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
             /**
-             * Optional Product ID this Aggregation should be attributed to for accounting purposes
+             * Optional Product ID this Aggregation should be attributed to for accounting purposes.
              */
             fun accountingProductId(accountingProductId: String) =
                 accountingProductId(JsonField.of(accountingProductId))
@@ -1176,7 +1177,7 @@ private constructor(
             /**
              * Unique identifier (UUID) of the Product the CompoundAggregation belongs to.
              *
-             * **Note:** Omit this parameter if you want to create a _Global_ CompoundAggregation.
+             * **Note:** Omit this parameter if you want to create a *Global* CompoundAggregation.
              */
             fun productId(productId: String) = productId(JsonField.of(productId))
 
@@ -1191,8 +1192,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -1314,12 +1315,37 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && calculation == other.calculation && name == other.name && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && unit == other.unit && accountingProductId == other.accountingProductId && code == other.code && customFields == other.customFields && evaluateNullAggregations == other.evaluateNullAggregations && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                calculation == other.calculation &&
+                name == other.name &&
+                quantityPerUnit == other.quantityPerUnit &&
+                rounding == other.rounding &&
+                unit == other.unit &&
+                accountingProductId == other.accountingProductId &&
+                code == other.code &&
+                customFields == other.customFields &&
+                evaluateNullAggregations == other.evaluateNullAggregations &&
+                productId == other.productId &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(calculation, name, quantityPerUnit, rounding, unit, accountingProductId, code, customFields, evaluateNullAggregations, productId, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                calculation,
+                name,
+                quantityPerUnit,
+                rounding,
+                unit,
+                accountingProductId,
+                code,
+                customFields,
+                evaluateNullAggregations,
+                productId,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1331,13 +1357,13 @@ private constructor(
      * Specifies how you want to deal with non-integer, fractional number Aggregation values.
      *
      * **NOTES:**
-     * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-     * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+     * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+     * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
      *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one, you
      *   would typically set Rounding to **UP**. For example, suppose you charge by kilobytes per
      *   second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at $0.25 per unit used.
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
-     *   97.8 rounded up to 98 \* 0.25 = $2.45.
+     *   97.8 rounded up to 98 * 0.25 = $2.45.
      *
      * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
@@ -1469,7 +1495,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Rounding && value == other.value /* spotless:on */
+            return other is Rounding && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1566,12 +1592,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1583,10 +1607,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CompoundAggregationCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CompoundAggregationCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CompoundAggregationCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

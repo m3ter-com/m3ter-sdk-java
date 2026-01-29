@@ -87,7 +87,7 @@ private constructor(
     fun referencedLineItemId(): String = body.referencedLineItemId()
 
     /**
-     * The service period end date in ISO-8601 format._(exclusive of the ending date)_.
+     * The service period end date in ISO-8601 format.*(exclusive of the ending date)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -95,12 +95,18 @@ private constructor(
     fun servicePeriodEndDate(): OffsetDateTime = body.servicePeriodEndDate()
 
     /**
-     * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
+     * The service period start date in ISO-8601 format. *(inclusive of the starting date)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
      */
     fun servicePeriodStartDate(): OffsetDateTime = body.servicePeriodStartDate()
+
+    /**
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun amountToApplyOnBill(): Optional<Double> = body.amountToApplyOnBill()
 
     /**
      * The ID of the Debit Reason given for this debit line item.
@@ -126,7 +132,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -197,6 +203,14 @@ private constructor(
      * unexpected type.
      */
     fun _servicePeriodStartDate(): JsonField<OffsetDateTime> = body._servicePeriodStartDate()
+
+    /**
+     * Returns the raw JSON value of [amountToApplyOnBill].
+     *
+     * Unlike [amountToApplyOnBill], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    fun _amountToApplyOnBill(): JsonField<Double> = body._amountToApplyOnBill()
 
     /**
      * Returns the raw JSON value of [debitReasonId].
@@ -388,7 +402,7 @@ private constructor(
             body.referencedLineItemId(referencedLineItemId)
         }
 
-        /** The service period end date in ISO-8601 format._(exclusive of the ending date)_. */
+        /** The service period end date in ISO-8601 format.*(exclusive of the ending date)*. */
         fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) = apply {
             body.servicePeriodEndDate(servicePeriodEndDate)
         }
@@ -404,7 +418,7 @@ private constructor(
             body.servicePeriodEndDate(servicePeriodEndDate)
         }
 
-        /** The service period start date in ISO-8601 format. _(inclusive of the starting date)_. */
+        /** The service period start date in ISO-8601 format. *(inclusive of the starting date)*. */
         fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) = apply {
             body.servicePeriodStartDate(servicePeriodStartDate)
         }
@@ -418,6 +432,21 @@ private constructor(
          */
         fun servicePeriodStartDate(servicePeriodStartDate: JsonField<OffsetDateTime>) = apply {
             body.servicePeriodStartDate(servicePeriodStartDate)
+        }
+
+        fun amountToApplyOnBill(amountToApplyOnBill: Double) = apply {
+            body.amountToApplyOnBill(amountToApplyOnBill)
+        }
+
+        /**
+         * Sets [Builder.amountToApplyOnBill] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.amountToApplyOnBill] with a well-typed [Double] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun amountToApplyOnBill(amountToApplyOnBill: JsonField<Double>) = apply {
+            body.amountToApplyOnBill(amountToApplyOnBill)
         }
 
         /** The ID of the Debit Reason given for this debit line item. */
@@ -460,8 +489,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -639,6 +668,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val accountingProductId: JsonField<String>,
         private val amount: JsonField<Double>,
@@ -648,6 +678,7 @@ private constructor(
         private val referencedLineItemId: JsonField<String>,
         private val servicePeriodEndDate: JsonField<OffsetDateTime>,
         private val servicePeriodStartDate: JsonField<OffsetDateTime>,
+        private val amountToApplyOnBill: JsonField<Double>,
         private val debitReasonId: JsonField<String>,
         private val lineItemType: JsonField<LineItemType>,
         private val reasonId: JsonField<String>,
@@ -679,6 +710,9 @@ private constructor(
             @JsonProperty("servicePeriodStartDate")
             @ExcludeMissing
             servicePeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("amountToApplyOnBill")
+            @ExcludeMissing
+            amountToApplyOnBill: JsonField<Double> = JsonMissing.of(),
             @JsonProperty("debitReasonId")
             @ExcludeMissing
             debitReasonId: JsonField<String> = JsonMissing.of(),
@@ -698,6 +732,7 @@ private constructor(
             referencedLineItemId,
             servicePeriodEndDate,
             servicePeriodStartDate,
+            amountToApplyOnBill,
             debitReasonId,
             lineItemType,
             reasonId,
@@ -753,7 +788,7 @@ private constructor(
             referencedLineItemId.getRequired("referencedLineItemId")
 
         /**
-         * The service period end date in ISO-8601 format._(exclusive of the ending date)_.
+         * The service period end date in ISO-8601 format.*(exclusive of the ending date)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -762,13 +797,20 @@ private constructor(
             servicePeriodEndDate.getRequired("servicePeriodEndDate")
 
         /**
-         * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
+         * The service period start date in ISO-8601 format. *(inclusive of the starting date)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun servicePeriodStartDate(): OffsetDateTime =
             servicePeriodStartDate.getRequired("servicePeriodStartDate")
+
+        /**
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun amountToApplyOnBill(): Optional<Double> =
+            amountToApplyOnBill.getOptional("amountToApplyOnBill")
 
         /**
          * The ID of the Debit Reason given for this debit line item.
@@ -794,8 +836,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -879,6 +921,16 @@ private constructor(
         fun _servicePeriodStartDate(): JsonField<OffsetDateTime> = servicePeriodStartDate
 
         /**
+         * Returns the raw JSON value of [amountToApplyOnBill].
+         *
+         * Unlike [amountToApplyOnBill], this method doesn't throw if the JSON field has an
+         * unexpected type.
+         */
+        @JsonProperty("amountToApplyOnBill")
+        @ExcludeMissing
+        fun _amountToApplyOnBill(): JsonField<Double> = amountToApplyOnBill
+
+        /**
          * Returns the raw JSON value of [debitReasonId].
          *
          * Unlike [debitReasonId], this method doesn't throw if the JSON field has an unexpected
@@ -955,6 +1007,7 @@ private constructor(
             private var referencedLineItemId: JsonField<String>? = null
             private var servicePeriodEndDate: JsonField<OffsetDateTime>? = null
             private var servicePeriodStartDate: JsonField<OffsetDateTime>? = null
+            private var amountToApplyOnBill: JsonField<Double> = JsonMissing.of()
             private var debitReasonId: JsonField<String> = JsonMissing.of()
             private var lineItemType: JsonField<LineItemType> = JsonMissing.of()
             private var reasonId: JsonField<String> = JsonMissing.of()
@@ -971,6 +1024,7 @@ private constructor(
                 referencedLineItemId = body.referencedLineItemId
                 servicePeriodEndDate = body.servicePeriodEndDate
                 servicePeriodStartDate = body.servicePeriodStartDate
+                amountToApplyOnBill = body.amountToApplyOnBill
                 debitReasonId = body.debitReasonId
                 lineItemType = body.lineItemType
                 reasonId = body.reasonId
@@ -1060,7 +1114,7 @@ private constructor(
                 this.referencedLineItemId = referencedLineItemId
             }
 
-            /** The service period end date in ISO-8601 format._(exclusive of the ending date)_. */
+            /** The service period end date in ISO-8601 format.*(exclusive of the ending date)*. */
             fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
                 servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
 
@@ -1076,7 +1130,7 @@ private constructor(
             }
 
             /**
-             * The service period start date in ISO-8601 format. _(inclusive of the starting date)_.
+             * The service period start date in ISO-8601 format. *(inclusive of the starting date)*.
              */
             fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) =
                 servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
@@ -1090,6 +1144,20 @@ private constructor(
              */
             fun servicePeriodStartDate(servicePeriodStartDate: JsonField<OffsetDateTime>) = apply {
                 this.servicePeriodStartDate = servicePeriodStartDate
+            }
+
+            fun amountToApplyOnBill(amountToApplyOnBill: Double) =
+                amountToApplyOnBill(JsonField.of(amountToApplyOnBill))
+
+            /**
+             * Sets [Builder.amountToApplyOnBill] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.amountToApplyOnBill] with a well-typed [Double]
+             * value instead. This method is primarily for setting the field to an undocumented or
+             * not yet supported value.
+             */
+            fun amountToApplyOnBill(amountToApplyOnBill: JsonField<Double>) = apply {
+                this.amountToApplyOnBill = amountToApplyOnBill
             }
 
             /** The ID of the Debit Reason given for this debit line item. */
@@ -1133,8 +1201,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -1198,6 +1266,7 @@ private constructor(
                     checkRequired("referencedLineItemId", referencedLineItemId),
                     checkRequired("servicePeriodEndDate", servicePeriodEndDate),
                     checkRequired("servicePeriodStartDate", servicePeriodStartDate),
+                    amountToApplyOnBill,
                     debitReasonId,
                     lineItemType,
                     reasonId,
@@ -1221,6 +1290,7 @@ private constructor(
             referencedLineItemId()
             servicePeriodEndDate()
             servicePeriodStartDate()
+            amountToApplyOnBill()
             debitReasonId()
             lineItemType().ifPresent { it.validate() }
             reasonId()
@@ -1252,6 +1322,7 @@ private constructor(
                 (if (referencedLineItemId.asKnown().isPresent) 1 else 0) +
                 (if (servicePeriodEndDate.asKnown().isPresent) 1 else 0) +
                 (if (servicePeriodStartDate.asKnown().isPresent) 1 else 0) +
+                (if (amountToApplyOnBill.asKnown().isPresent) 1 else 0) +
                 (if (debitReasonId.asKnown().isPresent) 1 else 0) +
                 (lineItemType.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (reasonId.asKnown().isPresent) 1 else 0) +
@@ -1262,17 +1333,46 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && accountingProductId == other.accountingProductId && amount == other.amount && description == other.description && productId == other.productId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && debitReasonId == other.debitReasonId && lineItemType == other.lineItemType && reasonId == other.reasonId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                accountingProductId == other.accountingProductId &&
+                amount == other.amount &&
+                description == other.description &&
+                productId == other.productId &&
+                referencedBillId == other.referencedBillId &&
+                referencedLineItemId == other.referencedLineItemId &&
+                servicePeriodEndDate == other.servicePeriodEndDate &&
+                servicePeriodStartDate == other.servicePeriodStartDate &&
+                amountToApplyOnBill == other.amountToApplyOnBill &&
+                debitReasonId == other.debitReasonId &&
+                lineItemType == other.lineItemType &&
+                reasonId == other.reasonId &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountingProductId, amount, description, productId, referencedBillId, referencedLineItemId, servicePeriodEndDate, servicePeriodStartDate, debitReasonId, lineItemType, reasonId, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                accountingProductId,
+                amount,
+                description,
+                productId,
+                referencedBillId,
+                referencedLineItemId,
+                servicePeriodEndDate,
+                servicePeriodStartDate,
+                amountToApplyOnBill,
+                debitReasonId,
+                lineItemType,
+                reasonId,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{accountingProductId=$accountingProductId, amount=$amount, description=$description, productId=$productId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, debitReasonId=$debitReasonId, lineItemType=$lineItemType, reasonId=$reasonId, version=$version, additionalProperties=$additionalProperties}"
+            "Body{accountingProductId=$accountingProductId, amount=$amount, description=$description, productId=$productId, referencedBillId=$referencedBillId, referencedLineItemId=$referencedLineItemId, servicePeriodEndDate=$servicePeriodEndDate, servicePeriodStartDate=$servicePeriodStartDate, amountToApplyOnBill=$amountToApplyOnBill, debitReasonId=$debitReasonId, lineItemType=$lineItemType, reasonId=$reasonId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     class LineItemType @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -1326,6 +1426,8 @@ private constructor(
 
             @JvmField val BALANCE_FEE = of("BALANCE_FEE")
 
+            @JvmField val AD_HOC = of("AD_HOC")
+
             @JvmStatic fun of(value: String) = LineItemType(JsonField.of(value))
         }
 
@@ -1349,6 +1451,7 @@ private constructor(
             OVERAGE_USAGE,
             BALANCE_CONSUMED,
             BALANCE_FEE,
+            AD_HOC,
         }
 
         /**
@@ -1379,6 +1482,7 @@ private constructor(
             OVERAGE_USAGE,
             BALANCE_CONSUMED,
             BALANCE_FEE,
+            AD_HOC,
             /**
              * An enum member indicating that [LineItemType] was instantiated with an unknown value.
              */
@@ -1412,6 +1516,7 @@ private constructor(
                 OVERAGE_USAGE -> Value.OVERAGE_USAGE
                 BALANCE_CONSUMED -> Value.BALANCE_CONSUMED
                 BALANCE_FEE -> Value.BALANCE_FEE
+                AD_HOC -> Value.AD_HOC
                 else -> Value._UNKNOWN
             }
 
@@ -1443,6 +1548,7 @@ private constructor(
                 OVERAGE_USAGE -> Known.OVERAGE_USAGE
                 BALANCE_CONSUMED -> Known.BALANCE_CONSUMED
                 BALANCE_FEE -> Known.BALANCE_FEE
+                AD_HOC -> Known.AD_HOC
                 else -> throw M3terInvalidDataException("Unknown LineItemType: $value")
             }
 
@@ -1490,7 +1596,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemType && value == other.value /* spotless:on */
+            return other is LineItemType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1503,10 +1609,17 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillDebitLineItemUpdateParams && orgId == other.orgId && billId == other.billId && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BillDebitLineItemUpdateParams &&
+            orgId == other.orgId &&
+            billId == other.billId &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, billId, id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, billId, id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "BillDebitLineItemUpdateParams{orgId=$orgId, billId=$billId, id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

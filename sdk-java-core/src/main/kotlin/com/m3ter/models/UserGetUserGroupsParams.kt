@@ -17,19 +17,19 @@ import kotlin.jvm.optionals.getOrNull
  *
  * **Notes:**
  * - **User Groups as Resource Groups**. A User Group is a Resource Group - one used to group
- *   resources of type `user`. You can use the _Create ResourceGroup_ call detailed in the
+ *   resources of type `user`. You can use the *Create ResourceGroup* call detailed in the
  *   [ResourceGroup](https://www.m3ter.com/docs/api#tag/ResourceGroup) section to create a User
- *   Resource Group, and then use the _Add Item_ and _Remove Item_ calls to manage which Users
+ *   Resource Group, and then use the *Add Item* and *Remove Item* calls to manage which Users
  *   belong to the User Resource Group.
  * - **Using the `inherited` parameter for the Retrieve OrgUser Groups call**. Resource Groups can
  *   be nested, which means a User Resource Group can contain another User Resource Group as a
- *   member. You can use the `inherited` parameter with this _Retrieve OrgUser Groups_ call as a
- *   _QUERY PARAMETER_ to control which User Resource Groups are returned:
+ *   member. You can use the `inherited` parameter with this *Retrieve OrgUser Groups* call as a
+ *   *QUERY PARAMETER* to control which User Resource Groups are returned:
  * * If the user specified belongs to a User Resource Group that is nested as part of another User
  *   Resource Group:
- *     - If `inherited = TRUE`, then any Groups the user belongs to AND any parent Groups those
+ *     * If `inherited = TRUE`, then any Groups the user belongs to AND any parent Groups those
  *       Groups belong to as nested Groups are returned.
- *     - If `inherited = FALSE`, then only those User Resource Groups to which the user belongs are
+ *     * If `inherited = FALSE`, then only those User Resource Groups to which the user belongs are
  *       returned.
  */
 class UserGetUserGroupsParams
@@ -263,10 +263,17 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UserGetUserGroupsParams && orgId == other.orgId && id == other.id && nextToken == other.nextToken && pageSize == other.pageSize && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is UserGetUserGroupsParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, nextToken, pageSize, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, nextToken, pageSize, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "UserGetUserGroupsParams{orgId=$orgId, id=$id, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

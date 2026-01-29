@@ -23,6 +23,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class CommitmentResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accountId: JsonField<String>,
@@ -239,7 +240,7 @@ private constructor(
     fun amountSpent(): Optional<Double> = amountSpent.getOptional("amountSpent")
 
     /**
-     * The starting date _(in ISO-8601 date format)_ from which the billing cycles are calculated.
+     * The starting date *(in ISO-8601 date format)* from which the billing cycles are calculated.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -279,9 +280,9 @@ private constructor(
      * If the Account is either a Parent or a Child Account, this specifies the Account hierarchy
      * billing mode. The mode determines how billing will be handled and shown on bills for charges
      * due on the Parent Account, and charges due on Child Accounts:
-     * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-     * - **Parent Summary** - single bill line item for all Accounts.
-     * - **Child** - the Child Account is billed.
+     * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+     * * **Parent Summary** - single bill line item for all Accounts.
+     * * **Child** - the Child Account is billed.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -290,10 +291,10 @@ private constructor(
         childBillingMode.getOptional("childBillingMode")
 
     /**
-     * A boolean value indicating whether the Commitment fee is billed in advance _(start of each
-     * billing period)_ or arrears _(end of each billing period)_.
-     * - **TRUE** - bill in advance _(start of each billing period)_.
-     * - **FALSE** - bill in arrears _(end of each billing period)_.
+     * A boolean value indicating whether the Commitment fee is billed in advance *(start of each
+     * billing period)* or arrears *(end of each billing period)*.
+     * * **TRUE** - bill in advance *(start of each billing period)*.
+     * * **FALSE** - bill in arrears *(end of each billing period)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -345,6 +346,9 @@ private constructor(
     fun currency(): Optional<String> = currency.getOptional("currency")
 
     /**
+     * Optional Product ID this Commitment's consumptions should be attributed to for accounting
+     * purposes.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -352,7 +356,7 @@ private constructor(
         drawdownsAccountingProductId.getOptional("drawdownsAccountingProductId")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the Commitment was created.
+     * The date and time *(in ISO-8601 format)* when the Commitment was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -360,7 +364,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the Commitment was last modified.
+     * The date and time *(in ISO-8601 format)* when the Commitment was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -376,13 +380,13 @@ private constructor(
     fun endDate(): Optional<LocalDate> = endDate.getOptional("endDate")
 
     /**
-     * Used for billing any outstanding Commitment fees _on a schedule_.
+     * Used for billing any outstanding Commitment fees *on a schedule*.
      *
      * An array defining a series of bill dates and amounts covering specified service periods:
-     * - `date` - the billing date _(in ISO-8601 format)_.
+     * - `date` - the billing date *(in ISO-8601 format)*.
      * - `amount` - the billed amount.
      * - `servicePeriodStartDate` and `servicePeriodEndDate` - defines the service period the bill
-     *   covers _(in ISO-8601 format)_.
+     *   covers *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -390,6 +394,8 @@ private constructor(
     fun feeDates(): Optional<List<CommitmentFee>> = feeDates.getOptional("feeDates")
 
     /**
+     * Optional Product ID this Commitment's fees should be attributed to for accounting purposes.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -453,8 +459,8 @@ private constructor(
      * overage usage is separated and a Commitment amount has been consumed by an Account, any
      * subsequent line items on Bills against the Account for usage will show as separate "overage
      * usage" charges, not simply as "usage" charges:
-     * - **TRUE** - billed separately.
-     * - **FALSE** - billed together.
+     * * **TRUE** - billed separately.
+     * * **FALSE** - billed together.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -953,7 +959,7 @@ private constructor(
         fun amountSpent(amountSpent: JsonField<Double>) = apply { this.amountSpent = amountSpent }
 
         /**
-         * The starting date _(in ISO-8601 date format)_ from which the billing cycles are
+         * The starting date *(in ISO-8601 date format)* from which the billing cycles are
          * calculated.
          */
         fun billEpoch(billEpoch: LocalDate) = billEpoch(JsonField.of(billEpoch))
@@ -1024,9 +1030,9 @@ private constructor(
          * If the Account is either a Parent or a Child Account, this specifies the Account
          * hierarchy billing mode. The mode determines how billing will be handled and shown on
          * bills for charges due on the Parent Account, and charges due on Child Accounts:
-         * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-         * - **Parent Summary** - single bill line item for all Accounts.
-         * - **Child** - the Child Account is billed.
+         * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+         * * **Parent Summary** - single bill line item for all Accounts.
+         * * **Child** - the Child Account is billed.
          */
         fun childBillingMode(childBillingMode: ChildBillingMode) =
             childBillingMode(JsonField.of(childBillingMode))
@@ -1043,10 +1049,10 @@ private constructor(
         }
 
         /**
-         * A boolean value indicating whether the Commitment fee is billed in advance _(start of
-         * each billing period)_ or arrears _(end of each billing period)_.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * A boolean value indicating whether the Commitment fee is billed in advance *(start of
+         * each billing period)* or arrears *(end of each billing period)*.
+         * * **TRUE** - bill in advance *(start of each billing period)*.
+         * * **FALSE** - bill in arrears *(end of each billing period)*.
          */
         fun commitmentFeeBillInAdvance(commitmentFeeBillInAdvance: Boolean) =
             commitmentFeeBillInAdvance(JsonField.of(commitmentFeeBillInAdvance))
@@ -1130,6 +1136,10 @@ private constructor(
          */
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+        /**
+         * Optional Product ID this Commitment's consumptions should be attributed to for accounting
+         * purposes.
+         */
         fun drawdownsAccountingProductId(drawdownsAccountingProductId: String) =
             drawdownsAccountingProductId(JsonField.of(drawdownsAccountingProductId))
 
@@ -1144,7 +1154,7 @@ private constructor(
             this.drawdownsAccountingProductId = drawdownsAccountingProductId
         }
 
-        /** The date and time _(in ISO-8601 format)_ when the Commitment was created. */
+        /** The date and time *(in ISO-8601 format)* when the Commitment was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -1156,7 +1166,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The date and time _(in ISO-8601 format)_ when the Commitment was last modified. */
+        /** The date and time *(in ISO-8601 format)* when the Commitment was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -1184,13 +1194,13 @@ private constructor(
         fun endDate(endDate: JsonField<LocalDate>) = apply { this.endDate = endDate }
 
         /**
-         * Used for billing any outstanding Commitment fees _on a schedule_.
+         * Used for billing any outstanding Commitment fees *on a schedule*.
          *
          * An array defining a series of bill dates and amounts covering specified service periods:
-         * - `date` - the billing date _(in ISO-8601 format)_.
+         * - `date` - the billing date *(in ISO-8601 format)*.
          * - `amount` - the billed amount.
          * - `servicePeriodStartDate` and `servicePeriodEndDate` - defines the service period the
-         *   bill covers _(in ISO-8601 format)_.
+         *   bill covers *(in ISO-8601 format)*.
          */
         fun feeDates(feeDates: List<CommitmentFee>) = feeDates(JsonField.of(feeDates))
 
@@ -1217,6 +1227,10 @@ private constructor(
                 }
         }
 
+        /**
+         * Optional Product ID this Commitment's fees should be attributed to for accounting
+         * purposes.
+         */
         fun feesAccountingProductId(feesAccountingProductId: String) =
             feesAccountingProductId(JsonField.of(feesAccountingProductId))
 
@@ -1349,8 +1363,8 @@ private constructor(
          * overage usage is separated and a Commitment amount has been consumed by an Account, any
          * subsequent line items on Bills against the Account for usage will show as separate
          * "overage usage" charges, not simply as "usage" charges:
-         * - **TRUE** - billed separately.
-         * - **FALSE** - billed together.
+         * * **TRUE** - billed separately.
+         * * **FALSE** - billed together.
          */
         fun separateOverageUsage(separateOverageUsage: Boolean) =
             separateOverageUsage(JsonField.of(separateOverageUsage))
@@ -1557,9 +1571,9 @@ private constructor(
      * If the Account is either a Parent or a Child Account, this specifies the Account hierarchy
      * billing mode. The mode determines how billing will be handled and shown on bills for charges
      * due on the Parent Account, and charges due on Child Accounts:
-     * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-     * - **Parent Summary** - single bill line item for all Accounts.
-     * - **Child** - the Child Account is billed.
+     * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+     * * **Parent Summary** - single bill line item for all Accounts.
+     * * **Child** - the Child Account is billed.
      */
     class ChildBillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -1687,7 +1701,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ChildBillingMode && value == other.value /* spotless:on */
+            return other is ChildBillingMode && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1833,7 +1847,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemType && value == other.value /* spotless:on */
+            return other is LineItemType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1846,12 +1860,79 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CommitmentResponse && id == other.id && accountId == other.accountId && accountingProductId == other.accountingProductId && amount == other.amount && amountFirstBill == other.amountFirstBill && amountPrePaid == other.amountPrePaid && amountSpent == other.amountSpent && billEpoch == other.billEpoch && billingInterval == other.billingInterval && billingOffset == other.billingOffset && billingPlanId == other.billingPlanId && childBillingMode == other.childBillingMode && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && commitmentFeeDescription == other.commitmentFeeDescription && commitmentUsageDescription == other.commitmentUsageDescription && contractId == other.contractId && createdBy == other.createdBy && currency == other.currency && drawdownsAccountingProductId == other.drawdownsAccountingProductId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feeDates == other.feeDates && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && separateOverageUsage == other.separateOverageUsage && startDate == other.startDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CommitmentResponse &&
+            id == other.id &&
+            accountId == other.accountId &&
+            accountingProductId == other.accountingProductId &&
+            amount == other.amount &&
+            amountFirstBill == other.amountFirstBill &&
+            amountPrePaid == other.amountPrePaid &&
+            amountSpent == other.amountSpent &&
+            billEpoch == other.billEpoch &&
+            billingInterval == other.billingInterval &&
+            billingOffset == other.billingOffset &&
+            billingPlanId == other.billingPlanId &&
+            childBillingMode == other.childBillingMode &&
+            commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance &&
+            commitmentFeeDescription == other.commitmentFeeDescription &&
+            commitmentUsageDescription == other.commitmentUsageDescription &&
+            contractId == other.contractId &&
+            createdBy == other.createdBy &&
+            currency == other.currency &&
+            drawdownsAccountingProductId == other.drawdownsAccountingProductId &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            endDate == other.endDate &&
+            feeDates == other.feeDates &&
+            feesAccountingProductId == other.feesAccountingProductId &&
+            lastModifiedBy == other.lastModifiedBy &&
+            lineItemTypes == other.lineItemTypes &&
+            overageDescription == other.overageDescription &&
+            overageSurchargePercent == other.overageSurchargePercent &&
+            productIds == other.productIds &&
+            separateOverageUsage == other.separateOverageUsage &&
+            startDate == other.startDate &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountId, accountingProductId, amount, amountFirstBill, amountPrePaid, amountSpent, billEpoch, billingInterval, billingOffset, billingPlanId, childBillingMode, commitmentFeeBillInAdvance, commitmentFeeDescription, commitmentUsageDescription, contractId, createdBy, currency, drawdownsAccountingProductId, dtCreated, dtLastModified, endDate, feeDates, feesAccountingProductId, lastModifiedBy, lineItemTypes, overageDescription, overageSurchargePercent, productIds, separateOverageUsage, startDate, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountId,
+            accountingProductId,
+            amount,
+            amountFirstBill,
+            amountPrePaid,
+            amountSpent,
+            billEpoch,
+            billingInterval,
+            billingOffset,
+            billingPlanId,
+            childBillingMode,
+            commitmentFeeBillInAdvance,
+            commitmentFeeDescription,
+            commitmentUsageDescription,
+            contractId,
+            createdBy,
+            currency,
+            drawdownsAccountingProductId,
+            dtCreated,
+            dtLastModified,
+            endDate,
+            feeDates,
+            feesAccountingProductId,
+            lastModifiedBy,
+            lineItemTypes,
+            overageDescription,
+            overageSurchargePercent,
+            productIds,
+            separateOverageUsage,
+            startDate,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -19,6 +19,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class ResourceGroupListPageResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val data: JsonField<List<ResourceGroupResponse>>,
     private val nextToken: JsonField<String>,
@@ -197,12 +198,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ResourceGroupListPageResponse && data == other.data && nextToken == other.nextToken && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is ResourceGroupListPageResponse &&
+            data == other.data &&
+            nextToken == other.nextToken &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(data, nextToken, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

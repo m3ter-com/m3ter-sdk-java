@@ -54,10 +54,10 @@ private constructor(
      * The name of the custom Scheduled Event Configuration.
      *
      * This must be in the format:
-     * - scheduled._name of entity_._custom event name_
+     * * scheduled.*name of entity*.*custom event name*
      *
      * For example:
-     * - `scheduled.bill.endDateEvent`
+     * * `scheduled.bill.endDateEvent`
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -74,10 +74,10 @@ private constructor(
     fun offset(): Int = body.offset()
 
     /**
-     * The version number of the scheduled event configuration:
-     * - **Create entity**: Not valid for initial insertion - do not use for Create. On initial
-     *   Create, version is set at 1 and listed in the response.
-     * - **Update Entity**: On Update, version is required and must match the existing version
+     * The version number of the entity:
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
+     *   On initial Create, version is set at 1 and listed in the response.
+     * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
      *   incremented by 1 and listed in the response.
      *
@@ -221,10 +221,10 @@ private constructor(
          * The name of the custom Scheduled Event Configuration.
          *
          * This must be in the format:
-         * - scheduled._name of entity_._custom event name_
+         * * scheduled.*name of entity*.*custom event name*
          *
          * For example:
-         * - `scheduled.bill.endDateEvent`
+         * * `scheduled.bill.endDateEvent`
          */
         fun name(name: String) = apply { body.name(name) }
 
@@ -251,10 +251,10 @@ private constructor(
         fun offset(offset: JsonField<Int>) = apply { body.offset(offset) }
 
         /**
-         * The version number of the scheduled event configuration:
-         * - **Create entity**: Not valid for initial insertion - do not use for Create. On initial
-         *   Create, version is set at 1 and listed in the response.
-         * - **Update Entity**: On Update, version is required and must match the existing version
+         * The version number of the entity:
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
          */
@@ -423,6 +423,7 @@ private constructor(
 
     /** Request containing a ScheduledEventConfiguration entity */
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val entity: JsonField<String>,
         private val field: JsonField<String>,
@@ -463,10 +464,10 @@ private constructor(
          * The name of the custom Scheduled Event Configuration.
          *
          * This must be in the format:
-         * - scheduled._name of entity_._custom event name_
+         * * scheduled.*name of entity*.*custom event name*
          *
          * For example:
-         * - `scheduled.bill.endDateEvent`
+         * * `scheduled.bill.endDateEvent`
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -483,10 +484,10 @@ private constructor(
         fun offset(): Int = offset.getRequired("offset")
 
         /**
-         * The version number of the scheduled event configuration:
-         * - **Create entity**: Not valid for initial insertion - do not use for Create. On initial
-         *   Create, version is set at 1 and listed in the response.
-         * - **Update Entity**: On Update, version is required and must match the existing version
+         * The version number of the entity:
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
+         * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
          *
@@ -612,10 +613,10 @@ private constructor(
              * The name of the custom Scheduled Event Configuration.
              *
              * This must be in the format:
-             * - scheduled._name of entity_._custom event name_
+             * * scheduled.*name of entity*.*custom event name*
              *
              * For example:
-             * - `scheduled.bill.endDateEvent`
+             * * `scheduled.bill.endDateEvent`
              */
             fun name(name: String) = name(JsonField.of(name))
 
@@ -644,10 +645,10 @@ private constructor(
             fun offset(offset: JsonField<Int>) = apply { this.offset = offset }
 
             /**
-             * The version number of the scheduled event configuration:
-             * - **Create entity**: Not valid for initial insertion - do not use for Create. On
-             *   initial Create, version is set at 1 and listed in the response.
-             * - **Update Entity**: On Update, version is required and must match the existing
+             * The version number of the entity:
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
+             * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
              */
@@ -749,12 +750,18 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && entity == other.entity && field == other.field && name == other.name && offset == other.offset && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                entity == other.entity &&
+                field == other.field &&
+                name == other.name &&
+                offset == other.offset &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(entity, field, name, offset, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(entity, field, name, offset, version, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -767,10 +774,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ScheduledEventConfigurationCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ScheduledEventConfigurationCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "ScheduledEventConfigurationCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

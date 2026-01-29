@@ -20,6 +20,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class PlanResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accountId: JsonField<String>,
@@ -131,7 +132,7 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
-     * _(Optional)_. The Account ID for which this plan was created as custom/bespoke. A
+     * *(Optional)*. The Account ID for which this Plan was created as custom/bespoke. A
      * custom/bespoke Plan can only be attached to the specified Account.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -140,7 +141,7 @@ private constructor(
     fun accountId(): Optional<String> = accountId.getOptional("accountId")
 
     /**
-     * TRUE/FALSE flag indicating whether the plan is custom/bespoke for a particular Account.
+     * TRUE/FALSE flag indicating whether the Plan is custom/bespoke for a particular Account.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -181,7 +182,7 @@ private constructor(
     fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
     /**
-     * The DateTime _(in ISO-8601 format)_ when the plan was created.
+     * The DateTime *(in ISO-8601 format)* when the Plan was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -189,7 +190,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime _(in ISO-8601 format)_ when the plan was last modified.
+     * The DateTime *(in ISO-8601 format)* when the Plan was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -197,7 +198,7 @@ private constructor(
     fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
-     * The id of the user who last modified this plan.
+     * The id of the user who last modified this Plan.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -208,7 +209,7 @@ private constructor(
      * The product minimum spend amount per billing cycle for end customer Accounts on a priced
      * Plan.
      *
-     * _(Optional)_. Overrides PlanTemplate value.
+     * *(Optional)*. Overrides PlanTemplate value.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -216,7 +217,8 @@ private constructor(
     fun minimumSpend(): Optional<Double> = minimumSpend.getOptional("minimumSpend")
 
     /**
-     * Optional Product ID this plan's minimum spend should be attributed to for accounting purposes
+     * Optional Product ID this Plan's minimum spend should be attributed to for accounting
+     * purposes.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -225,11 +227,11 @@ private constructor(
         minimumSpendAccountingProductId.getOptional("minimumSpendAccountingProductId")
 
     /**
-     * When TRUE, minimum spend is billed at the start of each billing period.
+     * When **TRUE**, minimum spend is billed at the start of each billing period.
      *
-     * When FALSE, minimum spend is billed at the end of each billing period.
+     * When **FALSE**, minimum spend is billed at the end of each billing period.
      *
-     * _(Optional)_. Overrides the setting at PlanTemplate level for minimum spend billing in
+     * *(Optional)*. Overrides the setting at PlanTemplate level for minimum spend billing in
      * arrears/in advance.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -239,7 +241,7 @@ private constructor(
         minimumSpendBillInAdvance.getOptional("minimumSpendBillInAdvance")
 
     /**
-     * Minimum spend description _(displayed on the bill line item)_.
+     * Minimum spend description *(displayed on the bill line item)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -259,7 +261,7 @@ private constructor(
      * Assigns a rank or position to the Plan in your order of pricing plans - lower numbers
      * represent more basic pricing plans; higher numbers represent more premium pricing plans.
      *
-     * _(Optional)_. Overrides PlanTemplate value.
+     * *(Optional)*. Overrides PlanTemplate value.
      *
      * **NOTE:** **DEPRECATED** - no longer used.
      *
@@ -287,7 +289,7 @@ private constructor(
     /**
      * The standing charge applied to bills for end customers. This is prorated.
      *
-     * _(Optional)_. Overrides PlanTemplate value.
+     * *(Optional)*. Overrides PlanTemplate value.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -295,8 +297,8 @@ private constructor(
     fun standingCharge(): Optional<Double> = standingCharge.getOptional("standingCharge")
 
     /**
-     * Optional Product ID this plan's standing charge should be attributed to for accounting
-     * purposes
+     * Optional Product ID this Plan's standing charge should be attributed to for accounting
+     * purposes.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -305,11 +307,11 @@ private constructor(
         standingChargeAccountingProductId.getOptional("standingChargeAccountingProductId")
 
     /**
-     * When TRUE, standing charge is billed at the start of each billing period.
+     * When **TRUE**, standing charge is billed at the start of each billing period.
      *
-     * When FALSE, standing charge is billed at the end of each billing period.
+     * When **FALSE**, standing charge is billed at the end of each billing period.
      *
-     * _(Optional)_. Overrides the setting at PlanTemplate level for standing charge billing in
+     * *(Optional)*. Overrides the setting at PlanTemplate level for standing charge billing in
      * arrears/in advance.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -319,7 +321,7 @@ private constructor(
         standingChargeBillInAdvance.getOptional("standingChargeBillInAdvance")
 
     /**
-     * Standing charge description _(displayed on the bill line item)_.
+     * Standing charge description *(displayed on the bill line item)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -615,7 +617,7 @@ private constructor(
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
-         * _(Optional)_. The Account ID for which this plan was created as custom/bespoke. A
+         * *(Optional)*. The Account ID for which this Plan was created as custom/bespoke. A
          * custom/bespoke Plan can only be attached to the specified Account.
          */
         fun accountId(accountId: String) = accountId(JsonField.of(accountId))
@@ -630,7 +632,7 @@ private constructor(
         fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
 
         /**
-         * TRUE/FALSE flag indicating whether the plan is custom/bespoke for a particular Account.
+         * TRUE/FALSE flag indicating whether the Plan is custom/bespoke for a particular Account.
          */
         fun bespoke(bespoke: Boolean) = bespoke(JsonField.of(bespoke))
 
@@ -690,7 +692,7 @@ private constructor(
             this.customFields = customFields
         }
 
-        /** The DateTime _(in ISO-8601 format)_ when the plan was created. */
+        /** The DateTime *(in ISO-8601 format)* when the Plan was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -702,7 +704,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime _(in ISO-8601 format)_ when the plan was last modified. */
+        /** The DateTime *(in ISO-8601 format)* when the Plan was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -717,7 +719,7 @@ private constructor(
             this.dtLastModified = dtLastModified
         }
 
-        /** The id of the user who last modified this plan. */
+        /** The id of the user who last modified this Plan. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
         /**
@@ -735,7 +737,7 @@ private constructor(
          * The product minimum spend amount per billing cycle for end customer Accounts on a priced
          * Plan.
          *
-         * _(Optional)_. Overrides PlanTemplate value.
+         * *(Optional)*. Overrides PlanTemplate value.
          */
         fun minimumSpend(minimumSpend: Double) = minimumSpend(JsonField.of(minimumSpend))
 
@@ -751,8 +753,8 @@ private constructor(
         }
 
         /**
-         * Optional Product ID this plan's minimum spend should be attributed to for accounting
-         * purposes
+         * Optional Product ID this Plan's minimum spend should be attributed to for accounting
+         * purposes.
          */
         fun minimumSpendAccountingProductId(minimumSpendAccountingProductId: String) =
             minimumSpendAccountingProductId(JsonField.of(minimumSpendAccountingProductId))
@@ -770,11 +772,11 @@ private constructor(
             }
 
         /**
-         * When TRUE, minimum spend is billed at the start of each billing period.
+         * When **TRUE**, minimum spend is billed at the start of each billing period.
          *
-         * When FALSE, minimum spend is billed at the end of each billing period.
+         * When **FALSE**, minimum spend is billed at the end of each billing period.
          *
-         * _(Optional)_. Overrides the setting at PlanTemplate level for minimum spend billing in
+         * *(Optional)*. Overrides the setting at PlanTemplate level for minimum spend billing in
          * arrears/in advance.
          */
         fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: Boolean) =
@@ -791,7 +793,7 @@ private constructor(
             this.minimumSpendBillInAdvance = minimumSpendBillInAdvance
         }
 
-        /** Minimum spend description _(displayed on the bill line item)_. */
+        /** Minimum spend description *(displayed on the bill line item)*. */
         fun minimumSpendDescription(minimumSpendDescription: String) =
             minimumSpendDescription(JsonField.of(minimumSpendDescription))
 
@@ -821,7 +823,7 @@ private constructor(
          * Assigns a rank or position to the Plan in your order of pricing plans - lower numbers
          * represent more basic pricing plans; higher numbers represent more premium pricing plans.
          *
-         * _(Optional)_. Overrides PlanTemplate value.
+         * *(Optional)*. Overrides PlanTemplate value.
          *
          * **NOTE:** **DEPRECATED** - no longer used.
          */
@@ -864,7 +866,7 @@ private constructor(
         /**
          * The standing charge applied to bills for end customers. This is prorated.
          *
-         * _(Optional)_. Overrides PlanTemplate value.
+         * *(Optional)*. Overrides PlanTemplate value.
          */
         fun standingCharge(standingCharge: Double) = standingCharge(JsonField.of(standingCharge))
 
@@ -880,8 +882,8 @@ private constructor(
         }
 
         /**
-         * Optional Product ID this plan's standing charge should be attributed to for accounting
-         * purposes
+         * Optional Product ID this Plan's standing charge should be attributed to for accounting
+         * purposes.
          */
         fun standingChargeAccountingProductId(standingChargeAccountingProductId: String) =
             standingChargeAccountingProductId(JsonField.of(standingChargeAccountingProductId))
@@ -898,11 +900,11 @@ private constructor(
         ) = apply { this.standingChargeAccountingProductId = standingChargeAccountingProductId }
 
         /**
-         * When TRUE, standing charge is billed at the start of each billing period.
+         * When **TRUE**, standing charge is billed at the start of each billing period.
          *
-         * When FALSE, standing charge is billed at the end of each billing period.
+         * When **FALSE**, standing charge is billed at the end of each billing period.
          *
-         * _(Optional)_. Overrides the setting at PlanTemplate level for standing charge billing in
+         * *(Optional)*. Overrides the setting at PlanTemplate level for standing charge billing in
          * arrears/in advance.
          */
         fun standingChargeBillInAdvance(standingChargeBillInAdvance: Boolean) =
@@ -919,7 +921,7 @@ private constructor(
             this.standingChargeBillInAdvance = standingChargeBillInAdvance
         }
 
-        /** Standing charge description _(displayed on the bill line item)_. */
+        /** Standing charge description *(displayed on the bill line item)*. */
         fun standingChargeDescription(standingChargeDescription: String) =
             standingChargeDescription(JsonField.of(standingChargeDescription))
 
@@ -1180,12 +1182,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1197,12 +1197,59 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanResponse && id == other.id && accountId == other.accountId && bespoke == other.bespoke && code == other.code && createdBy == other.createdBy && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && minimumSpend == other.minimumSpend && minimumSpendAccountingProductId == other.minimumSpendAccountingProductId && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && name == other.name && ordinal == other.ordinal && planTemplateId == other.planTemplateId && productId == other.productId && standingCharge == other.standingCharge && standingChargeAccountingProductId == other.standingChargeAccountingProductId && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PlanResponse &&
+            id == other.id &&
+            accountId == other.accountId &&
+            bespoke == other.bespoke &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            customFields == other.customFields &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            minimumSpend == other.minimumSpend &&
+            minimumSpendAccountingProductId == other.minimumSpendAccountingProductId &&
+            minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
+            minimumSpendDescription == other.minimumSpendDescription &&
+            name == other.name &&
+            ordinal == other.ordinal &&
+            planTemplateId == other.planTemplateId &&
+            productId == other.productId &&
+            standingCharge == other.standingCharge &&
+            standingChargeAccountingProductId == other.standingChargeAccountingProductId &&
+            standingChargeBillInAdvance == other.standingChargeBillInAdvance &&
+            standingChargeDescription == other.standingChargeDescription &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountId, bespoke, code, createdBy, customFields, dtCreated, dtLastModified, lastModifiedBy, minimumSpend, minimumSpendAccountingProductId, minimumSpendBillInAdvance, minimumSpendDescription, name, ordinal, planTemplateId, productId, standingCharge, standingChargeAccountingProductId, standingChargeBillInAdvance, standingChargeDescription, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountId,
+            bespoke,
+            code,
+            createdBy,
+            customFields,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            minimumSpend,
+            minimumSpendAccountingProductId,
+            minimumSpendBillInAdvance,
+            minimumSpendDescription,
+            name,
+            ordinal,
+            planTemplateId,
+            productId,
+            standingCharge,
+            standingChargeAccountingProductId,
+            standingChargeBillInAdvance,
+            standingChargeDescription,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

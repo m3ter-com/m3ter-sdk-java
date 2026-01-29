@@ -13,7 +13,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /**
  * Delete the Data Export Schedule for the given UUID. Each Schedule can be configured for exporting
- * _only one_ of either Usage or Operational data.
+ * *only one* of either Usage or Operational data.
  */
 class DataExportScheduleDeleteParams
 private constructor(
@@ -236,10 +236,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportScheduleDeleteParams && orgId == other.orgId && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return other is DataExportScheduleDeleteParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams &&
+            additionalBodyProperties == other.additionalBodyProperties
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, additionalHeaders, additionalQueryParams, additionalBodyProperties)
 
     override fun toString() =
         "DataExportScheduleDeleteParams{orgId=$orgId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"

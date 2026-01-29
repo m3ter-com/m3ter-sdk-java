@@ -16,6 +16,7 @@ import java.util.Objects
 import java.util.Optional
 
 class BillApproveResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val message: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -145,12 +146,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillApproveResponse && message == other.message && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is BillApproveResponse &&
+            message == other.message &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(message, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

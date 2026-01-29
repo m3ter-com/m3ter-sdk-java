@@ -13,8 +13,8 @@ import kotlin.jvm.optionals.getOrNull
  * Retrieve an Export Job for the given UUID.
  *
  * The response returns:
- * - The source type for the data exported by the Export Job: one of USAGE or OPERATIONAL.
- * - The status of the Export Job.
+ * * The source type for the data exported by the Export Job: one of USAGE or OPERATIONAL.
+ * * The status of the Export Job.
  */
 class DataExportJobRetrieveParams
 private constructor(
@@ -203,10 +203,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportJobRetrieveParams && orgId == other.orgId && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is DataExportJobRetrieveParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = Objects.hash(orgId, id, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "DataExportJobRetrieveParams{orgId=$orgId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -20,7 +20,9 @@ import com.m3ter.models.AccountCreateParams
 import com.m3ter.models.AccountDeleteParams
 import com.m3ter.models.AccountEndDateBillingEntitiesParams
 import com.m3ter.models.AccountEndDateBillingEntitiesResponse
-import com.m3ter.models.AccountGetChildrenParams
+import com.m3ter.models.AccountListChildrenPage
+import com.m3ter.models.AccountListChildrenPageResponse
+import com.m3ter.models.AccountListChildrenParams
 import com.m3ter.models.AccountListPage
 import com.m3ter.models.AccountListPageResponse
 import com.m3ter.models.AccountListParams
@@ -83,12 +85,12 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
         // put /organizations/{orgId}/accounts/{id}/enddatebillingentities
         withRawResponse().endDateBillingEntities(params, requestOptions).parse()
 
-    override fun getChildren(
-        params: AccountGetChildrenParams,
+    override fun listChildren(
+        params: AccountListChildrenParams,
         requestOptions: RequestOptions,
-    ): AccountResponse =
+    ): AccountListChildrenPage =
         // get /organizations/{orgId}/accounts/{id}/children
-        withRawResponse().getChildren(params, requestOptions).parse()
+        withRawResponse().listChildren(params, requestOptions).parse()
 
     override fun search(
         params: AccountSearchParams,
@@ -324,13 +326,13 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
             }
         }
 
-        private val getChildrenHandler: Handler<AccountResponse> =
-            jsonHandler<AccountResponse>(clientOptions.jsonMapper)
+        private val listChildrenHandler: Handler<AccountListChildrenPageResponse> =
+            jsonHandler<AccountListChildrenPageResponse>(clientOptions.jsonMapper)
 
-        override fun getChildren(
-            params: AccountGetChildrenParams,
+        override fun listChildren(
+            params: AccountListChildrenParams,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<AccountResponse> {
+        ): HttpResponseFor<AccountListChildrenPage> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
@@ -351,11 +353,18 @@ class AccountServiceImpl internal constructor(private val clientOptions: ClientO
             val response = clientOptions.httpClient.execute(request, requestOptions)
             return errorHandler.handle(response).parseable {
                 response
-                    .use { getChildrenHandler.handle(it) }
+                    .use { listChildrenHandler.handle(it) }
                     .also {
                         if (requestOptions.responseValidation!!) {
                             it.validate()
                         }
+                    }
+                    .let {
+                        AccountListChildrenPage.builder()
+                            .service(AccountServiceImpl(clientOptions))
+                            .params(params)
+                            .response(it)
+                            .build()
                     }
             }
         }

@@ -11,12 +11,12 @@ internal class ExternalMappingCreateParamsTest {
     fun create() {
         ExternalMappingCreateParams.builder()
             .orgId("orgId")
-            .externalId("S?oC\"\$]C] ]]]]]5]")
-            .externalSystem("S?oC\"\$]C] ]]]]]5]")
-            .externalTable("S?oC\"\$]C] ]]]]]5]")
-            .m3terEntity("S?oC\"\$]C] ]]]]]5]")
-            .m3terId("S?oC\"\$]C] ]]]]]5]")
-            .integrationConfigId("integrationConfigId")
+            .externalId("cus_00000000000000")
+            .externalSystem("Stripe")
+            .externalTable("Customer")
+            .m3terEntity("Account")
+            .m3terId("00000000-0000-0000-0000-000000000000")
+            .integrationConfigId("00000000-0000-0000-0000-000000000000")
             .version(0L)
             .build()
     }
@@ -25,11 +25,11 @@ internal class ExternalMappingCreateParamsTest {
     fun pathParams() {
         val params =
             ExternalMappingCreateParams.builder()
-                .externalId("S?oC\"\$]C] ]]]]]5]")
-                .externalSystem("S?oC\"\$]C] ]]]]]5]")
-                .externalTable("S?oC\"\$]C] ]]]]]5]")
-                .m3terEntity("S?oC\"\$]C] ]]]]]5]")
-                .m3terId("S?oC\"\$]C] ]]]]]5]")
+                .externalId("cus_00000000000000")
+                .externalSystem("Stripe")
+                .externalTable("Customer")
+                .m3terEntity("Account")
+                .m3terId("00000000-0000-0000-0000-000000000000")
                 .build()
 
         assertThat(params._pathParam(0)).isEqualTo("")
@@ -42,23 +42,23 @@ internal class ExternalMappingCreateParamsTest {
         val params =
             ExternalMappingCreateParams.builder()
                 .orgId("orgId")
-                .externalId("S?oC\"\$]C] ]]]]]5]")
-                .externalSystem("S?oC\"\$]C] ]]]]]5]")
-                .externalTable("S?oC\"\$]C] ]]]]]5]")
-                .m3terEntity("S?oC\"\$]C] ]]]]]5]")
-                .m3terId("S?oC\"\$]C] ]]]]]5]")
-                .integrationConfigId("integrationConfigId")
+                .externalId("cus_00000000000000")
+                .externalSystem("Stripe")
+                .externalTable("Customer")
+                .m3terEntity("Account")
+                .m3terId("00000000-0000-0000-0000-000000000000")
+                .integrationConfigId("00000000-0000-0000-0000-000000000000")
                 .version(0L)
                 .build()
 
         val body = params._body()
 
-        assertThat(body.externalId()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
-        assertThat(body.externalSystem()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
-        assertThat(body.externalTable()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
-        assertThat(body.m3terEntity()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
-        assertThat(body.m3terId()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
-        assertThat(body.integrationConfigId()).contains("integrationConfigId")
+        assertThat(body.externalId()).isEqualTo("cus_00000000000000")
+        assertThat(body.externalSystem()).isEqualTo("Stripe")
+        assertThat(body.externalTable()).isEqualTo("Customer")
+        assertThat(body.m3terEntity()).isEqualTo("Account")
+        assertThat(body.m3terId()).isEqualTo("00000000-0000-0000-0000-000000000000")
+        assertThat(body.integrationConfigId()).contains("00000000-0000-0000-0000-000000000000")
         assertThat(body.version()).contains(0L)
     }
 
@@ -66,19 +66,19 @@ internal class ExternalMappingCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             ExternalMappingCreateParams.builder()
-                .externalId("S?oC\"\$]C] ]]]]]5]")
-                .externalSystem("S?oC\"\$]C] ]]]]]5]")
-                .externalTable("S?oC\"\$]C] ]]]]]5]")
-                .m3terEntity("S?oC\"\$]C] ]]]]]5]")
-                .m3terId("S?oC\"\$]C] ]]]]]5]")
+                .externalId("cus_00000000000000")
+                .externalSystem("Stripe")
+                .externalTable("Customer")
+                .m3terEntity("Account")
+                .m3terId("00000000-0000-0000-0000-000000000000")
                 .build()
 
         val body = params._body()
 
-        assertThat(body.externalId()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
-        assertThat(body.externalSystem()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
-        assertThat(body.externalTable()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
-        assertThat(body.m3terEntity()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
-        assertThat(body.m3terId()).isEqualTo("S?oC\"\$]C] ]]]]]5]")
+        assertThat(body.externalId()).isEqualTo("cus_00000000000000")
+        assertThat(body.externalSystem()).isEqualTo("Stripe")
+        assertThat(body.externalTable()).isEqualTo("Customer")
+        assertThat(body.m3terEntity()).isEqualTo("Account")
+        assertThat(body.m3terId()).isEqualTo("00000000-0000-0000-0000-000000000000")
     }
 }

@@ -32,10 +32,12 @@ interface ContractServiceAsync {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): ContractServiceAsync
 
     /**
-     * Create a new Contract.
-     *
      * Creates a new Contract for the specified Account. The Contract includes information such as
      * the associated Account along with start and end dates.
+     *
+     * If you intend to bill an Account on a Contract basis, you can use the `billGroupingKeyId`,
+     * `applyContractPeriodLimits`, and `usageFilters` request parameters to control Contract
+     * billing.
      */
     fun create(params: ContractCreateParams): CompletableFuture<ContractResponse> =
         create(params, RequestOptions.none())
@@ -134,8 +136,9 @@ interface ContractServiceAsync {
      * Deletes the Contract with the specified UUID. Used to remove an existing Contract from an
      * Account.
      *
-     * **Note:** This call will fail if there are any AccountPlans or Commitments that have been
-     * added to the Contract.
+     * **Note:** This call will fail if there are any other billing entities associated with the
+     * Account and that have been added to the Contract, such as AccountPlans, Balance, or
+     * Commitments.
      */
     fun delete(id: String): CompletableFuture<ContractResponse> =
         delete(id, ContractDeleteParams.none())
@@ -173,7 +176,7 @@ interface ContractServiceAsync {
      * been added to, and apply the end-date to the Contract itself.
      *
      * **NOTES:**
-     * - If you want to apply the end-date to the Contract _itself_ - the Contract `id` you use as
+     * - If you want to apply the end-date to the Contract *itself* - the Contract `id` you use as
      *   the required PATH PARAMETER - you must also specify `CONTRACT` as a `billingEntities`
      *   option in the request body schema.
      * - Only the Contract whose id you specify for the PATH PARAMETER will be end-dated. If there

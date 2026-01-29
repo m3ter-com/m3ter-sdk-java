@@ -230,10 +230,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventGetFieldsParams && orgId == other.orgId && eventName == other.eventName && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is EventGetFieldsParams &&
+            orgId == other.orgId &&
+            eventName == other.eventName &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, eventName, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, eventName, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "EventGetFieldsParams{orgId=$orgId, eventName=$eventName, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

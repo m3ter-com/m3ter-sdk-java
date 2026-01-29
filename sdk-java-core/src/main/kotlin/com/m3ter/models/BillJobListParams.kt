@@ -33,8 +33,8 @@ private constructor(
     /**
      * Boolean filter to retrieve only active BillJobs and exclude completed or cancelled BillJobs
      * from the results.
-     * - TRUE - only active BillJobs.
-     * - FALSE - all BillJobs including completed and cancelled BillJobs.
+     * * TRUE - only active BillJobs.
+     * * FALSE - all BillJobs including completed and cancelled BillJobs.
      */
     fun active(): Optional<String> = Optional.ofNullable(active)
 
@@ -52,11 +52,11 @@ private constructor(
      * current processing status.
      *
      * Possible states are:
-     * - PENDING
-     * - INITIALIZING
-     * - RUNNING
-     * - COMPLETE
-     * - CANCELLED
+     * * PENDING
+     * * INITIALIZING
+     * * RUNNING
+     * * COMPLETE
+     * * CANCELLED
      */
     fun status(): Optional<String> = Optional.ofNullable(status)
 
@@ -108,8 +108,8 @@ private constructor(
         /**
          * Boolean filter to retrieve only active BillJobs and exclude completed or cancelled
          * BillJobs from the results.
-         * - TRUE - only active BillJobs.
-         * - FALSE - all BillJobs including completed and cancelled BillJobs.
+         * * TRUE - only active BillJobs.
+         * * FALSE - all BillJobs including completed and cancelled BillJobs.
          */
         fun active(active: String?) = apply { this.active = active }
 
@@ -143,11 +143,11 @@ private constructor(
          * their current processing status.
          *
          * Possible states are:
-         * - PENDING
-         * - INITIALIZING
-         * - RUNNING
-         * - COMPLETE
-         * - CANCELLED
+         * * PENDING
+         * * INITIALIZING
+         * * RUNNING
+         * * COMPLETE
+         * * CANCELLED
          */
         fun status(status: String?) = apply { this.status = status }
 
@@ -293,10 +293,26 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillJobListParams && orgId == other.orgId && active == other.active && nextToken == other.nextToken && pageSize == other.pageSize && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BillJobListParams &&
+            orgId == other.orgId &&
+            active == other.active &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            status == other.status &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, active, nextToken, pageSize, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            active,
+            nextToken,
+            pageSize,
+            status,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "BillJobListParams{orgId=$orgId, active=$active, nextToken=$nextToken, pageSize=$pageSize, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

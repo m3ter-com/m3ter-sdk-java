@@ -18,6 +18,7 @@ import java.util.Objects
 import java.util.Optional
 
 class TransactionTypeResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val archived: JsonField<Boolean>,
@@ -95,7 +96,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the TransactionType was created.
+     * The date and time *(in ISO-8601 format)* when the TransactionType was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -103,7 +104,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the TransactionType was last modified.
+     * The date and time *(in ISO-8601 format)* when the TransactionType was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -308,7 +309,7 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The date and time _(in ISO-8601 format)_ when the TransactionType was created. */
+        /** The date and time *(in ISO-8601 format)* when the TransactionType was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -320,7 +321,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The date and time _(in ISO-8601 format)_ when the TransactionType was last modified. */
+        /** The date and time *(in ISO-8601 format)* when the TransactionType was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -471,12 +472,33 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is TransactionTypeResponse && id == other.id && archived == other.archived && code == other.code && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is TransactionTypeResponse &&
+            id == other.id &&
+            archived == other.archived &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            name == other.name &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, archived, code, createdBy, dtCreated, dtLastModified, lastModifiedBy, name, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            archived,
+            code,
+            createdBy,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            name,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

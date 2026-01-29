@@ -16,7 +16,7 @@ import kotlin.jvm.optionals.getOrNull
  * payload needs to be less than 512,000 bytes.
  *
  * **NOTES:**
- * - **Non-existent Accounts.** The `account` request parameter is required. However, if you want to
+ * * **Non-existent Accounts.** The `account` request parameter is required. However, if you want to
  *   submit a usage data measurement for an Account which does not yet exist in your Organization,
  *   you can use an `account` code for a non-existent Account. A new skeleton Account will be
  *   automatically created. The usage data measurement is accepted and ingested as data belonging to
@@ -24,16 +24,16 @@ import kotlin.jvm.optionals.getOrNull
  *   and??e-mail address. For more details, see
  *   [Submitting Usage Data for Non-Existent Accounts](https://www.m3ter.com/docs/guides/billing-and-usage-data/submitting-usage-data/submitting-usage-data-for-non-existent-accounts)
  *   in our main documentation.
- * - **Usage Data Adjustments.** If you need to make corrections for billing retrospectively against
+ * * **Usage Data Adjustments.** If you need to make corrections for billing retrospectively against
  *   an Account, you can use date/time values in the past for the `ts` (timestamp) request parameter
  *   to submit positive or negative usage data amounts to correct and reconcile earlier billing
  *   anomalies. For more details, see
  *   [Submitting Usage Data Adjustments Using Timestamp](https://www.m3ter.com/docs/guides/billing-and-usage-data/submitting-usage-data/submitting-usage-data-adjustments-using-timestamp)
  *   in our main documentation.
- * - **Ingest Validation Failure Events.** After the intial submission of a usage data measurement
+ * * **Ingest Validation Failure Events.** After the intial submission of a usage data measurement
  *   to the Ingest API, a data enrichment stage is performed to check for any errors in the usage
  *   data measurement, such as a missing field. If an error is identified, this might result in the
- *   submission being rejected. In these cases, an _ingest validation failure_ Event is generated,
+ *   submission being rejected. In these cases, an *ingest validation failure* Event is generated,
  *   which you can review on the
  *   [Ingest Events](https://www.m3ter.com/docs/guides/billing-and-usage-data/submitting-usage-data/reviewing-and-resolving-ingest-events)
  *   page in the Console. See also the [Events](https://www.m3ter.com/docs/api#tag/Events) section
@@ -246,10 +246,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UsageSubmitParams && orgId == other.orgId && submitMeasurementsRequest == other.submitMeasurementsRequest && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is UsageSubmitParams &&
+            orgId == other.orgId &&
+            submitMeasurementsRequest == other.submitMeasurementsRequest &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, submitMeasurementsRequest, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, submitMeasurementsRequest, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "UsageSubmitParams{orgId=$orgId, submitMeasurementsRequest=$submitMeasurementsRequest, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

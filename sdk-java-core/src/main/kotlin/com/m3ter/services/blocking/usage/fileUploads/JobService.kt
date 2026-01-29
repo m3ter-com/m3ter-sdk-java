@@ -65,9 +65,9 @@ interface JobService {
 
     /**
      * Lists the File Upload jobs. Part of the File Upload service for measurements ingest:
-     * - You can use the `dateCreatedStart` and `dateCreatedEnd` optional Query parameters to define
+     * * You can use the `dateCreatedStart` and `dateCreatedEnd` optional Query parameters to define
      *   a date range to filter the File Uploads jobs returned for this call.
-     * - If `dateCreatedStart` and `dateCreatedEnd` Query parameters are not used, then all File
+     * * If `dateCreatedStart` and `dateCreatedEnd` Query parameters are not used, then all File
      *   Upload jobs are returned.
      */
     fun list(): UsageFileUploadJobListPage = list(UsageFileUploadJobListParams.none())

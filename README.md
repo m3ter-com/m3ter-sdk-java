@@ -2,8 +2,8 @@
 
 <!-- x-release-please-start-version -->
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.4.0)
-[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.4.0/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.4.0)
+[![Maven Central](https://img.shields.io/maven-central/v/com.m3ter/sdk-java)](https://central.sonatype.com/artifact/com.m3ter/sdk-java/0.5.0)
+[![javadoc](https://javadoc.io/badge2/com.m3ter/sdk-java/0.5.0/javadoc.svg)](https://javadoc.io/doc/com.m3ter/sdk-java/0.5.0)
 
 <!-- x-release-please-end -->
 
@@ -11,9 +11,18 @@ The M3ter Java SDK provides convenient access to the [M3ter REST API](https://ww
 
 It is generated with [Stainless](https://www.stainless.com/).
 
+## MCP Server
+
+Use the M3ter MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.
+
+[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=m3ter-sdk-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIm0zdGVyLXNkay1tY3AiXSwiZW52Ijp7Ik0zVEVSX0FQSV9LRVkiOiJNeSBBUEkgS2V5IiwiTTNURVJfQVBJX1NFQ1JFVCI6Ik15IEFQSSBTZWNyZXQiLCJNM1RFUl9BUElfVE9LRU4iOiJNeSBUb2tlbiIsIk0zVEVSX09SR19JRCI6Ik15IE9yZyBJRCJ9fQ)
+[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22m3ter-sdk-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22m3ter-sdk-mcp%22%5D%2C%22env%22%3A%7B%22M3TER_API_KEY%22%3A%22My%20API%20Key%22%2C%22M3TER_API_SECRET%22%3A%22My%20API%20Secret%22%2C%22M3TER_API_TOKEN%22%3A%22My%20Token%22%2C%22M3TER_ORG_ID%22%3A%22My%20Org%20ID%22%7D%7D)
+
+> Note: You may need to set environment variables in your MCP client.
+
 <!-- x-release-please-start-version -->
 
-The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.4.0).
+The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com). Javadocs are available on [javadoc.io](https://javadoc.io/doc/com.m3ter/sdk-java/0.5.0).
 
 <!-- x-release-please-end -->
 
@@ -24,7 +33,7 @@ The REST API documentation can be found on [www.m3ter.com](https://www.m3ter.com
 ### Gradle
 
 ```kotlin
-implementation("com.m3ter:sdk-java:0.4.0")
+implementation("com.m3ter:sdk-java:0.5.0")
 ```
 
 ### Maven
@@ -33,7 +42,7 @@ implementation("com.m3ter:sdk-java:0.4.0")
 <dependency>
   <groupId>com.m3ter</groupId>
   <artifactId>sdk-java</artifactId>
-  <version>0.4.0</version>
+  <version>0.5.0</version>
 </dependency>
 ```
 
@@ -51,7 +60,7 @@ import com.m3ter.client.okhttp.M3terOkHttpClient;
 import com.m3ter.models.ProductListPage;
 import com.m3ter.models.ProductListParams;
 
-// Configures using the `m3ter.apiKey`, `m3ter.apiSecret`, `m3ter.apiToken`, `m3ter.orgId` and `m3ter.baseUrl` system properties
+// Configures using the `m3ter.m3TerApiKey`, `m3ter.m3TerApiSecret`, `m3ter.m3TerApiToken`, `m3ter.m3TerOrgId` and `m3ter.baseUrl` system properties
 // Or configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
 M3terClient client = M3terOkHttpClient.fromEnv();
 
@@ -69,7 +78,7 @@ Configure the client using system properties or environment variables:
 import com.m3ter.client.M3terClient;
 import com.m3ter.client.okhttp.M3terOkHttpClient;
 
-// Configures using the `m3ter.apiKey`, `m3ter.apiSecret`, `m3ter.apiToken`, `m3ter.orgId` and `m3ter.baseUrl` system properties
+// Configures using the `m3ter.m3TerApiKey`, `m3ter.m3TerApiSecret`, `m3ter.m3TerApiToken`, `m3ter.m3TerOrgId` and `m3ter.baseUrl` system properties
 // Or configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
 M3terClient client = M3terOkHttpClient.fromEnv();
 ```
@@ -94,7 +103,7 @@ import com.m3ter.client.M3terClient;
 import com.m3ter.client.okhttp.M3terOkHttpClient;
 
 M3terClient client = M3terOkHttpClient.builder()
-    // Configures using the `m3ter.apiKey`, `m3ter.apiSecret`, `m3ter.apiToken`, `m3ter.orgId` and `m3ter.baseUrl` system properties
+    // Configures using the `m3ter.m3TerApiKey`, `m3ter.m3TerApiSecret`, `m3ter.m3TerApiToken`, `m3ter.m3TerOrgId` and `m3ter.baseUrl` system properties
     // Or configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
     .fromEnv()
     .apiKey("My API Key")
@@ -103,13 +112,13 @@ M3terClient client = M3terOkHttpClient.builder()
 
 See this table for the available options:
 
-| Setter      | System property   | Environment variable | Required | Default value             |
-| ----------- | ----------------- | -------------------- | -------- | ------------------------- |
-| `apiKey`    | `m3ter.apiKey`    | `M3TER_API_KEY`      | true     | -                         |
-| `apiSecret` | `m3ter.apiSecret` | `M3TER_API_SECRET`   | true     | -                         |
-| `token`     | `m3ter.apiToken`  | `M3TER_API_TOKEN`    | false    | -                         |
-| `orgId`     | `m3ter.orgId`     | `M3TER_ORG_ID`       | true     | -                         |
-| `baseUrl`   | `m3ter.baseUrl`   | `M3TER_BASE_URL`     | true     | `"https://api.m3ter.com"` |
+| Setter      | System property        | Environment variable | Required | Default value             |
+| ----------- | ---------------------- | -------------------- | -------- | ------------------------- |
+| `apiKey`    | `m3ter.m3TerApiKey`    | `M3TER_API_KEY`      | true     | -                         |
+| `apiSecret` | `m3ter.m3TerApiSecret` | `M3TER_API_SECRET`   | true     | -                         |
+| `token`     | `m3ter.m3TerApiToken`  | `M3TER_API_TOKEN`    | false    | -                         |
+| `orgId`     | `m3ter.m3TerOrgId`     | `M3TER_ORG_ID`       | true     | -                         |
+| `baseUrl`   | `m3ter.baseUrl`        | `M3TER_BASE_URL`     | true     | `"https://api.m3ter.com"` |
 
 System properties take precedence over environment variables.
 
@@ -157,7 +166,7 @@ import com.m3ter.models.ProductListPageAsync;
 import com.m3ter.models.ProductListParams;
 import java.util.concurrent.CompletableFuture;
 
-// Configures using the `m3ter.apiKey`, `m3ter.apiSecret`, `m3ter.apiToken`, `m3ter.orgId` and `m3ter.baseUrl` system properties
+// Configures using the `m3ter.m3TerApiKey`, `m3ter.m3TerApiSecret`, `m3ter.m3TerApiToken`, `m3ter.m3TerOrgId` and `m3ter.baseUrl` system properties
 // Or configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
 M3terClient client = M3terOkHttpClient.fromEnv();
 
@@ -176,7 +185,7 @@ import com.m3ter.models.ProductListPageAsync;
 import com.m3ter.models.ProductListParams;
 import java.util.concurrent.CompletableFuture;
 
-// Configures using the `m3ter.apiKey`, `m3ter.apiSecret`, `m3ter.apiToken`, `m3ter.orgId` and `m3ter.baseUrl` system properties
+// Configures using the `m3ter.m3TerApiKey`, `m3ter.m3TerApiSecret`, `m3ter.m3TerApiToken`, `m3ter.m3TerOrgId` and `m3ter.baseUrl` system properties
 // Or configures using the `M3TER_API_KEY`, `M3TER_API_SECRET`, `M3TER_API_TOKEN`, `M3TER_ORG_ID` and `M3TER_BASE_URL` environment variables
 M3terClientAsync client = M3terOkHttpClientAsync.fromEnv();
 
@@ -349,13 +358,13 @@ The SDK uses the standard [OkHttp logging interceptor](https://github.com/square
 Enable logging by setting the `M3TER_LOG` environment variable to `info`:
 
 ```sh
-$ export M3TER_LOG=info
+export M3TER_LOG=info
 ```
 
 Or to `debug` for more verbose logging:
 
 ```sh
-$ export M3TER_LOG=debug
+export M3TER_LOG=debug
 ```
 
 ## ProGuard and R8
@@ -374,6 +383,8 @@ If the SDK threw an exception, but you're _certain_ the version is compatible, t
 
 > [!CAUTION]
 > We make no guarantee that the SDK works correctly when the Jackson version check is disabled.
+
+Also note that there are bugs in older Jackson versions that can affect the SDK. We don't work around all Jackson bugs ([example](https://github.com/FasterXML/jackson-databind/issues/3240)) and expect users to upgrade Jackson for those instead.
 
 ## Network options
 

@@ -44,7 +44,7 @@ private constructor(
     fun id(): Optional<String> = Optional.ofNullable(id)
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to set or
+     * The date and time *(in ISO 8601 format)* when the user's access will end. Use this to set or
      * update the expiration of the user's access.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -160,7 +160,7 @@ private constructor(
         fun body(body: Body) = apply { this.body = body.toBuilder() }
 
         /**
-         * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to set
+         * The date and time *(in ISO 8601 format)* when the user's access will end. Use this to set
          * or update the expiration of the user's access.
          */
         fun dtEndAccess(dtEndAccess: OffsetDateTime) = apply { body.dtEndAccess(dtEndAccess) }
@@ -373,6 +373,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val dtEndAccess: JsonField<OffsetDateTime>,
         private val permissionPolicy: JsonField<List<PermissionStatementResponse>>,
@@ -392,7 +393,7 @@ private constructor(
         ) : this(dtEndAccess, permissionPolicy, version, mutableMapOf())
 
         /**
-         * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to set
+         * The date and time *(in ISO 8601 format)* when the user's access will end. Use this to set
          * or update the expiration of the user's access.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -489,7 +490,7 @@ private constructor(
             }
 
             /**
-             * The date and time _(in ISO 8601 format)_ when the user's access will end. Use this to
+             * The date and time *(in ISO 8601 format)* when the user's access will end. Use this to
              * set or update the expiration of the user's access.
              */
             fun dtEndAccess(dtEndAccess: OffsetDateTime) = dtEndAccess(JsonField.of(dtEndAccess))
@@ -630,12 +631,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && dtEndAccess == other.dtEndAccess && permissionPolicy == other.permissionPolicy && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                dtEndAccess == other.dtEndAccess &&
+                permissionPolicy == other.permissionPolicy &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(dtEndAccess, permissionPolicy, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(dtEndAccess, permissionPolicy, version, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -648,10 +653,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UserUpdateParams && orgId == other.orgId && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is UserUpdateParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "UserUpdateParams{orgId=$orgId, id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -16,6 +16,7 @@ import java.util.Objects
 import java.util.Optional
 
 class SetString
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val empty: JsonField<Boolean>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -137,12 +138,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SetString && empty == other.empty && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is SetString &&
+            empty == other.empty &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(empty, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

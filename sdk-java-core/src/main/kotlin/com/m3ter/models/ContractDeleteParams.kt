@@ -15,8 +15,8 @@ import kotlin.jvm.optionals.getOrNull
  * Deletes the Contract with the specified UUID. Used to remove an existing Contract from an
  * Account.
  *
- * **Note:** This call will fail if there are any AccountPlans or Commitments that have been added
- * to the Contract.
+ * **Note:** This call will fail if there are any other billing entities associated with the Account
+ * and that have been added to the Contract, such as AccountPlans, Balance, or Commitments.
  */
 class ContractDeleteParams
 private constructor(
@@ -235,10 +235,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ContractDeleteParams && orgId == other.orgId && id == other.id && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return other is ContractDeleteParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams &&
+            additionalBodyProperties == other.additionalBodyProperties
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, additionalHeaders, additionalQueryParams, additionalBodyProperties)
 
     override fun toString() =
         "ContractDeleteParams{orgId=$orgId, id=$id, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"

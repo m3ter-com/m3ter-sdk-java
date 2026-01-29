@@ -324,10 +324,28 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CompoundAggregationListParams && orgId == other.orgId && codes == other.codes && ids == other.ids && nextToken == other.nextToken && pageSize == other.pageSize && productId == other.productId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CompoundAggregationListParams &&
+            orgId == other.orgId &&
+            codes == other.codes &&
+            ids == other.ids &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            productId == other.productId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, codes, ids, nextToken, pageSize, productId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            codes,
+            ids,
+            nextToken,
+            pageSize,
+            productId,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "CompoundAggregationListParams{orgId=$orgId, codes=$codes, ids=$ids, nextToken=$nextToken, pageSize=$pageSize, productId=$productId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

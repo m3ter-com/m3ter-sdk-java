@@ -22,6 +22,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class AdHocUsageDataRequest
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val sourceType: JsonField<SourceType>,
     private val accountIds: JsonField<List<String>>,
@@ -129,7 +130,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -415,8 +416,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -631,7 +632,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SourceType && value == other.value /* spotless:on */
+            return other is SourceType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -640,6 +641,7 @@ private constructor(
     }
 
     class Aggregation
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val fieldCode: JsonField<String>,
         private val fieldType: JsonField<FieldType>,
@@ -1021,7 +1023,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is FieldType && value == other.value /* spotless:on */
+                return other is FieldType && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1182,7 +1184,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Function && value == other.value /* spotless:on */
+                return other is Function && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1195,12 +1197,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Aggregation && fieldCode == other.fieldCode && fieldType == other.fieldType && function == other.function && meterId == other.meterId && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Aggregation &&
+                fieldCode == other.fieldCode &&
+                fieldType == other.fieldType &&
+                function == other.function &&
+                meterId == other.meterId &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(fieldCode, fieldType, function, meterId, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(fieldCode, fieldType, function, meterId, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1209,6 +1216,7 @@ private constructor(
     }
 
     class DimensionFilter
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val fieldCode: JsonField<String>,
         private val meterId: JsonField<String>,
@@ -1445,12 +1453,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DimensionFilter && fieldCode == other.fieldCode && meterId == other.meterId && values == other.values && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is DimensionFilter &&
+                fieldCode == other.fieldCode &&
+                meterId == other.meterId &&
+                values == other.values &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(fieldCode, meterId, values, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(fieldCode, meterId, values, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1463,12 +1475,31 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AdHocUsageDataRequest && sourceType == other.sourceType && accountIds == other.accountIds && aggregations == other.aggregations && dimensionFilters == other.dimensionFilters && endDate == other.endDate && groups == other.groups && meterIds == other.meterIds && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AdHocUsageDataRequest &&
+            sourceType == other.sourceType &&
+            accountIds == other.accountIds &&
+            aggregations == other.aggregations &&
+            dimensionFilters == other.dimensionFilters &&
+            endDate == other.endDate &&
+            groups == other.groups &&
+            meterIds == other.meterIds &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(sourceType, accountIds, aggregations, dimensionFilters, endDate, groups, meterIds, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            sourceType,
+            accountIds,
+            aggregations,
+            dimensionFilters,
+            endDate,
+            groups,
+            meterIds,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

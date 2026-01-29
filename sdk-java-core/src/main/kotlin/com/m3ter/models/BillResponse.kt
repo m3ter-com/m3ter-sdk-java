@@ -23,6 +23,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class BillResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accountCode: JsonField<String>,
@@ -57,6 +58,7 @@ private constructor(
     private val sequentialInvoiceNumber: JsonField<String>,
     private val startDate: JsonField<LocalDate>,
     private val startDateTimeUtc: JsonField<OffsetDateTime>,
+    private val statementStale: JsonField<Boolean>,
     private val status: JsonField<Status>,
     private val timezone: JsonField<String>,
     private val version: JsonField<Long>,
@@ -142,6 +144,9 @@ private constructor(
         @JsonProperty("startDateTimeUTC")
         @ExcludeMissing
         startDateTimeUtc: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("statementStale")
+        @ExcludeMissing
+        statementStale: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("status") @ExcludeMissing status: JsonField<Status> = JsonMissing.of(),
         @JsonProperty("timezone") @ExcludeMissing timezone: JsonField<String> = JsonMissing.of(),
         @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
@@ -179,6 +184,7 @@ private constructor(
         sequentialInvoiceNumber,
         startDate,
         startDateTimeUtc,
+        statementStale,
         status,
         timezone,
         version,
@@ -263,8 +269,8 @@ private constructor(
 
     /**
      * Flag to indicate that the statement in CSV format has been generated for the Bill.
-     * - **TRUE** - CSV statement has been generated.
-     * - **FALSE** - no CSV statement generated.
+     * * **TRUE** - CSV statement has been generated.
+     * * **FALSE** - no CSV statement generated.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -294,7 +300,7 @@ private constructor(
     fun dtApproved(): Optional<OffsetDateTime> = dtApproved.getOptional("dtApproved")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the Bill was first created.
+     * The date and time *(in ISO 8601 format)* when the Bill was first created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -302,7 +308,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the Bill was last modified.
+     * The date and time *(in ISO 8601 format)* when the Bill was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -338,11 +344,11 @@ private constructor(
     /**
      * For accounting purposes, the date set at Organization level to use for external invoicing
      * with respect to billing periods - two options:
-     * - `FIRST_DAY_OF_NEXT_PERIOD` _(Default)_.
-     * - `LAST_DAY_OF_ARREARS`
+     * * `FIRST_DAY_OF_NEXT_PERIOD` *(Default)*.
+     * * `LAST_DAY_OF_ARREARS`
      *
      * For example, if the retrieved Bill was on a monthly billing frequency and the billing period
-     * for the Bill is September 2023 and the _External invoice date_ is set at
+     * for the Bill is September 2023 and the *External invoice date* is set at
      * `FIRST_DAY_OF_NEXT_PERIOD`, then the `externalInvoiceDate` will be `"2023-10-01"`.
      *
      * **NOTE:** To change the `externalInvoiceDate` setting for your Organization, you can use the
@@ -366,8 +372,8 @@ private constructor(
 
     /**
      * Flag to indicate that the statement in JSON format has been generated for the Bill.
-     * - **TRUE** - JSON statement has been generated.
-     * - **FALSE** - no JSON statement generated.
+     * * **TRUE** - JSON statement has been generated.
+     * * **FALSE** - no JSON statement generated.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -446,6 +452,14 @@ private constructor(
      */
     fun startDateTimeUtc(): Optional<OffsetDateTime> =
         startDateTimeUtc.getOptional("startDateTimeUTC")
+
+    /**
+     * True if the existing bill statement (JSON or CSV) is marked as stale/outdated.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun statementStale(): Optional<Boolean> = statementStale.getOptional("statementStale")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -749,6 +763,15 @@ private constructor(
     fun _startDateTimeUtc(): JsonField<OffsetDateTime> = startDateTimeUtc
 
     /**
+     * Returns the raw JSON value of [statementStale].
+     *
+     * Unlike [statementStale], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("statementStale")
+    @ExcludeMissing
+    fun _statementStale(): JsonField<Boolean> = statementStale
+
+    /**
      * Returns the raw JSON value of [status].
      *
      * Unlike [status], this method doesn't throw if the JSON field has an unexpected type.
@@ -830,6 +853,7 @@ private constructor(
         private var sequentialInvoiceNumber: JsonField<String> = JsonMissing.of()
         private var startDate: JsonField<LocalDate> = JsonMissing.of()
         private var startDateTimeUtc: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var statementStale: JsonField<Boolean> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
         private var timezone: JsonField<String> = JsonMissing.of()
         private var version: JsonField<Long> = JsonMissing.of()
@@ -870,6 +894,7 @@ private constructor(
             sequentialInvoiceNumber = billResponse.sequentialInvoiceNumber
             startDate = billResponse.startDate
             startDateTimeUtc = billResponse.startDateTimeUtc
+            statementStale = billResponse.statementStale
             status = billResponse.status
             timezone = billResponse.timezone
             version = billResponse.version
@@ -1010,8 +1035,8 @@ private constructor(
 
         /**
          * Flag to indicate that the statement in CSV format has been generated for the Bill.
-         * - **TRUE** - CSV statement has been generated.
-         * - **FALSE** - no CSV statement generated.
+         * * **TRUE** - CSV statement has been generated.
+         * * **FALSE** - no CSV statement generated.
          */
         fun csvStatementGenerated(csvStatementGenerated: Boolean) =
             csvStatementGenerated(JsonField.of(csvStatementGenerated))
@@ -1077,7 +1102,7 @@ private constructor(
             this.dtApproved = dtApproved
         }
 
-        /** The date and time _(in ISO 8601 format)_ when the Bill was first created. */
+        /** The date and time *(in ISO 8601 format)* when the Bill was first created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -1089,7 +1114,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The date and time _(in ISO 8601 format)_ when the Bill was last modified. */
+        /** The date and time *(in ISO 8601 format)* when the Bill was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -1155,11 +1180,11 @@ private constructor(
         /**
          * For accounting purposes, the date set at Organization level to use for external invoicing
          * with respect to billing periods - two options:
-         * - `FIRST_DAY_OF_NEXT_PERIOD` _(Default)_.
-         * - `LAST_DAY_OF_ARREARS`
+         * * `FIRST_DAY_OF_NEXT_PERIOD` *(Default)*.
+         * * `LAST_DAY_OF_ARREARS`
          *
          * For example, if the retrieved Bill was on a monthly billing frequency and the billing
-         * period for the Bill is September 2023 and the _External invoice date_ is set at
+         * period for the Bill is September 2023 and the *External invoice date* is set at
          * `FIRST_DAY_OF_NEXT_PERIOD`, then the `externalInvoiceDate` will be `"2023-10-01"`.
          *
          * **NOTE:** To change the `externalInvoiceDate` setting for your Organization, you can use
@@ -1198,8 +1223,8 @@ private constructor(
 
         /**
          * Flag to indicate that the statement in JSON format has been generated for the Bill.
-         * - **TRUE** - JSON statement has been generated.
-         * - **FALSE** - no JSON statement generated.
+         * * **TRUE** - JSON statement has been generated.
+         * * **FALSE** - no JSON statement generated.
          */
         fun jsonStatementGenerated(jsonStatementGenerated: Boolean) =
             jsonStatementGenerated(JsonField.of(jsonStatementGenerated))
@@ -1351,6 +1376,20 @@ private constructor(
             this.startDateTimeUtc = startDateTimeUtc
         }
 
+        /** True if the existing bill statement (JSON or CSV) is marked as stale/outdated. */
+        fun statementStale(statementStale: Boolean) = statementStale(JsonField.of(statementStale))
+
+        /**
+         * Sets [Builder.statementStale] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.statementStale] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun statementStale(statementStale: JsonField<Boolean>) = apply {
+            this.statementStale = statementStale
+        }
+
         fun status(status: Status) = status(JsonField.of(status))
 
         /**
@@ -1453,6 +1492,7 @@ private constructor(
                 sequentialInvoiceNumber,
                 startDate,
                 startDateTimeUtc,
+                statementStale,
                 status,
                 timezone,
                 version,
@@ -1500,6 +1540,7 @@ private constructor(
         sequentialInvoiceNumber()
         startDate()
         startDateTimeUtc()
+        statementStale()
         status().ifPresent { it.validate() }
         timezone()
         version()
@@ -1554,6 +1595,7 @@ private constructor(
             (if (sequentialInvoiceNumber.asKnown().isPresent) 1 else 0) +
             (if (startDate.asKnown().isPresent) 1 else 0) +
             (if (startDateTimeUtc.asKnown().isPresent) 1 else 0) +
+            (if (statementStale.asKnown().isPresent) 1 else 0) +
             (status.asKnown().getOrNull()?.validity() ?: 0) +
             (if (timezone.asKnown().isPresent) 1 else 0) +
             (if (version.asKnown().isPresent) 1 else 0)
@@ -1702,7 +1744,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BillingFrequency && value == other.value /* spotless:on */
+            return other is BillingFrequency && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1711,6 +1753,7 @@ private constructor(
     }
 
     class LineItem
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val averageUnitPrice: JsonField<Double>,
         private val conversionRate: JsonField<Double>,
@@ -2063,7 +2106,7 @@ private constructor(
         fun childAccountId(): Optional<String> = childAccountId.getOptional("childAccountId")
 
         /**
-         * If Commitments _(prepayments)_ are used in the line item, this shows the Commitment UUID.
+         * If Commitments *(prepayments)* are used in the line item, this shows the Commitment UUID.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -2196,7 +2239,7 @@ private constructor(
         fun sequenceNumber(): Optional<Int> = sequenceNumber.getOptional("sequenceNumber")
 
         /**
-         * The ending date _(exclusive)_ for the service period _(in ISO 8601 format)_.
+         * The ending date *(exclusive)* for the service period *(in ISO 8601 format)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -2205,7 +2248,7 @@ private constructor(
             servicePeriodEndDate.getOptional("servicePeriodEndDate")
 
         /**
-         * The starting date _(inclusive)_ for the service period _(in ISO 8601 format)_.
+         * The starting date *(inclusive)* for the service period *(in ISO 8601 format)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -2983,7 +3026,7 @@ private constructor(
             }
 
             /**
-             * If Commitments _(prepayments)_ are used in the line item, this shows the Commitment
+             * If Commitments *(prepayments)* are used in the line item, this shows the Commitment
              * UUID.
              */
             fun commitmentId(commitmentId: String) = commitmentId(JsonField.of(commitmentId))
@@ -3221,7 +3264,7 @@ private constructor(
                 this.sequenceNumber = sequenceNumber
             }
 
-            /** The ending date _(exclusive)_ for the service period _(in ISO 8601 format)_. */
+            /** The ending date *(exclusive)* for the service period *(in ISO 8601 format)*. */
             fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
                 servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
 
@@ -3236,7 +3279,7 @@ private constructor(
                 this.servicePeriodEndDate = servicePeriodEndDate
             }
 
-            /** The starting date _(inclusive)_ for the service period _(in ISO 8601 format)_. */
+            /** The starting date *(inclusive)* for the service period *(in ISO 8601 format)*. */
             fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) =
                 servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
 
@@ -3526,6 +3569,8 @@ private constructor(
 
                 @JvmField val BALANCE_FEE = of("BALANCE_FEE")
 
+                @JvmField val AD_HOC = of("AD_HOC")
+
                 @JvmStatic fun of(value: String) = LineItemType(JsonField.of(value))
             }
 
@@ -3549,6 +3594,7 @@ private constructor(
                 OVERAGE_USAGE,
                 BALANCE_CONSUMED,
                 BALANCE_FEE,
+                AD_HOC,
             }
 
             /**
@@ -3579,6 +3625,7 @@ private constructor(
                 OVERAGE_USAGE,
                 BALANCE_CONSUMED,
                 BALANCE_FEE,
+                AD_HOC,
                 /**
                  * An enum member indicating that [LineItemType] was instantiated with an unknown
                  * value.
@@ -3613,6 +3660,7 @@ private constructor(
                     OVERAGE_USAGE -> Value.OVERAGE_USAGE
                     BALANCE_CONSUMED -> Value.BALANCE_CONSUMED
                     BALANCE_FEE -> Value.BALANCE_FEE
+                    AD_HOC -> Value.AD_HOC
                     else -> Value._UNKNOWN
                 }
 
@@ -3645,6 +3693,7 @@ private constructor(
                     OVERAGE_USAGE -> Known.OVERAGE_USAGE
                     BALANCE_CONSUMED -> Known.BALANCE_CONSUMED
                     BALANCE_FEE -> Known.BALANCE_FEE
+                    AD_HOC -> Known.AD_HOC
                     else -> throw M3terInvalidDataException("Unknown LineItemType: $value")
                 }
 
@@ -3694,7 +3743,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is LineItemType && value == other.value /* spotless:on */
+                return other is LineItemType && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -3794,12 +3843,10 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Additional && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Additional && additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
             private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-            /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
@@ -3898,12 +3945,10 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Group && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Group && additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
             private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-            /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
@@ -4006,12 +4051,10 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Segment && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is Segment && additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
             private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-            /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
@@ -4023,6 +4066,7 @@ private constructor(
          * band or tier.
          */
         class UsagePerPricingBand
+        @JsonCreator(mode = JsonCreator.Mode.DISABLED)
         private constructor(
             private val bandQuantity: JsonField<Double>,
             private val bandSubtotal: JsonField<Double>,
@@ -4132,7 +4176,7 @@ private constructor(
             fun fixedPrice(): Optional<Double> = fixedPrice.getOptional("fixedPrice")
 
             /**
-             * The lower limit _(start)_ of the pricing band.
+             * The lower limit *(start)* of the pricing band.
              *
              * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if
              *   the server responded with an unexpected value).
@@ -4398,7 +4442,7 @@ private constructor(
                     this.fixedPrice = fixedPrice
                 }
 
-                /** The lower limit _(start)_ of the pricing band. */
+                /** The lower limit *(start)* of the pricing band. */
                 fun lowerLimit(lowerLimit: Double) = lowerLimit(JsonField.of(lowerLimit))
 
                 /**
@@ -4548,12 +4592,35 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is UsagePerPricingBand && bandQuantity == other.bandQuantity && bandSubtotal == other.bandSubtotal && bandUnits == other.bandUnits && convertedBandSubtotal == other.convertedBandSubtotal && creditTypeId == other.creditTypeId && fixedPrice == other.fixedPrice && lowerLimit == other.lowerLimit && pricingBandId == other.pricingBandId && unitPrice == other.unitPrice && unitSubtotal == other.unitSubtotal && additionalProperties == other.additionalProperties /* spotless:on */
+                return other is UsagePerPricingBand &&
+                    bandQuantity == other.bandQuantity &&
+                    bandSubtotal == other.bandSubtotal &&
+                    bandUnits == other.bandUnits &&
+                    convertedBandSubtotal == other.convertedBandSubtotal &&
+                    creditTypeId == other.creditTypeId &&
+                    fixedPrice == other.fixedPrice &&
+                    lowerLimit == other.lowerLimit &&
+                    pricingBandId == other.pricingBandId &&
+                    unitPrice == other.unitPrice &&
+                    unitSubtotal == other.unitSubtotal &&
+                    additionalProperties == other.additionalProperties
             }
 
-            /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(bandQuantity, bandSubtotal, bandUnits, convertedBandSubtotal, creditTypeId, fixedPrice, lowerLimit, pricingBandId, unitPrice, unitSubtotal, additionalProperties) }
-            /* spotless:on */
+            private val hashCode: Int by lazy {
+                Objects.hash(
+                    bandQuantity,
+                    bandSubtotal,
+                    bandUnits,
+                    convertedBandSubtotal,
+                    creditTypeId,
+                    fixedPrice,
+                    lowerLimit,
+                    pricingBandId,
+                    unitPrice,
+                    unitSubtotal,
+                    additionalProperties,
+                )
+            }
 
             override fun hashCode(): Int = hashCode
 
@@ -4566,12 +4633,97 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItem && averageUnitPrice == other.averageUnitPrice && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && currency == other.currency && description == other.description && lineItemType == other.lineItemType && quantity == other.quantity && subtotal == other.subtotal && unit == other.unit && units == other.units && id == other.id && accountingProductCode == other.accountingProductCode && accountingProductId == other.accountingProductId && accountingProductName == other.accountingProductName && additional == other.additional && aggregationId == other.aggregationId && balanceId == other.balanceId && chargeId == other.chargeId && childAccountCode == other.childAccountCode && childAccountId == other.childAccountId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && counterId == other.counterId && creditTypeId == other.creditTypeId && group == other.group && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && usagePerPricingBand == other.usagePerPricingBand && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is LineItem &&
+                averageUnitPrice == other.averageUnitPrice &&
+                conversionRate == other.conversionRate &&
+                convertedSubtotal == other.convertedSubtotal &&
+                currency == other.currency &&
+                description == other.description &&
+                lineItemType == other.lineItemType &&
+                quantity == other.quantity &&
+                subtotal == other.subtotal &&
+                unit == other.unit &&
+                units == other.units &&
+                id == other.id &&
+                accountingProductCode == other.accountingProductCode &&
+                accountingProductId == other.accountingProductId &&
+                accountingProductName == other.accountingProductName &&
+                additional == other.additional &&
+                aggregationId == other.aggregationId &&
+                balanceId == other.balanceId &&
+                chargeId == other.chargeId &&
+                childAccountCode == other.childAccountCode &&
+                childAccountId == other.childAccountId &&
+                commitmentId == other.commitmentId &&
+                compoundAggregationId == other.compoundAggregationId &&
+                contractId == other.contractId &&
+                counterId == other.counterId &&
+                creditTypeId == other.creditTypeId &&
+                group == other.group &&
+                meterId == other.meterId &&
+                planGroupId == other.planGroupId &&
+                planId == other.planId &&
+                pricingId == other.pricingId &&
+                productCode == other.productCode &&
+                productId == other.productId &&
+                productName == other.productName &&
+                reasonId == other.reasonId &&
+                referencedBillId == other.referencedBillId &&
+                referencedLineItemId == other.referencedLineItemId &&
+                segment == other.segment &&
+                sequenceNumber == other.sequenceNumber &&
+                servicePeriodEndDate == other.servicePeriodEndDate &&
+                servicePeriodStartDate == other.servicePeriodStartDate &&
+                usagePerPricingBand == other.usagePerPricingBand &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(averageUnitPrice, conversionRate, convertedSubtotal, currency, description, lineItemType, quantity, subtotal, unit, units, id, accountingProductCode, accountingProductId, accountingProductName, additional, aggregationId, balanceId, chargeId, childAccountCode, childAccountId, commitmentId, compoundAggregationId, contractId, counterId, creditTypeId, group, meterId, planGroupId, planId, pricingId, productCode, productId, productName, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, usagePerPricingBand, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                averageUnitPrice,
+                conversionRate,
+                convertedSubtotal,
+                currency,
+                description,
+                lineItemType,
+                quantity,
+                subtotal,
+                unit,
+                units,
+                id,
+                accountingProductCode,
+                accountingProductId,
+                accountingProductName,
+                additional,
+                aggregationId,
+                balanceId,
+                chargeId,
+                childAccountCode,
+                childAccountId,
+                commitmentId,
+                compoundAggregationId,
+                contractId,
+                counterId,
+                creditTypeId,
+                group,
+                meterId,
+                planGroupId,
+                planId,
+                pricingId,
+                productCode,
+                productId,
+                productName,
+                reasonId,
+                referencedBillId,
+                referencedLineItemId,
+                segment,
+                sequenceNumber,
+                servicePeriodEndDate,
+                servicePeriodStartDate,
+                usagePerPricingBand,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -4695,7 +4847,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -4708,15 +4860,92 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillResponse && id == other.id && accountCode == other.accountCode && accountId == other.accountId && approvedBy == other.approvedBy && billDate == other.billDate && billFrequencyInterval == other.billFrequencyInterval && billingFrequency == other.billingFrequency && billJobId == other.billJobId && billTotal == other.billTotal && createdBy == other.createdBy && createdDate == other.createdDate && csvStatementGenerated == other.csvStatementGenerated && currency == other.currency && currencyConversions == other.currencyConversions && dtApproved == other.dtApproved && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && dtLocked == other.dtLocked && dueDate == other.dueDate && endDate == other.endDate && endDateTimeUtc == other.endDateTimeUtc && externalInvoiceDate == other.externalInvoiceDate && externalInvoiceReference == other.externalInvoiceReference && jsonStatementGenerated == other.jsonStatementGenerated && lastCalculatedDate == other.lastCalculatedDate && lastModifiedBy == other.lastModifiedBy && lineItems == other.lineItems && locked == other.locked && lockedBy == other.lockedBy && purchaseOrderNumber == other.purchaseOrderNumber && sequentialInvoiceNumber == other.sequentialInvoiceNumber && startDate == other.startDate && startDateTimeUtc == other.startDateTimeUtc && status == other.status && timezone == other.timezone && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is BillResponse &&
+            id == other.id &&
+            accountCode == other.accountCode &&
+            accountId == other.accountId &&
+            approvedBy == other.approvedBy &&
+            billDate == other.billDate &&
+            billFrequencyInterval == other.billFrequencyInterval &&
+            billingFrequency == other.billingFrequency &&
+            billJobId == other.billJobId &&
+            billTotal == other.billTotal &&
+            createdBy == other.createdBy &&
+            createdDate == other.createdDate &&
+            csvStatementGenerated == other.csvStatementGenerated &&
+            currency == other.currency &&
+            currencyConversions == other.currencyConversions &&
+            dtApproved == other.dtApproved &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            dtLocked == other.dtLocked &&
+            dueDate == other.dueDate &&
+            endDate == other.endDate &&
+            endDateTimeUtc == other.endDateTimeUtc &&
+            externalInvoiceDate == other.externalInvoiceDate &&
+            externalInvoiceReference == other.externalInvoiceReference &&
+            jsonStatementGenerated == other.jsonStatementGenerated &&
+            lastCalculatedDate == other.lastCalculatedDate &&
+            lastModifiedBy == other.lastModifiedBy &&
+            lineItems == other.lineItems &&
+            locked == other.locked &&
+            lockedBy == other.lockedBy &&
+            purchaseOrderNumber == other.purchaseOrderNumber &&
+            sequentialInvoiceNumber == other.sequentialInvoiceNumber &&
+            startDate == other.startDate &&
+            startDateTimeUtc == other.startDateTimeUtc &&
+            statementStale == other.statementStale &&
+            status == other.status &&
+            timezone == other.timezone &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountCode, accountId, approvedBy, billDate, billFrequencyInterval, billingFrequency, billJobId, billTotal, createdBy, createdDate, csvStatementGenerated, currency, currencyConversions, dtApproved, dtCreated, dtLastModified, dtLocked, dueDate, endDate, endDateTimeUtc, externalInvoiceDate, externalInvoiceReference, jsonStatementGenerated, lastCalculatedDate, lastModifiedBy, lineItems, locked, lockedBy, purchaseOrderNumber, sequentialInvoiceNumber, startDate, startDateTimeUtc, status, timezone, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountCode,
+            accountId,
+            approvedBy,
+            billDate,
+            billFrequencyInterval,
+            billingFrequency,
+            billJobId,
+            billTotal,
+            createdBy,
+            createdDate,
+            csvStatementGenerated,
+            currency,
+            currencyConversions,
+            dtApproved,
+            dtCreated,
+            dtLastModified,
+            dtLocked,
+            dueDate,
+            endDate,
+            endDateTimeUtc,
+            externalInvoiceDate,
+            externalInvoiceReference,
+            jsonStatementGenerated,
+            lastCalculatedDate,
+            lastModifiedBy,
+            lineItems,
+            locked,
+            lockedBy,
+            purchaseOrderNumber,
+            sequentialInvoiceNumber,
+            startDate,
+            startDateTimeUtc,
+            statementStale,
+            status,
+            timezone,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "BillResponse{id=$id, accountCode=$accountCode, accountId=$accountId, approvedBy=$approvedBy, billDate=$billDate, billFrequencyInterval=$billFrequencyInterval, billingFrequency=$billingFrequency, billJobId=$billJobId, billTotal=$billTotal, createdBy=$createdBy, createdDate=$createdDate, csvStatementGenerated=$csvStatementGenerated, currency=$currency, currencyConversions=$currencyConversions, dtApproved=$dtApproved, dtCreated=$dtCreated, dtLastModified=$dtLastModified, dtLocked=$dtLocked, dueDate=$dueDate, endDate=$endDate, endDateTimeUtc=$endDateTimeUtc, externalInvoiceDate=$externalInvoiceDate, externalInvoiceReference=$externalInvoiceReference, jsonStatementGenerated=$jsonStatementGenerated, lastCalculatedDate=$lastCalculatedDate, lastModifiedBy=$lastModifiedBy, lineItems=$lineItems, locked=$locked, lockedBy=$lockedBy, purchaseOrderNumber=$purchaseOrderNumber, sequentialInvoiceNumber=$sequentialInvoiceNumber, startDate=$startDate, startDateTimeUtc=$startDateTimeUtc, status=$status, timezone=$timezone, version=$version, additionalProperties=$additionalProperties}"
+        "BillResponse{id=$id, accountCode=$accountCode, accountId=$accountId, approvedBy=$approvedBy, billDate=$billDate, billFrequencyInterval=$billFrequencyInterval, billingFrequency=$billingFrequency, billJobId=$billJobId, billTotal=$billTotal, createdBy=$createdBy, createdDate=$createdDate, csvStatementGenerated=$csvStatementGenerated, currency=$currency, currencyConversions=$currencyConversions, dtApproved=$dtApproved, dtCreated=$dtCreated, dtLastModified=$dtLastModified, dtLocked=$dtLocked, dueDate=$dueDate, endDate=$endDate, endDateTimeUtc=$endDateTimeUtc, externalInvoiceDate=$externalInvoiceDate, externalInvoiceReference=$externalInvoiceReference, jsonStatementGenerated=$jsonStatementGenerated, lastCalculatedDate=$lastCalculatedDate, lastModifiedBy=$lastModifiedBy, lineItems=$lineItems, locked=$locked, lockedBy=$lockedBy, purchaseOrderNumber=$purchaseOrderNumber, sequentialInvoiceNumber=$sequentialInvoiceNumber, startDate=$startDate, startDateTimeUtc=$startDateTimeUtc, statementStale=$statementStale, status=$status, timezone=$timezone, version=$version, additionalProperties=$additionalProperties}"
 }

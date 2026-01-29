@@ -7,6 +7,7 @@ import com.m3ter.core.JsonValue
 import com.m3ter.core.jsonMapper
 import java.time.LocalDate
 import java.time.OffsetDateTime
+import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -18,6 +19,8 @@ internal class ContractResponseTest {
             ContractResponse.builder()
                 .id("id")
                 .accountId("accountId")
+                .applyContractPeriodLimits(true)
+                .billGroupingKeyId("billGroupingKeyId")
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(
@@ -33,11 +36,20 @@ internal class ContractResponseTest {
                 .name("name")
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .startDate(LocalDate.parse("2019-12-27"))
+                .addUsageFilter(
+                    ContractResponse.UsageFilter.builder()
+                        .dimensionCode("x")
+                        .mode(ContractResponse.UsageFilter.Mode.INCLUDE)
+                        .value("x")
+                        .build()
+                )
                 .version(0L)
                 .build()
 
         assertThat(contractResponse.id()).isEqualTo("id")
         assertThat(contractResponse.accountId()).contains("accountId")
+        assertThat(contractResponse.applyContractPeriodLimits()).contains(true)
+        assertThat(contractResponse.billGroupingKeyId()).contains("billGroupingKeyId")
         assertThat(contractResponse.code()).contains("code")
         assertThat(contractResponse.createdBy()).contains("createdBy")
         assertThat(contractResponse.customFields())
@@ -56,6 +68,14 @@ internal class ContractResponseTest {
         assertThat(contractResponse.name()).contains("name")
         assertThat(contractResponse.purchaseOrderNumber()).contains("purchaseOrderNumber")
         assertThat(contractResponse.startDate()).contains(LocalDate.parse("2019-12-27"))
+        assertThat(contractResponse.usageFilters().getOrNull())
+            .containsExactly(
+                ContractResponse.UsageFilter.builder()
+                    .dimensionCode("x")
+                    .mode(ContractResponse.UsageFilter.Mode.INCLUDE)
+                    .value("x")
+                    .build()
+            )
         assertThat(contractResponse.version()).contains(0L)
     }
 
@@ -66,6 +86,8 @@ internal class ContractResponseTest {
             ContractResponse.builder()
                 .id("id")
                 .accountId("accountId")
+                .applyContractPeriodLimits(true)
+                .billGroupingKeyId("billGroupingKeyId")
                 .code("code")
                 .createdBy("createdBy")
                 .customFields(
@@ -81,6 +103,13 @@ internal class ContractResponseTest {
                 .name("name")
                 .purchaseOrderNumber("purchaseOrderNumber")
                 .startDate(LocalDate.parse("2019-12-27"))
+                .addUsageFilter(
+                    ContractResponse.UsageFilter.builder()
+                        .dimensionCode("x")
+                        .mode(ContractResponse.UsageFilter.Mode.INCLUDE)
+                        .value("x")
+                        .build()
+                )
                 .version(0L)
                 .build()
 

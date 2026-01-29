@@ -21,6 +21,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class AdHocOperationalDataRequest
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val operationalDataTypes: JsonField<List<OperationalDataType>>,
     private val sourceType: JsonField<SourceType>,
@@ -58,7 +59,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -180,8 +181,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -325,6 +326,8 @@ private constructor(
 
             @JvmField val TRANSACTION_TYPES = of("TRANSACTION_TYPES")
 
+            @JvmField val CHARGES = of("CHARGES")
+
             @JvmStatic fun of(value: String) = OperationalDataType(JsonField.of(value))
         }
 
@@ -349,6 +352,7 @@ private constructor(
             PLAN_TEMPLATES,
             BALANCE_TRANSACTIONS,
             TRANSACTION_TYPES,
+            CHARGES,
         }
 
         /**
@@ -380,6 +384,7 @@ private constructor(
             PLAN_TEMPLATES,
             BALANCE_TRANSACTIONS,
             TRANSACTION_TYPES,
+            CHARGES,
             /**
              * An enum member indicating that [OperationalDataType] was instantiated with an unknown
              * value.
@@ -415,6 +420,7 @@ private constructor(
                 PLAN_TEMPLATES -> Value.PLAN_TEMPLATES
                 BALANCE_TRANSACTIONS -> Value.BALANCE_TRANSACTIONS
                 TRANSACTION_TYPES -> Value.TRANSACTION_TYPES
+                CHARGES -> Value.CHARGES
                 else -> Value._UNKNOWN
             }
 
@@ -447,6 +453,7 @@ private constructor(
                 PLAN_TEMPLATES -> Known.PLAN_TEMPLATES
                 BALANCE_TRANSACTIONS -> Known.BALANCE_TRANSACTIONS
                 TRANSACTION_TYPES -> Known.TRANSACTION_TYPES
+                CHARGES -> Known.CHARGES
                 else -> throw M3terInvalidDataException("Unknown OperationalDataType: $value")
             }
 
@@ -494,7 +501,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is OperationalDataType && value == other.value /* spotless:on */
+            return other is OperationalDataType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -615,7 +622,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SourceType && value == other.value /* spotless:on */
+            return other is SourceType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -628,12 +635,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AdHocOperationalDataRequest && operationalDataTypes == other.operationalDataTypes && sourceType == other.sourceType && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is AdHocOperationalDataRequest &&
+            operationalDataTypes == other.operationalDataTypes &&
+            sourceType == other.sourceType &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(operationalDataTypes, sourceType, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(operationalDataTypes, sourceType, version, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

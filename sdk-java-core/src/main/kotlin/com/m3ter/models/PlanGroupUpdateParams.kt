@@ -114,8 +114,8 @@ private constructor(
     /**
      * A boolean flag that determines when the minimum spend is billed. This flag overrides the
      * setting at Organizational level for minimum spend billing in arrears/in advance.
-     * - **TRUE** - minimum spend is billed at the start of each billing period.
-     * - **FALSE** - minimum spend is billed at the end of each billing period.
+     * * **TRUE** - minimum spend is billed at the start of each billing period.
+     * * **FALSE** - minimum spend is billed at the end of each billing period.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -150,8 +150,8 @@ private constructor(
     /**
      * A boolean flag that determines when the standing charge is billed. This flag overrides the
      * setting at Organizational level for standing charge billing in arrears/in advance.
-     * - **TRUE** - standing charge is billed at the start of each billing period.
-     * - **FALSE** - standing charge is billed at the end of each billing period.
+     * * **TRUE** - standing charge is billed at the start of each billing period.
+     * * **FALSE** - standing charge is billed at the end of each billing period.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -168,7 +168,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -462,8 +462,8 @@ private constructor(
         /**
          * A boolean flag that determines when the minimum spend is billed. This flag overrides the
          * setting at Organizational level for minimum spend billing in arrears/in advance.
-         * - **TRUE** - minimum spend is billed at the start of each billing period.
-         * - **FALSE** - minimum spend is billed at the end of each billing period.
+         * * **TRUE** - minimum spend is billed at the start of each billing period.
+         * * **FALSE** - minimum spend is billed at the end of each billing period.
          */
         fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: Boolean) = apply {
             body.minimumSpendBillInAdvance(minimumSpendBillInAdvance)
@@ -532,8 +532,8 @@ private constructor(
         /**
          * A boolean flag that determines when the standing charge is billed. This flag overrides
          * the setting at Organizational level for standing charge billing in arrears/in advance.
-         * - **TRUE** - standing charge is billed at the start of each billing period.
-         * - **FALSE** - standing charge is billed at the end of each billing period.
+         * * **TRUE** - standing charge is billed at the start of each billing period.
+         * * **FALSE** - standing charge is billed at the end of each billing period.
          */
         fun standingChargeBillInAdvance(standingChargeBillInAdvance: Boolean) = apply {
             body.standingChargeBillInAdvance(standingChargeBillInAdvance)
@@ -568,8 +568,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -738,6 +738,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val currency: JsonField<String>,
         private val name: JsonField<String>,
@@ -882,8 +883,8 @@ private constructor(
         /**
          * A boolean flag that determines when the minimum spend is billed. This flag overrides the
          * setting at Organizational level for minimum spend billing in arrears/in advance.
-         * - **TRUE** - minimum spend is billed at the start of each billing period.
-         * - **FALSE** - minimum spend is billed at the end of each billing period.
+         * * **TRUE** - minimum spend is billed at the start of each billing period.
+         * * **FALSE** - minimum spend is billed at the end of each billing period.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -921,8 +922,8 @@ private constructor(
         /**
          * A boolean flag that determines when the standing charge is billed. This flag overrides
          * the setting at Organizational level for standing charge billing in arrears/in advance.
-         * - **TRUE** - standing charge is billed at the start of each billing period.
-         * - **FALSE** - standing charge is billed at the end of each billing period.
+         * * **TRUE** - standing charge is billed at the start of each billing period.
+         * * **FALSE** - standing charge is billed at the end of each billing period.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -941,8 +942,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1253,8 +1254,8 @@ private constructor(
             /**
              * A boolean flag that determines when the minimum spend is billed. This flag overrides
              * the setting at Organizational level for minimum spend billing in arrears/in advance.
-             * - **TRUE** - minimum spend is billed at the start of each billing period.
-             * - **FALSE** - minimum spend is billed at the end of each billing period.
+             * * **TRUE** - minimum spend is billed at the start of each billing period.
+             * * **FALSE** - minimum spend is billed at the end of each billing period.
              */
             fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: Boolean) =
                 minimumSpendBillInAdvance(JsonField.of(minimumSpendBillInAdvance))
@@ -1322,8 +1323,8 @@ private constructor(
              * A boolean flag that determines when the standing charge is billed. This flag
              * overrides the setting at Organizational level for standing charge billing in
              * arrears/in advance.
-             * - **TRUE** - standing charge is billed at the start of each billing period.
-             * - **FALSE** - standing charge is billed at the end of each billing period.
+             * * **TRUE** - standing charge is billed at the start of each billing period.
+             * * **FALSE** - standing charge is billed at the end of each billing period.
              */
             fun standingChargeBillInAdvance(standingChargeBillInAdvance: Boolean) =
                 standingChargeBillInAdvance(JsonField.of(standingChargeBillInAdvance))
@@ -1357,8 +1358,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -1486,12 +1487,43 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && currency == other.currency && name == other.name && accountId == other.accountId && code == other.code && customFields == other.customFields && minimumSpend == other.minimumSpend && minimumSpendAccountingProductId == other.minimumSpendAccountingProductId && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && standingCharge == other.standingCharge && standingChargeAccountingProductId == other.standingChargeAccountingProductId && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                currency == other.currency &&
+                name == other.name &&
+                accountId == other.accountId &&
+                code == other.code &&
+                customFields == other.customFields &&
+                minimumSpend == other.minimumSpend &&
+                minimumSpendAccountingProductId == other.minimumSpendAccountingProductId &&
+                minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
+                minimumSpendDescription == other.minimumSpendDescription &&
+                standingCharge == other.standingCharge &&
+                standingChargeAccountingProductId == other.standingChargeAccountingProductId &&
+                standingChargeBillInAdvance == other.standingChargeBillInAdvance &&
+                standingChargeDescription == other.standingChargeDescription &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(currency, name, accountId, code, customFields, minimumSpend, minimumSpendAccountingProductId, minimumSpendBillInAdvance, minimumSpendDescription, standingCharge, standingChargeAccountingProductId, standingChargeBillInAdvance, standingChargeDescription, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                currency,
+                name,
+                accountId,
+                code,
+                customFields,
+                minimumSpend,
+                minimumSpendAccountingProductId,
+                minimumSpendBillInAdvance,
+                minimumSpendDescription,
+                standingCharge,
+                standingChargeAccountingProductId,
+                standingChargeBillInAdvance,
+                standingChargeDescription,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1600,12 +1632,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1617,10 +1647,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanGroupUpdateParams && orgId == other.orgId && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is PlanGroupUpdateParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "PlanGroupUpdateParams{orgId=$orgId, id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

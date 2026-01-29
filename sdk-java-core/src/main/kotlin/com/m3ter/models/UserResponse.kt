@@ -11,6 +11,7 @@ import com.m3ter.core.JsonField
 import com.m3ter.core.JsonMissing
 import com.m3ter.core.JsonValue
 import com.m3ter.core.checkKnown
+import com.m3ter.core.checkRequired
 import com.m3ter.core.toImmutable
 import com.m3ter.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
@@ -20,6 +21,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class UserResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val contactNumber: JsonField<String>,
@@ -99,12 +101,12 @@ private constructor(
     )
 
     /**
-     * The unique identifier (UUID) of this user.
+     * The UUID of the entity.
      *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun id(): Optional<String> = id.getOptional("id")
+    fun id(): String = id.getRequired("id")
 
     /**
      * The user's contact telephone number.
@@ -123,7 +125,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the user was created.
+     * The date and time *(in ISO-8601 format)* when the user was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -131,7 +133,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the user's access will end. Used to set or
+     * The date and time *(in ISO 8601 format)* when the user's access will end. Used to set or
      * update the date and time a user's access expires.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -140,7 +142,7 @@ private constructor(
     fun dtEndAccess(): Optional<OffsetDateTime> = dtEndAccess.getOptional("dtEndAccess")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the user was last modified.
+     * The date and time *(in ISO-8601 format)* when the user was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -156,7 +158,7 @@ private constructor(
     fun email(): Optional<String> = email.getOptional("email")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when this user first accepted the the m3ter terms
+     * The date and time *(in ISO 8601 format)* when this user first accepted the the m3ter terms
      * and conditions.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -174,7 +176,7 @@ private constructor(
     fun firstName(): Optional<String> = firstName.getOptional("firstName")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when this user last accepted the the m3ter terms and
+     * The date and time *(in ISO 8601 format)* when this user last accepted the the m3ter terms and
      * conditions.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -387,14 +389,21 @@ private constructor(
 
     companion object {
 
-        /** Returns a mutable builder for constructing an instance of [UserResponse]. */
+        /**
+         * Returns a mutable builder for constructing an instance of [UserResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
     /** A builder for [UserResponse]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String> = JsonMissing.of()
+        private var id: JsonField<String>? = null
         private var contactNumber: JsonField<String> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -433,7 +442,7 @@ private constructor(
             additionalProperties = userResponse.additionalProperties.toMutableMap()
         }
 
-        /** The unique identifier (UUID) of this user. */
+        /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
         /**
@@ -470,7 +479,7 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The date and time _(in ISO-8601 format)_ when the user was created. */
+        /** The date and time *(in ISO-8601 format)* when the user was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -483,7 +492,7 @@ private constructor(
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /**
-         * The date and time _(in ISO 8601 format)_ when the user's access will end. Used to set or
+         * The date and time *(in ISO 8601 format)* when the user's access will end. Used to set or
          * update the date and time a user's access expires.
          */
         fun dtEndAccess(dtEndAccess: OffsetDateTime) = dtEndAccess(JsonField.of(dtEndAccess))
@@ -499,7 +508,7 @@ private constructor(
             this.dtEndAccess = dtEndAccess
         }
 
-        /** The date and time _(in ISO-8601 format)_ when the user was last modified. */
+        /** The date and time *(in ISO-8601 format)* when the user was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -526,7 +535,7 @@ private constructor(
         fun email(email: JsonField<String>) = apply { this.email = email }
 
         /**
-         * The date and time _(in ISO 8601 format)_ when this user first accepted the the m3ter
+         * The date and time *(in ISO 8601 format)* when this user first accepted the the m3ter
          * terms and conditions.
          */
         fun firstAcceptedTermsAndConditions(firstAcceptedTermsAndConditions: OffsetDateTime) =
@@ -556,7 +565,7 @@ private constructor(
         fun firstName(firstName: JsonField<String>) = apply { this.firstName = firstName }
 
         /**
-         * The date and time _(in ISO 8601 format)_ when this user last accepted the the m3ter terms
+         * The date and time *(in ISO 8601 format)* when this user last accepted the the m3ter terms
          * and conditions.
          */
         fun lastAcceptedTermsAndConditions(lastAcceptedTermsAndConditions: OffsetDateTime) =
@@ -706,10 +715,17 @@ private constructor(
          * Returns an immutable instance of [UserResponse].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): UserResponse =
             UserResponse(
-                id,
+                checkRequired("id", id),
                 contactNumber,
                 createdBy,
                 dtCreated,
@@ -792,12 +808,47 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UserResponse && id == other.id && contactNumber == other.contactNumber && createdBy == other.createdBy && dtCreated == other.dtCreated && dtEndAccess == other.dtEndAccess && dtLastModified == other.dtLastModified && email == other.email && firstAcceptedTermsAndConditions == other.firstAcceptedTermsAndConditions && firstName == other.firstName && lastAcceptedTermsAndConditions == other.lastAcceptedTermsAndConditions && lastModifiedBy == other.lastModifiedBy && lastName == other.lastName && organizations == other.organizations && permissionPolicy == other.permissionPolicy && supportUser == other.supportUser && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is UserResponse &&
+            id == other.id &&
+            contactNumber == other.contactNumber &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtEndAccess == other.dtEndAccess &&
+            dtLastModified == other.dtLastModified &&
+            email == other.email &&
+            firstAcceptedTermsAndConditions == other.firstAcceptedTermsAndConditions &&
+            firstName == other.firstName &&
+            lastAcceptedTermsAndConditions == other.lastAcceptedTermsAndConditions &&
+            lastModifiedBy == other.lastModifiedBy &&
+            lastName == other.lastName &&
+            organizations == other.organizations &&
+            permissionPolicy == other.permissionPolicy &&
+            supportUser == other.supportUser &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, contactNumber, createdBy, dtCreated, dtEndAccess, dtLastModified, email, firstAcceptedTermsAndConditions, firstName, lastAcceptedTermsAndConditions, lastModifiedBy, lastName, organizations, permissionPolicy, supportUser, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            contactNumber,
+            createdBy,
+            dtCreated,
+            dtEndAccess,
+            dtLastModified,
+            email,
+            firstAcceptedTermsAndConditions,
+            firstName,
+            lastAcceptedTermsAndConditions,
+            lastModifiedBy,
+            lastName,
+            organizations,
+            permissionPolicy,
+            supportUser,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

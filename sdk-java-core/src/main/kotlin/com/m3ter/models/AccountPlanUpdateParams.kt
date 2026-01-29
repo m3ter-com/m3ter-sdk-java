@@ -31,10 +31,10 @@ import kotlin.jvm.optionals.getOrNull
  * Organization. The updated information should be provided in the request body.
  *
  * **Notes:**
- * - You cannot use this call to update _both_ an AccountPlan and AccountPlanGroup for an Account at
+ * * You cannot use this call to update *both* an AccountPlan and AccountPlanGroup for an Account at
  *   the same time. If you want to update an AccounPlan and an AccountPlanGroup attached to an
  *   Account, you must submit two separate calls.
- * - If you have created Custom Fields for an AccountPlan, when you use this endpoint to update the
+ * * If you have created Custom Fields for an AccountPlan, when you use this endpoint to update the
  *   AccountPlan use the `customFields` parameter to preserve those Custom Fields. If you omit them
  *   from the update request, they will be lost.
  */
@@ -61,7 +61,7 @@ private constructor(
     fun accountId(): String = body.accountId()
 
     /**
-     * The start date _(in ISO-8601 format)_ for the AccountPlan or AccountPlanGroup becoming active
+     * The start date *(in ISO-8601 format)* for the AccountPlan or AccountPlanGroup becoming active
      * for the Account.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -70,16 +70,16 @@ private constructor(
     fun startDate(): OffsetDateTime = body.startDate()
 
     /**
-     * Optional setting to define a _billing cycle date_, which acts as a reference for when in the
+     * Optional setting to define a *billing cycle date*, which acts as a reference for when in the
      * applied billing frequency period bills are created:
-     * - For example, if you attach a Plan to an Account where the Plan is configured for monthly
+     * * For example, if you attach a Plan to an Account where the Plan is configured for monthly
      *   billing frequency and you've defined the period the Plan will apply to the Account to be
      *   from January 1st, 2022 until January 1st, 2023. You then set a `billEpoch` date of February
      *   15th, 2022. The first Bill will be created for the Account on February 15th, and subsequent
      *   Bills created on the 15th of the months following for the remainder of the billing period -
      *   March 15th, April 15th, and so on.
-     * - If not defined, then the `billEpoch` date set for the Account will be used instead.
-     * - The date is in ISO-8601 format.
+     * * If not defined, then the `billEpoch` date set for the Account will be used instead.
+     * * The date is in ISO-8601 format.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -90,9 +90,9 @@ private constructor(
      * If the Account is either a Parent or a Child Account, this specifies the Account hierarchy
      * billing mode. The mode determines how billing will be handled and shown on bills for charges
      * due on the Parent Account, and charges due on Child Accounts:
-     * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-     * - **Parent Summary** - single bill line item for all Accounts.
-     * - **Child** - the Child Account is billed.
+     * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+     * * **Parent Summary** - single bill line item for all Accounts.
+     * * **Child** - the Child Account is billed.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -134,7 +134,7 @@ private constructor(
     fun customFields(): Optional<CustomFields> = body.customFields()
 
     /**
-     * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup ceases to be
+     * The end date *(in ISO-8601 format)* for when the AccountPlan or AccountPlanGroup ceases to be
      * active for the Account. If not specified, the AccountPlan or AccountPlanGroup remains active
      * indefinitely.
      *
@@ -169,7 +169,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -339,7 +339,7 @@ private constructor(
         fun accountId(accountId: JsonField<String>) = apply { body.accountId(accountId) }
 
         /**
-         * The start date _(in ISO-8601 format)_ for the AccountPlan or AccountPlanGroup becoming
+         * The start date *(in ISO-8601 format)* for the AccountPlan or AccountPlanGroup becoming
          * active for the Account.
          */
         fun startDate(startDate: OffsetDateTime) = apply { body.startDate(startDate) }
@@ -354,16 +354,16 @@ private constructor(
         fun startDate(startDate: JsonField<OffsetDateTime>) = apply { body.startDate(startDate) }
 
         /**
-         * Optional setting to define a _billing cycle date_, which acts as a reference for when in
+         * Optional setting to define a *billing cycle date*, which acts as a reference for when in
          * the applied billing frequency period bills are created:
-         * - For example, if you attach a Plan to an Account where the Plan is configured for
+         * * For example, if you attach a Plan to an Account where the Plan is configured for
          *   monthly billing frequency and you've defined the period the Plan will apply to the
          *   Account to be from January 1st, 2022 until January 1st, 2023. You then set a
          *   `billEpoch` date of February 15th, 2022. The first Bill will be created for the Account
          *   on February 15th, and subsequent Bills created on the 15th of the months following for
          *   the remainder of the billing period - March 15th, April 15th, and so on.
-         * - If not defined, then the `billEpoch` date set for the Account will be used instead.
-         * - The date is in ISO-8601 format.
+         * * If not defined, then the `billEpoch` date set for the Account will be used instead.
+         * * The date is in ISO-8601 format.
          */
         fun billEpoch(billEpoch: LocalDate) = apply { body.billEpoch(billEpoch) }
 
@@ -380,9 +380,9 @@ private constructor(
          * If the Account is either a Parent or a Child Account, this specifies the Account
          * hierarchy billing mode. The mode determines how billing will be handled and shown on
          * bills for charges due on the Parent Account, and charges due on Child Accounts:
-         * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-         * - **Parent Summary** - single bill line item for all Accounts.
-         * - **Child** - the Child Account is billed.
+         * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+         * * **Parent Summary** - single bill line item for all Accounts.
+         * * **Child** - the Child Account is billed.
          */
         fun childBillingMode(childBillingMode: ChildBillingMode) = apply {
             body.childBillingMode(childBillingMode)
@@ -451,7 +451,7 @@ private constructor(
         }
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup ceases
+         * The end date *(in ISO-8601 format)* for when the AccountPlan or AccountPlanGroup ceases
          * to be active for the Account. If not specified, the AccountPlan or AccountPlanGroup
          * remains active indefinitely.
          */
@@ -503,8 +503,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -673,6 +673,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val accountId: JsonField<String>,
         private val startDate: JsonField<OffsetDateTime>,
@@ -741,7 +742,7 @@ private constructor(
         fun accountId(): String = accountId.getRequired("accountId")
 
         /**
-         * The start date _(in ISO-8601 format)_ for the AccountPlan or AccountPlanGroup becoming
+         * The start date *(in ISO-8601 format)* for the AccountPlan or AccountPlanGroup becoming
          * active for the Account.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
@@ -750,16 +751,16 @@ private constructor(
         fun startDate(): OffsetDateTime = startDate.getRequired("startDate")
 
         /**
-         * Optional setting to define a _billing cycle date_, which acts as a reference for when in
+         * Optional setting to define a *billing cycle date*, which acts as a reference for when in
          * the applied billing frequency period bills are created:
-         * - For example, if you attach a Plan to an Account where the Plan is configured for
+         * * For example, if you attach a Plan to an Account where the Plan is configured for
          *   monthly billing frequency and you've defined the period the Plan will apply to the
          *   Account to be from January 1st, 2022 until January 1st, 2023. You then set a
          *   `billEpoch` date of February 15th, 2022. The first Bill will be created for the Account
          *   on February 15th, and subsequent Bills created on the 15th of the months following for
          *   the remainder of the billing period - March 15th, April 15th, and so on.
-         * - If not defined, then the `billEpoch` date set for the Account will be used instead.
-         * - The date is in ISO-8601 format.
+         * * If not defined, then the `billEpoch` date set for the Account will be used instead.
+         * * The date is in ISO-8601 format.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -770,9 +771,9 @@ private constructor(
          * If the Account is either a Parent or a Child Account, this specifies the Account
          * hierarchy billing mode. The mode determines how billing will be handled and shown on
          * bills for charges due on the Parent Account, and charges due on Child Accounts:
-         * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-         * - **Parent Summary** - single bill line item for all Accounts.
-         * - **Child** - the Child Account is billed.
+         * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+         * * **Parent Summary** - single bill line item for all Accounts.
+         * * **Child** - the Child Account is billed.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -815,7 +816,7 @@ private constructor(
         fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup ceases
+         * The end date *(in ISO-8601 format)* for when the AccountPlan or AccountPlanGroup ceases
          * to be active for the Account. If not specified, the AccountPlan or AccountPlanGroup
          * remains active indefinitely.
          *
@@ -850,8 +851,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1023,7 +1024,7 @@ private constructor(
             fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
 
             /**
-             * The start date _(in ISO-8601 format)_ for the AccountPlan or AccountPlanGroup
+             * The start date *(in ISO-8601 format)* for the AccountPlan or AccountPlanGroup
              * becoming active for the Account.
              */
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
@@ -1040,17 +1041,17 @@ private constructor(
             }
 
             /**
-             * Optional setting to define a _billing cycle date_, which acts as a reference for when
+             * Optional setting to define a *billing cycle date*, which acts as a reference for when
              * in the applied billing frequency period bills are created:
-             * - For example, if you attach a Plan to an Account where the Plan is configured for
+             * * For example, if you attach a Plan to an Account where the Plan is configured for
              *   monthly billing frequency and you've defined the period the Plan will apply to the
              *   Account to be from January 1st, 2022 until January 1st, 2023. You then set a
              *   `billEpoch` date of February 15th, 2022. The first Bill will be created for the
              *   Account on February 15th, and subsequent Bills created on the 15th of the months
              *   following for the remainder of the billing period - March 15th, April 15th, and so
              *   on.
-             * - If not defined, then the `billEpoch` date set for the Account will be used instead.
-             * - The date is in ISO-8601 format.
+             * * If not defined, then the `billEpoch` date set for the Account will be used instead.
+             * * The date is in ISO-8601 format.
              */
             fun billEpoch(billEpoch: LocalDate) = billEpoch(JsonField.of(billEpoch))
 
@@ -1067,9 +1068,9 @@ private constructor(
              * If the Account is either a Parent or a Child Account, this specifies the Account
              * hierarchy billing mode. The mode determines how billing will be handled and shown on
              * bills for charges due on the Parent Account, and charges due on Child Accounts:
-             * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-             * - **Parent Summary** - single bill line item for all Accounts.
-             * - **Child** - the Child Account is billed.
+             * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+             * * **Parent Summary** - single bill line item for all Accounts.
+             * * **Child** - the Child Account is billed.
              */
             fun childBillingMode(childBillingMode: ChildBillingMode) =
                 childBillingMode(JsonField.of(childBillingMode))
@@ -1138,7 +1139,7 @@ private constructor(
             }
 
             /**
-             * The end date _(in ISO-8601 format)_ for when the AccountPlan or AccountPlanGroup
+             * The end date *(in ISO-8601 format)* for when the AccountPlan or AccountPlanGroup
              * ceases to be active for the Account. If not specified, the AccountPlan or
              * AccountPlanGroup remains active indefinitely.
              */
@@ -1193,8 +1194,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -1313,12 +1314,37 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && accountId == other.accountId && startDate == other.startDate && billEpoch == other.billEpoch && childBillingMode == other.childBillingMode && code == other.code && contractId == other.contractId && customFields == other.customFields && endDate == other.endDate && planGroupId == other.planGroupId && planId == other.planId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                accountId == other.accountId &&
+                startDate == other.startDate &&
+                billEpoch == other.billEpoch &&
+                childBillingMode == other.childBillingMode &&
+                code == other.code &&
+                contractId == other.contractId &&
+                customFields == other.customFields &&
+                endDate == other.endDate &&
+                planGroupId == other.planGroupId &&
+                planId == other.planId &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountId, startDate, billEpoch, childBillingMode, code, contractId, customFields, endDate, planGroupId, planId, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                accountId,
+                startDate,
+                billEpoch,
+                childBillingMode,
+                code,
+                contractId,
+                customFields,
+                endDate,
+                planGroupId,
+                planId,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1330,9 +1356,9 @@ private constructor(
      * If the Account is either a Parent or a Child Account, this specifies the Account hierarchy
      * billing mode. The mode determines how billing will be handled and shown on bills for charges
      * due on the Parent Account, and charges due on Child Accounts:
-     * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-     * - **Parent Summary** - single bill line item for all Accounts.
-     * - **Child** - the Child Account is billed.
+     * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+     * * **Parent Summary** - single bill line item for all Accounts.
+     * * **Child** - the Child Account is billed.
      */
     class ChildBillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -1460,7 +1486,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ChildBillingMode && value == other.value /* spotless:on */
+            return other is ChildBillingMode && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1569,12 +1595,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1586,10 +1610,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountPlanUpdateParams && orgId == other.orgId && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is AccountPlanUpdateParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "AccountPlanUpdateParams{orgId=$orgId, id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

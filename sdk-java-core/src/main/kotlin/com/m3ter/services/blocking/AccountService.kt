@@ -10,7 +10,8 @@ import com.m3ter.models.AccountCreateParams
 import com.m3ter.models.AccountDeleteParams
 import com.m3ter.models.AccountEndDateBillingEntitiesParams
 import com.m3ter.models.AccountEndDateBillingEntitiesResponse
-import com.m3ter.models.AccountGetChildrenParams
+import com.m3ter.models.AccountListChildrenPage
+import com.m3ter.models.AccountListChildrenParams
 import com.m3ter.models.AccountListPage
 import com.m3ter.models.AccountListParams
 import com.m3ter.models.AccountResponse
@@ -181,34 +182,35 @@ interface AccountService {
     ): AccountEndDateBillingEntitiesResponse
 
     /** Retrieve a list of Accounts that are children of the specified Account. */
-    fun getChildren(id: String): AccountResponse = getChildren(id, AccountGetChildrenParams.none())
+    fun listChildren(id: String): AccountListChildrenPage =
+        listChildren(id, AccountListChildrenParams.none())
 
-    /** @see getChildren */
-    fun getChildren(
+    /** @see listChildren */
+    fun listChildren(
         id: String,
-        params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
+        params: AccountListChildrenParams = AccountListChildrenParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AccountResponse = getChildren(params.toBuilder().id(id).build(), requestOptions)
+    ): AccountListChildrenPage = listChildren(params.toBuilder().id(id).build(), requestOptions)
 
-    /** @see getChildren */
-    fun getChildren(
+    /** @see listChildren */
+    fun listChildren(
         id: String,
-        params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
-    ): AccountResponse = getChildren(id, params, RequestOptions.none())
+        params: AccountListChildrenParams = AccountListChildrenParams.none(),
+    ): AccountListChildrenPage = listChildren(id, params, RequestOptions.none())
 
-    /** @see getChildren */
-    fun getChildren(
-        params: AccountGetChildrenParams,
+    /** @see listChildren */
+    fun listChildren(
+        params: AccountListChildrenParams,
         requestOptions: RequestOptions = RequestOptions.none(),
-    ): AccountResponse
+    ): AccountListChildrenPage
 
-    /** @see getChildren */
-    fun getChildren(params: AccountGetChildrenParams): AccountResponse =
-        getChildren(params, RequestOptions.none())
+    /** @see listChildren */
+    fun listChildren(params: AccountListChildrenParams): AccountListChildrenPage =
+        listChildren(params, RequestOptions.none())
 
-    /** @see getChildren */
-    fun getChildren(id: String, requestOptions: RequestOptions): AccountResponse =
-        getChildren(id, AccountGetChildrenParams.none(), requestOptions)
+    /** @see listChildren */
+    fun listChildren(id: String, requestOptions: RequestOptions): AccountListChildrenPage =
+        listChildren(id, AccountListChildrenParams.none(), requestOptions)
 
     /**
      * Search for Account entities.
@@ -430,47 +432,49 @@ interface AccountService {
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/{id}/children`, but
-         * is otherwise the same as [AccountService.getChildren].
+         * is otherwise the same as [AccountService.listChildren].
          */
         @MustBeClosed
-        fun getChildren(id: String): HttpResponseFor<AccountResponse> =
-            getChildren(id, AccountGetChildrenParams.none())
+        fun listChildren(id: String): HttpResponseFor<AccountListChildrenPage> =
+            listChildren(id, AccountListChildrenParams.none())
 
-        /** @see getChildren */
+        /** @see listChildren */
         @MustBeClosed
-        fun getChildren(
+        fun listChildren(
             id: String,
-            params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
+            params: AccountListChildrenParams = AccountListChildrenParams.none(),
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<AccountResponse> =
-            getChildren(params.toBuilder().id(id).build(), requestOptions)
+        ): HttpResponseFor<AccountListChildrenPage> =
+            listChildren(params.toBuilder().id(id).build(), requestOptions)
 
-        /** @see getChildren */
+        /** @see listChildren */
         @MustBeClosed
-        fun getChildren(
+        fun listChildren(
             id: String,
-            params: AccountGetChildrenParams = AccountGetChildrenParams.none(),
-        ): HttpResponseFor<AccountResponse> = getChildren(id, params, RequestOptions.none())
+            params: AccountListChildrenParams = AccountListChildrenParams.none(),
+        ): HttpResponseFor<AccountListChildrenPage> =
+            listChildren(id, params, RequestOptions.none())
 
-        /** @see getChildren */
+        /** @see listChildren */
         @MustBeClosed
-        fun getChildren(
-            params: AccountGetChildrenParams,
+        fun listChildren(
+            params: AccountListChildrenParams,
             requestOptions: RequestOptions = RequestOptions.none(),
-        ): HttpResponseFor<AccountResponse>
+        ): HttpResponseFor<AccountListChildrenPage>
 
-        /** @see getChildren */
+        /** @see listChildren */
         @MustBeClosed
-        fun getChildren(params: AccountGetChildrenParams): HttpResponseFor<AccountResponse> =
-            getChildren(params, RequestOptions.none())
+        fun listChildren(
+            params: AccountListChildrenParams
+        ): HttpResponseFor<AccountListChildrenPage> = listChildren(params, RequestOptions.none())
 
-        /** @see getChildren */
+        /** @see listChildren */
         @MustBeClosed
-        fun getChildren(
+        fun listChildren(
             id: String,
             requestOptions: RequestOptions,
-        ): HttpResponseFor<AccountResponse> =
-            getChildren(id, AccountGetChildrenParams.none(), requestOptions)
+        ): HttpResponseFor<AccountListChildrenPage> =
+            listChildren(id, AccountListChildrenParams.none(), requestOptions)
 
         /**
          * Returns a raw HTTP response for `get /organizations/{orgId}/accounts/search`, but is

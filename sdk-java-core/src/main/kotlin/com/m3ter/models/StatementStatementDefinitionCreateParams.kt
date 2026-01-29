@@ -49,8 +49,8 @@ private constructor(
     fun aggregationFrequency(): AggregationFrequency = body.aggregationFrequency()
 
     /**
-     * An array of objects, each representing a Dimension data field from a Meter _(for Meters that
-     * have Dimensions setup)_.
+     * An array of objects, each representing a Dimension data field from a Meter *(for Meters that
+     * have Dimensions setup)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -65,8 +65,8 @@ private constructor(
 
     /**
      * A Boolean indicating whether to include the price per unit in the Statement.
-     * - TRUE - includes the price per unit.
-     * - FALSE - excludes the price per unit.
+     * * TRUE - includes the price per unit.
+     * * FALSE - excludes the price per unit.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -91,7 +91,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -236,8 +236,8 @@ private constructor(
         }
 
         /**
-         * An array of objects, each representing a Dimension data field from a Meter _(for Meters
-         * that have Dimensions setup)_.
+         * An array of objects, each representing a Dimension data field from a Meter *(for Meters
+         * that have Dimensions setup)*.
          */
         fun dimensions(dimensions: List<Dimension>) = apply { body.dimensions(dimensions) }
 
@@ -276,8 +276,8 @@ private constructor(
 
         /**
          * A Boolean indicating whether to include the price per unit in the Statement.
-         * - TRUE - includes the price per unit.
-         * - FALSE - excludes the price per unit.
+         * * TRUE - includes the price per unit.
+         * * FALSE - excludes the price per unit.
          */
         fun includePricePerUnit(includePricePerUnit: Boolean) = apply {
             body.includePricePerUnit(includePricePerUnit)
@@ -326,8 +326,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -493,6 +493,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val aggregationFrequency: JsonField<AggregationFrequency>,
         private val dimensions: JsonField<List<Dimension>>,
@@ -544,8 +545,8 @@ private constructor(
             aggregationFrequency.getRequired("aggregationFrequency")
 
         /**
-         * An array of objects, each representing a Dimension data field from a Meter _(for Meters
-         * that have Dimensions setup)_.
+         * An array of objects, each representing a Dimension data field from a Meter *(for Meters
+         * that have Dimensions setup)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -561,8 +562,8 @@ private constructor(
 
         /**
          * A Boolean indicating whether to include the price per unit in the Statement.
-         * - TRUE - includes the price per unit.
-         * - FALSE - excludes the price per unit.
+         * * TRUE - includes the price per unit.
+         * * FALSE - excludes the price per unit.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -588,8 +589,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -727,8 +728,8 @@ private constructor(
                 }
 
             /**
-             * An array of objects, each representing a Dimension data field from a Meter _(for
-             * Meters that have Dimensions setup)_.
+             * An array of objects, each representing a Dimension data field from a Meter *(for
+             * Meters that have Dimensions setup)*.
              */
             fun dimensions(dimensions: List<Dimension>) = dimensions(JsonField.of(dimensions))
 
@@ -771,8 +772,8 @@ private constructor(
 
             /**
              * A Boolean indicating whether to include the price per unit in the Statement.
-             * - TRUE - includes the price per unit.
-             * - FALSE - excludes the price per unit.
+             * * TRUE - includes the price per unit.
+             * * FALSE - excludes the price per unit.
              */
             fun includePricePerUnit(includePricePerUnit: Boolean) =
                 includePricePerUnit(JsonField.of(includePricePerUnit))
@@ -828,8 +829,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -935,12 +936,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && aggregationFrequency == other.aggregationFrequency && dimensions == other.dimensions && generateSlimStatements == other.generateSlimStatements && includePricePerUnit == other.includePricePerUnit && measures == other.measures && name == other.name && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                aggregationFrequency == other.aggregationFrequency &&
+                dimensions == other.dimensions &&
+                generateSlimStatements == other.generateSlimStatements &&
+                includePricePerUnit == other.includePricePerUnit &&
+                measures == other.measures &&
+                name == other.name &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(aggregationFrequency, dimensions, generateSlimStatements, includePricePerUnit, measures, name, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                aggregationFrequency,
+                dimensions,
+                generateSlimStatements,
+                includePricePerUnit,
+                measures,
+                name,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -965,10 +983,6 @@ private constructor(
 
         companion object {
 
-            @JvmField val ORIGINAL = of("ORIGINAL")
-
-            @JvmField val HOUR = of("HOUR")
-
             @JvmField val DAY = of("DAY")
 
             @JvmField val WEEK = of("WEEK")
@@ -986,8 +1000,6 @@ private constructor(
 
         /** An enum containing [AggregationFrequency]'s known values. */
         enum class Known {
-            ORIGINAL,
-            HOUR,
             DAY,
             WEEK,
             MONTH,
@@ -1007,8 +1019,6 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            ORIGINAL,
-            HOUR,
             DAY,
             WEEK,
             MONTH,
@@ -1031,8 +1041,6 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                ORIGINAL -> Value.ORIGINAL
-                HOUR -> Value.HOUR
                 DAY -> Value.DAY
                 WEEK -> Value.WEEK
                 MONTH -> Value.MONTH
@@ -1052,8 +1060,6 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                ORIGINAL -> Known.ORIGINAL
-                HOUR -> Known.HOUR
                 DAY -> Known.DAY
                 WEEK -> Known.WEEK
                 MONTH -> Known.MONTH
@@ -1107,7 +1113,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AggregationFrequency && value == other.value /* spotless:on */
+            return other is AggregationFrequency && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1117,58 +1123,89 @@ private constructor(
 
     /** A Dimension belonging to a Meter. */
     class Dimension
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
-        private val dimensionAttributes: JsonField<List<String>>,
-        private val dimensionName: JsonField<String>,
+        private val filter: JsonField<List<String>>,
+        private val name: JsonField<String>,
+        private val attributes: JsonField<List<String>>,
+        private val meterId: JsonField<String>,
         private val additionalProperties: MutableMap<String, JsonValue>,
     ) {
 
         @JsonCreator
         private constructor(
-            @JsonProperty("dimensionAttributes")
+            @JsonProperty("filter")
             @ExcludeMissing
-            dimensionAttributes: JsonField<List<String>> = JsonMissing.of(),
-            @JsonProperty("dimensionName")
+            filter: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("name") @ExcludeMissing name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("attributes")
             @ExcludeMissing
-            dimensionName: JsonField<String> = JsonMissing.of(),
-        ) : this(dimensionAttributes, dimensionName, mutableMapOf())
+            attributes: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("meterId") @ExcludeMissing meterId: JsonField<String> = JsonMissing.of(),
+        ) : this(filter, name, attributes, meterId, mutableMapOf())
 
         /**
-         * Attributes belonging to the dimension
+         * The value of a Dimension to use as a filter. Use "*" as a wildcard to filter on all
+         * Dimension values.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun filter(): List<String> = filter.getRequired("filter")
+
+        /**
+         * The name of the Dimension to target in the Meter.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+         */
+        fun name(): String = name.getRequired("name")
+
+        /**
+         * The Dimension attribute to target.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun dimensionAttributes(): Optional<List<String>> =
-            dimensionAttributes.getOptional("dimensionAttributes")
+        fun attributes(): Optional<List<String>> = attributes.getOptional("attributes")
 
         /**
-         * The name of a dimension
+         * The unique identifier (UUID) of the Meter containing this Dimension.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
-        fun dimensionName(): Optional<String> = dimensionName.getOptional("dimensionName")
+        fun meterId(): Optional<String> = meterId.getOptional("meterId")
 
         /**
-         * Returns the raw JSON value of [dimensionAttributes].
+         * Returns the raw JSON value of [filter].
          *
-         * Unlike [dimensionAttributes], this method doesn't throw if the JSON field has an
-         * unexpected type.
+         * Unlike [filter], this method doesn't throw if the JSON field has an unexpected type.
          */
-        @JsonProperty("dimensionAttributes")
-        @ExcludeMissing
-        fun _dimensionAttributes(): JsonField<List<String>> = dimensionAttributes
+        @JsonProperty("filter") @ExcludeMissing fun _filter(): JsonField<List<String>> = filter
 
         /**
-         * Returns the raw JSON value of [dimensionName].
+         * Returns the raw JSON value of [name].
          *
-         * Unlike [dimensionName], this method doesn't throw if the JSON field has an unexpected
-         * type.
+         * Unlike [name], this method doesn't throw if the JSON field has an unexpected type.
          */
-        @JsonProperty("dimensionName")
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+        /**
+         * Returns the raw JSON value of [attributes].
+         *
+         * Unlike [attributes], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("attributes")
         @ExcludeMissing
-        fun _dimensionName(): JsonField<String> = dimensionName
+        fun _attributes(): JsonField<List<String>> = attributes
+
+        /**
+         * Returns the raw JSON value of [meterId].
+         *
+         * Unlike [meterId], this method doesn't throw if the JSON field has an unexpected type.
+         */
+        @JsonProperty("meterId") @ExcludeMissing fun _meterId(): JsonField<String> = meterId
 
         @JsonAnySetter
         private fun putAdditionalProperty(key: String, value: JsonValue) {
@@ -1184,64 +1221,114 @@ private constructor(
 
         companion object {
 
-            /** Returns a mutable builder for constructing an instance of [Dimension]. */
+            /**
+             * Returns a mutable builder for constructing an instance of [Dimension].
+             *
+             * The following fields are required:
+             * ```java
+             * .filter()
+             * .name()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
         /** A builder for [Dimension]. */
         class Builder internal constructor() {
 
-            private var dimensionAttributes: JsonField<MutableList<String>>? = null
-            private var dimensionName: JsonField<String> = JsonMissing.of()
+            private var filter: JsonField<MutableList<String>>? = null
+            private var name: JsonField<String>? = null
+            private var attributes: JsonField<MutableList<String>>? = null
+            private var meterId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             @JvmSynthetic
             internal fun from(dimension: Dimension) = apply {
-                dimensionAttributes = dimension.dimensionAttributes.map { it.toMutableList() }
-                dimensionName = dimension.dimensionName
+                filter = dimension.filter.map { it.toMutableList() }
+                name = dimension.name
+                attributes = dimension.attributes.map { it.toMutableList() }
+                meterId = dimension.meterId
                 additionalProperties = dimension.additionalProperties.toMutableMap()
             }
 
-            /** Attributes belonging to the dimension */
-            fun dimensionAttributes(dimensionAttributes: List<String>) =
-                dimensionAttributes(JsonField.of(dimensionAttributes))
-
             /**
-             * Sets [Builder.dimensionAttributes] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.dimensionAttributes] with a well-typed
-             * `List<String>` value instead. This method is primarily for setting the field to an
-             * undocumented or not yet supported value.
+             * The value of a Dimension to use as a filter. Use "*" as a wildcard to filter on all
+             * Dimension values.
              */
-            fun dimensionAttributes(dimensionAttributes: JsonField<List<String>>) = apply {
-                this.dimensionAttributes = dimensionAttributes.map { it.toMutableList() }
-            }
+            fun filter(filter: List<String>) = filter(JsonField.of(filter))
 
             /**
-             * Adds a single [String] to [dimensionAttributes].
+             * Sets [Builder.filter] to an arbitrary JSON value.
              *
-             * @throws IllegalStateException if the field was previously set to a non-list.
-             */
-            fun addDimensionAttribute(dimensionAttribute: String) = apply {
-                dimensionAttributes =
-                    (dimensionAttributes ?: JsonField.of(mutableListOf())).also {
-                        checkKnown("dimensionAttributes", it).add(dimensionAttribute)
-                    }
-            }
-
-            /** The name of a dimension */
-            fun dimensionName(dimensionName: String) = dimensionName(JsonField.of(dimensionName))
-
-            /**
-             * Sets [Builder.dimensionName] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.dimensionName] with a well-typed [String] value
+             * You should usually call [Builder.filter] with a well-typed `List<String>` value
              * instead. This method is primarily for setting the field to an undocumented or not yet
              * supported value.
              */
-            fun dimensionName(dimensionName: JsonField<String>) = apply {
-                this.dimensionName = dimensionName
+            fun filter(filter: JsonField<List<String>>) = apply {
+                this.filter = filter.map { it.toMutableList() }
             }
+
+            /**
+             * Adds a single [String] to [Builder.filter].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addFilter(filter: String) = apply {
+                this.filter =
+                    (this.filter ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("filter", it).add(filter)
+                    }
+            }
+
+            /** The name of the Dimension to target in the Meter. */
+            fun name(name: String) = name(JsonField.of(name))
+
+            /**
+             * Sets [Builder.name] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.name] with a well-typed [String] value instead. This
+             * method is primarily for setting the field to an undocumented or not yet supported
+             * value.
+             */
+            fun name(name: JsonField<String>) = apply { this.name = name }
+
+            /** The Dimension attribute to target. */
+            fun attributes(attributes: List<String>) = attributes(JsonField.of(attributes))
+
+            /**
+             * Sets [Builder.attributes] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.attributes] with a well-typed `List<String>` value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun attributes(attributes: JsonField<List<String>>) = apply {
+                this.attributes = attributes.map { it.toMutableList() }
+            }
+
+            /**
+             * Adds a single [String] to [attributes].
+             *
+             * @throws IllegalStateException if the field was previously set to a non-list.
+             */
+            fun addAttribute(attribute: String) = apply {
+                attributes =
+                    (attributes ?: JsonField.of(mutableListOf())).also {
+                        checkKnown("attributes", it).add(attribute)
+                    }
+            }
+
+            /** The unique identifier (UUID) of the Meter containing this Dimension. */
+            fun meterId(meterId: String) = meterId(JsonField.of(meterId))
+
+            /**
+             * Sets [Builder.meterId] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.meterId] with a well-typed [String] value instead.
+             * This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1266,11 +1353,21 @@ private constructor(
              * Returns an immutable instance of [Dimension].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .filter()
+             * .name()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): Dimension =
                 Dimension(
-                    (dimensionAttributes ?: JsonMissing.of()).map { it.toImmutable() },
-                    dimensionName,
+                    checkRequired("filter", filter).map { it.toImmutable() },
+                    checkRequired("name", name),
+                    (attributes ?: JsonMissing.of()).map { it.toImmutable() },
+                    meterId,
                     additionalProperties.toMutableMap(),
                 )
         }
@@ -1282,8 +1379,10 @@ private constructor(
                 return@apply
             }
 
-            dimensionAttributes()
-            dimensionName()
+            filter()
+            name()
+            attributes()
+            meterId()
             validated = true
         }
 
@@ -1303,28 +1402,36 @@ private constructor(
          */
         @JvmSynthetic
         internal fun validity(): Int =
-            (dimensionAttributes.asKnown().getOrNull()?.size ?: 0) +
-                (if (dimensionName.asKnown().isPresent) 1 else 0)
+            (filter.asKnown().getOrNull()?.size ?: 0) +
+                (if (name.asKnown().isPresent) 1 else 0) +
+                (attributes.asKnown().getOrNull()?.size ?: 0) +
+                (if (meterId.asKnown().isPresent) 1 else 0)
 
         override fun equals(other: Any?): Boolean {
             if (this === other) {
                 return true
             }
 
-            return /* spotless:off */ other is Dimension && dimensionAttributes == other.dimensionAttributes && dimensionName == other.dimensionName && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Dimension &&
+                filter == other.filter &&
+                name == other.name &&
+                attributes == other.attributes &&
+                meterId == other.meterId &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(dimensionAttributes, dimensionName, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(filter, name, attributes, meterId, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Dimension{dimensionAttributes=$dimensionAttributes, dimensionName=$dimensionName, additionalProperties=$additionalProperties}"
+            "Dimension{filter=$filter, name=$name, attributes=$attributes, meterId=$meterId, additionalProperties=$additionalProperties}"
     }
 
     class Measure
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val aggregations: JsonField<List<Aggregation>>,
         private val meterId: JsonField<String>,
@@ -1358,7 +1465,7 @@ private constructor(
         fun meterId(): Optional<String> = meterId.getOptional("meterId")
 
         /**
-         * The name of a Measure data field _(or blank to indicate a wildcard, i.e. all fields)_.
+         * The name of a Measure data field *(or blank to indicate a wildcard, i.e. all fields)*.
          * Default value is blank.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1464,8 +1571,8 @@ private constructor(
             fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
 
             /**
-             * The name of a Measure data field _(or blank to indicate a wildcard, i.e. all
-             * fields)_. Default value is blank.
+             * The name of a Measure data field *(or blank to indicate a wildcard, i.e. all
+             * fields)*. Default value is blank.
              */
             fun name(name: String) = name(JsonField.of(name))
 
@@ -1548,21 +1655,21 @@ private constructor(
          * Specifies the computation method applied to usage data collected in `targetField`.
          * Aggregation unit value depends on the **Category** configured for the selected
          * targetField.
-         * - **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
+         * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
          *   `targetField`.
-         * - **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
+         * * **MIN**. Uses the minimum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
+         * * **MAX**. Uses the maximum value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
+         * * **COUNT**. Counts the number of values. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`.
-         * - **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
+         * * **LATEST**. Uses the most recent value. Can be applied to a **Measure**, **Income**, or
          *   **Cost** `targetField`. Note: Based on the timestamp `ts` value of usage data
-         *   measurement submissions. If using this method, please ensure _distinct_ `ts` values are
+         *   measurement submissions. If using this method, please ensure *distinct* `ts` values are
          *   used for usage data measurement submissions.
-         * - **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
+         * * **MEAN**. Uses the arithmetic mean of the values. Can be applied to a **Measure**,
          *   **Income**, or **Cost** `targetField`.
-         * - **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
+         * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
          */
         class Aggregation @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -1594,6 +1701,8 @@ private constructor(
 
                 @JvmField val UNIQUE = of("UNIQUE")
 
+                @JvmField val CUSTOM_SQL = of("CUSTOM_SQL")
+
                 @JvmStatic fun of(value: String) = Aggregation(JsonField.of(value))
             }
 
@@ -1606,6 +1715,7 @@ private constructor(
                 LATEST,
                 MEAN,
                 UNIQUE,
+                CUSTOM_SQL,
             }
 
             /**
@@ -1625,6 +1735,7 @@ private constructor(
                 LATEST,
                 MEAN,
                 UNIQUE,
+                CUSTOM_SQL,
                 /**
                  * An enum member indicating that [Aggregation] was instantiated with an unknown
                  * value.
@@ -1648,6 +1759,7 @@ private constructor(
                     LATEST -> Value.LATEST
                     MEAN -> Value.MEAN
                     UNIQUE -> Value.UNIQUE
+                    CUSTOM_SQL -> Value.CUSTOM_SQL
                     else -> Value._UNKNOWN
                 }
 
@@ -1669,6 +1781,7 @@ private constructor(
                     LATEST -> Known.LATEST
                     MEAN -> Known.MEAN
                     UNIQUE -> Known.UNIQUE
+                    CUSTOM_SQL -> Known.CUSTOM_SQL
                     else -> throw M3terInvalidDataException("Unknown Aggregation: $value")
                 }
 
@@ -1718,7 +1831,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Aggregation && value == other.value /* spotless:on */
+                return other is Aggregation && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1731,12 +1844,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Measure && aggregations == other.aggregations && meterId == other.meterId && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Measure &&
+                aggregations == other.aggregations &&
+                meterId == other.meterId &&
+                name == other.name &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(aggregations, meterId, name, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(aggregations, meterId, name, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1749,10 +1866,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is StatementStatementDefinitionCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is StatementStatementDefinitionCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "StatementStatementDefinitionCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

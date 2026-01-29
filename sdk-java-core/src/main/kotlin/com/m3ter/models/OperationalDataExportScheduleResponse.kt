@@ -21,6 +21,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class OperationalDataExportScheduleResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val operationalDataTypes: JsonField<List<OperationalDataType>>,
@@ -318,6 +319,8 @@ private constructor(
 
             @JvmField val TRANSACTION_TYPES = of("TRANSACTION_TYPES")
 
+            @JvmField val CHARGES = of("CHARGES")
+
             @JvmStatic fun of(value: String) = OperationalDataType(JsonField.of(value))
         }
 
@@ -342,6 +345,7 @@ private constructor(
             PLAN_TEMPLATES,
             BALANCE_TRANSACTIONS,
             TRANSACTION_TYPES,
+            CHARGES,
         }
 
         /**
@@ -373,6 +377,7 @@ private constructor(
             PLAN_TEMPLATES,
             BALANCE_TRANSACTIONS,
             TRANSACTION_TYPES,
+            CHARGES,
             /**
              * An enum member indicating that [OperationalDataType] was instantiated with an unknown
              * value.
@@ -408,6 +413,7 @@ private constructor(
                 PLAN_TEMPLATES -> Value.PLAN_TEMPLATES
                 BALANCE_TRANSACTIONS -> Value.BALANCE_TRANSACTIONS
                 TRANSACTION_TYPES -> Value.TRANSACTION_TYPES
+                CHARGES -> Value.CHARGES
                 else -> Value._UNKNOWN
             }
 
@@ -440,6 +446,7 @@ private constructor(
                 PLAN_TEMPLATES -> Known.PLAN_TEMPLATES
                 BALANCE_TRANSACTIONS -> Known.BALANCE_TRANSACTIONS
                 TRANSACTION_TYPES -> Known.TRANSACTION_TYPES
+                CHARGES -> Known.CHARGES
                 else -> throw M3terInvalidDataException("Unknown OperationalDataType: $value")
             }
 
@@ -487,7 +494,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is OperationalDataType && value == other.value /* spotless:on */
+            return other is OperationalDataType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -500,12 +507,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is OperationalDataExportScheduleResponse && id == other.id && operationalDataTypes == other.operationalDataTypes && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is OperationalDataExportScheduleResponse &&
+            id == other.id &&
+            operationalDataTypes == other.operationalDataTypes &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, operationalDataTypes, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(id, operationalDataTypes, version, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -29,7 +29,7 @@ import kotlin.jvm.optionals.getOrNull
  * added to, and apply the end-date to the Contract itself.
  *
  * **NOTES:**
- * - If you want to apply the end-date to the Contract _itself_ - the Contract `id` you use as the
+ * - If you want to apply the end-date to the Contract *itself* - the Contract `id` you use as the
  *   required PATH PARAMETER - you must also specify `CONTRACT` as a `billingEntities` option in the
  *   request body schema.
  * - Only the Contract whose id you specify for the PATH PARAMETER will be end-dated. If there are
@@ -62,7 +62,7 @@ private constructor(
     fun billingEntities(): List<BillingEntity> = body.billingEntities()
 
     /**
-     * The end date and time applied to the specified billing entities _(in ISO 8601 format)_.
+     * The end date and time applied to the specified billing entities *(in ISO 8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -71,7 +71,7 @@ private constructor(
 
     /**
      * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
-     * end-date to be applied to any billing entities associated with Child Accounts. _(Optional)_
+     * end-date to be applied to any billing entities associated with Child Accounts. *(Optional)*
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -198,7 +198,7 @@ private constructor(
         }
 
         /**
-         * The end date and time applied to the specified billing entities _(in ISO 8601 format)_.
+         * The end date and time applied to the specified billing entities *(in ISO 8601 format)*.
          */
         fun endDate(endDate: OffsetDateTime) = apply { body.endDate(endDate) }
 
@@ -214,7 +214,7 @@ private constructor(
         /**
          * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
          * end-date to be applied to any billing entities associated with Child Accounts.
-         * _(Optional)_
+         * *(Optional)*
          */
         fun applyToChildren(applyToChildren: Boolean) = apply {
             body.applyToChildren(applyToChildren)
@@ -385,6 +385,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val billingEntities: JsonField<List<BillingEntity>>,
         private val endDate: JsonField<OffsetDateTime>,
@@ -416,7 +417,7 @@ private constructor(
         fun billingEntities(): List<BillingEntity> = billingEntities.getRequired("billingEntities")
 
         /**
-         * The end date and time applied to the specified billing entities _(in ISO 8601 format)_.
+         * The end date and time applied to the specified billing entities *(in ISO 8601 format)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -426,7 +427,7 @@ private constructor(
         /**
          * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
          * end-date to be applied to any billing entities associated with Child Accounts.
-         * _(Optional)_
+         * *(Optional)*
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -534,8 +535,8 @@ private constructor(
             }
 
             /**
-             * The end date and time applied to the specified billing entities _(in ISO 8601
-             * format)_.
+             * The end date and time applied to the specified billing entities *(in ISO 8601
+             * format)*.
              */
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
@@ -551,7 +552,7 @@ private constructor(
             /**
              * A Boolean TRUE/FALSE flag. For Parent Accounts, set to TRUE if you want the specified
              * end-date to be applied to any billing entities associated with Child Accounts.
-             * _(Optional)_
+             * *(Optional)*
              */
             fun applyToChildren(applyToChildren: Boolean) =
                 applyToChildren(JsonField.of(applyToChildren))
@@ -646,12 +647,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && billingEntities == other.billingEntities && endDate == other.endDate && applyToChildren == other.applyToChildren && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                billingEntities == other.billingEntities &&
+                endDate == other.endDate &&
+                applyToChildren == other.applyToChildren &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(billingEntities, endDate, applyToChildren, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(billingEntities, endDate, applyToChildren, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -797,7 +802,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BillingEntity && value == other.value /* spotless:on */
+            return other is BillingEntity && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -810,10 +815,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ContractEndDateBillingEntitiesParams && orgId == other.orgId && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is ContractEndDateBillingEntitiesParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "ContractEndDateBillingEntitiesParams{orgId=$orgId, id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

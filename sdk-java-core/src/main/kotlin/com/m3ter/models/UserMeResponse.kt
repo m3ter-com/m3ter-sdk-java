@@ -22,6 +22,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class UserMeResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val organization: JsonField<Organization>,
     private val serviceUser: JsonField<ServiceUser>,
@@ -214,6 +215,7 @@ private constructor(
             (user.asKnown().getOrNull()?.validity() ?: 0)
 
     class Organization
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val addressLine1: JsonField<String>,
@@ -1418,7 +1420,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+                return other is Status && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1545,7 +1547,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+                return other is Type && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1558,12 +1560,67 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Organization && id == other.id && addressLine1 == other.addressLine1 && addressLine2 == other.addressLine2 && addressLine3 == other.addressLine3 && addressLine4 == other.addressLine4 && billingContactUserId1 == other.billingContactUserId1 && billingContactUserId2 == other.billingContactUserId2 && billingContactUserId3 == other.billingContactUserId3 && country == other.country && createdBy == other.createdBy && customerId == other.customerId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && invoiceGeneralReference == other.invoiceGeneralReference && lastModifiedBy == other.lastModifiedBy && locality == other.locality && organizationName == other.organizationName && orgId == other.orgId && postCode == other.postCode && purchaseOrderNumber == other.purchaseOrderNumber && region == other.region && shortName == other.shortName && status == other.status && taxId == other.taxId && type == other.type && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Organization &&
+                id == other.id &&
+                addressLine1 == other.addressLine1 &&
+                addressLine2 == other.addressLine2 &&
+                addressLine3 == other.addressLine3 &&
+                addressLine4 == other.addressLine4 &&
+                billingContactUserId1 == other.billingContactUserId1 &&
+                billingContactUserId2 == other.billingContactUserId2 &&
+                billingContactUserId3 == other.billingContactUserId3 &&
+                country == other.country &&
+                createdBy == other.createdBy &&
+                customerId == other.customerId &&
+                dtCreated == other.dtCreated &&
+                dtLastModified == other.dtLastModified &&
+                invoiceGeneralReference == other.invoiceGeneralReference &&
+                lastModifiedBy == other.lastModifiedBy &&
+                locality == other.locality &&
+                organizationName == other.organizationName &&
+                orgId == other.orgId &&
+                postCode == other.postCode &&
+                purchaseOrderNumber == other.purchaseOrderNumber &&
+                region == other.region &&
+                shortName == other.shortName &&
+                status == other.status &&
+                taxId == other.taxId &&
+                type == other.type &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, addressLine1, addressLine2, addressLine3, addressLine4, billingContactUserId1, billingContactUserId2, billingContactUserId3, country, createdBy, customerId, dtCreated, dtLastModified, invoiceGeneralReference, lastModifiedBy, locality, organizationName, orgId, postCode, purchaseOrderNumber, region, shortName, status, taxId, type, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                addressLine1,
+                addressLine2,
+                addressLine3,
+                addressLine4,
+                billingContactUserId1,
+                billingContactUserId2,
+                billingContactUserId3,
+                country,
+                createdBy,
+                customerId,
+                dtCreated,
+                dtLastModified,
+                invoiceGeneralReference,
+                lastModifiedBy,
+                locality,
+                organizationName,
+                orgId,
+                postCode,
+                purchaseOrderNumber,
+                region,
+                shortName,
+                status,
+                taxId,
+                type,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1572,6 +1629,7 @@ private constructor(
     }
 
     class ServiceUser
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val createdBy: JsonField<String>,
@@ -1612,10 +1670,12 @@ private constructor(
         )
 
         /**
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * The UUID of the entity.
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun id(): Optional<String> = id.getOptional("id")
+        fun id(): String = id.getRequired("id")
 
         /**
          * The id of the user who created this service user.
@@ -1657,6 +1717,11 @@ private constructor(
         fun name(): Optional<String> = name.getOptional("name")
 
         /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
@@ -1733,14 +1798,21 @@ private constructor(
 
         companion object {
 
-            /** Returns a mutable builder for constructing an instance of [ServiceUser]. */
+            /**
+             * Returns a mutable builder for constructing an instance of [ServiceUser].
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
         /** A builder for [ServiceUser]. */
         class Builder internal constructor() {
 
-            private var id: JsonField<String> = JsonMissing.of()
+            private var id: JsonField<String>? = null
             private var createdBy: JsonField<String> = JsonMissing.of()
             private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
             private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -1761,6 +1833,7 @@ private constructor(
                 additionalProperties = serviceUser.additionalProperties.toMutableMap()
             }
 
+            /** The UUID of the entity. */
             fun id(id: String) = id(JsonField.of(id))
 
             /**
@@ -1839,6 +1912,12 @@ private constructor(
              */
             fun name(name: JsonField<String>) = apply { this.name = name }
 
+            /**
+             * The version number:
+             * - **Create:** On initial Create to insert a new entity, the version is set at 1 in
+             *   the response.
+             * - **Update:** On successful Update, the version is incremented by 1 in the response.
+             */
             fun version(version: Long) = version(JsonField.of(version))
 
             /**
@@ -1873,10 +1952,17 @@ private constructor(
              * Returns an immutable instance of [ServiceUser].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): ServiceUser =
                 ServiceUser(
-                    id,
+                    checkRequired("id", id),
                     createdBy,
                     dtCreated,
                     dtLastModified,
@@ -1933,12 +2019,29 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ServiceUser && id == other.id && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && name == other.name && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is ServiceUser &&
+                id == other.id &&
+                createdBy == other.createdBy &&
+                dtCreated == other.dtCreated &&
+                dtLastModified == other.dtLastModified &&
+                lastModifiedBy == other.lastModifiedBy &&
+                name == other.name &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, createdBy, dtCreated, dtLastModified, lastModifiedBy, name, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                createdBy,
+                dtCreated,
+                dtLastModified,
+                lastModifiedBy,
+                name,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1947,6 +2050,7 @@ private constructor(
     }
 
     class User
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val id: JsonField<String>,
         private val contactNumber: JsonField<String>,
@@ -2022,12 +2126,12 @@ private constructor(
         )
 
         /**
-         * The unique identifier (UUID) of this user.
+         * The UUID of the entity.
          *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
+         *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
-        fun id(): Optional<String> = id.getOptional("id")
+        fun id(): String = id.getRequired("id")
 
         /**
          * The user's contact telephone number.
@@ -2046,7 +2150,7 @@ private constructor(
         fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
         /**
-         * The date and time _(in ISO-8601 format)_ when the user was created.
+         * The date and time *(in ISO-8601 format)* when the user was created.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -2054,7 +2158,7 @@ private constructor(
         fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
         /**
-         * The date and time _(in ISO-8601 format)_ when the user was last modified.
+         * The date and time *(in ISO-8601 format)* when the user was last modified.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -2071,7 +2175,7 @@ private constructor(
         fun email(): Optional<String> = email.getOptional("email")
 
         /**
-         * The date and time _(in ISO 8601 format)_ when this user first accepted the the m3ter
+         * The date and time *(in ISO 8601 format)* when this user first accepted the the m3ter
          * terms and conditions.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -2089,7 +2193,7 @@ private constructor(
         fun firstName(): Optional<String> = firstName.getOptional("firstName")
 
         /**
-         * The date and time _(in ISO 8601 format)_ when this user last accepted the the m3ter terms
+         * The date and time *(in ISO 8601 format)* when this user last accepted the the m3ter terms
          * and conditions.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -2277,14 +2381,21 @@ private constructor(
 
         companion object {
 
-            /** Returns a mutable builder for constructing an instance of [User]. */
+            /**
+             * Returns a mutable builder for constructing an instance of [User].
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * ```
+             */
             @JvmStatic fun builder() = Builder()
         }
 
         /** A builder for [User]. */
         class Builder internal constructor() {
 
-            private var id: JsonField<String> = JsonMissing.of()
+            private var id: JsonField<String>? = null
             private var contactNumber: JsonField<String> = JsonMissing.of()
             private var createdBy: JsonField<String> = JsonMissing.of()
             private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -2320,7 +2431,7 @@ private constructor(
                 additionalProperties = user.additionalProperties.toMutableMap()
             }
 
-            /** The unique identifier (UUID) of this user. */
+            /** The UUID of the entity. */
             fun id(id: String) = id(JsonField.of(id))
 
             /**
@@ -2358,7 +2469,7 @@ private constructor(
              */
             fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-            /** The date and time _(in ISO-8601 format)_ when the user was created. */
+            /** The date and time *(in ISO-8601 format)* when the user was created. */
             fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
             /**
@@ -2372,7 +2483,7 @@ private constructor(
                 this.dtCreated = dtCreated
             }
 
-            /** The date and time _(in ISO-8601 format)_ when the user was last modified. */
+            /** The date and time *(in ISO-8601 format)* when the user was last modified. */
             fun dtLastModified(dtLastModified: OffsetDateTime) =
                 dtLastModified(JsonField.of(dtLastModified))
 
@@ -2400,7 +2511,7 @@ private constructor(
             fun email(email: JsonField<String>) = apply { this.email = email }
 
             /**
-             * The date and time _(in ISO 8601 format)_ when this user first accepted the the m3ter
+             * The date and time *(in ISO 8601 format)* when this user first accepted the the m3ter
              * terms and conditions.
              */
             fun firstAcceptedTermsAndConditions(firstAcceptedTermsAndConditions: OffsetDateTime) =
@@ -2430,7 +2541,7 @@ private constructor(
             fun firstName(firstName: JsonField<String>) = apply { this.firstName = firstName }
 
             /**
-             * The date and time _(in ISO 8601 format)_ when this user last accepted the the m3ter
+             * The date and time *(in ISO 8601 format)* when this user last accepted the the m3ter
              * terms and conditions.
              */
             fun lastAcceptedTermsAndConditions(lastAcceptedTermsAndConditions: OffsetDateTime) =
@@ -2555,10 +2666,17 @@ private constructor(
              * Returns an immutable instance of [User].
              *
              * Further updates to this [Builder] will not mutate the returned instance.
+             *
+             * The following fields are required:
+             * ```java
+             * .id()
+             * ```
+             *
+             * @throws IllegalStateException if any required field is unset.
              */
             fun build(): User =
                 User(
-                    id,
+                    checkRequired("id", id),
                     contactNumber,
                     createdBy,
                     dtCreated,
@@ -2636,12 +2754,43 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is User && id == other.id && contactNumber == other.contactNumber && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && email == other.email && firstAcceptedTermsAndConditions == other.firstAcceptedTermsAndConditions && firstName == other.firstName && lastAcceptedTermsAndConditions == other.lastAcceptedTermsAndConditions && lastModifiedBy == other.lastModifiedBy && lastName == other.lastName && organizations == other.organizations && supportUser == other.supportUser && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is User &&
+                id == other.id &&
+                contactNumber == other.contactNumber &&
+                createdBy == other.createdBy &&
+                dtCreated == other.dtCreated &&
+                dtLastModified == other.dtLastModified &&
+                email == other.email &&
+                firstAcceptedTermsAndConditions == other.firstAcceptedTermsAndConditions &&
+                firstName == other.firstName &&
+                lastAcceptedTermsAndConditions == other.lastAcceptedTermsAndConditions &&
+                lastModifiedBy == other.lastModifiedBy &&
+                lastName == other.lastName &&
+                organizations == other.organizations &&
+                supportUser == other.supportUser &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, contactNumber, createdBy, dtCreated, dtLastModified, email, firstAcceptedTermsAndConditions, firstName, lastAcceptedTermsAndConditions, lastModifiedBy, lastName, organizations, supportUser, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                id,
+                contactNumber,
+                createdBy,
+                dtCreated,
+                dtLastModified,
+                email,
+                firstAcceptedTermsAndConditions,
+                firstName,
+                lastAcceptedTermsAndConditions,
+                lastModifiedBy,
+                lastName,
+                organizations,
+                supportUser,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2654,12 +2803,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UserMeResponse && organization == other.organization && serviceUser == other.serviceUser && user == other.user && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is UserMeResponse &&
+            organization == other.organization &&
+            serviceUser == other.serviceUser &&
+            user == other.user &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(organization, serviceUser, user, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(organization, serviceUser, user, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

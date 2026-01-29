@@ -22,6 +22,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class CompoundAggregationResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accountingProductId: JsonField<String>,
@@ -110,6 +111,8 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
+     * Optional Product ID this Aggregation should be attributed to for accounting purposes.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -148,7 +151,7 @@ private constructor(
     fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the CompoundAggregation was created.
+     * The date and time *(in ISO-8601 format)* when the CompoundAggregation was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -156,7 +159,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the CompoundAggregation was last modified.
+     * The date and time *(in ISO-8601 format)* when the CompoundAggregation was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -216,13 +219,13 @@ private constructor(
      * Specifies how you want to deal with non-integer, fractional number Aggregation values.
      *
      * **NOTES:**
-     * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-     * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+     * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+     * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
      *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one, you
      *   would typically set Rounding to **UP**. For example, suppose you charge by kilobytes per
      *   second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at $0.25 per unit used.
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
-     *   97.8 rounded up to 98 \* 0.25 = $2.45.
+     *   97.8 rounded up to 98 * 0.25 = $2.45.
      *
      * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      *
@@ -232,7 +235,7 @@ private constructor(
     fun rounding(): Optional<Rounding> = rounding.getOptional("rounding")
 
     /**
-     * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
+     * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage data
      * collected by a single Meter. Works together with `segmentedFields`.
      *
      * Contains the values that are to be used as the segments, read from the fields in the meter
@@ -244,7 +247,7 @@ private constructor(
     fun segments(): Optional<List<Segment>> = segments.getOptional("segments")
 
     /**
-     * User defined or following the _Unified Code for Units of Measure_ (UCUM).
+     * User defined or following the *Unified Code for Units of Measure* (UCUM).
      *
      * Used as the label for billing, indicating to your customers what they are being charged for.
      *
@@ -479,6 +482,7 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes. */
         fun accountingProductId(accountingProductId: String) =
             accountingProductId(JsonField.of(accountingProductId))
 
@@ -544,7 +548,7 @@ private constructor(
             this.customFields = customFields
         }
 
-        /** The date and time _(in ISO-8601 format)_ when the CompoundAggregation was created. */
+        /** The date and time *(in ISO-8601 format)* when the CompoundAggregation was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -557,7 +561,7 @@ private constructor(
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
         /**
-         * The date and time _(in ISO-8601 format)_ when the CompoundAggregation was last modified.
+         * The date and time *(in ISO-8601 format)* when the CompoundAggregation was last modified.
          */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
@@ -658,13 +662,13 @@ private constructor(
          * Specifies how you want to deal with non-integer, fractional number Aggregation values.
          *
          * **NOTES:**
-         * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-         * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+         * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+         * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
          *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one,
          *   you would typically set Rounding to **UP**. For example, suppose you charge by
          *   kilobytes per second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at
          *   $0.25 per unit used. If your customer used 48,900 KiBy/s in a billing period, the
-         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 \* 0.25 = $2.45.
+         *   charge would be 48,900 / 500 = 97.8 rounded up to 98 * 0.25 = $2.45.
          *
          * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
          */
@@ -680,7 +684,7 @@ private constructor(
         fun rounding(rounding: JsonField<Rounding>) = apply { this.rounding = rounding }
 
         /**
-         * _(Optional)_. Used when creating a segmented Aggregation, which segments the usage data
+         * *(Optional)*. Used when creating a segmented Aggregation, which segments the usage data
          * collected by a single Meter. Works together with `segmentedFields`.
          *
          * Contains the values that are to be used as the segments, read from the fields in the
@@ -712,7 +716,7 @@ private constructor(
         }
 
         /**
-         * User defined or following the _Unified Code for Units of Measure_ (UCUM).
+         * User defined or following the *Unified Code for Units of Measure* (UCUM).
          *
          * Used as the label for billing, indicating to your customers what they are being charged
          * for.
@@ -946,12 +950,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -962,13 +964,13 @@ private constructor(
      * Specifies how you want to deal with non-integer, fractional number Aggregation values.
      *
      * **NOTES:**
-     * - **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
-     * - Also used in combination with `quantityPerUnit`. Rounds the number of units after
+     * * **NEAREST** rounds to the nearest half: 5.1 is rounded to 5, and 3.5 is rounded to 4.
+     * * Also used in combination with `quantityPerUnit`. Rounds the number of units after
      *   `quantityPerUnit` is applied. If you set `quantityPerUnit` to a value other than one, you
      *   would typically set Rounding to **UP**. For example, suppose you charge by kilobytes per
      *   second (KiBy/s), set `quantityPerUnit` = 500, and set charge rate at $0.25 per unit used.
      *   If your customer used 48,900 KiBy/s in a billing period, the charge would be 48,900 / 500 =
-     *   97.8 rounded up to 98 \* 0.25 = $2.45.
+     *   97.8 rounded up to 98 * 0.25 = $2.45.
      *
      * Enum: ???UP??? ???DOWN??? ???NEAREST??? ???NONE???
      */
@@ -1100,7 +1102,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Rounding && value == other.value /* spotless:on */
+            return other is Rounding && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1197,12 +1199,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Segment && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Segment && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1214,12 +1214,49 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CompoundAggregationResponse && id == other.id && accountingProductId == other.accountingProductId && calculation == other.calculation && code == other.code && createdBy == other.createdBy && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && evaluateNullAggregations == other.evaluateNullAggregations && lastModifiedBy == other.lastModifiedBy && name == other.name && productId == other.productId && quantityPerUnit == other.quantityPerUnit && rounding == other.rounding && segments == other.segments && unit == other.unit && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CompoundAggregationResponse &&
+            id == other.id &&
+            accountingProductId == other.accountingProductId &&
+            calculation == other.calculation &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            customFields == other.customFields &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            evaluateNullAggregations == other.evaluateNullAggregations &&
+            lastModifiedBy == other.lastModifiedBy &&
+            name == other.name &&
+            productId == other.productId &&
+            quantityPerUnit == other.quantityPerUnit &&
+            rounding == other.rounding &&
+            segments == other.segments &&
+            unit == other.unit &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountingProductId, calculation, code, createdBy, customFields, dtCreated, dtLastModified, evaluateNullAggregations, lastModifiedBy, name, productId, quantityPerUnit, rounding, segments, unit, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountingProductId,
+            calculation,
+            code,
+            createdBy,
+            customFields,
+            dtCreated,
+            dtLastModified,
+            evaluateNullAggregations,
+            lastModifiedBy,
+            name,
+            productId,
+            quantityPerUnit,
+            rounding,
+            segments,
+            unit,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

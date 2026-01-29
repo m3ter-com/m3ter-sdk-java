@@ -18,6 +18,7 @@ import java.util.Optional
 
 /** It contains details for downloading an export file */
 class DataExportJobGetDownloadUrlResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val expirationTime: JsonField<OffsetDateTime>,
     private val url: JsonField<String>,
@@ -194,12 +195,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportJobGetDownloadUrlResponse && expirationTime == other.expirationTime && url == other.url && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DataExportJobGetDownloadUrlResponse &&
+            expirationTime == other.expirationTime &&
+            url == other.url &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(expirationTime, url, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

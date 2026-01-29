@@ -16,6 +16,7 @@ import java.util.Objects
 import java.util.Optional
 
 class BalanceTransactionSummaryResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val balanceConsumed: JsonField<Double>,
     private val expiredBalanceAmount: JsonField<Double>,
@@ -370,12 +371,27 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BalanceTransactionSummaryResponse && balanceConsumed == other.balanceConsumed && expiredBalanceAmount == other.expiredBalanceAmount && initialCreditAmount == other.initialCreditAmount && rolloverConsumed == other.rolloverConsumed && totalCreditAmount == other.totalCreditAmount && totalDebitAmount == other.totalDebitAmount && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is BalanceTransactionSummaryResponse &&
+            balanceConsumed == other.balanceConsumed &&
+            expiredBalanceAmount == other.expiredBalanceAmount &&
+            initialCreditAmount == other.initialCreditAmount &&
+            rolloverConsumed == other.rolloverConsumed &&
+            totalCreditAmount == other.totalCreditAmount &&
+            totalDebitAmount == other.totalDebitAmount &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(balanceConsumed, expiredBalanceAmount, initialCreditAmount, rolloverConsumed, totalCreditAmount, totalDebitAmount, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            balanceConsumed,
+            expiredBalanceAmount,
+            initialCreditAmount,
+            rolloverConsumed,
+            totalCreditAmount,
+            totalDebitAmount,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

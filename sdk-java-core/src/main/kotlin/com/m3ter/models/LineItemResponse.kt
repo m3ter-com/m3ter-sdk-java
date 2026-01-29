@@ -22,6 +22,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class LineItemResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accountingProductCode: JsonField<String>,
@@ -233,6 +234,8 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
+     * The code of the Accounting Product associated with this line item.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -240,6 +243,8 @@ private constructor(
         accountingProductCode.getOptional("accountingProductCode")
 
     /**
+     * The unique identifier (UUID) for the associated Accounting Product.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -247,6 +252,8 @@ private constructor(
         accountingProductId.getOptional("accountingProductId")
 
     /**
+     * The name of the Accounting Product associated with this line item.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -277,6 +284,8 @@ private constructor(
     fun averageUnitPrice(): Optional<Double> = averageUnitPrice.getOptional("averageUnitPrice")
 
     /**
+     * The unique identifier (UUID) for the Balance associated with this line item.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -300,13 +309,15 @@ private constructor(
     fun billId(): Optional<String> = billId.getOptional("billId")
 
     /**
+     * The unique identifier (UUID) for the Charge associated with this line item.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun chargeId(): Optional<String> = chargeId.getOptional("chargeId")
 
     /**
-     * The unique identifier (UUID) of the Commitment _(if this is used)_.
+     * The unique identifier (UUID) of the Commitment associated with this line item.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -323,7 +334,7 @@ private constructor(
         compoundAggregationId.getOptional("compoundAggregationId")
 
     /**
-     * The unique identifier (UUID) for the contract associated with this line item.
+     * The unique identifier (UUID) for the Contract associated with this line item.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -331,7 +342,7 @@ private constructor(
     fun contractId(): Optional<String> = contractId.getOptional("contractId")
 
     /**
-     * The currency conversion rate _(if used)_ for the line item.
+     * The currency conversion rate *(if used)* for the line item.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -347,13 +358,15 @@ private constructor(
     fun convertedSubtotal(): Optional<Double> = convertedSubtotal.getOptional("convertedSubtotal")
 
     /**
+     * The unique identifier (UUID) for the Counter associated with this line item.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun counterId(): Optional<String> = counterId.getOptional("counterId")
 
     /**
-     * The unique identifier (UUID) for the user who created the Bill line item.
+     * The ID of the user who created this line item.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -378,15 +391,13 @@ private constructor(
     fun currency(): Optional<String> = currency.getOptional("currency")
 
     /**
-     * A detailed description providing context for the line item within the Bill.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun description(): Optional<String> = description.getOptional("description")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the Bill line item was first created.
+     * The DateTime when the line item was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -394,7 +405,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the Bill line item was last modified.
+     * The DateTime when the line item was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -412,18 +423,15 @@ private constructor(
      * format. When a Bill statement is generated, usage line items have their usage stored in JSON
      * format.
      *
-     * See
-     * [Working with Bill Statements](https://www.m3ter.com/docs/guides/running-viewing-and-managing-bills/working-with-bill-statements)
-     * for more information.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
+    @Deprecated("deprecated")
     fun jsonUsageGenerated(): Optional<Boolean> =
         jsonUsageGenerated.getOptional("jsonUsageGenerated")
 
     /**
-     * The unique identifier (UUID) for the user who last modified this Bill line item.
+     * The ID of the user who last modified this line item.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -445,9 +453,7 @@ private constructor(
     fun meterId(): Optional<String> = meterId.getOptional("meterId")
 
     /**
-     * The UUID of the PlanGroup.
-     *
-     * The unique identifier (UUID) for the PlanGroup, if applicable.
+     * The unique identifier (UUID) of the Plan Group associated with this line item.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -455,7 +461,7 @@ private constructor(
     fun planGroupId(): Optional<String> = planGroupId.getOptional("planGroupId")
 
     /**
-     * A unique identifier (UUID) for the billing Plan associated with this line item,
+     * A unique identifier (UUID) for the billing Plan associated with this line item.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -471,14 +477,14 @@ private constructor(
     fun pricingId(): Optional<String> = pricingId.getOptional("pricingId")
 
     /**
+     * The code of the Product associated with this line item.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun productCode(): Optional<String> = productCode.getOptional("productCode")
 
     /**
-     * The unique identifier (UUID) for the associated Product.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -501,8 +507,6 @@ private constructor(
     fun quantity(): Optional<Double> = quantity.getOptional("quantity")
 
     /**
-     * The UUID of the reason used for the line item.
-     *
      * A unique identifier (UUID) for the reason or justification for this line item, if applicable.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -511,17 +515,12 @@ private constructor(
     fun reasonId(): Optional<String> = reasonId.getOptional("reasonId")
 
     /**
-     * A unique identifier (UUID) for a Bill that this line item may be related to or derived from.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun referencedBillId(): Optional<String> = referencedBillId.getOptional("referencedBillId")
 
     /**
-     * A unique identifier (UUID) for another line item that this line item may be related to or
-     * derived from.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -538,7 +537,7 @@ private constructor(
     fun segment(): Optional<Segment> = segment.getOptional("segment")
 
     /**
-     * The number used for sequential invoices.
+     * The line item sequence number.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -546,8 +545,6 @@ private constructor(
     fun sequenceNumber(): Optional<Int> = sequenceNumber.getOptional("sequenceNumber")
 
     /**
-     * The _(exclusive)_ end date for the service period in ISO 68601 format.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -555,8 +552,6 @@ private constructor(
         servicePeriodEndDate.getOptional("servicePeriodEndDate")
 
     /**
-     * The _(inclusive)_ start date for the service period in ISO 8601 format.
-     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -564,8 +559,8 @@ private constructor(
         servicePeriodStartDate.getOptional("servicePeriodStartDate")
 
     /**
-     * The subtotal amount when not currency converted _(in the cases where currency conversion is
-     * required)_.
+     * The subtotal amount when not currency converted *(in the cases where currency conversion is
+     * required)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -810,6 +805,7 @@ private constructor(
      * Unlike [jsonUsageGenerated], this method doesn't throw if the JSON field has an unexpected
      * type.
      */
+    @Deprecated("deprecated")
     @JsonProperty("jsonUsageGenerated")
     @ExcludeMissing
     fun _jsonUsageGenerated(): JsonField<Boolean> = jsonUsageGenerated
@@ -1117,6 +1113,7 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
+        /** The code of the Accounting Product associated with this line item. */
         fun accountingProductCode(accountingProductCode: String) =
             accountingProductCode(JsonField.of(accountingProductCode))
 
@@ -1131,6 +1128,7 @@ private constructor(
             this.accountingProductCode = accountingProductCode
         }
 
+        /** The unique identifier (UUID) for the associated Accounting Product. */
         fun accountingProductId(accountingProductId: String) =
             accountingProductId(JsonField.of(accountingProductId))
 
@@ -1145,6 +1143,7 @@ private constructor(
             this.accountingProductId = accountingProductId
         }
 
+        /** The name of the Accounting Product associated with this line item. */
         fun accountingProductName(accountingProductName: String) =
             accountingProductName(JsonField.of(accountingProductName))
 
@@ -1204,6 +1203,7 @@ private constructor(
             this.averageUnitPrice = averageUnitPrice
         }
 
+        /** The unique identifier (UUID) for the Balance associated with this line item. */
         fun balanceId(balanceId: String) = balanceId(JsonField.of(balanceId))
 
         /**
@@ -1255,6 +1255,7 @@ private constructor(
          */
         fun billId(billId: JsonField<String>) = apply { this.billId = billId }
 
+        /** The unique identifier (UUID) for the Charge associated with this line item. */
         fun chargeId(chargeId: String) = chargeId(JsonField.of(chargeId))
 
         /**
@@ -1265,7 +1266,7 @@ private constructor(
          */
         fun chargeId(chargeId: JsonField<String>) = apply { this.chargeId = chargeId }
 
-        /** The unique identifier (UUID) of the Commitment _(if this is used)_. */
+        /** The unique identifier (UUID) of the Commitment associated with this line item. */
         fun commitmentId(commitmentId: String) = commitmentId(JsonField.of(commitmentId))
 
         /**
@@ -1294,7 +1295,7 @@ private constructor(
             this.compoundAggregationId = compoundAggregationId
         }
 
-        /** The unique identifier (UUID) for the contract associated with this line item. */
+        /** The unique identifier (UUID) for the Contract associated with this line item. */
         fun contractId(contractId: String) = contractId(JsonField.of(contractId))
 
         /**
@@ -1306,7 +1307,7 @@ private constructor(
          */
         fun contractId(contractId: JsonField<String>) = apply { this.contractId = contractId }
 
-        /** The currency conversion rate _(if used)_ for the line item. */
+        /** The currency conversion rate *(if used)* for the line item. */
         fun conversionRate(conversionRate: Double) = conversionRate(JsonField.of(conversionRate))
 
         /**
@@ -1335,6 +1336,7 @@ private constructor(
             this.convertedSubtotal = convertedSubtotal
         }
 
+        /** The unique identifier (UUID) for the Counter associated with this line item. */
         fun counterId(counterId: String) = counterId(JsonField.of(counterId))
 
         /**
@@ -1346,7 +1348,7 @@ private constructor(
          */
         fun counterId(counterId: JsonField<String>) = apply { this.counterId = counterId }
 
-        /** The unique identifier (UUID) for the user who created the Bill line item. */
+        /** The ID of the user who created this line item. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
 
         /**
@@ -1386,7 +1388,6 @@ private constructor(
          */
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
-        /** A detailed description providing context for the line item within the Bill. */
         fun description(description: String) = description(JsonField.of(description))
 
         /**
@@ -1398,7 +1399,7 @@ private constructor(
          */
         fun description(description: JsonField<String>) = apply { this.description = description }
 
-        /** The date and time _(in ISO 8601 format)_ when the Bill line item was first created. */
+        /** The DateTime when the line item was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -1410,7 +1411,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The date and time _(in ISO 8601 format)_ when the Bill line item was last modified. */
+        /** The DateTime when the line item was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -1439,11 +1440,8 @@ private constructor(
          * Boolean flag indicating whether the Bill line item has associated statement usage in JSON
          * format. When a Bill statement is generated, usage line items have their usage stored in
          * JSON format.
-         *
-         * See
-         * [Working with Bill Statements](https://www.m3ter.com/docs/guides/running-viewing-and-managing-bills/working-with-bill-statements)
-         * for more information.
          */
+        @Deprecated("deprecated")
         fun jsonUsageGenerated(jsonUsageGenerated: Boolean) =
             jsonUsageGenerated(JsonField.of(jsonUsageGenerated))
 
@@ -1454,11 +1452,12 @@ private constructor(
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
+        @Deprecated("deprecated")
         fun jsonUsageGenerated(jsonUsageGenerated: JsonField<Boolean>) = apply {
             this.jsonUsageGenerated = jsonUsageGenerated
         }
 
-        /** The unique identifier (UUID) for the user who last modified this Bill line item. */
+        /** The ID of the user who last modified this line item. */
         fun lastModifiedBy(lastModifiedBy: String) = lastModifiedBy(JsonField.of(lastModifiedBy))
 
         /**
@@ -1496,11 +1495,7 @@ private constructor(
          */
         fun meterId(meterId: JsonField<String>) = apply { this.meterId = meterId }
 
-        /**
-         * The UUID of the PlanGroup.
-         *
-         * The unique identifier (UUID) for the PlanGroup, if applicable.
-         */
+        /** The unique identifier (UUID) of the Plan Group associated with this line item. */
         fun planGroupId(planGroupId: String) = planGroupId(JsonField.of(planGroupId))
 
         /**
@@ -1512,7 +1507,7 @@ private constructor(
          */
         fun planGroupId(planGroupId: JsonField<String>) = apply { this.planGroupId = planGroupId }
 
-        /** A unique identifier (UUID) for the billing Plan associated with this line item, */
+        /** A unique identifier (UUID) for the billing Plan associated with this line item. */
         fun planId(planId: String) = planId(JsonField.of(planId))
 
         /**
@@ -1535,6 +1530,7 @@ private constructor(
          */
         fun pricingId(pricingId: JsonField<String>) = apply { this.pricingId = pricingId }
 
+        /** The code of the Product associated with this line item. */
         fun productCode(productCode: String) = productCode(JsonField.of(productCode))
 
         /**
@@ -1546,7 +1542,6 @@ private constructor(
          */
         fun productCode(productCode: JsonField<String>) = apply { this.productCode = productCode }
 
-        /** The unique identifier (UUID) for the associated Product. */
         fun productId(productId: String) = productId(JsonField.of(productId))
 
         /**
@@ -1582,8 +1577,6 @@ private constructor(
         fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
         /**
-         * The UUID of the reason used for the line item.
-         *
          * A unique identifier (UUID) for the reason or justification for this line item, if
          * applicable.
          */
@@ -1597,10 +1590,6 @@ private constructor(
          */
         fun reasonId(reasonId: JsonField<String>) = apply { this.reasonId = reasonId }
 
-        /**
-         * A unique identifier (UUID) for a Bill that this line item may be related to or derived
-         * from.
-         */
         fun referencedBillId(referencedBillId: String) =
             referencedBillId(JsonField.of(referencedBillId))
 
@@ -1615,10 +1604,6 @@ private constructor(
             this.referencedBillId = referencedBillId
         }
 
-        /**
-         * A unique identifier (UUID) for another line item that this line item may be related to or
-         * derived from.
-         */
         fun referencedLineItemId(referencedLineItemId: String) =
             referencedLineItemId(JsonField.of(referencedLineItemId))
 
@@ -1647,7 +1632,7 @@ private constructor(
          */
         fun segment(segment: JsonField<Segment>) = apply { this.segment = segment }
 
-        /** The number used for sequential invoices. */
+        /** The line item sequence number. */
         fun sequenceNumber(sequenceNumber: Int) = sequenceNumber(JsonField.of(sequenceNumber))
 
         /**
@@ -1661,7 +1646,6 @@ private constructor(
             this.sequenceNumber = sequenceNumber
         }
 
-        /** The _(exclusive)_ end date for the service period in ISO 68601 format. */
         fun servicePeriodEndDate(servicePeriodEndDate: OffsetDateTime) =
             servicePeriodEndDate(JsonField.of(servicePeriodEndDate))
 
@@ -1676,7 +1660,6 @@ private constructor(
             this.servicePeriodEndDate = servicePeriodEndDate
         }
 
-        /** The _(inclusive)_ start date for the service period in ISO 8601 format. */
         fun servicePeriodStartDate(servicePeriodStartDate: OffsetDateTime) =
             servicePeriodStartDate(JsonField.of(servicePeriodStartDate))
 
@@ -1692,8 +1675,8 @@ private constructor(
         }
 
         /**
-         * The subtotal amount when not currency converted _(in the cases where currency conversion
-         * is required)_.
+         * The subtotal amount when not currency converted *(in the cases where currency conversion
+         * is required)*.
          */
         fun subtotal(subtotal: Double) = subtotal(JsonField.of(subtotal))
 
@@ -2038,12 +2021,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Additional && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Additional && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2055,6 +2036,7 @@ private constructor(
      * or tier.
      */
     class BandUsage
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val bandQuantity: JsonField<Double>,
         private val bandSubtotal: JsonField<Double>,
@@ -2164,7 +2146,7 @@ private constructor(
         fun fixedPrice(): Optional<Double> = fixedPrice.getOptional("fixedPrice")
 
         /**
-         * The lower limit _(start)_ of the pricing band.
+         * The lower limit *(start)* of the pricing band.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -2418,7 +2400,7 @@ private constructor(
              */
             fun fixedPrice(fixedPrice: JsonField<Double>) = apply { this.fixedPrice = fixedPrice }
 
-            /** The lower limit _(start)_ of the pricing band. */
+            /** The lower limit *(start)* of the pricing band. */
             fun lowerLimit(lowerLimit: Double) = lowerLimit(JsonField.of(lowerLimit))
 
             /**
@@ -2562,12 +2544,35 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BandUsage && bandQuantity == other.bandQuantity && bandSubtotal == other.bandSubtotal && bandUnits == other.bandUnits && convertedBandSubtotal == other.convertedBandSubtotal && creditTypeId == other.creditTypeId && fixedPrice == other.fixedPrice && lowerLimit == other.lowerLimit && pricingBandId == other.pricingBandId && unitPrice == other.unitPrice && unitSubtotal == other.unitSubtotal && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is BandUsage &&
+                bandQuantity == other.bandQuantity &&
+                bandSubtotal == other.bandSubtotal &&
+                bandUnits == other.bandUnits &&
+                convertedBandSubtotal == other.convertedBandSubtotal &&
+                creditTypeId == other.creditTypeId &&
+                fixedPrice == other.fixedPrice &&
+                lowerLimit == other.lowerLimit &&
+                pricingBandId == other.pricingBandId &&
+                unitPrice == other.unitPrice &&
+                unitSubtotal == other.unitSubtotal &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(bandQuantity, bandSubtotal, bandUnits, convertedBandSubtotal, creditTypeId, fixedPrice, lowerLimit, pricingBandId, unitPrice, unitSubtotal, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                bandQuantity,
+                bandSubtotal,
+                bandUnits,
+                convertedBandSubtotal,
+                creditTypeId,
+                fixedPrice,
+                lowerLimit,
+                pricingBandId,
+                unitPrice,
+                unitSubtotal,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2664,12 +2669,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Group && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Group && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2727,6 +2730,8 @@ private constructor(
 
             @JvmField val BALANCE_FEE = of("BALANCE_FEE")
 
+            @JvmField val AD_HOC = of("AD_HOC")
+
             @JvmStatic fun of(value: String) = LineItemType(JsonField.of(value))
         }
 
@@ -2750,6 +2755,7 @@ private constructor(
             OVERAGE_USAGE,
             BALANCE_CONSUMED,
             BALANCE_FEE,
+            AD_HOC,
         }
 
         /**
@@ -2780,6 +2786,7 @@ private constructor(
             OVERAGE_USAGE,
             BALANCE_CONSUMED,
             BALANCE_FEE,
+            AD_HOC,
             /**
              * An enum member indicating that [LineItemType] was instantiated with an unknown value.
              */
@@ -2813,6 +2820,7 @@ private constructor(
                 OVERAGE_USAGE -> Value.OVERAGE_USAGE
                 BALANCE_CONSUMED -> Value.BALANCE_CONSUMED
                 BALANCE_FEE -> Value.BALANCE_FEE
+                AD_HOC -> Value.AD_HOC
                 else -> Value._UNKNOWN
             }
 
@@ -2844,6 +2852,7 @@ private constructor(
                 OVERAGE_USAGE -> Known.OVERAGE_USAGE
                 BALANCE_CONSUMED -> Known.BALANCE_CONSUMED
                 BALANCE_FEE -> Known.BALANCE_FEE
+                AD_HOC -> Known.AD_HOC
                 else -> throw M3terInvalidDataException("Unknown LineItemType: $value")
             }
 
@@ -2891,7 +2900,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemType && value == other.value /* spotless:on */
+            return other is LineItemType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2992,12 +3001,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Segment && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Segment && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -3009,12 +3016,107 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is LineItemResponse && id == other.id && accountingProductCode == other.accountingProductCode && accountingProductId == other.accountingProductId && accountingProductName == other.accountingProductName && additional == other.additional && aggregationId == other.aggregationId && averageUnitPrice == other.averageUnitPrice && balanceId == other.balanceId && bandUsage == other.bandUsage && billId == other.billId && chargeId == other.chargeId && commitmentId == other.commitmentId && compoundAggregationId == other.compoundAggregationId && contractId == other.contractId && conversionRate == other.conversionRate && convertedSubtotal == other.convertedSubtotal && counterId == other.counterId && createdBy == other.createdBy && creditTypeId == other.creditTypeId && currency == other.currency && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && group == other.group && jsonUsageGenerated == other.jsonUsageGenerated && lastModifiedBy == other.lastModifiedBy && lineItemType == other.lineItemType && meterId == other.meterId && planGroupId == other.planGroupId && planId == other.planId && pricingId == other.pricingId && productCode == other.productCode && productId == other.productId && productName == other.productName && quantity == other.quantity && reasonId == other.reasonId && referencedBillId == other.referencedBillId && referencedLineItemId == other.referencedLineItemId && segment == other.segment && sequenceNumber == other.sequenceNumber && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && subtotal == other.subtotal && unit == other.unit && units == other.units && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is LineItemResponse &&
+            id == other.id &&
+            accountingProductCode == other.accountingProductCode &&
+            accountingProductId == other.accountingProductId &&
+            accountingProductName == other.accountingProductName &&
+            additional == other.additional &&
+            aggregationId == other.aggregationId &&
+            averageUnitPrice == other.averageUnitPrice &&
+            balanceId == other.balanceId &&
+            bandUsage == other.bandUsage &&
+            billId == other.billId &&
+            chargeId == other.chargeId &&
+            commitmentId == other.commitmentId &&
+            compoundAggregationId == other.compoundAggregationId &&
+            contractId == other.contractId &&
+            conversionRate == other.conversionRate &&
+            convertedSubtotal == other.convertedSubtotal &&
+            counterId == other.counterId &&
+            createdBy == other.createdBy &&
+            creditTypeId == other.creditTypeId &&
+            currency == other.currency &&
+            description == other.description &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            group == other.group &&
+            jsonUsageGenerated == other.jsonUsageGenerated &&
+            lastModifiedBy == other.lastModifiedBy &&
+            lineItemType == other.lineItemType &&
+            meterId == other.meterId &&
+            planGroupId == other.planGroupId &&
+            planId == other.planId &&
+            pricingId == other.pricingId &&
+            productCode == other.productCode &&
+            productId == other.productId &&
+            productName == other.productName &&
+            quantity == other.quantity &&
+            reasonId == other.reasonId &&
+            referencedBillId == other.referencedBillId &&
+            referencedLineItemId == other.referencedLineItemId &&
+            segment == other.segment &&
+            sequenceNumber == other.sequenceNumber &&
+            servicePeriodEndDate == other.servicePeriodEndDate &&
+            servicePeriodStartDate == other.servicePeriodStartDate &&
+            subtotal == other.subtotal &&
+            unit == other.unit &&
+            units == other.units &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountingProductCode, accountingProductId, accountingProductName, additional, aggregationId, averageUnitPrice, balanceId, bandUsage, billId, chargeId, commitmentId, compoundAggregationId, contractId, conversionRate, convertedSubtotal, counterId, createdBy, creditTypeId, currency, description, dtCreated, dtLastModified, group, jsonUsageGenerated, lastModifiedBy, lineItemType, meterId, planGroupId, planId, pricingId, productCode, productId, productName, quantity, reasonId, referencedBillId, referencedLineItemId, segment, sequenceNumber, servicePeriodEndDate, servicePeriodStartDate, subtotal, unit, units, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountingProductCode,
+            accountingProductId,
+            accountingProductName,
+            additional,
+            aggregationId,
+            averageUnitPrice,
+            balanceId,
+            bandUsage,
+            billId,
+            chargeId,
+            commitmentId,
+            compoundAggregationId,
+            contractId,
+            conversionRate,
+            convertedSubtotal,
+            counterId,
+            createdBy,
+            creditTypeId,
+            currency,
+            description,
+            dtCreated,
+            dtLastModified,
+            group,
+            jsonUsageGenerated,
+            lastModifiedBy,
+            lineItemType,
+            meterId,
+            planGroupId,
+            planId,
+            pricingId,
+            productCode,
+            productId,
+            productName,
+            quantity,
+            reasonId,
+            referencedBillId,
+            referencedLineItemId,
+            segment,
+            sequenceNumber,
+            servicePeriodEndDate,
+            servicePeriodStartDate,
+            subtotal,
+            unit,
+            units,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

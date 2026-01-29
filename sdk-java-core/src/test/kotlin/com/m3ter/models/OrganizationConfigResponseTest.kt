@@ -16,6 +16,8 @@ internal class OrganizationConfigResponseTest {
         val organizationConfigResponse =
             OrganizationConfigResponse.builder()
                 .id("id")
+                .allowNegativeBalances(true)
+                .allowOverlappingPlans(true)
                 .autoApproveBillsGracePeriod(0)
                 .autoApproveBillsGracePeriodUnit(
                     OrganizationConfigResponse.AutoApproveBillsGracePeriodUnit.MINUTES
@@ -46,6 +48,7 @@ internal class OrganizationConfigResponseTest {
                 .minimumSpendBillInAdvance(true)
                 .monthEpoch("2022-01-01")
                 .scheduledBillInterval(0.0)
+                .scheduledBillOffset(0)
                 .sequenceStartNumber(0)
                 .standingChargeBillInAdvance(true)
                 .suppressedEmptyBills(true)
@@ -56,6 +59,8 @@ internal class OrganizationConfigResponseTest {
                 .build()
 
         assertThat(organizationConfigResponse.id()).isEqualTo("id")
+        assertThat(organizationConfigResponse.allowNegativeBalances()).contains(true)
+        assertThat(organizationConfigResponse.allowOverlappingPlans()).contains(true)
         assertThat(organizationConfigResponse.autoApproveBillsGracePeriod()).contains(0)
         assertThat(organizationConfigResponse.autoApproveBillsGracePeriodUnit())
             .contains(OrganizationConfigResponse.AutoApproveBillsGracePeriodUnit.MINUTES)
@@ -86,6 +91,7 @@ internal class OrganizationConfigResponseTest {
         assertThat(organizationConfigResponse.minimumSpendBillInAdvance()).contains(true)
         assertThat(organizationConfigResponse.monthEpoch()).contains("2022-01-01")
         assertThat(organizationConfigResponse.scheduledBillInterval()).contains(0.0)
+        assertThat(organizationConfigResponse.scheduledBillOffset()).contains(0)
         assertThat(organizationConfigResponse.sequenceStartNumber()).contains(0)
         assertThat(organizationConfigResponse.standingChargeBillInAdvance()).contains(true)
         assertThat(organizationConfigResponse.suppressedEmptyBills()).contains(true)
@@ -101,6 +107,8 @@ internal class OrganizationConfigResponseTest {
         val organizationConfigResponse =
             OrganizationConfigResponse.builder()
                 .id("id")
+                .allowNegativeBalances(true)
+                .allowOverlappingPlans(true)
                 .autoApproveBillsGracePeriod(0)
                 .autoApproveBillsGracePeriodUnit(
                     OrganizationConfigResponse.AutoApproveBillsGracePeriodUnit.MINUTES
@@ -131,6 +139,7 @@ internal class OrganizationConfigResponseTest {
                 .minimumSpendBillInAdvance(true)
                 .monthEpoch("2022-01-01")
                 .scheduledBillInterval(0.0)
+                .scheduledBillOffset(0)
                 .sequenceStartNumber(0)
                 .standingChargeBillInAdvance(true)
                 .suppressedEmptyBills(true)

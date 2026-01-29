@@ -435,7 +435,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -448,10 +448,32 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportJobListParams && orgId == other.orgId && dateCreatedEnd == other.dateCreatedEnd && dateCreatedStart == other.dateCreatedStart && ids == other.ids && nextToken == other.nextToken && pageSize == other.pageSize && scheduleId == other.scheduleId && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is DataExportJobListParams &&
+            orgId == other.orgId &&
+            dateCreatedEnd == other.dateCreatedEnd &&
+            dateCreatedStart == other.dateCreatedStart &&
+            ids == other.ids &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            scheduleId == other.scheduleId &&
+            status == other.status &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, dateCreatedEnd, dateCreatedStart, ids, nextToken, pageSize, scheduleId, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            dateCreatedEnd,
+            dateCreatedStart,
+            ids,
+            nextToken,
+            pageSize,
+            scheduleId,
+            status,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "DataExportJobListParams{orgId=$orgId, dateCreatedEnd=$dateCreatedEnd, dateCreatedStart=$dateCreatedStart, ids=$ids, nextToken=$nextToken, pageSize=$pageSize, scheduleId=$scheduleId, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

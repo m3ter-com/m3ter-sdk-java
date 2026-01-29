@@ -32,8 +32,8 @@ interface JobServiceAsync {
      * Retrieve an Export Job for the given UUID.
      *
      * The response returns:
-     * - The source type for the data exported by the Export Job: one of USAGE or OPERATIONAL.
-     * - The status of the Export Job.
+     * * The source type for the data exported by the Export Job: one of USAGE or OPERATIONAL.
+     * * The status of the Export Job.
      */
     fun retrieve(id: String): CompletableFuture<DataExportJobResponse> =
         retrieve(id, DataExportJobRetrieveParams.none())
@@ -97,12 +97,12 @@ interface JobServiceAsync {
      * URL.
      *
      * **Constraints:**
-     * - Only valid for Export jobs ran in the past 24 hours.
-     * - The download URL is time-bound and is only valid for 15 minutes.
+     * * Only valid for Export jobs ran in the past 24 hours.
+     * * The download URL is time-bound and is only valid for 15 minutes.
      *
-     * **NOTE!** This ExportDestination endpoint is available in Beta release version. Beta release
-     * features are functional but may be incomplete, and there is no commitment at this stage to
-     * particular functionality or timelines.
+     * **NOTE!** This ExportDestination endpoint is available in Beta release version. See
+     * [Feature Release Stages](https://www.m3ter.com/docs/guides/getting-started/feature-release-stages)
+     * for Beta release definition.
      */
     fun getDownloadUrl(jobId: String): CompletableFuture<DataExportJobGetDownloadUrlResponse> =
         getDownloadUrl(jobId, DataExportJobGetDownloadUrlParams.none())

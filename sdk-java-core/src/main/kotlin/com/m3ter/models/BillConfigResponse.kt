@@ -10,6 +10,7 @@ import com.m3ter.core.ExcludeMissing
 import com.m3ter.core.JsonField
 import com.m3ter.core.JsonMissing
 import com.m3ter.core.JsonValue
+import com.m3ter.core.checkRequired
 import com.m3ter.errors.M3terInvalidDataException
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -18,6 +19,7 @@ import java.util.Objects
 import java.util.Optional
 
 class BillConfigResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val billLockDate: JsonField<LocalDate>,
@@ -58,16 +60,15 @@ private constructor(
     )
 
     /**
-     * The Organization UUID. The Organization represents your company as a direct customer of the
-     * m3ter service.
+     * The UUID of the entity.
      *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun id(): Optional<String> = id.getOptional("id")
+    fun id(): String = id.getRequired("id")
 
     /**
-     * The global lock date _(in ISO 8601 format)_ when all Bills will be locked.
+     * The global lock date *(in ISO 8601 format)* when all Bills will be locked.
      *
      * For example: `"2024-03-01"`.
      *
@@ -85,7 +86,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The DateTime _(in ISO-8601 format)_ when the bill config was first created.
+     * The DateTime *(in ISO-8601 format)* when the bill config was first created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -93,7 +94,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime _(in ISO-8601 format)_ when the bill config was last modified.
+     * The DateTime *(in ISO-8601 format)* when the bill config was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -110,8 +111,9 @@ private constructor(
 
     /**
      * The version number:
-     * - Default value when newly created is one.
-     * - Incremented by 1 each time it is updated.
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -189,14 +191,21 @@ private constructor(
 
     companion object {
 
-        /** Returns a mutable builder for constructing an instance of [BillConfigResponse]. */
+        /**
+         * Returns a mutable builder for constructing an instance of [BillConfigResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         */
         @JvmStatic fun builder() = Builder()
     }
 
     /** A builder for [BillConfigResponse]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String> = JsonMissing.of()
+        private var id: JsonField<String>? = null
         private var billLockDate: JsonField<LocalDate> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -217,10 +226,7 @@ private constructor(
             additionalProperties = billConfigResponse.additionalProperties.toMutableMap()
         }
 
-        /**
-         * The Organization UUID. The Organization represents your company as a direct customer of
-         * the m3ter service.
-         */
+        /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
         /**
@@ -232,7 +238,7 @@ private constructor(
         fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
-         * The global lock date _(in ISO 8601 format)_ when all Bills will be locked.
+         * The global lock date *(in ISO 8601 format)* when all Bills will be locked.
          *
          * For example: `"2024-03-01"`.
          */
@@ -261,7 +267,7 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The DateTime _(in ISO-8601 format)_ when the bill config was first created. */
+        /** The DateTime *(in ISO-8601 format)* when the bill config was first created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -273,7 +279,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime _(in ISO-8601 format)_ when the bill config was last modified. */
+        /** The DateTime *(in ISO-8601 format)* when the bill config was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -304,8 +310,9 @@ private constructor(
 
         /**
          * The version number:
-         * - Default value when newly created is one.
-         * - Incremented by 1 each time it is updated.
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
          */
         fun version(version: Long) = version(JsonField.of(version))
 
@@ -340,10 +347,17 @@ private constructor(
          * Returns an immutable instance of [BillConfigResponse].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): BillConfigResponse =
             BillConfigResponse(
-                id,
+                checkRequired("id", id),
                 billLockDate,
                 createdBy,
                 dtCreated,
@@ -399,12 +413,29 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillConfigResponse && id == other.id && billLockDate == other.billLockDate && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is BillConfigResponse &&
+            id == other.id &&
+            billLockDate == other.billLockDate &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, billLockDate, createdBy, dtCreated, dtLastModified, lastModifiedBy, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            billLockDate,
+            createdBy,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -14,9 +14,9 @@ import kotlin.jvm.optionals.getOrNull
  * the list returned by date, Account ID, or Counter ID.
  *
  * **CONSTRAINTS:**
- * - The `counterId` query parameter is always required when calling this endpoint, used either as a
+ * * The `counterId` query parameter is always required when calling this endpoint, used either as a
  *   single query parameter or in combination with any of the other query parameters.
- * - If you want to use the `date`, `dateStart`, or `dateEnd` query parameters, you must also use
+ * * If you want to use the `date`, `dateStart`, or `dateEnd` query parameters, you must also use
  *   the `accountId` query parameter.
  */
 class CounterAdjustmentListParams
@@ -342,10 +342,38 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterAdjustmentListParams && orgId == other.orgId && accountId == other.accountId && counterId == other.counterId && date == other.date && dateEnd == other.dateEnd && dateStart == other.dateStart && endDateEnd == other.endDateEnd && endDateStart == other.endDateStart && nextToken == other.nextToken && pageSize == other.pageSize && sortOrder == other.sortOrder && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CounterAdjustmentListParams &&
+            orgId == other.orgId &&
+            accountId == other.accountId &&
+            counterId == other.counterId &&
+            date == other.date &&
+            dateEnd == other.dateEnd &&
+            dateStart == other.dateStart &&
+            endDateEnd == other.endDateEnd &&
+            endDateStart == other.endDateStart &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            sortOrder == other.sortOrder &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, accountId, counterId, date, dateEnd, dateStart, endDateEnd, endDateStart, nextToken, pageSize, sortOrder, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            accountId,
+            counterId,
+            date,
+            dateEnd,
+            dateStart,
+            endDateEnd,
+            endDateStart,
+            nextToken,
+            pageSize,
+            sortOrder,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "CounterAdjustmentListParams{orgId=$orgId, accountId=$accountId, counterId=$counterId, date=$date, dateEnd=$dateEnd, dateStart=$dateStart, endDateEnd=$endDateEnd, endDateStart=$endDateStart, nextToken=$nextToken, pageSize=$pageSize, sortOrder=$sortOrder, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

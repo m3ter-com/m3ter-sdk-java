@@ -271,10 +271,26 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanTemplateListParams && orgId == other.orgId && ids == other.ids && nextToken == other.nextToken && pageSize == other.pageSize && productId == other.productId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is PlanTemplateListParams &&
+            orgId == other.orgId &&
+            ids == other.ids &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            productId == other.productId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, ids, nextToken, pageSize, productId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            ids,
+            nextToken,
+            pageSize,
+            productId,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "PlanTemplateListParams{orgId=$orgId, ids=$ids, nextToken=$nextToken, pageSize=$pageSize, productId=$productId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -36,7 +36,7 @@ interface AccountPlanService {
      * Organization. The details of the new AccountPlan or AccountPlanGroup should be supplied in
      * the request body.
      *
-     * **Note:** You cannot use this call to create _both_ an AccountPlan and AccountPlanGroup for
+     * **Note:** You cannot use this call to create *both* an AccountPlan and AccountPlanGroup for
      * an Account at the same time. If you want to create both for an Account, you must submit two
      * separate calls.
      */
@@ -86,10 +86,10 @@ interface AccountPlanService {
      * Organization. The updated information should be provided in the request body.
      *
      * **Notes:**
-     * - You cannot use this call to update _both_ an AccountPlan and AccountPlanGroup for an
+     * * You cannot use this call to update *both* an AccountPlan and AccountPlanGroup for an
      *   Account at the same time. If you want to update an AccounPlan and an AccountPlanGroup
      *   attached to an Account, you must submit two separate calls.
-     * - If you have created Custom Fields for an AccountPlan, when you use this endpoint to update
+     * * If you have created Custom Fields for an AccountPlan, when you use this endpoint to update
      *   the AccountPlan use the `customFields` parameter to preserve those Custom Fields. If you
      *   omit them from the update request, they will be lost.
      */

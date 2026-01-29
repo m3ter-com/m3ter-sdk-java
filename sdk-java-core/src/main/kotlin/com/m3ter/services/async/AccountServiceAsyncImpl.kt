@@ -20,7 +20,9 @@ import com.m3ter.models.AccountCreateParams
 import com.m3ter.models.AccountDeleteParams
 import com.m3ter.models.AccountEndDateBillingEntitiesParams
 import com.m3ter.models.AccountEndDateBillingEntitiesResponse
-import com.m3ter.models.AccountGetChildrenParams
+import com.m3ter.models.AccountListChildrenPageAsync
+import com.m3ter.models.AccountListChildrenPageResponse
+import com.m3ter.models.AccountListChildrenParams
 import com.m3ter.models.AccountListPageAsync
 import com.m3ter.models.AccountListPageResponse
 import com.m3ter.models.AccountListParams
@@ -87,12 +89,12 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
         // put /organizations/{orgId}/accounts/{id}/enddatebillingentities
         withRawResponse().endDateBillingEntities(params, requestOptions).thenApply { it.parse() }
 
-    override fun getChildren(
-        params: AccountGetChildrenParams,
+    override fun listChildren(
+        params: AccountListChildrenParams,
         requestOptions: RequestOptions,
-    ): CompletableFuture<AccountResponse> =
+    ): CompletableFuture<AccountListChildrenPageAsync> =
         // get /organizations/{orgId}/accounts/{id}/children
-        withRawResponse().getChildren(params, requestOptions).thenApply { it.parse() }
+        withRawResponse().listChildren(params, requestOptions).thenApply { it.parse() }
 
     override fun search(
         params: AccountSearchParams,
@@ -347,13 +349,13 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 }
         }
 
-        private val getChildrenHandler: Handler<AccountResponse> =
-            jsonHandler<AccountResponse>(clientOptions.jsonMapper)
+        private val listChildrenHandler: Handler<AccountListChildrenPageResponse> =
+            jsonHandler<AccountListChildrenPageResponse>(clientOptions.jsonMapper)
 
-        override fun getChildren(
-            params: AccountGetChildrenParams,
+        override fun listChildren(
+            params: AccountListChildrenParams,
             requestOptions: RequestOptions,
-        ): CompletableFuture<HttpResponseFor<AccountResponse>> {
+        ): CompletableFuture<HttpResponseFor<AccountListChildrenPageAsync>> {
             // We check here instead of in the params builder because this can be specified
             // positionally or in the params class.
             checkRequired("id", params.id().getOrNull())
@@ -376,11 +378,19 @@ class AccountServiceAsyncImpl internal constructor(private val clientOptions: Cl
                 .thenApply { response ->
                     errorHandler.handle(response).parseable {
                         response
-                            .use { getChildrenHandler.handle(it) }
+                            .use { listChildrenHandler.handle(it) }
                             .also {
                                 if (requestOptions.responseValidation!!) {
                                     it.validate()
                                 }
+                            }
+                            .let {
+                                AccountListChildrenPageAsync.builder()
+                                    .service(AccountServiceAsyncImpl(clientOptions))
+                                    .streamHandlerExecutor(clientOptions.streamHandlerExecutor)
+                                    .params(params)
+                                    .response(it)
+                                    .build()
                             }
                     }
                 }

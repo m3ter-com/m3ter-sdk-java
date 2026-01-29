@@ -19,6 +19,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /** Response containing the list of Fields for an Event Type. */
 class EventGetFieldsResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val events: JsonField<Events>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -248,12 +249,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Events && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Events && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -265,12 +264,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventGetFieldsResponse && events == other.events && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is EventGetFieldsResponse &&
+            events == other.events &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(events, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

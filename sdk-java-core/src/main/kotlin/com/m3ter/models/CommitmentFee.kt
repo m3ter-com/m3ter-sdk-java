@@ -18,6 +18,7 @@ import java.util.Collections
 import java.util.Objects
 
 class CommitmentFee
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val amount: JsonField<Double>,
     private val date: JsonField<LocalDate>,
@@ -275,12 +276,23 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CommitmentFee && amount == other.amount && date == other.date && servicePeriodEndDate == other.servicePeriodEndDate && servicePeriodStartDate == other.servicePeriodStartDate && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is CommitmentFee &&
+            amount == other.amount &&
+            date == other.date &&
+            servicePeriodEndDate == other.servicePeriodEndDate &&
+            servicePeriodStartDate == other.servicePeriodStartDate &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(amount, date, servicePeriodEndDate, servicePeriodStartDate, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            amount,
+            date,
+            servicePeriodEndDate,
+            servicePeriodStartDate,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

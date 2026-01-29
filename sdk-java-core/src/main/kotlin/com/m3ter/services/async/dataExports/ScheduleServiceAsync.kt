@@ -33,39 +33,39 @@ interface ScheduleServiceAsync {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): ScheduleServiceAsync
 
     /**
-     * Create a new Data Export Schedule. Each Schedule can be configured for exporting _only one_
+     * Create a new Data Export Schedule. Each Schedule can be configured for exporting *only one*
      * of either Usage or Operational data:
      *
      * **Operational Data Exports**.
-     * - Use the `operationalDataTypes` parameter to specify the entities whose operational data you
+     * * Use the `operationalDataTypes` parameter to specify the entities whose operational data you
      *   want to include in the export each time the Export Schedule runs.
-     * - For each of the entity types you select, each time the Export Schedule runs a separate file
+     * * For each of the entity types you select, each time the Export Schedule runs a separate file
      *   is compiled containing the operational data for all entities of that type that exist in
      *   your Organization
      *
      * **Usage Data Exports**.
-     * - Select the Meters and Accounts whose usage data you want to include in the export each time
+     * * Select the Meters and Accounts whose usage data you want to include in the export each time
      *   the Export Schedule runs.
-     * - You can use the `dimensionFilters` parameter to filter the usage data returned for export
+     * * You can use the `dimensionFilters` parameter to filter the usage data returned for export
      *   by adding specific values of non-numeric Dimension data fields on included Meters. Only the
      *   data collected for the values you've added for the selected Dimension fields will be
      *   included in the export.
-     * - You can use the `aggregations` to apply aggregation methods the usage data returned for
+     * * You can use the `aggregations` to apply aggregation methods the usage data returned for
      *   export. This restricts the range of usage data returned for export to only the data
      *   collected by aggregated fields on selected Meters. Nothing is returned for any
      *   non-aggregated fields on Meters. The usage data for Meter fields is returned as the values
      *   resulting from applying the selected aggregation method. See the
      *   [Aggregations for Queries - Options and Consequences](https://www.m3ter.com/docs/guides/data-explorer/usage-data-explorer-v2#aggregations-for-queries---understanding-options-and-consequences)
      *   for more details.
-     * - If you've applied `aggregations` to the usage returned for export, you can then use the
-     *   `groups` parameter to group the data by _Account_, _Dimension_, or _Time_.
+     * * If you've applied `aggregations` to the usage returned for export, you can then use the
+     *   `groups` parameter to group the data by *Account*, *Dimension*, or *Time*.
      *
      * Request and Response schema:
-     * - Use the selector under the `sourceType` parameter to expose the relevant request and
+     * * Use the selector under the `sourceType` parameter to expose the relevant request and
      *   response schema for the source data type.
      *
      * Request and Response samples:
-     * - Use the **Example** selector to show the relevant request and response samples for source
+     * * Use the **Example** selector to show the relevant request and response samples for source
      *   data type.
      */
     fun create(
@@ -80,7 +80,7 @@ interface ScheduleServiceAsync {
 
     /**
      * Retrieve a Data Export Schedule for the given UUID. Each Schedule can be configured for
-     * exporting _only one_ of either Usage or Operational data.
+     * exporting *only one* of either Usage or Operational data.
      */
     fun retrieve(id: String): CompletableFuture<DataExportScheduleRetrieveResponse> =
         retrieve(id, DataExportScheduleRetrieveParams.none())
@@ -121,31 +121,31 @@ interface ScheduleServiceAsync {
 
     /**
      * Update a Data Export Schedule for the given UUID. Each Schedule can be configured for
-     * exporting _only one_ of either Usage or Operational data:
+     * exporting *only one* of either Usage or Operational data:
      *
      * **Operational Data Exports**.
-     * - Use the `operationalDataTypes` parameter to specify the entities whose operational data you
+     * * Use the `operationalDataTypes` parameter to specify the entities whose operational data you
      *   want to include in the export each time the Export Schedule runs.
-     * - For each of the entity types you select, each time the Export Schedule runs a separate file
+     * * For each of the entity types you select, each time the Export Schedule runs a separate file
      *   is compiled containing the operational data for all entities of that type that exist in
      *   your Organization
      *
      * **Usage Data Exports**.
-     * - Select the Meters and Accounts whose usage data you want to include in the export each time
+     * * Select the Meters and Accounts whose usage data you want to include in the export each time
      *   the Export Schedule runs.
-     * - You can use the `dimensionFilters` parameter to filter the usage data returned for export
+     * * You can use the `dimensionFilters` parameter to filter the usage data returned for export
      *   by adding specific values of non-numeric Dimension data fields on included Meters. Only the
      *   data collected for the values you've added for the selected Dimension fields will be
      *   included in the export.
-     * - You can use the `aggregations` to apply aggregation methods the usage data returned for
+     * * You can use the `aggregations` to apply aggregation methods the usage data returned for
      *   export. This restricts the range of usage data returned for export to only the data
      *   collected by aggregated fields on selected Meters. Nothing is returned for any
      *   non-aggregated fields on Meters. The usage data for Meter fields is returned as the values
      *   resulting from applying the selected aggregation method. See the
      *   [Aggregations for Queries - Options and Consequences](https://www.m3ter.com/docs/guides/data-explorer/usage-data-explorer-v2#aggregations-for-queries---understanding-options-and-consequences)
      *   for more details.
-     * - If you've applied `aggregations` to the usage returned for export, you can then use the
-     *   `groups` parameter to group the data by _Account_, _Dimension_, or _Time_.
+     * * If you've applied `aggregations` to the usage returned for export, you can then use the
+     *   `groups` parameter to group the data by *Account*, *Dimension*, or *Time*.
      */
     fun update(
         id: String,
@@ -199,7 +199,7 @@ interface ScheduleServiceAsync {
 
     /**
      * Delete the Data Export Schedule for the given UUID. Each Schedule can be configured for
-     * exporting _only one_ of either Usage or Operational data.
+     * exporting *only one* of either Usage or Operational data.
      */
     fun delete(id: String): CompletableFuture<DataExportScheduleDeleteResponse> =
         delete(id, DataExportScheduleDeleteParams.none())

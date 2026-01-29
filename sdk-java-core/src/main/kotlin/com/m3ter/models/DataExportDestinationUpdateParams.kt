@@ -27,15 +27,15 @@ import kotlin.jvm.optionals.getOrNull
  * Update an Export Destination for the given UUID.
  *
  * Currently, two options for setting up Data Export Destinations are available:
- * - S3 buckets on your AWS account.
- * - Buckets in your Google Cloud Storage account.
+ * * S3 buckets on your AWS account.
+ * * Buckets in your Google Cloud Storage account.
  *
  * Request and Response schema:
- * - Use the selector under the `destinationType` parameter to expose the relevant request and
+ * * Use the selector under the `destinationType` parameter to expose the relevant request and
  *   response schema for the type of Destination.
  *
  * Request and Response samples:
- * - Use the **Example** selector to show the relevant request and response samples for the type of
+ * * Use the **Example** selector to show the relevant request and response samples for the type of
  *   Destination.
  */
 class DataExportDestinationUpdateParams
@@ -371,10 +371,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && dataExportDestinationS3Request == other.dataExportDestinationS3Request && dataExportDestinationGoogleCloudStorageRequest == other.dataExportDestinationGoogleCloudStorageRequest /* spotless:on */
+            return other is Body &&
+                dataExportDestinationS3Request == other.dataExportDestinationS3Request &&
+                dataExportDestinationGoogleCloudStorageRequest ==
+                    other.dataExportDestinationGoogleCloudStorageRequest
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(dataExportDestinationS3Request, dataExportDestinationGoogleCloudStorageRequest) /* spotless:on */
+        override fun hashCode(): Int =
+            Objects.hash(
+                dataExportDestinationS3Request,
+                dataExportDestinationGoogleCloudStorageRequest,
+            )
 
         override fun toString(): String =
             when {
@@ -494,10 +501,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportDestinationUpdateParams && orgId == other.orgId && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is DataExportDestinationUpdateParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "DataExportDestinationUpdateParams{orgId=$orgId, id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -214,10 +214,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is OrganizationConfigUpdateParams && orgId == other.orgId && organizationConfigRequest == other.organizationConfigRequest && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is OrganizationConfigUpdateParams &&
+            orgId == other.orgId &&
+            organizationConfigRequest == other.organizationConfigRequest &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, organizationConfigRequest, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, organizationConfigRequest, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "OrganizationConfigUpdateParams{orgId=$orgId, organizationConfigRequest=$organizationConfigRequest, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

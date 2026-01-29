@@ -19,6 +19,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class DataExportDestinationS3Request
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val bucketName: JsonField<String>,
     private val iamRoleArn: JsonField<String>,
@@ -69,10 +70,10 @@ private constructor(
      * your AWS account and enter ARN:
      *
      * **Formatting Constraints:**
-     * - The IAM role ARN must begin with "arn:aws:iam".
-     * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>". For
+     * * The IAM role ARN must begin with "arn:aws:iam".
+     * * The general format required is: "arn:aws:iam::<aws account id>:role/<role name>". For
      *   example: "arn:aws:iam::922609978421:role/IAMRole636".
-     * - If the `iamRoleArn` used doesn't comply with this format, then an error message will be
+     * * If the `iamRoleArn` used doesn't comply with this format, then an error message will be
      *   returned.
      *
      * **More Details:** For more details and examples of the Permission and Trust Policies you can
@@ -99,14 +100,14 @@ private constructor(
      * first (Default) or Type first.
      *
      * Type is dependent on whether the Export is for Usage data or Operational data:
-     * - **Usage.** Type is `measurements`.
-     * - **Operational.** Type is one of the entities for which operational data exports are
+     * * **Usage.** Type is `measurements`.
+     * * **Operational.** Type is one of the entities for which operational data exports are
      *   available, such as `account`, `commitment`, `meter`, and so on.
      *
      * Example for Usage Data Export using .CSV format:
-     * - Time first:
+     * * Time first:
      *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-     * - Type first:
+     * * Type first:
      *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -125,7 +126,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -250,10 +251,10 @@ private constructor(
          * role in your AWS account and enter ARN:
          *
          * **Formatting Constraints:**
-         * - The IAM role ARN must begin with "arn:aws:iam".
-         * - The general format required is: "arn:aws:iam::<aws account id>:role/<role name>". For
+         * * The IAM role ARN must begin with "arn:aws:iam".
+         * * The general format required is: "arn:aws:iam::<aws account id>:role/<role name>". For
          *   example: "arn:aws:iam::922609978421:role/IAMRole636".
-         * - If the `iamRoleArn` used doesn't comply with this format, then an error message will be
+         * * If the `iamRoleArn` used doesn't comply with this format, then an error message will be
          *   returned.
          *
          * **More Details:** For more details and examples of the Permission and Trust Policies you
@@ -292,14 +293,14 @@ private constructor(
          * first (Default) or Type first.
          *
          * Type is dependent on whether the Export is for Usage data or Operational data:
-         * - **Usage.** Type is `measurements`.
-         * - **Operational.** Type is one of the entities for which operational data exports are
+         * * **Usage.** Type is `measurements`.
+         * * **Operational.** Type is one of the entities for which operational data exports are
          *   available, such as `account`, `commitment`, `meter`, and so on.
          *
          * Example for Usage Data Export using .CSV format:
-         * - Time first:
+         * * Time first:
          *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-         * - Type first:
+         * * Type first:
          *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
          */
         fun partitionOrder(partitionOrder: PartitionOrder?) =
@@ -336,8 +337,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -549,7 +550,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DestinationType && value == other.value /* spotless:on */
+            return other is DestinationType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -562,14 +563,14 @@ private constructor(
      * first (Default) or Type first.
      *
      * Type is dependent on whether the Export is for Usage data or Operational data:
-     * - **Usage.** Type is `measurements`.
-     * - **Operational.** Type is one of the entities for which operational data exports are
+     * * **Usage.** Type is `measurements`.
+     * * **Operational.** Type is one of the entities for which operational data exports are
      *   available, such as `account`, `commitment`, `meter`, and so on.
      *
      * Example for Usage Data Export using .CSV format:
-     * - Time first:
+     * * Time first:
      *   `{bucketName}/{prefix}/orgId={orgId}/date=2025-01-27/hour=10/type=measurements/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
-     * - Type first:
+     * * Type first:
      *   `{bucketName}/{prefix}/orgId={orgId}/type=measurements/date=2025-01-27/hour=10/b9a317a6-860a-40f9-9bf4-e65c44c72c94_measurements.csv.gz`
      */
     class PartitionOrder @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -692,7 +693,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PartitionOrder && value == other.value /* spotless:on */
+            return other is PartitionOrder && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -705,12 +706,27 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportDestinationS3Request && bucketName == other.bucketName && iamRoleArn == other.iamRoleArn && destinationType == other.destinationType && partitionOrder == other.partitionOrder && prefix == other.prefix && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DataExportDestinationS3Request &&
+            bucketName == other.bucketName &&
+            iamRoleArn == other.iamRoleArn &&
+            destinationType == other.destinationType &&
+            partitionOrder == other.partitionOrder &&
+            prefix == other.prefix &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(bucketName, iamRoleArn, destinationType, partitionOrder, prefix, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            bucketName,
+            iamRoleArn,
+            destinationType,
+            partitionOrder,
+            prefix,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

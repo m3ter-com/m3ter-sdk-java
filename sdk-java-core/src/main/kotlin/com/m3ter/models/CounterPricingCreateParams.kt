@@ -55,8 +55,8 @@ private constructor(
     fun pricingBands(): List<PricingBand> = body.pricingBands()
 
     /**
-     * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the Plan
-     * of Plan Template._(Required)_
+     * The start date *(in ISO-8601 format)* for when the Pricing starts to be active for the Plan
+     * of Plan Template.*(Required)*
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -83,9 +83,9 @@ private constructor(
      * Controls whether or not charge rates under a set of pricing bands configured for a Pricing
      * are applied according to each separate band or at the highest band reached.
      *
-     * _(Optional)_. The default value is **FALSE**.
-     * - When TRUE, at billing charge rates are applied according to each separate band.
-     * - When FALSE, at billing charge rates are applied according to highest band reached.
+     * *(Optional)*. The default value is **FALSE**.
+     * * When TRUE, at billing charge rates are applied according to each separate band.
+     * * When FALSE, at billing charge rates are applied according to highest band reached.
      *
      * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
      * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
@@ -104,10 +104,10 @@ private constructor(
     fun description(): Optional<String> = body.description()
 
     /**
-     * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan or
+     * The end date *(in ISO-8601 format)* for when the Pricing ceases to be active for the Plan or
      * Plan Template.
      *
-     * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+     * *(Optional)* If not specified, the Pricing remains active indefinitely.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -132,12 +132,12 @@ private constructor(
 
     /**
      * The default value is **TRUE**.
-     * - When TRUE, counter adjustment credits are prorated and are billed according to the number
-     *   of days in billing period.
-     * - When FALSE, counter adjustment credits are not prorated and are billed for the entire
+     * * When **TRUE**, counter adjustment credits are prorated and are billed according to the
+     *   number of days in billing period.
+     * * When **FALSE**, counter adjustment credits are not prorated and are billed for the entire
      *   billing period.
      *
-     * _(Optional)_.
+     * *(Optional)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -146,12 +146,12 @@ private constructor(
 
     /**
      * The default value is **TRUE**.
-     * - When TRUE, counter adjustment debits are prorated and are billed according to the number of
-     *   days in billing period.
-     * - When FALSE, counter adjustment debits are not prorated and are billed for the entire
+     * * When **TRUE**, counter adjustment debits are prorated and are billed according to the
+     *   number of days in billing period.
+     * * When **FALSE**, counter adjustment debits are not prorated and are billed for the entire
      *   billing period.
      *
-     * _(Optional)_.
+     * *(Optional)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -160,12 +160,12 @@ private constructor(
 
     /**
      * The default value is **TRUE**.
-     * - When TRUE, counter running total charges are prorated and are billed according to the
+     * * When **TRUE**, counter running total charges are prorated and are billed according to the
      *   number of days in billing period.
-     * - When FALSE, counter running total charges are not prorated and are billed for the entire
-     *   billing period.
+     * * When **FALSE**, counter running total charges are not prorated and are billed for the
+     *   entire billing period.
      *
-     * _(Optional)_.
+     * *(Optional)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -174,10 +174,10 @@ private constructor(
 
     /**
      * The default value is **TRUE**.
-     * - When TRUE, running totals are billed at the start of each billing period.
-     * - When FALSE, running totals are billed at the end of each billing period.
+     * * When **TRUE**, running totals are billed at the start of each billing period.
+     * * When **FALSE**, running totals are billed at the end of each billing period.
      *
-     * _(Optional)_.
+     * *(Optional)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -186,7 +186,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -404,8 +404,8 @@ private constructor(
         fun addPricingBand(pricingBand: PricingBand) = apply { body.addPricingBand(pricingBand) }
 
         /**
-         * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the
-         * Plan of Plan Template._(Required)_
+         * The start date *(in ISO-8601 format)* for when the Pricing starts to be active for the
+         * Plan of Plan Template.*(Required)*
          */
         fun startDate(startDate: OffsetDateTime) = apply { body.startDate(startDate) }
 
@@ -449,9 +449,9 @@ private constructor(
          * Controls whether or not charge rates under a set of pricing bands configured for a
          * Pricing are applied according to each separate band or at the highest band reached.
          *
-         * _(Optional)_. The default value is **FALSE**.
-         * - When TRUE, at billing charge rates are applied according to each separate band.
-         * - When FALSE, at billing charge rates are applied according to highest band reached.
+         * *(Optional)*. The default value is **FALSE**.
+         * * When TRUE, at billing charge rates are applied according to each separate band.
+         * * When FALSE, at billing charge rates are applied according to highest band reached.
          *
          * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
          * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
@@ -480,10 +480,10 @@ private constructor(
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan
+         * The end date *(in ISO-8601 format)* for when the Pricing ceases to be active for the Plan
          * or Plan Template.
          *
-         * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+         * *(Optional)* If not specified, the Pricing remains active indefinitely.
          */
         fun endDate(endDate: OffsetDateTime) = apply { body.endDate(endDate) }
 
@@ -523,12 +523,12 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * - When TRUE, counter adjustment credits are prorated and are billed according to the
+         * * When **TRUE**, counter adjustment credits are prorated and are billed according to the
          *   number of days in billing period.
-         * - When FALSE, counter adjustment credits are not prorated and are billed for the entire
-         *   billing period.
+         * * When **FALSE**, counter adjustment credits are not prorated and are billed for the
+         *   entire billing period.
          *
-         * _(Optional)_.
+         * *(Optional)*.
          */
         fun proRateAdjustmentCredit(proRateAdjustmentCredit: Boolean) = apply {
             body.proRateAdjustmentCredit(proRateAdjustmentCredit)
@@ -547,12 +547,12 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * - When TRUE, counter adjustment debits are prorated and are billed according to the
+         * * When **TRUE**, counter adjustment debits are prorated and are billed according to the
          *   number of days in billing period.
-         * - When FALSE, counter adjustment debits are not prorated and are billed for the entire
-         *   billing period.
+         * * When **FALSE**, counter adjustment debits are not prorated and are billed for the
+         *   entire billing period.
          *
-         * _(Optional)_.
+         * *(Optional)*.
          */
         fun proRateAdjustmentDebit(proRateAdjustmentDebit: Boolean) = apply {
             body.proRateAdjustmentDebit(proRateAdjustmentDebit)
@@ -571,12 +571,12 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * - When TRUE, counter running total charges are prorated and are billed according to the
-         *   number of days in billing period.
-         * - When FALSE, counter running total charges are not prorated and are billed for the
+         * * When **TRUE**, counter running total charges are prorated and are billed according to
+         *   the number of days in billing period.
+         * * When **FALSE**, counter running total charges are not prorated and are billed for the
          *   entire billing period.
          *
-         * _(Optional)_.
+         * *(Optional)*.
          */
         fun proRateRunningTotal(proRateRunningTotal: Boolean) = apply {
             body.proRateRunningTotal(proRateRunningTotal)
@@ -595,10 +595,10 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * - When TRUE, running totals are billed at the start of each billing period.
-         * - When FALSE, running totals are billed at the end of each billing period.
+         * * When **TRUE**, running totals are billed at the start of each billing period.
+         * * When **FALSE**, running totals are billed at the end of each billing period.
          *
-         * _(Optional)_.
+         * *(Optional)*.
          */
         fun runningTotalBillInAdvance(runningTotalBillInAdvance: Boolean) = apply {
             body.runningTotalBillInAdvance(runningTotalBillInAdvance)
@@ -617,8 +617,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -786,6 +786,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val counterId: JsonField<String>,
         private val pricingBands: JsonField<List<PricingBand>>,
@@ -880,8 +881,8 @@ private constructor(
         fun pricingBands(): List<PricingBand> = pricingBands.getRequired("pricingBands")
 
         /**
-         * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the
-         * Plan of Plan Template._(Required)_
+         * The start date *(in ISO-8601 format)* for when the Pricing starts to be active for the
+         * Plan of Plan Template.*(Required)*
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -909,9 +910,9 @@ private constructor(
          * Controls whether or not charge rates under a set of pricing bands configured for a
          * Pricing are applied according to each separate band or at the highest band reached.
          *
-         * _(Optional)_. The default value is **FALSE**.
-         * - When TRUE, at billing charge rates are applied according to each separate band.
-         * - When FALSE, at billing charge rates are applied according to highest band reached.
+         * *(Optional)*. The default value is **FALSE**.
+         * * When TRUE, at billing charge rates are applied according to each separate band.
+         * * When FALSE, at billing charge rates are applied according to highest band reached.
          *
          * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
          * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
@@ -930,10 +931,10 @@ private constructor(
         fun description(): Optional<String> = description.getOptional("description")
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan
+         * The end date *(in ISO-8601 format)* for when the Pricing ceases to be active for the Plan
          * or Plan Template.
          *
-         * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+         * *(Optional)* If not specified, the Pricing remains active indefinitely.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -958,12 +959,12 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * - When TRUE, counter adjustment credits are prorated and are billed according to the
+         * * When **TRUE**, counter adjustment credits are prorated and are billed according to the
          *   number of days in billing period.
-         * - When FALSE, counter adjustment credits are not prorated and are billed for the entire
-         *   billing period.
+         * * When **FALSE**, counter adjustment credits are not prorated and are billed for the
+         *   entire billing period.
          *
-         * _(Optional)_.
+         * *(Optional)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -973,12 +974,12 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * - When TRUE, counter adjustment debits are prorated and are billed according to the
+         * * When **TRUE**, counter adjustment debits are prorated and are billed according to the
          *   number of days in billing period.
-         * - When FALSE, counter adjustment debits are not prorated and are billed for the entire
-         *   billing period.
+         * * When **FALSE**, counter adjustment debits are not prorated and are billed for the
+         *   entire billing period.
          *
-         * _(Optional)_.
+         * *(Optional)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -988,12 +989,12 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * - When TRUE, counter running total charges are prorated and are billed according to the
-         *   number of days in billing period.
-         * - When FALSE, counter running total charges are not prorated and are billed for the
+         * * When **TRUE**, counter running total charges are prorated and are billed according to
+         *   the number of days in billing period.
+         * * When **FALSE**, counter running total charges are not prorated and are billed for the
          *   entire billing period.
          *
-         * _(Optional)_.
+         * *(Optional)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1003,10 +1004,10 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * - When TRUE, running totals are billed at the start of each billing period.
-         * - When FALSE, running totals are billed at the end of each billing period.
+         * * When **TRUE**, running totals are billed at the start of each billing period.
+         * * When **FALSE**, running totals are billed at the end of each billing period.
          *
-         * _(Optional)_.
+         * *(Optional)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1016,8 +1017,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1265,8 +1266,8 @@ private constructor(
             }
 
             /**
-             * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for
-             * the Plan of Plan Template._(Required)_
+             * The start date *(in ISO-8601 format)* for when the Pricing starts to be active for
+             * the Plan of Plan Template.*(Required)*
              */
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
@@ -1312,9 +1313,9 @@ private constructor(
              * Controls whether or not charge rates under a set of pricing bands configured for a
              * Pricing are applied according to each separate band or at the highest band reached.
              *
-             * _(Optional)_. The default value is **FALSE**.
-             * - When TRUE, at billing charge rates are applied according to each separate band.
-             * - When FALSE, at billing charge rates are applied according to highest band reached.
+             * *(Optional)*. The default value is **FALSE**.
+             * * When TRUE, at billing charge rates are applied according to each separate band.
+             * * When FALSE, at billing charge rates are applied according to highest band reached.
              *
              * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require.
              * For example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to
@@ -1346,10 +1347,10 @@ private constructor(
             }
 
             /**
-             * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the
+             * The end date *(in ISO-8601 format)* for when the Pricing ceases to be active for the
              * Plan or Plan Template.
              *
-             * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+             * *(Optional)* If not specified, the Pricing remains active indefinitely.
              */
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
@@ -1391,12 +1392,12 @@ private constructor(
 
             /**
              * The default value is **TRUE**.
-             * - When TRUE, counter adjustment credits are prorated and are billed according to the
-             *   number of days in billing period.
-             * - When FALSE, counter adjustment credits are not prorated and are billed for the
+             * * When **TRUE**, counter adjustment credits are prorated and are billed according to
+             *   the number of days in billing period.
+             * * When **FALSE**, counter adjustment credits are not prorated and are billed for the
              *   entire billing period.
              *
-             * _(Optional)_.
+             * *(Optional)*.
              */
             fun proRateAdjustmentCredit(proRateAdjustmentCredit: Boolean) =
                 proRateAdjustmentCredit(JsonField.of(proRateAdjustmentCredit))
@@ -1414,12 +1415,12 @@ private constructor(
 
             /**
              * The default value is **TRUE**.
-             * - When TRUE, counter adjustment debits are prorated and are billed according to the
-             *   number of days in billing period.
-             * - When FALSE, counter adjustment debits are not prorated and are billed for the
+             * * When **TRUE**, counter adjustment debits are prorated and are billed according to
+             *   the number of days in billing period.
+             * * When **FALSE**, counter adjustment debits are not prorated and are billed for the
              *   entire billing period.
              *
-             * _(Optional)_.
+             * *(Optional)*.
              */
             fun proRateAdjustmentDebit(proRateAdjustmentDebit: Boolean) =
                 proRateAdjustmentDebit(JsonField.of(proRateAdjustmentDebit))
@@ -1437,12 +1438,12 @@ private constructor(
 
             /**
              * The default value is **TRUE**.
-             * - When TRUE, counter running total charges are prorated and are billed according to
-             *   the number of days in billing period.
-             * - When FALSE, counter running total charges are not prorated and are billed for the
-             *   entire billing period.
+             * * When **TRUE**, counter running total charges are prorated and are billed according
+             *   to the number of days in billing period.
+             * * When **FALSE**, counter running total charges are not prorated and are billed for
+             *   the entire billing period.
              *
-             * _(Optional)_.
+             * *(Optional)*.
              */
             fun proRateRunningTotal(proRateRunningTotal: Boolean) =
                 proRateRunningTotal(JsonField.of(proRateRunningTotal))
@@ -1460,10 +1461,10 @@ private constructor(
 
             /**
              * The default value is **TRUE**.
-             * - When TRUE, running totals are billed at the start of each billing period.
-             * - When FALSE, running totals are billed at the end of each billing period.
+             * * When **TRUE**, running totals are billed at the start of each billing period.
+             * * When **FALSE**, running totals are billed at the end of each billing period.
              *
-             * _(Optional)_.
+             * *(Optional)*.
              */
             fun runningTotalBillInAdvance(runningTotalBillInAdvance: Boolean) =
                 runningTotalBillInAdvance(JsonField.of(runningTotalBillInAdvance))
@@ -1481,8 +1482,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -1614,12 +1615,45 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && counterId == other.counterId && pricingBands == other.pricingBands && startDate == other.startDate && accountingProductId == other.accountingProductId && code == other.code && cumulative == other.cumulative && description == other.description && endDate == other.endDate && planId == other.planId && planTemplateId == other.planTemplateId && proRateAdjustmentCredit == other.proRateAdjustmentCredit && proRateAdjustmentDebit == other.proRateAdjustmentDebit && proRateRunningTotal == other.proRateRunningTotal && runningTotalBillInAdvance == other.runningTotalBillInAdvance && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                counterId == other.counterId &&
+                pricingBands == other.pricingBands &&
+                startDate == other.startDate &&
+                accountingProductId == other.accountingProductId &&
+                code == other.code &&
+                cumulative == other.cumulative &&
+                description == other.description &&
+                endDate == other.endDate &&
+                planId == other.planId &&
+                planTemplateId == other.planTemplateId &&
+                proRateAdjustmentCredit == other.proRateAdjustmentCredit &&
+                proRateAdjustmentDebit == other.proRateAdjustmentDebit &&
+                proRateRunningTotal == other.proRateRunningTotal &&
+                runningTotalBillInAdvance == other.runningTotalBillInAdvance &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(counterId, pricingBands, startDate, accountingProductId, code, cumulative, description, endDate, planId, planTemplateId, proRateAdjustmentCredit, proRateAdjustmentDebit, proRateRunningTotal, runningTotalBillInAdvance, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                counterId,
+                pricingBands,
+                startDate,
+                accountingProductId,
+                code,
+                cumulative,
+                description,
+                endDate,
+                planId,
+                planTemplateId,
+                proRateAdjustmentCredit,
+                proRateAdjustmentDebit,
+                proRateRunningTotal,
+                runningTotalBillInAdvance,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1632,10 +1666,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterPricingCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CounterPricingCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CounterPricingCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

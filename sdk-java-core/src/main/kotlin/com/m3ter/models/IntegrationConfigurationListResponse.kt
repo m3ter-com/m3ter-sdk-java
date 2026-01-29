@@ -21,11 +21,11 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class IntegrationConfigurationListResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val destination: JsonField<String>,
     private val entityType: JsonField<String>,
-    private val version: JsonField<Long>,
     private val authorized: JsonField<Boolean>,
     private val configData: JsonField<ConfigData>,
     private val createdBy: JsonField<String>,
@@ -38,6 +38,7 @@ private constructor(
     private val lastModifiedBy: JsonField<String>,
     private val name: JsonField<String>,
     private val triggerType: JsonField<TriggerType>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
@@ -50,7 +51,6 @@ private constructor(
         @JsonProperty("entityType")
         @ExcludeMissing
         entityType: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
         @JsonProperty("authorized")
         @ExcludeMissing
         authorized: JsonField<Boolean> = JsonMissing.of(),
@@ -79,11 +79,11 @@ private constructor(
         @JsonProperty("triggerType")
         @ExcludeMissing
         triggerType: JsonField<TriggerType> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
         id,
         destination,
         entityType,
-        version,
         authorized,
         configData,
         createdBy,
@@ -96,6 +96,7 @@ private constructor(
         lastModifiedBy,
         name,
         triggerType,
+        version,
         mutableMapOf(),
     )
 
@@ -108,7 +109,7 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
-     * The type of destination _(e.g. Netsuite, webhooks)_.
+     * The type of destination *(e.g. Netsuite, webhooks)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -116,7 +117,7 @@ private constructor(
     fun destination(): String = destination.getRequired("destination")
 
     /**
-     * The type of entity the integration is for _(e.g. Bill)_.
+     * The type of entity the integration is for *(e.g. Bill)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -124,20 +125,9 @@ private constructor(
     fun entityType(): String = entityType.getRequired("entityType")
 
     /**
-     * The version number:
-     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-     *   response.
-     * - **Update:** On successful Update, the version is incremented by 1 in the response.
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
-     *   missing or null (e.g. if the server responded with an unexpected value).
-     */
-    fun version(): Long = version.getRequired("version")
-
-    /**
      * A flag indicating whether the integration configuration is authorized.
-     * - TRUE - authorized.
-     * - FALSE - not authorized.
+     * * TRUE - authorized.
+     * * FALSE - not authorized.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -169,7 +159,7 @@ private constructor(
     fun destinationId(): Optional<String> = destinationId.getOptional("destinationId")
 
     /**
-     * The DateTime when this item was created _(in ISO-8601 format)_.
+     * The DateTime when this item was created *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -177,7 +167,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime when this item was last modified _(in ISO-8601 format)_.
+     * The DateTime when this item was last modified *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -186,8 +176,8 @@ private constructor(
 
     /**
      * A flag indicating whether the integration configuration is currently enabled or disabled.
-     * - TRUE - enabled.
-     * - FALSE - disabled.
+     * * TRUE - enabled.
+     * * FALSE - disabled.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -195,8 +185,8 @@ private constructor(
     fun enabled(): Optional<Boolean> = enabled.getOptional("enabled")
 
     /**
-     * The unique identifier (UUID) of the entity this integration is for _(e.g. the ID of a
-     * notification configuration. Optional.)_
+     * The unique identifier (UUID) of the entity this integration is for *(e.g. the ID of a
+     * notification configuration. Optional.)*
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -238,6 +228,17 @@ private constructor(
     fun triggerType(): Optional<TriggerType> = triggerType.getOptional("triggerType")
 
     /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
      * Returns the raw JSON value of [id].
      *
      * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
@@ -257,13 +258,6 @@ private constructor(
      * Unlike [entityType], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("entityType") @ExcludeMissing fun _entityType(): JsonField<String> = entityType
-
-    /**
-     * Returns the raw JSON value of [version].
-     *
-     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
 
     /**
      * Returns the raw JSON value of [authorized].
@@ -365,6 +359,13 @@ private constructor(
     @ExcludeMissing
     fun _triggerType(): JsonField<TriggerType> = triggerType
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -388,7 +389,6 @@ private constructor(
          * .id()
          * .destination()
          * .entityType()
-         * .version()
          * ```
          */
         @JvmStatic fun builder() = Builder()
@@ -400,7 +400,6 @@ private constructor(
         private var id: JsonField<String>? = null
         private var destination: JsonField<String>? = null
         private var entityType: JsonField<String>? = null
-        private var version: JsonField<Long>? = null
         private var authorized: JsonField<Boolean> = JsonMissing.of()
         private var configData: JsonField<ConfigData> = JsonMissing.of()
         private var createdBy: JsonField<String> = JsonMissing.of()
@@ -413,6 +412,7 @@ private constructor(
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var name: JsonField<String> = JsonMissing.of()
         private var triggerType: JsonField<TriggerType> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
@@ -422,7 +422,6 @@ private constructor(
             id = integrationConfigurationListResponse.id
             destination = integrationConfigurationListResponse.destination
             entityType = integrationConfigurationListResponse.entityType
-            version = integrationConfigurationListResponse.version
             authorized = integrationConfigurationListResponse.authorized
             configData = integrationConfigurationListResponse.configData
             createdBy = integrationConfigurationListResponse.createdBy
@@ -435,6 +434,7 @@ private constructor(
             lastModifiedBy = integrationConfigurationListResponse.lastModifiedBy
             name = integrationConfigurationListResponse.name
             triggerType = integrationConfigurationListResponse.triggerType
+            version = integrationConfigurationListResponse.version
             additionalProperties =
                 integrationConfigurationListResponse.additionalProperties.toMutableMap()
         }
@@ -450,7 +450,7 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        /** The type of destination _(e.g. Netsuite, webhooks)_. */
+        /** The type of destination *(e.g. Netsuite, webhooks)*. */
         fun destination(destination: String) = destination(JsonField.of(destination))
 
         /**
@@ -462,7 +462,7 @@ private constructor(
          */
         fun destination(destination: JsonField<String>) = apply { this.destination = destination }
 
-        /** The type of entity the integration is for _(e.g. Bill)_. */
+        /** The type of entity the integration is for *(e.g. Bill)*. */
         fun entityType(entityType: String) = entityType(JsonField.of(entityType))
 
         /**
@@ -475,25 +475,9 @@ private constructor(
         fun entityType(entityType: JsonField<String>) = apply { this.entityType = entityType }
 
         /**
-         * The version number:
-         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
-         *   response.
-         * - **Update:** On successful Update, the version is incremented by 1 in the response.
-         */
-        fun version(version: Long) = version(JsonField.of(version))
-
-        /**
-         * Sets [Builder.version] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
-         * method is primarily for setting the field to an undocumented or not yet supported value.
-         */
-        fun version(version: JsonField<Long>) = apply { this.version = version }
-
-        /**
          * A flag indicating whether the integration configuration is authorized.
-         * - TRUE - authorized.
-         * - FALSE - not authorized.
+         * * TRUE - authorized.
+         * * FALSE - not authorized.
          */
         fun authorized(authorized: Boolean) = authorized(JsonField.of(authorized))
 
@@ -544,7 +528,7 @@ private constructor(
             this.destinationId = destinationId
         }
 
-        /** The DateTime when this item was created _(in ISO-8601 format)_. */
+        /** The DateTime when this item was created *(in ISO-8601 format)*. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -556,7 +540,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime when this item was last modified _(in ISO-8601 format)_. */
+        /** The DateTime when this item was last modified *(in ISO-8601 format)*. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -573,8 +557,8 @@ private constructor(
 
         /**
          * A flag indicating whether the integration configuration is currently enabled or disabled.
-         * - TRUE - enabled.
-         * - FALSE - disabled.
+         * * TRUE - enabled.
+         * * FALSE - disabled.
          */
         fun enabled(enabled: Boolean) = enabled(JsonField.of(enabled))
 
@@ -587,8 +571,8 @@ private constructor(
         fun enabled(enabled: JsonField<Boolean>) = apply { this.enabled = enabled }
 
         /**
-         * The unique identifier (UUID) of the entity this integration is for _(e.g. the ID of a
-         * notification configuration. Optional.)_
+         * The unique identifier (UUID) of the entity this integration is for *(e.g. the ID of a
+         * notification configuration. Optional.)*
          */
         fun entityId(entityId: String) = entityId(JsonField.of(entityId))
 
@@ -656,6 +640,22 @@ private constructor(
             this.triggerType = triggerType
         }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -685,7 +685,6 @@ private constructor(
          * .id()
          * .destination()
          * .entityType()
-         * .version()
          * ```
          *
          * @throws IllegalStateException if any required field is unset.
@@ -695,7 +694,6 @@ private constructor(
                 checkRequired("id", id),
                 checkRequired("destination", destination),
                 checkRequired("entityType", entityType),
-                checkRequired("version", version),
                 authorized,
                 configData,
                 createdBy,
@@ -708,6 +706,7 @@ private constructor(
                 lastModifiedBy,
                 name,
                 triggerType,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -722,7 +721,6 @@ private constructor(
         id()
         destination()
         entityType()
-        version()
         authorized()
         configData().ifPresent { it.validate() }
         createdBy()
@@ -735,6 +733,7 @@ private constructor(
         lastModifiedBy()
         name()
         triggerType().ifPresent { it.validate() }
+        version()
         validated = true
     }
 
@@ -756,7 +755,6 @@ private constructor(
         (if (id.asKnown().isPresent) 1 else 0) +
             (if (destination.asKnown().isPresent) 1 else 0) +
             (if (entityType.asKnown().isPresent) 1 else 0) +
-            (if (version.asKnown().isPresent) 1 else 0) +
             (if (authorized.asKnown().isPresent) 1 else 0) +
             (configData.asKnown().getOrNull()?.validity() ?: 0) +
             (if (createdBy.asKnown().isPresent) 1 else 0) +
@@ -768,7 +766,8 @@ private constructor(
             (if (integrationCredentialsId.asKnown().isPresent) 1 else 0) +
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (if (name.asKnown().isPresent) 1 else 0) +
-            (triggerType.asKnown().getOrNull()?.validity() ?: 0)
+            (triggerType.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     /** Configuration data for the integration */
     class ConfigData
@@ -860,12 +859,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ConfigData && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is ConfigData && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -993,7 +990,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TriggerType && value == other.value /* spotless:on */
+            return other is TriggerType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1006,15 +1003,50 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is IntegrationConfigurationListResponse && id == other.id && destination == other.destination && entityType == other.entityType && version == other.version && authorized == other.authorized && configData == other.configData && createdBy == other.createdBy && destinationId == other.destinationId && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && enabled == other.enabled && entityId == other.entityId && integrationCredentialsId == other.integrationCredentialsId && lastModifiedBy == other.lastModifiedBy && name == other.name && triggerType == other.triggerType && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is IntegrationConfigurationListResponse &&
+            id == other.id &&
+            destination == other.destination &&
+            entityType == other.entityType &&
+            authorized == other.authorized &&
+            configData == other.configData &&
+            createdBy == other.createdBy &&
+            destinationId == other.destinationId &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            enabled == other.enabled &&
+            entityId == other.entityId &&
+            integrationCredentialsId == other.integrationCredentialsId &&
+            lastModifiedBy == other.lastModifiedBy &&
+            name == other.name &&
+            triggerType == other.triggerType &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, destination, entityType, version, authorized, configData, createdBy, destinationId, dtCreated, dtLastModified, enabled, entityId, integrationCredentialsId, lastModifiedBy, name, triggerType, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            destination,
+            entityType,
+            authorized,
+            configData,
+            createdBy,
+            destinationId,
+            dtCreated,
+            dtLastModified,
+            enabled,
+            entityId,
+            integrationCredentialsId,
+            lastModifiedBy,
+            name,
+            triggerType,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "IntegrationConfigurationListResponse{id=$id, destination=$destination, entityType=$entityType, version=$version, authorized=$authorized, configData=$configData, createdBy=$createdBy, destinationId=$destinationId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, enabled=$enabled, entityId=$entityId, integrationCredentialsId=$integrationCredentialsId, lastModifiedBy=$lastModifiedBy, name=$name, triggerType=$triggerType, additionalProperties=$additionalProperties}"
+        "IntegrationConfigurationListResponse{id=$id, destination=$destination, entityType=$entityType, authorized=$authorized, configData=$configData, createdBy=$createdBy, destinationId=$destinationId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, enabled=$enabled, entityId=$entityId, integrationCredentialsId=$integrationCredentialsId, lastModifiedBy=$lastModifiedBy, name=$name, triggerType=$triggerType, version=$version, additionalProperties=$additionalProperties}"
 }

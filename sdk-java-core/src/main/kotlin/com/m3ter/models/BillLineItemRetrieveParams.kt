@@ -252,10 +252,17 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillLineItemRetrieveParams && orgId == other.orgId && billId == other.billId && id == other.id && additional == other.additional && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is BillLineItemRetrieveParams &&
+            orgId == other.orgId &&
+            billId == other.billId &&
+            id == other.id &&
+            additional == other.additional &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, billId, id, additional, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, billId, id, additional, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "BillLineItemRetrieveParams{orgId=$orgId, billId=$billId, id=$id, additional=$additional, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

@@ -21,6 +21,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class UsageDataExportScheduleRequest
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val sourceType: JsonField<SourceType>,
     private val timePeriod: JsonField<TimePeriod>,
@@ -80,23 +81,23 @@ private constructor(
     /**
      * Define a time period to control the range of usage data you want the data export to contain
      * when it runs:
-     * - **TODAY**. Data collected for the current day up until the time the export is scheduled to
+     * * **TODAY**. Data collected for the current day up until the time the export is scheduled to
      *   run.
-     * - **YESTERDAY**. Data collected for the day before the export runs under the schedule - that
+     * * **YESTERDAY**. Data collected for the day before the export runs under the schedule - that
      *   is, the 24 hour period from midnight to midnight of the day before.
-     * - **PREVIOUS_WEEK**, **PREVIOUS_MONTH**, **PREVIOUS_QUARTER**, **PREVIOUS_YEAR**. Data
+     * * **PREVIOUS_WEEK**, **PREVIOUS_MONTH**, **PREVIOUS_QUARTER**, **PREVIOUS_YEAR**. Data
      *   collected for the previous full week, month, quarter, or year period. For example if
      *   **PREVIOUS_WEEK**, weeks run Monday to Monday - if the export is scheduled to run on June
      *   12th 2024, which is a Wednesday, the export will contain data for the period running from
      *   Monday, June 3rd 2024 to midnight on Sunday, June 9th 2024.
-     * - **WEEK_TO_DATE**, **MONTH_TO_DATE**, or **YEAR_TO_DATE**. Data collected for the period
+     * * **WEEK_TO_DATE**, **MONTH_TO_DATE**, or **YEAR_TO_DATE**. Data collected for the period
      *   covering the current week, month, or year period. For example if **WEEK_TO_DATE**, weeks
      *   run Monday to Monday - if the Export is scheduled to run at 10 a.m. UTC on October 16th
      *   2024, which is a Wednesday, it will contain all usage data collected starting Monday
      *   October 14th 2024 through to the Wednesday at 10 a.m. UTC of the current week.
-     * - **LAST_12_HOURS**. Data collected for the twelve hour period up to the start of the hour in
+     * * **LAST_12_HOURS**. Data collected for the twelve hour period up to the start of the hour in
      *   which the export is scheduled to run.
-     * - **LAST_7_DAYS**, **LAST_30_DAYS**, **LAST_35_DAYS**, **LAST_90_DAYS**, **LAST_120_DAYS**
+     * * **LAST_7_DAYS**, **LAST_30_DAYS**, **LAST_35_DAYS**, **LAST_90_DAYS**, **LAST_120_DAYS**
      *   **LAST_YEAR**. Data collected for the selected period prior to the date the export is
      *   scheduled to run. For example if **LAST_30_DAYS** and the export is scheduled to run for
      *   any time on June 15th 2024, it will contain usage data collected for the previous 30 days -
@@ -154,7 +155,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -304,24 +305,24 @@ private constructor(
         /**
          * Define a time period to control the range of usage data you want the data export to
          * contain when it runs:
-         * - **TODAY**. Data collected for the current day up until the time the export is scheduled
+         * * **TODAY**. Data collected for the current day up until the time the export is scheduled
          *   to run.
-         * - **YESTERDAY**. Data collected for the day before the export runs under the schedule -
+         * * **YESTERDAY**. Data collected for the day before the export runs under the schedule -
          *   that is, the 24 hour period from midnight to midnight of the day before.
-         * - **PREVIOUS_WEEK**, **PREVIOUS_MONTH**, **PREVIOUS_QUARTER**, **PREVIOUS_YEAR**. Data
+         * * **PREVIOUS_WEEK**, **PREVIOUS_MONTH**, **PREVIOUS_QUARTER**, **PREVIOUS_YEAR**. Data
          *   collected for the previous full week, month, quarter, or year period. For example if
          *   **PREVIOUS_WEEK**, weeks run Monday to Monday - if the export is scheduled to run on
          *   June 12th 2024, which is a Wednesday, the export will contain data for the period
          *   running from Monday, June 3rd 2024 to midnight on Sunday, June 9th 2024.
-         * - **WEEK_TO_DATE**, **MONTH_TO_DATE**, or **YEAR_TO_DATE**. Data collected for the period
+         * * **WEEK_TO_DATE**, **MONTH_TO_DATE**, or **YEAR_TO_DATE**. Data collected for the period
          *   covering the current week, month, or year period. For example if **WEEK_TO_DATE**,
          *   weeks run Monday to Monday - if the Export is scheduled to run at 10 a.m. UTC on
          *   October 16th 2024, which is a Wednesday, it will contain all usage data collected
          *   starting Monday October 14th 2024 through to the Wednesday at 10 a.m. UTC of the
          *   current week.
-         * - **LAST_12_HOURS**. Data collected for the twelve hour period up to the start of the
+         * * **LAST_12_HOURS**. Data collected for the twelve hour period up to the start of the
          *   hour in which the export is scheduled to run.
-         * - **LAST_7_DAYS**, **LAST_30_DAYS**, **LAST_35_DAYS**, **LAST_90_DAYS**,
+         * * **LAST_7_DAYS**, **LAST_30_DAYS**, **LAST_35_DAYS**, **LAST_90_DAYS**,
          *   **LAST_120_DAYS** **LAST_YEAR**. Data collected for the selected period prior to the
          *   date the export is scheduled to run. For example if **LAST_30_DAYS** and the export is
          *   scheduled to run for any time on June 15th 2024, it will contain usage data collected
@@ -475,8 +476,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -692,7 +693,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SourceType && value == other.value /* spotless:on */
+            return other is SourceType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -703,23 +704,23 @@ private constructor(
     /**
      * Define a time period to control the range of usage data you want the data export to contain
      * when it runs:
-     * - **TODAY**. Data collected for the current day up until the time the export is scheduled to
+     * * **TODAY**. Data collected for the current day up until the time the export is scheduled to
      *   run.
-     * - **YESTERDAY**. Data collected for the day before the export runs under the schedule - that
+     * * **YESTERDAY**. Data collected for the day before the export runs under the schedule - that
      *   is, the 24 hour period from midnight to midnight of the day before.
-     * - **PREVIOUS_WEEK**, **PREVIOUS_MONTH**, **PREVIOUS_QUARTER**, **PREVIOUS_YEAR**. Data
+     * * **PREVIOUS_WEEK**, **PREVIOUS_MONTH**, **PREVIOUS_QUARTER**, **PREVIOUS_YEAR**. Data
      *   collected for the previous full week, month, quarter, or year period. For example if
      *   **PREVIOUS_WEEK**, weeks run Monday to Monday - if the export is scheduled to run on June
      *   12th 2024, which is a Wednesday, the export will contain data for the period running from
      *   Monday, June 3rd 2024 to midnight on Sunday, June 9th 2024.
-     * - **WEEK_TO_DATE**, **MONTH_TO_DATE**, or **YEAR_TO_DATE**. Data collected for the period
+     * * **WEEK_TO_DATE**, **MONTH_TO_DATE**, or **YEAR_TO_DATE**. Data collected for the period
      *   covering the current week, month, or year period. For example if **WEEK_TO_DATE**, weeks
      *   run Monday to Monday - if the Export is scheduled to run at 10 a.m. UTC on October 16th
      *   2024, which is a Wednesday, it will contain all usage data collected starting Monday
      *   October 14th 2024 through to the Wednesday at 10 a.m. UTC of the current week.
-     * - **LAST_12_HOURS**. Data collected for the twelve hour period up to the start of the hour in
+     * * **LAST_12_HOURS**. Data collected for the twelve hour period up to the start of the hour in
      *   which the export is scheduled to run.
-     * - **LAST_7_DAYS**, **LAST_30_DAYS**, **LAST_35_DAYS**, **LAST_90_DAYS**, **LAST_120_DAYS**
+     * * **LAST_7_DAYS**, **LAST_30_DAYS**, **LAST_35_DAYS**, **LAST_90_DAYS**, **LAST_120_DAYS**
      *   **LAST_YEAR**. Data collected for the selected period prior to the date the export is
      *   scheduled to run. For example if **LAST_30_DAYS** and the export is scheduled to run for
      *   any time on June 15th 2024, it will contain usage data collected for the previous 30 days -
@@ -931,7 +932,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TimePeriod && value == other.value /* spotless:on */
+            return other is TimePeriod && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -940,6 +941,7 @@ private constructor(
     }
 
     class Aggregation
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val fieldCode: JsonField<String>,
         private val fieldType: JsonField<FieldType>,
@@ -1321,7 +1323,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is FieldType && value == other.value /* spotless:on */
+                return other is FieldType && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1482,7 +1484,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Function && value == other.value /* spotless:on */
+                return other is Function && value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -1495,12 +1497,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Aggregation && fieldCode == other.fieldCode && fieldType == other.fieldType && function == other.function && meterId == other.meterId && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Aggregation &&
+                fieldCode == other.fieldCode &&
+                fieldType == other.fieldType &&
+                function == other.function &&
+                meterId == other.meterId &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(fieldCode, fieldType, function, meterId, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(fieldCode, fieldType, function, meterId, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1509,6 +1516,7 @@ private constructor(
     }
 
     class DimensionFilter
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val fieldCode: JsonField<String>,
         private val meterId: JsonField<String>,
@@ -1745,12 +1753,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DimensionFilter && fieldCode == other.fieldCode && meterId == other.meterId && values == other.values && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is DimensionFilter &&
+                fieldCode == other.fieldCode &&
+                meterId == other.meterId &&
+                values == other.values &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(fieldCode, meterId, values, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(fieldCode, meterId, values, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1763,12 +1775,31 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UsageDataExportScheduleRequest && sourceType == other.sourceType && timePeriod == other.timePeriod && accountIds == other.accountIds && aggregations == other.aggregations && dimensionFilters == other.dimensionFilters && groups == other.groups && meterIds == other.meterIds && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is UsageDataExportScheduleRequest &&
+            sourceType == other.sourceType &&
+            timePeriod == other.timePeriod &&
+            accountIds == other.accountIds &&
+            aggregations == other.aggregations &&
+            dimensionFilters == other.dimensionFilters &&
+            groups == other.groups &&
+            meterIds == other.meterIds &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(sourceType, timePeriod, accountIds, aggregations, dimensionFilters, groups, meterIds, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            sourceType,
+            timePeriod,
+            accountIds,
+            aggregations,
+            dimensionFilters,
+            groups,
+            meterIds,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

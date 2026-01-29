@@ -18,6 +18,7 @@ import java.util.Objects
 import java.util.Optional
 
 class PlanGroupLinkResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val createdBy: JsonField<String>,
@@ -77,7 +78,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The DateTime _(in ISO-8601 format)_ when the plan group link was created.
+     * The DateTime *(in ISO-8601 format)* when the plan group link was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -85,7 +86,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime _(in ISO-8601 format)_ when the plan group link was last modified.
+     * The DateTime *(in ISO-8601 format)* when the plan group link was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -263,7 +264,7 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The DateTime _(in ISO-8601 format)_ when the plan group link was created. */
+        /** The DateTime *(in ISO-8601 format)* when the plan group link was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -275,7 +276,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime _(in ISO-8601 format)_ when the plan group link was last modified. */
+        /** The DateTime *(in ISO-8601 format)* when the plan group link was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -435,12 +436,31 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanGroupLinkResponse && id == other.id && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && planGroupId == other.planGroupId && planId == other.planId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PlanGroupLinkResponse &&
+            id == other.id &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            planGroupId == other.planGroupId &&
+            planId == other.planId &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, createdBy, dtCreated, dtLastModified, lastModifiedBy, planGroupId, planId, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            createdBy,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            planGroupId,
+            planId,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

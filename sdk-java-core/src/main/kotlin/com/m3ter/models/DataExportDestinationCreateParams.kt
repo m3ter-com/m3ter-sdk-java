@@ -27,15 +27,15 @@ import kotlin.jvm.optionals.getOrNull
  * Create a new Export Destination to use for your Data Export Schedules or Ad-Hoc Data Exports.
  *
  * Currently, two options for setting up Data Export Destinations are available:
- * - S3 buckets on your AWS account.
- * - Buckets in your Google Cloud Storage account.
+ * * S3 buckets on your AWS account.
+ * * Buckets in your Google Cloud Storage account.
  *
  * Request and Response schema:
- * - Use the selector under the `destinationType` parameter to expose the relevant request and
+ * * Use the selector under the `destinationType` parameter to expose the relevant request and
  *   response schema for the type of Destination.
  *
  * Request and Response samples:
- * - Use the **Example** selector to show the relevant request and response samples for the type of
+ * * Use the **Example** selector to show the relevant request and response samples for the type of
  *   Destination.
  */
 class DataExportDestinationCreateParams
@@ -359,10 +359,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && dataExportDestinationS3Request == other.dataExportDestinationS3Request && dataExportDestinationGoogleCloudStorageRequest == other.dataExportDestinationGoogleCloudStorageRequest /* spotless:on */
+            return other is Body &&
+                dataExportDestinationS3Request == other.dataExportDestinationS3Request &&
+                dataExportDestinationGoogleCloudStorageRequest ==
+                    other.dataExportDestinationGoogleCloudStorageRequest
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(dataExportDestinationS3Request, dataExportDestinationGoogleCloudStorageRequest) /* spotless:on */
+        override fun hashCode(): Int =
+            Objects.hash(
+                dataExportDestinationS3Request,
+                dataExportDestinationGoogleCloudStorageRequest,
+            )
 
         override fun toString(): String =
             when {
@@ -482,10 +489,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataExportDestinationCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is DataExportDestinationCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "DataExportDestinationCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

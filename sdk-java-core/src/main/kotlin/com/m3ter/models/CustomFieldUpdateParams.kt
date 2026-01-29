@@ -114,7 +114,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -388,8 +388,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -548,6 +548,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val account: JsonField<Account>,
         private val accountPlan: JsonField<AccountPlan>,
@@ -686,8 +687,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -970,8 +971,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -1082,12 +1083,37 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && account == other.account && accountPlan == other.accountPlan && aggregation == other.aggregation && compoundAggregation == other.compoundAggregation && contract == other.contract && meter == other.meter && organization == other.organization && plan == other.plan && planTemplate == other.planTemplate && product == other.product && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                account == other.account &&
+                accountPlan == other.accountPlan &&
+                aggregation == other.aggregation &&
+                compoundAggregation == other.compoundAggregation &&
+                contract == other.contract &&
+                meter == other.meter &&
+                organization == other.organization &&
+                plan == other.plan &&
+                planTemplate == other.planTemplate &&
+                product == other.product &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(account, accountPlan, aggregation, compoundAggregation, contract, meter, organization, plan, planTemplate, product, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                account,
+                accountPlan,
+                aggregation,
+                compoundAggregation,
+                contract,
+                meter,
+                organization,
+                plan,
+                planTemplate,
+                product,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1185,12 +1211,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Account && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Account && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1287,12 +1311,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountPlan && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is AccountPlan && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1389,12 +1411,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Aggregation && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Aggregation && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1492,12 +1512,11 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CompoundAggregation && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CompoundAggregation &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1594,12 +1613,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Contract && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Contract && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1696,12 +1713,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Meter && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Meter && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1798,12 +1813,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Organization && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Organization && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1900,12 +1913,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Plan && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Plan && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2002,12 +2013,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PlanTemplate && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is PlanTemplate && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2104,12 +2113,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Product && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Product && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2121,10 +2128,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomFieldUpdateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CustomFieldUpdateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CustomFieldUpdateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

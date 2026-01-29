@@ -21,6 +21,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class PlanTemplateResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val billFrequency: JsonField<BillFrequency>,
@@ -135,11 +136,11 @@ private constructor(
 
     /**
      * Determines the frequency at which bills are generated.
-     * - **Daily**. Starting at midnight each day, covering the twenty-four hour period following.
-     * - **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
-     * - **Monthly**. Starting at midnight on the first day of each month, covering the entire
+     * * **Daily**. Starting at midnight each day, covering the twenty-four hour period following.
+     * * **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
+     * * **Monthly**. Starting at midnight on the first day of each month, covering the entire
      *   calendar month following.
-     * - **Annually**. Starting at midnight on first day of each year covering the entire calendar
+     * * **Annually**. Starting at midnight on first day of each year covering the entire calendar
      *   year following.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -201,7 +202,7 @@ private constructor(
     fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the PlanTemplate was created.
+     * The date and time *(in ISO-8601 format)* when the PlanTemplate was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -209,7 +210,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO-8601 format)_ when the PlanTemplate was last modified.
+     * The date and time *(in ISO-8601 format)* when the PlanTemplate was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -235,8 +236,8 @@ private constructor(
 
     /**
      * A boolean that determines when the minimum spend is billed.
-     * - TRUE - minimum spend is billed at the start of each billing period.
-     * - FALSE - minimum spend is billed at the end of each billing period.
+     * * TRUE - minimum spend is billed at the start of each billing period.
+     * * FALSE - minimum spend is billed at the end of each billing period.
      *
      * Overrides the setting at Organizational level for minimum spend billing in arrears/in
      * advance.
@@ -248,7 +249,7 @@ private constructor(
         minimumSpendBillInAdvance.getOptional("minimumSpendBillInAdvance")
 
     /**
-     * Minimum spend description _(displayed on the bill line item)_.
+     * Minimum spend description *(displayed on the bill line item)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -284,7 +285,7 @@ private constructor(
     fun productId(): Optional<String> = productId.getOptional("productId")
 
     /**
-     * The fixed charge _(standing charge)_ applied to customer bills. This charge is prorated and
+     * The fixed charge *(standing charge)* applied to customer bills. This charge is prorated and
      * must be a non-negative number.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -294,8 +295,8 @@ private constructor(
 
     /**
      * A boolean that determines when the standing charge is billed.
-     * - TRUE - standing charge is billed at the start of each billing period.
-     * - FALSE - standing charge is billed at the end of each billing period.
+     * * TRUE - standing charge is billed at the start of each billing period.
+     * * FALSE - standing charge is billed at the end of each billing period.
      *
      * Overrides the setting at Organizational level for standing charge billing in arrears/in
      * advance.
@@ -307,7 +308,7 @@ private constructor(
         standingChargeBillInAdvance.getOptional("standingChargeBillInAdvance")
 
     /**
-     * Standing charge description _(displayed on the bill line item)_.
+     * Standing charge description *(displayed on the bill line item)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -329,8 +330,8 @@ private constructor(
     /**
      * Defines an offset for when the standing charge is first applied. For example, if the bill is
      * issued every three months and the `standingChargeOfset` is 0, then the charge is applied to
-     * the first bill _(at three months)_; if 1, it would be applied to the second bill _(at six
-     * months)_, and so on.
+     * the first bill *(at three months)*; if 1, it would be applied to the second bill *(at six
+     * months)*, and so on.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -630,12 +631,12 @@ private constructor(
 
         /**
          * Determines the frequency at which bills are generated.
-         * - **Daily**. Starting at midnight each day, covering the twenty-four hour period
+         * * **Daily**. Starting at midnight each day, covering the twenty-four hour period
          *   following.
-         * - **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
-         * - **Monthly**. Starting at midnight on the first day of each month, covering the entire
+         * * **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
+         * * **Monthly**. Starting at midnight on the first day of each month, covering the entire
          *   calendar month following.
-         * - **Annually**. Starting at midnight on first day of each year covering the entire
+         * * **Annually**. Starting at midnight on first day of each year covering the entire
          *   calendar year following.
          */
         fun billFrequency(billFrequency: BillFrequency) = billFrequency(JsonField.of(billFrequency))
@@ -734,7 +735,7 @@ private constructor(
             this.customFields = customFields
         }
 
-        /** The date and time _(in ISO-8601 format)_ when the PlanTemplate was created. */
+        /** The date and time *(in ISO-8601 format)* when the PlanTemplate was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -746,7 +747,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The date and time _(in ISO-8601 format)_ when the PlanTemplate was last modified. */
+        /** The date and time *(in ISO-8601 format)* when the PlanTemplate was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -794,8 +795,8 @@ private constructor(
 
         /**
          * A boolean that determines when the minimum spend is billed.
-         * - TRUE - minimum spend is billed at the start of each billing period.
-         * - FALSE - minimum spend is billed at the end of each billing period.
+         * * TRUE - minimum spend is billed at the start of each billing period.
+         * * FALSE - minimum spend is billed at the end of each billing period.
          *
          * Overrides the setting at Organizational level for minimum spend billing in arrears/in
          * advance.
@@ -814,7 +815,7 @@ private constructor(
             this.minimumSpendBillInAdvance = minimumSpendBillInAdvance
         }
 
-        /** Minimum spend description _(displayed on the bill line item)_. */
+        /** Minimum spend description *(displayed on the bill line item)*. */
         fun minimumSpendDescription(minimumSpendDescription: String) =
             minimumSpendDescription(JsonField.of(minimumSpendDescription))
 
@@ -870,7 +871,7 @@ private constructor(
         fun productId(productId: JsonField<String>) = apply { this.productId = productId }
 
         /**
-         * The fixed charge _(standing charge)_ applied to customer bills. This charge is prorated
+         * The fixed charge *(standing charge)* applied to customer bills. This charge is prorated
          * and must be a non-negative number.
          */
         fun standingCharge(standingCharge: Double) = standingCharge(JsonField.of(standingCharge))
@@ -888,8 +889,8 @@ private constructor(
 
         /**
          * A boolean that determines when the standing charge is billed.
-         * - TRUE - standing charge is billed at the start of each billing period.
-         * - FALSE - standing charge is billed at the end of each billing period.
+         * * TRUE - standing charge is billed at the start of each billing period.
+         * * FALSE - standing charge is billed at the end of each billing period.
          *
          * Overrides the setting at Organizational level for standing charge billing in arrears/in
          * advance.
@@ -908,7 +909,7 @@ private constructor(
             this.standingChargeBillInAdvance = standingChargeBillInAdvance
         }
 
-        /** Standing charge description _(displayed on the bill line item)_. */
+        /** Standing charge description *(displayed on the bill line item)*. */
         fun standingChargeDescription(standingChargeDescription: String) =
             standingChargeDescription(JsonField.of(standingChargeDescription))
 
@@ -945,8 +946,8 @@ private constructor(
         /**
          * Defines an offset for when the standing charge is first applied. For example, if the bill
          * is issued every three months and the `standingChargeOfset` is 0, then the charge is
-         * applied to the first bill _(at three months)_; if 1, it would be applied to the second
-         * bill _(at six months)_, and so on.
+         * applied to the first bill *(at three months)*; if 1, it would be applied to the second
+         * bill *(at six months)*, and so on.
          */
         fun standingChargeOffset(standingChargeOffset: Int) =
             standingChargeOffset(JsonField.of(standingChargeOffset))
@@ -1109,11 +1110,11 @@ private constructor(
 
     /**
      * Determines the frequency at which bills are generated.
-     * - **Daily**. Starting at midnight each day, covering the twenty-four hour period following.
-     * - **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
-     * - **Monthly**. Starting at midnight on the first day of each month, covering the entire
+     * * **Daily**. Starting at midnight each day, covering the twenty-four hour period following.
+     * * **Weekly**. Starting at midnight on a Monday, covering the seven-day period following.
+     * * **Monthly**. Starting at midnight on the first day of each month, covering the entire
      *   calendar month following.
-     * - **Annually**. Starting at midnight on first day of each year covering the entire calendar
+     * * **Annually**. Starting at midnight on first day of each year covering the entire calendar
      *   year following.
      */
     class BillFrequency @JsonCreator private constructor(private val value: JsonField<String>) :
@@ -1260,7 +1261,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BillFrequency && value == other.value /* spotless:on */
+            return other is BillFrequency && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1369,12 +1370,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1386,12 +1385,59 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanTemplateResponse && id == other.id && billFrequency == other.billFrequency && billFrequencyInterval == other.billFrequencyInterval && code == other.code && createdBy == other.createdBy && currency == other.currency && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && name == other.name && ordinal == other.ordinal && productId == other.productId && standingCharge == other.standingCharge && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && standingChargeInterval == other.standingChargeInterval && standingChargeOffset == other.standingChargeOffset && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PlanTemplateResponse &&
+            id == other.id &&
+            billFrequency == other.billFrequency &&
+            billFrequencyInterval == other.billFrequencyInterval &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            currency == other.currency &&
+            customFields == other.customFields &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            minimumSpend == other.minimumSpend &&
+            minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
+            minimumSpendDescription == other.minimumSpendDescription &&
+            name == other.name &&
+            ordinal == other.ordinal &&
+            productId == other.productId &&
+            standingCharge == other.standingCharge &&
+            standingChargeBillInAdvance == other.standingChargeBillInAdvance &&
+            standingChargeDescription == other.standingChargeDescription &&
+            standingChargeInterval == other.standingChargeInterval &&
+            standingChargeOffset == other.standingChargeOffset &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, billFrequency, billFrequencyInterval, code, createdBy, currency, customFields, dtCreated, dtLastModified, lastModifiedBy, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, name, ordinal, productId, standingCharge, standingChargeBillInAdvance, standingChargeDescription, standingChargeInterval, standingChargeOffset, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            billFrequency,
+            billFrequencyInterval,
+            code,
+            createdBy,
+            currency,
+            customFields,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            minimumSpend,
+            minimumSpendBillInAdvance,
+            minimumSpendDescription,
+            name,
+            ordinal,
+            productId,
+            standingCharge,
+            standingChargeBillInAdvance,
+            standingChargeDescription,
+            standingChargeInterval,
+            standingChargeOffset,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

@@ -51,19 +51,19 @@ private constructor(
 
     /**
      * Query for data using special syntax:
-     * - Query parameters should be delimited using $ (dollar sign).
-     * - Allowed comparators are:
-     *     - (greater than) >
-     *     - (greater than or equal to) >=
-     *     - (equal to) :
-     *     - (less than) <
-     *     - (less than or equal to) <=
-     *     - (match phrase/prefix) ~
-     * - Allowed parameters: startDate, endDate, contractId, accountId, productId, productIds, id,
+     * * Query parameters should be delimited using $ (dollar sign).
+     * * Allowed comparators are:
+     *     * (greater than) >
+     *     * (greater than or equal to) >=
+     *     * (equal to) :
+     *     * (less than) <
+     *     * (less than or equal to) <=
+     *     * (match phrase/prefix) ~
+     * * Allowed parameters: startDate, endDate, contractId, accountId, productId, productIds, id,
      *   createdBy, dtCreated, lastModifiedBy, ids.
-     * - Query example:
-     *     - searchQuery=startDate>2023-01-01$accountId:062085ab-a301-4f21-a081-411020864452.
-     *     - This query is translated into: find commitments where the startDate is older than
+     * * Query example:
+     *     * searchQuery=startDate>2023-01-01$accountId:062085ab-a301-4f21-a081-411020864452.
+     *     * This query is translated into: find commitments where the startDate is older than
      *       2023-01-01 AND the accountId is equal to 062085ab-a301-4f21-a081-411020864452.
      *
      * **Note:** Using the ~ match phrase/prefix comparator. For best results, we recommend treating
@@ -167,19 +167,19 @@ private constructor(
 
         /**
          * Query for data using special syntax:
-         * - Query parameters should be delimited using $ (dollar sign).
-         * - Allowed comparators are:
-         *     - (greater than) >
-         *     - (greater than or equal to) >=
-         *     - (equal to) :
-         *     - (less than) <
-         *     - (less than or equal to) <=
-         *     - (match phrase/prefix) ~
-         * - Allowed parameters: startDate, endDate, contractId, accountId, productId, productIds,
+         * * Query parameters should be delimited using $ (dollar sign).
+         * * Allowed comparators are:
+         *     * (greater than) >
+         *     * (greater than or equal to) >=
+         *     * (equal to) :
+         *     * (less than) <
+         *     * (less than or equal to) <=
+         *     * (match phrase/prefix) ~
+         * * Allowed parameters: startDate, endDate, contractId, accountId, productId, productIds,
          *   id, createdBy, dtCreated, lastModifiedBy, ids.
-         * - Query example:
-         *     - searchQuery=startDate>2023-01-01$accountId:062085ab-a301-4f21-a081-411020864452.
-         *     - This query is translated into: find commitments where the startDate is older than
+         * * Query example:
+         *     * searchQuery=startDate>2023-01-01$accountId:062085ab-a301-4f21-a081-411020864452.
+         *     * This query is translated into: find commitments where the startDate is older than
          *       2023-01-01 AND the accountId is equal to 062085ab-a301-4f21-a081-411020864452.
          *
          * **Note:** Using the ~ match phrase/prefix comparator. For best results, we recommend
@@ -460,7 +460,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Operator && value == other.value /* spotless:on */
+            return other is Operator && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -587,7 +587,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SortOrder && value == other.value /* spotless:on */
+            return other is SortOrder && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -600,10 +600,30 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CommitmentSearchParams && orgId == other.orgId && fromDocument == other.fromDocument && operator == other.operator && pageSize == other.pageSize && searchQuery == other.searchQuery && sortBy == other.sortBy && sortOrder == other.sortOrder && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CommitmentSearchParams &&
+            orgId == other.orgId &&
+            fromDocument == other.fromDocument &&
+            operator == other.operator &&
+            pageSize == other.pageSize &&
+            searchQuery == other.searchQuery &&
+            sortBy == other.sortBy &&
+            sortOrder == other.sortOrder &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, fromDocument, operator, pageSize, searchQuery, sortBy, sortOrder, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            fromDocument,
+            operator,
+            pageSize,
+            searchQuery,
+            sortBy,
+            sortOrder,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "CommitmentSearchParams{orgId=$orgId, fromDocument=$fromDocument, operator=$operator, pageSize=$pageSize, searchQuery=$searchQuery, sortBy=$sortBy, sortOrder=$sortOrder, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

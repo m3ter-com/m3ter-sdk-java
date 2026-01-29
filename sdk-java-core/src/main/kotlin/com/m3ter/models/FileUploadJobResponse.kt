@@ -19,6 +19,7 @@ import kotlin.jvm.optionals.getOrNull
 
 /** Response containing the upload job details. */
 class FileUploadJobResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val contentLength: JsonField<Long>,
@@ -120,7 +121,7 @@ private constructor(
     fun totalRows(): Optional<Long> = totalRows.getOptional("totalRows")
 
     /**
-     * The upload date for the upload job _(in ISO-8601 format)_.
+     * The upload date for the upload job *(in ISO-8601 format)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -334,7 +335,7 @@ private constructor(
          */
         fun totalRows(totalRows: JsonField<Long>) = apply { this.totalRows = totalRows }
 
-        /** The upload date for the upload job _(in ISO-8601 format)_. */
+        /** The upload date for the upload job *(in ISO-8601 format)*. */
         fun uploadDate(uploadDate: String) = uploadDate(JsonField.of(uploadDate))
 
         /**
@@ -569,7 +570,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+            return other is Status && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -582,12 +583,33 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is FileUploadJobResponse && id == other.id && contentLength == other.contentLength && failedRows == other.failedRows && fileName == other.fileName && processedRows == other.processedRows && status == other.status && totalRows == other.totalRows && uploadDate == other.uploadDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is FileUploadJobResponse &&
+            id == other.id &&
+            contentLength == other.contentLength &&
+            failedRows == other.failedRows &&
+            fileName == other.fileName &&
+            processedRows == other.processedRows &&
+            status == other.status &&
+            totalRows == other.totalRows &&
+            uploadDate == other.uploadDate &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, contentLength, failedRows, fileName, processedRows, status, totalRows, uploadDate, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            contentLength,
+            failedRows,
+            fileName,
+            processedRows,
+            status,
+            totalRows,
+            uploadDate,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

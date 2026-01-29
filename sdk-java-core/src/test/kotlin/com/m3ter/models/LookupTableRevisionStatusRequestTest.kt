@@ -1,0 +1,43 @@
+// File generated from our OpenAPI spec by Stainless.
+
+package com.m3ter.models
+
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import com.m3ter.core.jsonMapper
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
+
+internal class LookupTableRevisionStatusRequestTest {
+
+    @Test
+    fun create() {
+        val lookupTableRevisionStatusRequest =
+            LookupTableRevisionStatusRequest.builder()
+                .status(LookupTableRevisionStatusRequest.Status.DRAFT)
+                .version(0L)
+                .build()
+
+        assertThat(lookupTableRevisionStatusRequest.status())
+            .contains(LookupTableRevisionStatusRequest.Status.DRAFT)
+        assertThat(lookupTableRevisionStatusRequest.version()).contains(0L)
+    }
+
+    @Test
+    fun roundtrip() {
+        val jsonMapper = jsonMapper()
+        val lookupTableRevisionStatusRequest =
+            LookupTableRevisionStatusRequest.builder()
+                .status(LookupTableRevisionStatusRequest.Status.DRAFT)
+                .version(0L)
+                .build()
+
+        val roundtrippedLookupTableRevisionStatusRequest =
+            jsonMapper.readValue(
+                jsonMapper.writeValueAsString(lookupTableRevisionStatusRequest),
+                jacksonTypeRef<LookupTableRevisionStatusRequest>(),
+            )
+
+        assertThat(roundtrippedLookupTableRevisionStatusRequest)
+            .isEqualTo(lookupTableRevisionStatusRequest)
+    }
+}

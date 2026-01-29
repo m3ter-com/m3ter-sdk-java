@@ -27,8 +27,11 @@ import kotlin.jvm.optionals.getOrNull
 /**
  * Create a new Pricing.
  *
- * **Note:** Either `planId` or `planTemplateId` request parameters are required for this call to be
- * valid. If you omit both, then you will receive a validation error.
+ * **Notes:**
+ * * Exactly one of `planId` or `planTemplateId` request parameters are required for this call to be
+ *   valid. If you omit both, then you will receive a validation error.
+ * * Exactly one of `aggregationId` or `compoundAggregationId` request parameters are required for
+ *   this call to be valid. If you omit both, then you will receive a validation error.
  */
 class PricingCreateParams
 private constructor(
@@ -48,8 +51,8 @@ private constructor(
     fun pricingBands(): List<PricingBand> = body.pricingBands()
 
     /**
-     * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the Plan
-     * of Plan Template._(Required)_
+     * The start date *(in ISO-8601 format)* for when the Pricing starts to be active for the Plan
+     * of Plan Template.*(Required)*
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -93,9 +96,9 @@ private constructor(
      * Controls whether or not charge rates under a set of pricing bands configured for a Pricing
      * are applied according to each separate band or at the highest band reached.
      *
-     * _(Optional)_. The default value is **FALSE**.
-     * - When TRUE, at billing charge rates are applied according to each separate band.
-     * - When FALSE, at billing charge rates are applied according to highest band reached.
+     * *(Optional)*. The default value is **FALSE**.
+     * * When TRUE, at billing charge rates are applied according to each separate band.
+     * * When FALSE, at billing charge rates are applied according to highest band reached.
      *
      * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
      * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
@@ -114,10 +117,10 @@ private constructor(
     fun description(): Optional<String> = body.description()
 
     /**
-     * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan or
+     * The end date *(in ISO-8601 format)* for when the Pricing ceases to be active for the Plan or
      * Plan Template.
      *
-     * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+     * *(Optional)* If not specified, the Pricing remains active indefinitely.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -135,10 +138,10 @@ private constructor(
 
     /**
      * The default value is **FALSE**.
-     * - When TRUE, minimum spend is billed at the start of each billing period.
-     * - When FALSE, minimum spend is billed at the end of each billing period.
+     * * When **TRUE**, minimum spend is billed at the start of each billing period.
+     * * When **FALSE**, minimum spend is billed at the end of each billing period.
      *
-     * _(Optional)_. Overrides the setting at Organization level for minimum spend billing in
+     * *(Optional)*. Overrides the setting at Organization level for minimum spend billing in
      * arrears/in advance.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -147,7 +150,7 @@ private constructor(
     fun minimumSpendBillInAdvance(): Optional<Boolean> = body.minimumSpendBillInAdvance()
 
     /**
-     * Minimum spend description _(displayed on the bill line item)_.
+     * Minimum spend description *(displayed on the bill line item)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -156,7 +159,17 @@ private constructor(
 
     /**
      * Specify Prepayment/Balance overage pricing in pricing bands for the case of a **Tiered**
-     * pricing structure.
+     * pricing structure. The overage pricing rates will be used to charge for usage if the Account
+     * has a Commitment/Prepayment or Balance applied to it and the entire Commitment/Prepayment or
+     * Balance amount has been consumed.
+     *
+     * **Constraints:**
+     * * Can only be used for a **Tiered** pricing structure. If cumulative is **FALSE** and you
+     *   defined `overagePricingBands`, then you'll receive an error.
+     * * If `tiersSpanPlan` is set to **TRUE** for usage accumulates over entire contract period,
+     *   then cannot be used.
+     * * If the Commitment/Prepayement or Balance has an `overageSurchargePercent` defined, then
+     *   this will override any `overagePricingBands` you've defined for the pricing.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -200,10 +213,10 @@ private constructor(
 
     /**
      * The default value is **FALSE**.
-     * - If TRUE, usage accumulates over the entire period the priced Plan is active for the
+     * * If **TRUE**, usage accumulates over the entire period the priced Plan is active for the
      *   account, and is not reset for pricing band rates at the start of each billing period.
-     * - If FALSE, usage does not accumulate, and is reset for pricing bands at the start of each
-     *   billing period.
+     * * If **FALSE**, usage does not accumulate, and is reset for pricing bands at the start of
+     *   each billing period.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -211,13 +224,13 @@ private constructor(
     fun tiersSpanPlan(): Optional<Boolean> = body.tiersSpanPlan()
 
     /**
-     * - **DEBIT**. Default setting. The amount calculated using the Pricing is added to the bill as
+     * * **DEBIT**. Default setting. The amount calculated using the Pricing is added to the bill as
      *   a debit.
-     * - **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as a
-     *   credit _(negative amount)_. To prevent negative billing, the bill will be capped at the
+     * * **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as a
+     *   credit *(negative amount)*. To prevent negative billing, the bill will be capped at the
      *   total of other line items for the same Product.
-     * - **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as a credit
-     *   _(negative amount)_. To prevent negative billing, the bill will be capped at the total of
+     * * **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as a credit
+     *   *(negative amount)*. To prevent negative billing, the bill will be capped at the total of
      *   other line items for the entire bill, which might include other Products the Account
      *   consumes.
      *
@@ -228,7 +241,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -461,8 +474,8 @@ private constructor(
         fun addPricingBand(pricingBand: PricingBand) = apply { body.addPricingBand(pricingBand) }
 
         /**
-         * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the
-         * Plan of Plan Template._(Required)_
+         * The start date *(in ISO-8601 format)* for when the Pricing starts to be active for the
+         * Plan of Plan Template.*(Required)*
          */
         fun startDate(startDate: OffsetDateTime) = apply { body.startDate(startDate) }
 
@@ -539,9 +552,9 @@ private constructor(
          * Controls whether or not charge rates under a set of pricing bands configured for a
          * Pricing are applied according to each separate band or at the highest band reached.
          *
-         * _(Optional)_. The default value is **FALSE**.
-         * - When TRUE, at billing charge rates are applied according to each separate band.
-         * - When FALSE, at billing charge rates are applied according to highest band reached.
+         * *(Optional)*. The default value is **FALSE**.
+         * * When TRUE, at billing charge rates are applied according to each separate band.
+         * * When FALSE, at billing charge rates are applied according to highest band reached.
          *
          * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
          * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
@@ -570,10 +583,10 @@ private constructor(
         fun description(description: JsonField<String>) = apply { body.description(description) }
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan
+         * The end date *(in ISO-8601 format)* for when the Pricing ceases to be active for the Plan
          * or Plan Template.
          *
-         * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+         * *(Optional)* If not specified, the Pricing remains active indefinitely.
          */
         fun endDate(endDate: OffsetDateTime) = apply { body.endDate(endDate) }
 
@@ -605,10 +618,10 @@ private constructor(
 
         /**
          * The default value is **FALSE**.
-         * - When TRUE, minimum spend is billed at the start of each billing period.
-         * - When FALSE, minimum spend is billed at the end of each billing period.
+         * * When **TRUE**, minimum spend is billed at the start of each billing period.
+         * * When **FALSE**, minimum spend is billed at the end of each billing period.
          *
-         * _(Optional)_. Overrides the setting at Organization level for minimum spend billing in
+         * *(Optional)*. Overrides the setting at Organization level for minimum spend billing in
          * arrears/in advance.
          */
         fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: Boolean) = apply {
@@ -626,7 +639,7 @@ private constructor(
             body.minimumSpendBillInAdvance(minimumSpendBillInAdvance)
         }
 
-        /** Minimum spend description _(displayed on the bill line item)_. */
+        /** Minimum spend description *(displayed on the bill line item)*. */
         fun minimumSpendDescription(minimumSpendDescription: String) = apply {
             body.minimumSpendDescription(minimumSpendDescription)
         }
@@ -644,7 +657,17 @@ private constructor(
 
         /**
          * Specify Prepayment/Balance overage pricing in pricing bands for the case of a **Tiered**
-         * pricing structure.
+         * pricing structure. The overage pricing rates will be used to charge for usage if the
+         * Account has a Commitment/Prepayment or Balance applied to it and the entire
+         * Commitment/Prepayment or Balance amount has been consumed.
+         *
+         * **Constraints:**
+         * * Can only be used for a **Tiered** pricing structure. If cumulative is **FALSE** and you
+         *   defined `overagePricingBands`, then you'll receive an error.
+         * * If `tiersSpanPlan` is set to **TRUE** for usage accumulates over entire contract
+         *   period, then cannot be used.
+         * * If the Commitment/Prepayement or Balance has an `overageSurchargePercent` defined, then
+         *   this will override any `overagePricingBands` you've defined for the pricing.
          */
         fun overagePricingBands(overagePricingBands: List<PricingBand>) = apply {
             body.overagePricingBands(overagePricingBands)
@@ -721,9 +744,9 @@ private constructor(
 
         /**
          * The default value is **FALSE**.
-         * - If TRUE, usage accumulates over the entire period the priced Plan is active for the
+         * * If **TRUE**, usage accumulates over the entire period the priced Plan is active for the
          *   account, and is not reset for pricing band rates at the start of each billing period.
-         * - If FALSE, usage does not accumulate, and is reset for pricing bands at the start of
+         * * If **FALSE**, usage does not accumulate, and is reset for pricing bands at the start of
          *   each billing period.
          */
         fun tiersSpanPlan(tiersSpanPlan: Boolean) = apply { body.tiersSpanPlan(tiersSpanPlan) }
@@ -740,13 +763,13 @@ private constructor(
         }
 
         /**
-         * - **DEBIT**. Default setting. The amount calculated using the Pricing is added to the
+         * * **DEBIT**. Default setting. The amount calculated using the Pricing is added to the
          *   bill as a debit.
-         * - **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as a
-         *   credit _(negative amount)_. To prevent negative billing, the bill will be capped at the
+         * * **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as a
+         *   credit *(negative amount)*. To prevent negative billing, the bill will be capped at the
          *   total of other line items for the same Product.
-         * - **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as a
-         *   credit _(negative amount)_. To prevent negative billing, the bill will be capped at the
+         * * **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as a
+         *   credit *(negative amount)*. To prevent negative billing, the bill will be capped at the
          *   total of other line items for the entire bill, which might include other Products the
          *   Account consumes.
          */
@@ -762,8 +785,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -930,6 +953,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val pricingBands: JsonField<List<PricingBand>>,
         private val startDate: JsonField<OffsetDateTime>,
@@ -1032,8 +1056,8 @@ private constructor(
         fun pricingBands(): List<PricingBand> = pricingBands.getRequired("pricingBands")
 
         /**
-         * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for the
-         * Plan of Plan Template._(Required)_
+         * The start date *(in ISO-8601 format)* for when the Pricing starts to be active for the
+         * Plan of Plan Template.*(Required)*
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -1079,9 +1103,9 @@ private constructor(
          * Controls whether or not charge rates under a set of pricing bands configured for a
          * Pricing are applied according to each separate band or at the highest band reached.
          *
-         * _(Optional)_. The default value is **FALSE**.
-         * - When TRUE, at billing charge rates are applied according to each separate band.
-         * - When FALSE, at billing charge rates are applied according to highest band reached.
+         * *(Optional)*. The default value is **FALSE**.
+         * * When TRUE, at billing charge rates are applied according to each separate band.
+         * * When FALSE, at billing charge rates are applied according to highest band reached.
          *
          * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require. For
          * example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to **FALSE**.
@@ -1100,10 +1124,10 @@ private constructor(
         fun description(): Optional<String> = description.getOptional("description")
 
         /**
-         * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the Plan
+         * The end date *(in ISO-8601 format)* for when the Pricing ceases to be active for the Plan
          * or Plan Template.
          *
-         * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+         * *(Optional)* If not specified, the Pricing remains active indefinitely.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1121,10 +1145,10 @@ private constructor(
 
         /**
          * The default value is **FALSE**.
-         * - When TRUE, minimum spend is billed at the start of each billing period.
-         * - When FALSE, minimum spend is billed at the end of each billing period.
+         * * When **TRUE**, minimum spend is billed at the start of each billing period.
+         * * When **FALSE**, minimum spend is billed at the end of each billing period.
          *
-         * _(Optional)_. Overrides the setting at Organization level for minimum spend billing in
+         * *(Optional)*. Overrides the setting at Organization level for minimum spend billing in
          * arrears/in advance.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1134,7 +1158,7 @@ private constructor(
             minimumSpendBillInAdvance.getOptional("minimumSpendBillInAdvance")
 
         /**
-         * Minimum spend description _(displayed on the bill line item)_.
+         * Minimum spend description *(displayed on the bill line item)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1144,7 +1168,17 @@ private constructor(
 
         /**
          * Specify Prepayment/Balance overage pricing in pricing bands for the case of a **Tiered**
-         * pricing structure.
+         * pricing structure. The overage pricing rates will be used to charge for usage if the
+         * Account has a Commitment/Prepayment or Balance applied to it and the entire
+         * Commitment/Prepayment or Balance amount has been consumed.
+         *
+         * **Constraints:**
+         * * Can only be used for a **Tiered** pricing structure. If cumulative is **FALSE** and you
+         *   defined `overagePricingBands`, then you'll receive an error.
+         * * If `tiersSpanPlan` is set to **TRUE** for usage accumulates over entire contract
+         *   period, then cannot be used.
+         * * If the Commitment/Prepayement or Balance has an `overageSurchargePercent` defined, then
+         *   this will override any `overagePricingBands` you've defined for the pricing.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1189,9 +1223,9 @@ private constructor(
 
         /**
          * The default value is **FALSE**.
-         * - If TRUE, usage accumulates over the entire period the priced Plan is active for the
+         * * If **TRUE**, usage accumulates over the entire period the priced Plan is active for the
          *   account, and is not reset for pricing band rates at the start of each billing period.
-         * - If FALSE, usage does not accumulate, and is reset for pricing bands at the start of
+         * * If **FALSE**, usage does not accumulate, and is reset for pricing bands at the start of
          *   each billing period.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1200,13 +1234,13 @@ private constructor(
         fun tiersSpanPlan(): Optional<Boolean> = tiersSpanPlan.getOptional("tiersSpanPlan")
 
         /**
-         * - **DEBIT**. Default setting. The amount calculated using the Pricing is added to the
+         * * **DEBIT**. Default setting. The amount calculated using the Pricing is added to the
          *   bill as a debit.
-         * - **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as a
-         *   credit _(negative amount)_. To prevent negative billing, the bill will be capped at the
+         * * **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as a
+         *   credit *(negative amount)*. To prevent negative billing, the bill will be capped at the
          *   total of other line items for the same Product.
-         * - **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as a
-         *   credit _(negative amount)_. To prevent negative billing, the bill will be capped at the
+         * * **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as a
+         *   credit *(negative amount)*. To prevent negative billing, the bill will be capped at the
          *   total of other line items for the entire bill, which might include other Products the
          *   Account consumes.
          *
@@ -1217,8 +1251,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1498,8 +1532,8 @@ private constructor(
             }
 
             /**
-             * The start date _(in ISO-8601 format)_ for when the Pricing starts to be active for
-             * the Plan of Plan Template._(Required)_
+             * The start date *(in ISO-8601 format)* for when the Pricing starts to be active for
+             * the Plan of Plan Template.*(Required)*
              */
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
@@ -1577,9 +1611,9 @@ private constructor(
              * Controls whether or not charge rates under a set of pricing bands configured for a
              * Pricing are applied according to each separate band or at the highest band reached.
              *
-             * _(Optional)_. The default value is **FALSE**.
-             * - When TRUE, at billing charge rates are applied according to each separate band.
-             * - When FALSE, at billing charge rates are applied according to highest band reached.
+             * *(Optional)*. The default value is **FALSE**.
+             * * When TRUE, at billing charge rates are applied according to each separate band.
+             * * When FALSE, at billing charge rates are applied according to highest band reached.
              *
              * **NOTE:** Use the `cumulative` parameter to create the type of Pricing you require.
              * For example, for Tiered Pricing set to **TRUE**; for Volume Pricing, set to
@@ -1611,10 +1645,10 @@ private constructor(
             }
 
             /**
-             * The end date _(in ISO-8601 format)_ for when the Pricing ceases to be active for the
+             * The end date *(in ISO-8601 format)* for when the Pricing ceases to be active for the
              * Plan or Plan Template.
              *
-             * _(Optional)_ If not specified, the Pricing remains active indefinitely.
+             * *(Optional)* If not specified, the Pricing remains active indefinitely.
              */
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
@@ -1646,10 +1680,10 @@ private constructor(
 
             /**
              * The default value is **FALSE**.
-             * - When TRUE, minimum spend is billed at the start of each billing period.
-             * - When FALSE, minimum spend is billed at the end of each billing period.
+             * * When **TRUE**, minimum spend is billed at the start of each billing period.
+             * * When **FALSE**, minimum spend is billed at the end of each billing period.
              *
-             * _(Optional)_. Overrides the setting at Organization level for minimum spend billing
+             * *(Optional)*. Overrides the setting at Organization level for minimum spend billing
              * in arrears/in advance.
              */
             fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: Boolean) =
@@ -1666,7 +1700,7 @@ private constructor(
                 this.minimumSpendBillInAdvance = minimumSpendBillInAdvance
             }
 
-            /** Minimum spend description _(displayed on the bill line item)_. */
+            /** Minimum spend description *(displayed on the bill line item)*. */
             fun minimumSpendDescription(minimumSpendDescription: String) =
                 minimumSpendDescription(JsonField.of(minimumSpendDescription))
 
@@ -1683,7 +1717,17 @@ private constructor(
 
             /**
              * Specify Prepayment/Balance overage pricing in pricing bands for the case of a
-             * **Tiered** pricing structure.
+             * **Tiered** pricing structure. The overage pricing rates will be used to charge for
+             * usage if the Account has a Commitment/Prepayment or Balance applied to it and the
+             * entire Commitment/Prepayment or Balance amount has been consumed.
+             *
+             * **Constraints:**
+             * * Can only be used for a **Tiered** pricing structure. If cumulative is **FALSE** and
+             *   you defined `overagePricingBands`, then you'll receive an error.
+             * * If `tiersSpanPlan` is set to **TRUE** for usage accumulates over entire contract
+             *   period, then cannot be used.
+             * * If the Commitment/Prepayement or Balance has an `overageSurchargePercent` defined,
+             *   then this will override any `overagePricingBands` you've defined for the pricing.
              */
             fun overagePricingBands(overagePricingBands: List<PricingBand>) =
                 overagePricingBands(JsonField.of(overagePricingBands))
@@ -1765,11 +1809,11 @@ private constructor(
 
             /**
              * The default value is **FALSE**.
-             * - If TRUE, usage accumulates over the entire period the priced Plan is active for the
-             *   account, and is not reset for pricing band rates at the start of each billing
+             * * If **TRUE**, usage accumulates over the entire period the priced Plan is active for
+             *   the account, and is not reset for pricing band rates at the start of each billing
              *   period.
-             * - If FALSE, usage does not accumulate, and is reset for pricing bands at the start of
-             *   each billing period.
+             * * If **FALSE**, usage does not accumulate, and is reset for pricing bands at the
+             *   start of each billing period.
              */
             fun tiersSpanPlan(tiersSpanPlan: Boolean) = tiersSpanPlan(JsonField.of(tiersSpanPlan))
 
@@ -1785,13 +1829,13 @@ private constructor(
             }
 
             /**
-             * - **DEBIT**. Default setting. The amount calculated using the Pricing is added to the
+             * * **DEBIT**. Default setting. The amount calculated using the Pricing is added to the
              *   bill as a debit.
-             * - **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as
-             *   a credit _(negative amount)_. To prevent negative billing, the bill will be capped
+             * * **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as
+             *   a credit *(negative amount)*. To prevent negative billing, the bill will be capped
              *   at the total of other line items for the same Product.
-             * - **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as
-             *   a credit _(negative amount)_. To prevent negative billing, the bill will be capped
+             * * **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as
+             *   a credit *(negative amount)*. To prevent negative billing, the bill will be capped
              *   at the total of other line items for the entire bill, which might include other
              *   Products the Account consumes.
              */
@@ -1808,8 +1852,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -1952,12 +1996,53 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && pricingBands == other.pricingBands && startDate == other.startDate && accountingProductId == other.accountingProductId && aggregationId == other.aggregationId && code == other.code && compoundAggregationId == other.compoundAggregationId && cumulative == other.cumulative && description == other.description && endDate == other.endDate && minimumSpend == other.minimumSpend && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && overagePricingBands == other.overagePricingBands && planId == other.planId && planTemplateId == other.planTemplateId && segment == other.segment && tiersSpanPlan == other.tiersSpanPlan && type == other.type && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                pricingBands == other.pricingBands &&
+                startDate == other.startDate &&
+                accountingProductId == other.accountingProductId &&
+                aggregationId == other.aggregationId &&
+                code == other.code &&
+                compoundAggregationId == other.compoundAggregationId &&
+                cumulative == other.cumulative &&
+                description == other.description &&
+                endDate == other.endDate &&
+                minimumSpend == other.minimumSpend &&
+                minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
+                minimumSpendDescription == other.minimumSpendDescription &&
+                overagePricingBands == other.overagePricingBands &&
+                planId == other.planId &&
+                planTemplateId == other.planTemplateId &&
+                segment == other.segment &&
+                tiersSpanPlan == other.tiersSpanPlan &&
+                type == other.type &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(pricingBands, startDate, accountingProductId, aggregationId, code, compoundAggregationId, cumulative, description, endDate, minimumSpend, minimumSpendBillInAdvance, minimumSpendDescription, overagePricingBands, planId, planTemplateId, segment, tiersSpanPlan, type, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                pricingBands,
+                startDate,
+                accountingProductId,
+                aggregationId,
+                code,
+                compoundAggregationId,
+                cumulative,
+                description,
+                endDate,
+                minimumSpend,
+                minimumSpendBillInAdvance,
+                minimumSpendDescription,
+                overagePricingBands,
+                planId,
+                planTemplateId,
+                segment,
+                tiersSpanPlan,
+                type,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2068,12 +2153,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Segment && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Segment && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2081,13 +2164,13 @@ private constructor(
     }
 
     /**
-     * - **DEBIT**. Default setting. The amount calculated using the Pricing is added to the bill as
+     * * **DEBIT**. Default setting. The amount calculated using the Pricing is added to the bill as
      *   a debit.
-     * - **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as a
-     *   credit _(negative amount)_. To prevent negative billing, the bill will be capped at the
+     * * **PRODUCT_CREDIT**. The amount calculated using the Pricing is added to the bill as a
+     *   credit *(negative amount)*. To prevent negative billing, the bill will be capped at the
      *   total of other line items for the same Product.
-     * - **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as a credit
-     *   _(negative amount)_. To prevent negative billing, the bill will be capped at the total of
+     * * **GLOBAL_CREDIT**. The amount calculated using the Pricing is added to the bill as a credit
+     *   *(negative amount)*. To prevent negative billing, the bill will be capped at the total of
      *   other line items for the entire bill, which might include other Products the Account
      *   consumes.
      */
@@ -2213,7 +2296,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            return other is Type && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2226,10 +2309,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PricingCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is PricingCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "PricingCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

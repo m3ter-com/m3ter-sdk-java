@@ -84,7 +84,7 @@ private constructor(
     /**
      * Used to submit usage data values for ingest into the platform that are the result of a
      * calculation performed on `dataFields`, `customFields`, or system `Timestamp` fields. Raw
-     * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. _(Optional)_.
+     * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. *(Optional)*.
      *
      * **Note:** Required parameter. If you want to create a Meter without Derived Fields, use an
      * empty array `[]`. If you use a `null`, you'll receive an error.
@@ -120,7 +120,7 @@ private constructor(
     fun customFields(): Optional<CustomFields> = body.customFields()
 
     /**
-     * UUID of the group the Meter belongs to. _(Optional)_.
+     * UUID of the group the Meter belongs to. *(Optional)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -128,7 +128,7 @@ private constructor(
     fun groupId(): Optional<String> = body.groupId()
 
     /**
-     * UUID of the product the Meter belongs to. _(Optional)_ - if left blank, the Meter is global.
+     * UUID of the product the Meter belongs to. *(Optional)* - if left blank, the Meter is global.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -137,7 +137,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -311,7 +311,7 @@ private constructor(
         /**
          * Used to submit usage data values for ingest into the platform that are the result of a
          * calculation performed on `dataFields`, `customFields`, or system `Timestamp` fields. Raw
-         * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. _(Optional)_.
+         * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. *(Optional)*.
          *
          * **Note:** Required parameter. If you want to create a Meter without Derived Fields, use
          * an empty array `[]`. If you use a `null`, you'll receive an error.
@@ -376,7 +376,7 @@ private constructor(
             body.customFields(customFields)
         }
 
-        /** UUID of the group the Meter belongs to. _(Optional)_. */
+        /** UUID of the group the Meter belongs to. *(Optional)*. */
         fun groupId(groupId: String) = apply { body.groupId(groupId) }
 
         /**
@@ -388,7 +388,7 @@ private constructor(
         fun groupId(groupId: JsonField<String>) = apply { body.groupId(groupId) }
 
         /**
-         * UUID of the product the Meter belongs to. _(Optional)_ - if left blank, the Meter is
+         * UUID of the product the Meter belongs to. *(Optional)* - if left blank, the Meter is
          * global.
          */
         fun productId(productId: String) = apply { body.productId(productId) }
@@ -404,8 +404,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -574,6 +574,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val code: JsonField<String>,
         private val dataFields: JsonField<List<DataField>>,
@@ -640,7 +641,7 @@ private constructor(
         /**
          * Used to submit usage data values for ingest into the platform that are the result of a
          * calculation performed on `dataFields`, `customFields`, or system `Timestamp` fields. Raw
-         * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. _(Optional)_.
+         * usage data is not submitted using `derivedFields`. Maximum 15 per Meter. *(Optional)*.
          *
          * **Note:** Required parameter. If you want to create a Meter without Derived Fields, use
          * an empty array `[]`. If you use a `null`, you'll receive an error.
@@ -676,7 +677,7 @@ private constructor(
         fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
-         * UUID of the group the Meter belongs to. _(Optional)_.
+         * UUID of the group the Meter belongs to. *(Optional)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -684,7 +685,7 @@ private constructor(
         fun groupId(): Optional<String> = groupId.getOptional("groupId")
 
         /**
-         * UUID of the product the Meter belongs to. _(Optional)_ - if left blank, the Meter is
+         * UUID of the product the Meter belongs to. *(Optional)* - if left blank, the Meter is
          * global.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -694,8 +695,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -875,7 +876,7 @@ private constructor(
              * Used to submit usage data values for ingest into the platform that are the result of
              * a calculation performed on `dataFields`, `customFields`, or system `Timestamp`
              * fields. Raw usage data is not submitted using `derivedFields`. Maximum 15 per Meter.
-             * _(Optional)_.
+             * *(Optional)*.
              *
              * **Note:** Required parameter. If you want to create a Meter without Derived Fields,
              * use an empty array `[]`. If you use a `null`, you'll receive an error.
@@ -943,7 +944,7 @@ private constructor(
                 this.customFields = customFields
             }
 
-            /** UUID of the group the Meter belongs to. _(Optional)_. */
+            /** UUID of the group the Meter belongs to. *(Optional)*. */
             fun groupId(groupId: String) = groupId(JsonField.of(groupId))
 
             /**
@@ -956,7 +957,7 @@ private constructor(
             fun groupId(groupId: JsonField<String>) = apply { this.groupId = groupId }
 
             /**
-             * UUID of the product the Meter belongs to. _(Optional)_ - if left blank, the Meter is
+             * UUID of the product the Meter belongs to. *(Optional)* - if left blank, the Meter is
              * global.
              */
             fun productId(productId: String) = productId(JsonField.of(productId))
@@ -972,8 +973,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -1085,12 +1086,31 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && code == other.code && dataFields == other.dataFields && derivedFields == other.derivedFields && name == other.name && customFields == other.customFields && groupId == other.groupId && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                code == other.code &&
+                dataFields == other.dataFields &&
+                derivedFields == other.derivedFields &&
+                name == other.name &&
+                customFields == other.customFields &&
+                groupId == other.groupId &&
+                productId == other.productId &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(code, dataFields, derivedFields, name, customFields, groupId, productId, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                code,
+                dataFields,
+                derivedFields,
+                name,
+                customFields,
+                groupId,
+                productId,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1199,12 +1219,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1216,10 +1234,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is MeterCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is MeterCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "MeterCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

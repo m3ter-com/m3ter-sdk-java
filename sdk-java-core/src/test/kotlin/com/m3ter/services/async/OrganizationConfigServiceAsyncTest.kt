@@ -60,6 +60,8 @@ internal class OrganizationConfigServiceAsyncTest {
                             .timezone("UTC")
                             .weekEpoch("2022-01-04")
                             .yearEpoch("2022-01-01")
+                            .allowNegativeBalances(false)
+                            .allowOverlappingPlans(false)
                             .autoApproveBillsGracePeriod(2)
                             .autoApproveBillsGracePeriodUnit("DAYS")
                             .autoGenerateStatementMode(
@@ -82,6 +84,7 @@ internal class OrganizationConfigServiceAsyncTest {
                             .externalInvoiceDate("LAST_DAY_OF_ARREARS")
                             .minimumSpendBillInAdvance(true)
                             .scheduledBillInterval(0.0)
+                            .scheduledBillOffset(0)
                             .sequenceStartNumber(1000)
                             .standingChargeBillInAdvance(true)
                             .suppressedEmptyBills(true)

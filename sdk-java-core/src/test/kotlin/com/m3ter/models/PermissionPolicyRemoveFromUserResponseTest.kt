@@ -25,7 +25,7 @@ internal class PermissionPolicyRemoveFromUserResponseTest {
                 .version(0L)
                 .build()
 
-        assertThat(permissionPolicyRemoveFromUserResponse.id()).contains("id")
+        assertThat(permissionPolicyRemoveFromUserResponse.id()).isEqualTo("id")
         assertThat(permissionPolicyRemoveFromUserResponse.createdBy()).contains("createdBy")
         assertThat(permissionPolicyRemoveFromUserResponse.dtCreated())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

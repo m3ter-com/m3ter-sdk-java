@@ -61,7 +61,7 @@ private constructor(
     fun code(): Optional<String> = body.code()
 
     /**
-     * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
+     * UUID of the product the Counter belongs to. *(Optional)* - if left blank, the Counter is
      * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
      * Product.
      *
@@ -72,7 +72,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -223,7 +223,7 @@ private constructor(
         fun code(code: JsonField<String>) = apply { body.code(code) }
 
         /**
-         * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
+         * UUID of the product the Counter belongs to. *(Optional)* - if left blank, the Counter is
          * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
          * Product.
          */
@@ -240,8 +240,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -410,6 +410,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val name: JsonField<String>,
         private val unit: JsonField<String>,
@@ -456,7 +457,7 @@ private constructor(
         fun code(): Optional<String> = code.getOptional("code")
 
         /**
-         * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter is
+         * UUID of the product the Counter belongs to. *(Optional)* - if left blank, the Counter is
          * Global. A Global Counter can be used to price Plans or Plan Templates belonging to any
          * Product.
          *
@@ -467,8 +468,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -599,7 +600,7 @@ private constructor(
             fun code(code: JsonField<String>) = apply { this.code = code }
 
             /**
-             * UUID of the product the Counter belongs to. _(Optional)_ - if left blank, the Counter
+             * UUID of the product the Counter belongs to. *(Optional)* - if left blank, the Counter
              * is Global. A Global Counter can be used to price Plans or Plan Templates belonging to
              * any Product.
              */
@@ -616,8 +617,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -718,12 +719,18 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && name == other.name && unit == other.unit && code == other.code && productId == other.productId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                name == other.name &&
+                unit == other.unit &&
+                code == other.code &&
+                productId == other.productId &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(name, unit, code, productId, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(name, unit, code, productId, version, additionalProperties)
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -736,10 +743,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterUpdateParams && orgId == other.orgId && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CounterUpdateParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CounterUpdateParams{orgId=$orgId, id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

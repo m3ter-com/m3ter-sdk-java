@@ -17,6 +17,7 @@ import java.util.Optional
 
 /** It contains details for downloading a file */
 class DownloadUrlResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val url: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -142,12 +143,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DownloadUrlResponse && url == other.url && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DownloadUrlResponse &&
+            url == other.url &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(url, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

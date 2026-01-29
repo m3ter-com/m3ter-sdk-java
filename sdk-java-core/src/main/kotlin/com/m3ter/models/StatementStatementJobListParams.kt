@@ -14,14 +14,14 @@ import kotlin.jvm.optionals.getOrNull
  *
  * Retrieves a list of all StatementJobs for a specific Organization. You can filter the results
  * based on:
- * - StatementJob status.
- * - Whether StatementJob is neither completed nor cancelled but remains active.
- * - The ID of the Bill the StatementJob is associated with.
+ * * StatementJob status.
+ * * Whether StatementJob is neither completed nor cancelled but remains active.
+ * * The ID of the Bill the StatementJob is associated with.
  *
  * You can also paginate the results for easier management.
  *
  * **WARNING!**
- * - You can use only one of the valid Query parameters: `active`, `status`, or `billId` in any
+ * * You can use only one of the valid Query parameters: `active`, `status`, or `billId` in any
  *   call. If you use more than one of these Query parameters in the same call, then a 400 Bad
  *   Request is returned with an error message.
  */
@@ -41,10 +41,10 @@ private constructor(
     fun orgId(): Optional<String> = Optional.ofNullable(orgId)
 
     /**
-     * Boolean filter on whether to only retrieve active _(i.e. not completed/cancelled)_
+     * Boolean filter on whether to only retrieve active *(i.e. not completed/cancelled)*
      * StatementJobs.
-     * - TRUE - only active StatementJobs retrieved.
-     * - FALSE - all StatementJobs retrieved.
+     * * TRUE - only active StatementJobs retrieved.
+     * * FALSE - all StatementJobs retrieved.
      */
     fun active(): Optional<String> = Optional.ofNullable(active)
 
@@ -62,11 +62,11 @@ private constructor(
 
     /**
      * Filter using the StatementJobs status. Possible values:
-     * - `PENDING`
-     * - `RUNNING`
-     * - `COMPLETE`
-     * - `CANCELLED`
-     * - `FAILED`
+     * * `PENDING`
+     * * `RUNNING`
+     * * `COMPLETE`
+     * * `CANCELLED`
+     * * `FAILED`
      */
     fun status(): Optional<String> = Optional.ofNullable(status)
 
@@ -123,10 +123,10 @@ private constructor(
         fun orgId(orgId: Optional<String>) = orgId(orgId.getOrNull())
 
         /**
-         * Boolean filter on whether to only retrieve active _(i.e. not completed/cancelled)_
+         * Boolean filter on whether to only retrieve active *(i.e. not completed/cancelled)*
          * StatementJobs.
-         * - TRUE - only active StatementJobs retrieved.
-         * - FALSE - all StatementJobs retrieved.
+         * * TRUE - only active StatementJobs retrieved.
+         * * FALSE - all StatementJobs retrieved.
          */
         fun active(active: String?) = apply { this.active = active }
 
@@ -163,11 +163,11 @@ private constructor(
 
         /**
          * Filter using the StatementJobs status. Possible values:
-         * - `PENDING`
-         * - `RUNNING`
-         * - `COMPLETE`
-         * - `CANCELLED`
-         * - `FAILED`
+         * * `PENDING`
+         * * `RUNNING`
+         * * `COMPLETE`
+         * * `CANCELLED`
+         * * `FAILED`
          */
         fun status(status: String?) = apply { this.status = status }
 
@@ -315,10 +315,28 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is StatementStatementJobListParams && orgId == other.orgId && active == other.active && billId == other.billId && nextToken == other.nextToken && pageSize == other.pageSize && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is StatementStatementJobListParams &&
+            orgId == other.orgId &&
+            active == other.active &&
+            billId == other.billId &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            status == other.status &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, active, billId, nextToken, pageSize, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            active,
+            billId,
+            nextToken,
+            pageSize,
+            status,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "StatementStatementJobListParams{orgId=$orgId, active=$active, billId=$billId, nextToken=$nextToken, pageSize=$pageSize, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

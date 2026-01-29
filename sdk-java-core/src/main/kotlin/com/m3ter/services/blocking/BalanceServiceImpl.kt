@@ -24,6 +24,10 @@ import com.m3ter.models.BalanceListPageResponse
 import com.m3ter.models.BalanceListParams
 import com.m3ter.models.BalanceRetrieveParams
 import com.m3ter.models.BalanceUpdateParams
+import com.m3ter.services.blocking.balances.ChargeScheduleService
+import com.m3ter.services.blocking.balances.ChargeScheduleServiceImpl
+import com.m3ter.services.blocking.balances.TransactionScheduleService
+import com.m3ter.services.blocking.balances.TransactionScheduleServiceImpl
 import com.m3ter.services.blocking.balances.TransactionService
 import com.m3ter.services.blocking.balances.TransactionServiceImpl
 import java.util.function.Consumer
@@ -38,12 +42,24 @@ class BalanceServiceImpl internal constructor(private val clientOptions: ClientO
 
     private val transactions: TransactionService by lazy { TransactionServiceImpl(clientOptions) }
 
+    private val chargeSchedules: ChargeScheduleService by lazy {
+        ChargeScheduleServiceImpl(clientOptions)
+    }
+
+    private val transactionSchedules: TransactionScheduleService by lazy {
+        TransactionScheduleServiceImpl(clientOptions)
+    }
+
     override fun withRawResponse(): BalanceService.WithRawResponse = withRawResponse
 
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BalanceService =
         BalanceServiceImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun transactions(): TransactionService = transactions
+
+    override fun chargeSchedules(): ChargeScheduleService = chargeSchedules
+
+    override fun transactionSchedules(): TransactionScheduleService = transactionSchedules
 
     override fun create(params: BalanceCreateParams, requestOptions: RequestOptions): Balance =
         // post /organizations/{orgId}/balances
@@ -75,6 +91,14 @@ class BalanceServiceImpl internal constructor(private val clientOptions: ClientO
             TransactionServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val chargeSchedules: ChargeScheduleService.WithRawResponse by lazy {
+            ChargeScheduleServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val transactionSchedules: TransactionScheduleService.WithRawResponse by lazy {
+            TransactionScheduleServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
         ): BalanceService.WithRawResponse =
@@ -83,6 +107,11 @@ class BalanceServiceImpl internal constructor(private val clientOptions: ClientO
             )
 
         override fun transactions(): TransactionService.WithRawResponse = transactions
+
+        override fun chargeSchedules(): ChargeScheduleService.WithRawResponse = chargeSchedules
+
+        override fun transactionSchedules(): TransactionScheduleService.WithRawResponse =
+            transactionSchedules
 
         private val createHandler: Handler<Balance> = jsonHandler<Balance>(clientOptions.jsonMapper)
 

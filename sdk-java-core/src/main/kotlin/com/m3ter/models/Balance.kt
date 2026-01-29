@@ -22,9 +22,11 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class Balance
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accountId: JsonField<String>,
+    private val allowOverdraft: JsonField<Boolean>,
     private val amount: JsonField<Double>,
     private val balanceDrawDownDescription: JsonField<String>,
     private val code: JsonField<String>,
@@ -55,6 +57,9 @@ private constructor(
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
         @JsonProperty("accountId") @ExcludeMissing accountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("allowOverdraft")
+        @ExcludeMissing
+        allowOverdraft: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("balanceDrawDownDescription")
         @ExcludeMissing
@@ -115,6 +120,7 @@ private constructor(
     ) : this(
         id,
         accountId,
+        allowOverdraft,
         amount,
         balanceDrawDownDescription,
         code,
@@ -158,6 +164,16 @@ private constructor(
     fun accountId(): Optional<String> = accountId.getOptional("accountId")
 
     /**
+     * Allow balance amounts to fall below zero. This feature is enabled on request. Please get in
+     * touch with m3ter Support or your m3ter contact if you would like it enabling for your
+     * organization(s).
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun allowOverdraft(): Optional<Boolean> = allowOverdraft.getOptional("allowOverdraft")
+
+    /**
      * The financial value that the Balance holds.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -183,6 +199,9 @@ private constructor(
     fun code(): Optional<String> = code.getOptional("code")
 
     /**
+     * Product ID that any Balance Consumed line items will be attributed to for accounting
+     * purposes.(*Optional*)
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -190,6 +209,8 @@ private constructor(
         consumptionsAccountingProductId.getOptional("consumptionsAccountingProductId")
 
     /**
+     * The unique identifier (UUID) for a Contract on the Account the Balance has been added to.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -237,7 +258,7 @@ private constructor(
     fun description(): Optional<String> = description.getOptional("description")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the Balance was first created.
+     * The date and time *(in ISO 8601 format)* when the Balance was first created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -245,7 +266,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the Balance was last modified.
+     * The date and time *(in ISO 8601 format)* when the Balance was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -253,7 +274,7 @@ private constructor(
     fun dtLastModified(): Optional<OffsetDateTime> = dtLastModified.getOptional("dtLastModified")
 
     /**
-     * The date _(in ISO 8601 format)_ after which the Balance will no longer be active.
+     * The date *(in ISO 8601 format)* after which the Balance will no longer be active.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -261,6 +282,9 @@ private constructor(
     fun endDate(): Optional<OffsetDateTime> = endDate.getOptional("endDate")
 
     /**
+     * Product ID that any Balance Fees line items will be attributed to for accounting
+     * purposes.(*Optional*)
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -301,7 +325,7 @@ private constructor(
         overageDescription.getOptional("overageDescription")
 
     /**
-     * The percentage surcharge applied to overage charges _(usage above the Balance)_.
+     * The percentage surcharge applied to overage charges *(usage above the Balance)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -329,7 +353,7 @@ private constructor(
     fun rolloverAmount(): Optional<Double> = rolloverAmount.getOptional("rolloverAmount")
 
     /**
-     * The end date _(in ISO 8601 format)_ for the rollover grace period, which is the period that
+     * The end date *(in ISO 8601 format)* for the rollover grace period, which is the period that
      * unused Balance amounts can be carried over beyond the specified Balance `endDate` and
      * continue to be drawn-down against for billing.
      *
@@ -339,7 +363,7 @@ private constructor(
     fun rolloverEndDate(): Optional<OffsetDateTime> = rolloverEndDate.getOptional("rolloverEndDate")
 
     /**
-     * The date _(in ISO 8601 format)_ when the Balance becomes active.
+     * The date *(in ISO 8601 format)* when the Balance becomes active.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -370,6 +394,15 @@ private constructor(
      * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("accountId") @ExcludeMissing fun _accountId(): JsonField<String> = accountId
+
+    /**
+     * Returns the raw JSON value of [allowOverdraft].
+     *
+     * Unlike [allowOverdraft], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("allowOverdraft")
+    @ExcludeMissing
+    fun _allowOverdraft(): JsonField<Boolean> = allowOverdraft
 
     /**
      * Returns the raw JSON value of [amount].
@@ -595,6 +628,7 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var accountId: JsonField<String> = JsonMissing.of()
+        private var allowOverdraft: JsonField<Boolean> = JsonMissing.of()
         private var amount: JsonField<Double> = JsonMissing.of()
         private var balanceDrawDownDescription: JsonField<String> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
@@ -624,6 +658,7 @@ private constructor(
         internal fun from(balance: Balance) = apply {
             id = balance.id
             accountId = balance.accountId
+            allowOverdraft = balance.allowOverdraft
             amount = balance.amount
             balanceDrawDownDescription = balance.balanceDrawDownDescription
             code = balance.code
@@ -673,6 +708,24 @@ private constructor(
          */
         fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
 
+        /**
+         * Allow balance amounts to fall below zero. This feature is enabled on request. Please get
+         * in touch with m3ter Support or your m3ter contact if you would like it enabling for your
+         * organization(s).
+         */
+        fun allowOverdraft(allowOverdraft: Boolean) = allowOverdraft(JsonField.of(allowOverdraft))
+
+        /**
+         * Sets [Builder.allowOverdraft] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.allowOverdraft] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun allowOverdraft(allowOverdraft: JsonField<Boolean>) = apply {
+            this.allowOverdraft = allowOverdraft
+        }
+
         /** The financial value that the Balance holds. */
         fun amount(amount: Double) = amount(JsonField.of(amount))
 
@@ -710,6 +763,10 @@ private constructor(
          */
         fun code(code: JsonField<String>) = apply { this.code = code }
 
+        /**
+         * Product ID that any Balance Consumed line items will be attributed to for accounting
+         * purposes.(*Optional*)
+         */
         fun consumptionsAccountingProductId(consumptionsAccountingProductId: String) =
             consumptionsAccountingProductId(JsonField.of(consumptionsAccountingProductId))
 
@@ -725,6 +782,9 @@ private constructor(
                 this.consumptionsAccountingProductId = consumptionsAccountingProductId
             }
 
+        /**
+         * The unique identifier (UUID) for a Contract on the Account the Balance has been added to.
+         */
         fun contractId(contractId: String) = contractId(JsonField.of(contractId))
 
         /**
@@ -796,7 +856,7 @@ private constructor(
          */
         fun description(description: JsonField<String>) = apply { this.description = description }
 
-        /** The date and time _(in ISO 8601 format)_ when the Balance was first created. */
+        /** The date and time *(in ISO 8601 format)* when the Balance was first created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -808,7 +868,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The date and time _(in ISO 8601 format)_ when the Balance was last modified. */
+        /** The date and time *(in ISO 8601 format)* when the Balance was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -823,7 +883,7 @@ private constructor(
             this.dtLastModified = dtLastModified
         }
 
-        /** The date _(in ISO 8601 format)_ after which the Balance will no longer be active. */
+        /** The date *(in ISO 8601 format)* after which the Balance will no longer be active. */
         fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
         /**
@@ -835,6 +895,10 @@ private constructor(
          */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
+        /**
+         * Product ID that any Balance Fees line items will be attributed to for accounting
+         * purposes.(*Optional*)
+         */
         fun feesAccountingProductId(feesAccountingProductId: String) =
             feesAccountingProductId(JsonField.of(feesAccountingProductId))
 
@@ -919,7 +983,7 @@ private constructor(
             this.overageDescription = overageDescription
         }
 
-        /** The percentage surcharge applied to overage charges _(usage above the Balance)_. */
+        /** The percentage surcharge applied to overage charges *(usage above the Balance)*. */
         fun overageSurchargePercent(overageSurchargePercent: Double) =
             overageSurchargePercent(JsonField.of(overageSurchargePercent))
 
@@ -982,7 +1046,7 @@ private constructor(
         }
 
         /**
-         * The end date _(in ISO 8601 format)_ for the rollover grace period, which is the period
+         * The end date *(in ISO 8601 format)* for the rollover grace period, which is the period
          * that unused Balance amounts can be carried over beyond the specified Balance `endDate`
          * and continue to be drawn-down against for billing.
          */
@@ -1000,7 +1064,7 @@ private constructor(
             this.rolloverEndDate = rolloverEndDate
         }
 
-        /** The date _(in ISO 8601 format)_ when the Balance becomes active. */
+        /** The date *(in ISO 8601 format)* when the Balance becomes active. */
         fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
         /**
@@ -1063,6 +1127,7 @@ private constructor(
             Balance(
                 checkRequired("id", id),
                 accountId,
+                allowOverdraft,
                 amount,
                 balanceDrawDownDescription,
                 code,
@@ -1099,6 +1164,7 @@ private constructor(
 
         id()
         accountId()
+        allowOverdraft()
         amount()
         balanceDrawDownDescription()
         code()
@@ -1142,6 +1208,7 @@ private constructor(
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
             (if (accountId.asKnown().isPresent) 1 else 0) +
+            (if (allowOverdraft.asKnown().isPresent) 1 else 0) +
             (if (amount.asKnown().isPresent) 1 else 0) +
             (if (balanceDrawDownDescription.asKnown().isPresent) 1 else 0) +
             (if (code.asKnown().isPresent) 1 else 0) +
@@ -1267,12 +1334,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1305,6 +1370,8 @@ private constructor(
 
             @JvmField val COUNTER_ADJUSTMENT_DEBIT = of("COUNTER_ADJUSTMENT_DEBIT")
 
+            @JvmField val AD_HOC = of("AD_HOC")
+
             @JvmStatic fun of(value: String) = LineItemType(JsonField.of(value))
         }
 
@@ -1315,6 +1382,7 @@ private constructor(
             MINIMUM_SPEND,
             COUNTER_RUNNING_TOTAL_CHARGE,
             COUNTER_ADJUSTMENT_DEBIT,
+            AD_HOC,
         }
 
         /**
@@ -1332,6 +1400,7 @@ private constructor(
             MINIMUM_SPEND,
             COUNTER_RUNNING_TOTAL_CHARGE,
             COUNTER_ADJUSTMENT_DEBIT,
+            AD_HOC,
             /**
              * An enum member indicating that [LineItemType] was instantiated with an unknown value.
              */
@@ -1352,6 +1421,7 @@ private constructor(
                 MINIMUM_SPEND -> Value.MINIMUM_SPEND
                 COUNTER_RUNNING_TOTAL_CHARGE -> Value.COUNTER_RUNNING_TOTAL_CHARGE
                 COUNTER_ADJUSTMENT_DEBIT -> Value.COUNTER_ADJUSTMENT_DEBIT
+                AD_HOC -> Value.AD_HOC
                 else -> Value._UNKNOWN
             }
 
@@ -1370,6 +1440,7 @@ private constructor(
                 MINIMUM_SPEND -> Known.MINIMUM_SPEND
                 COUNTER_RUNNING_TOTAL_CHARGE -> Known.COUNTER_RUNNING_TOTAL_CHARGE
                 COUNTER_ADJUSTMENT_DEBIT -> Known.COUNTER_ADJUSTMENT_DEBIT
+                AD_HOC -> Known.AD_HOC
                 else -> throw M3terInvalidDataException("Unknown LineItemType: $value")
             }
 
@@ -1417,7 +1488,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemType && value == other.value /* spotless:on */
+            return other is LineItemType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -1430,15 +1501,70 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Balance && id == other.id && accountId == other.accountId && amount == other.amount && balanceDrawDownDescription == other.balanceDrawDownDescription && code == other.code && consumptionsAccountingProductId == other.consumptionsAccountingProductId && contractId == other.contractId && createdBy == other.createdBy && currency == other.currency && customFields == other.customFields && description == other.description && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && endDate == other.endDate && feesAccountingProductId == other.feesAccountingProductId && lastModifiedBy == other.lastModifiedBy && lineItemTypes == other.lineItemTypes && name == other.name && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && rolloverAmount == other.rolloverAmount && rolloverEndDate == other.rolloverEndDate && startDate == other.startDate && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is Balance &&
+            id == other.id &&
+            accountId == other.accountId &&
+            allowOverdraft == other.allowOverdraft &&
+            amount == other.amount &&
+            balanceDrawDownDescription == other.balanceDrawDownDescription &&
+            code == other.code &&
+            consumptionsAccountingProductId == other.consumptionsAccountingProductId &&
+            contractId == other.contractId &&
+            createdBy == other.createdBy &&
+            currency == other.currency &&
+            customFields == other.customFields &&
+            description == other.description &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            endDate == other.endDate &&
+            feesAccountingProductId == other.feesAccountingProductId &&
+            lastModifiedBy == other.lastModifiedBy &&
+            lineItemTypes == other.lineItemTypes &&
+            name == other.name &&
+            overageDescription == other.overageDescription &&
+            overageSurchargePercent == other.overageSurchargePercent &&
+            productIds == other.productIds &&
+            rolloverAmount == other.rolloverAmount &&
+            rolloverEndDate == other.rolloverEndDate &&
+            startDate == other.startDate &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountId, amount, balanceDrawDownDescription, code, consumptionsAccountingProductId, contractId, createdBy, currency, customFields, description, dtCreated, dtLastModified, endDate, feesAccountingProductId, lastModifiedBy, lineItemTypes, name, overageDescription, overageSurchargePercent, productIds, rolloverAmount, rolloverEndDate, startDate, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountId,
+            allowOverdraft,
+            amount,
+            balanceDrawDownDescription,
+            code,
+            consumptionsAccountingProductId,
+            contractId,
+            createdBy,
+            currency,
+            customFields,
+            description,
+            dtCreated,
+            dtLastModified,
+            endDate,
+            feesAccountingProductId,
+            lastModifiedBy,
+            lineItemTypes,
+            name,
+            overageDescription,
+            overageSurchargePercent,
+            productIds,
+            rolloverAmount,
+            rolloverEndDate,
+            startDate,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Balance{id=$id, accountId=$accountId, amount=$amount, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, contractId=$contractId, createdBy=$createdBy, currency=$currency, customFields=$customFields, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, startDate=$startDate, version=$version, additionalProperties=$additionalProperties}"
+        "Balance{id=$id, accountId=$accountId, allowOverdraft=$allowOverdraft, amount=$amount, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, contractId=$contractId, createdBy=$createdBy, currency=$currency, customFields=$customFields, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, startDate=$startDate, version=$version, additionalProperties=$additionalProperties}"
 }

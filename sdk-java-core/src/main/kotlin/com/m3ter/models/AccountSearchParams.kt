@@ -460,7 +460,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Operator && value == other.value /* spotless:on */
+            return other is Operator && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -587,7 +587,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SortOrder && value == other.value /* spotless:on */
+            return other is SortOrder && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -600,10 +600,30 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountSearchParams && orgId == other.orgId && fromDocument == other.fromDocument && operator == other.operator && pageSize == other.pageSize && searchQuery == other.searchQuery && sortBy == other.sortBy && sortOrder == other.sortOrder && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is AccountSearchParams &&
+            orgId == other.orgId &&
+            fromDocument == other.fromDocument &&
+            operator == other.operator &&
+            pageSize == other.pageSize &&
+            searchQuery == other.searchQuery &&
+            sortBy == other.sortBy &&
+            sortOrder == other.sortOrder &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, fromDocument, operator, pageSize, searchQuery, sortBy, sortOrder, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            fromDocument,
+            operator,
+            pageSize,
+            searchQuery,
+            sortBy,
+            sortOrder,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "AccountSearchParams{orgId=$orgId, fromDocument=$fromDocument, operator=$operator, pageSize=$pageSize, searchQuery=$searchQuery, sortBy=$sortBy, sortOrder=$sortOrder, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

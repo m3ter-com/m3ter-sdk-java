@@ -20,6 +20,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class PlanGroupResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val accountId: JsonField<String>,
@@ -170,7 +171,7 @@ private constructor(
     fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the PlanGroup was first created.
+     * The date and time *(in ISO 8601 format)* when the PlanGroup was first created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -178,7 +179,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The date and time _(in ISO 8601 format)_ when the PlanGroup was last modified.
+     * The date and time *(in ISO 8601 format)* when the PlanGroup was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -213,8 +214,8 @@ private constructor(
     /**
      * A boolean flag that determines when the minimum spend is billed. This flag overrides the
      * setting at Organizational level for minimum spend billing in arrears/in advance.
-     * - **TRUE** - minimum spend is billed at the start of each billing period.
-     * - **FALSE** - minimum spend is billed at the end of each billing period.
+     * * **TRUE** - minimum spend is billed at the start of each billing period.
+     * * **FALSE** - minimum spend is billed at the end of each billing period.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -259,8 +260,8 @@ private constructor(
     /**
      * A boolean flag that determines when the standing charge is billed. This flag overrides the
      * setting at Organizational level for standing charge billing in arrears/in advance.
-     * - **TRUE** - standing charge is billed at the start of each billing period.
-     * - **FALSE** - standing charge is billed at the end of each billing period.
+     * * **TRUE** - standing charge is billed at the start of each billing period.
+     * * **FALSE** - standing charge is billed at the end of each billing period.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -609,7 +610,7 @@ private constructor(
             this.customFields = customFields
         }
 
-        /** The date and time _(in ISO 8601 format)_ when the PlanGroup was first created. */
+        /** The date and time *(in ISO 8601 format)* when the PlanGroup was first created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -621,7 +622,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The date and time _(in ISO 8601 format)_ when the PlanGroup was last modified. */
+        /** The date and time *(in ISO 8601 format)* when the PlanGroup was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -685,8 +686,8 @@ private constructor(
         /**
          * A boolean flag that determines when the minimum spend is billed. This flag overrides the
          * setting at Organizational level for minimum spend billing in arrears/in advance.
-         * - **TRUE** - minimum spend is billed at the start of each billing period.
-         * - **FALSE** - minimum spend is billed at the end of each billing period.
+         * * **TRUE** - minimum spend is billed at the start of each billing period.
+         * * **FALSE** - minimum spend is billed at the end of each billing period.
          */
         fun minimumSpendBillInAdvance(minimumSpendBillInAdvance: Boolean) =
             minimumSpendBillInAdvance(JsonField.of(minimumSpendBillInAdvance))
@@ -763,8 +764,8 @@ private constructor(
         /**
          * A boolean flag that determines when the standing charge is billed. This flag overrides
          * the setting at Organizational level for standing charge billing in arrears/in advance.
-         * - **TRUE** - standing charge is billed at the start of each billing period.
-         * - **FALSE** - standing charge is billed at the end of each billing period.
+         * * **TRUE** - standing charge is billed at the start of each billing period.
+         * * **FALSE** - standing charge is billed at the end of each billing period.
          */
         fun standingChargeBillInAdvance(standingChargeBillInAdvance: Boolean) =
             standingChargeBillInAdvance(JsonField.of(standingChargeBillInAdvance))
@@ -1032,12 +1033,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -1049,12 +1048,53 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanGroupResponse && id == other.id && accountId == other.accountId && code == other.code && createdBy == other.createdBy && currency == other.currency && customFields == other.customFields && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && minimumSpend == other.minimumSpend && minimumSpendAccountingProductId == other.minimumSpendAccountingProductId && minimumSpendBillInAdvance == other.minimumSpendBillInAdvance && minimumSpendDescription == other.minimumSpendDescription && name == other.name && standingCharge == other.standingCharge && standingChargeAccountingProductId == other.standingChargeAccountingProductId && standingChargeBillInAdvance == other.standingChargeBillInAdvance && standingChargeDescription == other.standingChargeDescription && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PlanGroupResponse &&
+            id == other.id &&
+            accountId == other.accountId &&
+            code == other.code &&
+            createdBy == other.createdBy &&
+            currency == other.currency &&
+            customFields == other.customFields &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            minimumSpend == other.minimumSpend &&
+            minimumSpendAccountingProductId == other.minimumSpendAccountingProductId &&
+            minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
+            minimumSpendDescription == other.minimumSpendDescription &&
+            name == other.name &&
+            standingCharge == other.standingCharge &&
+            standingChargeAccountingProductId == other.standingChargeAccountingProductId &&
+            standingChargeBillInAdvance == other.standingChargeBillInAdvance &&
+            standingChargeDescription == other.standingChargeDescription &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, accountId, code, createdBy, currency, customFields, dtCreated, dtLastModified, lastModifiedBy, minimumSpend, minimumSpendAccountingProductId, minimumSpendBillInAdvance, minimumSpendDescription, name, standingCharge, standingChargeAccountingProductId, standingChargeBillInAdvance, standingChargeDescription, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            accountId,
+            code,
+            createdBy,
+            currency,
+            customFields,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            minimumSpend,
+            minimumSpendAccountingProductId,
+            minimumSpendBillInAdvance,
+            minimumSpendDescription,
+            name,
+            standingCharge,
+            standingChargeAccountingProductId,
+            standingChargeBillInAdvance,
+            standingChargeDescription,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

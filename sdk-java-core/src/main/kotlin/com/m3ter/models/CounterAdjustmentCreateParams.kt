@@ -24,10 +24,10 @@ import kotlin.jvm.optionals.getOrNull
  * Create a new CounterAdjustment for an Account using a Counter.
  *
  * **Notes:**
- * - Use the new absolute value for the Counter for the selected date - if it was 15 and has
- *   increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. _Do not enter_ the
+ * * Use the new absolute value for the Counter for the selected date - if it was 15 and has
+ *   increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. *Do not enter* the
  *   plus or minus value relative to the previous Counter value on the Account.
- * - CounterAdjustments on Accounts are supported down to a _specific day_ of granularity - you
+ * * CounterAdjustments on Accounts are supported down to a *specific day* of granularity - you
  *   cannot create more than one CounterAdjustment for any given day using the same Counter and
  *   you'll receive an error if you try to do this.
  */
@@ -59,9 +59,9 @@ private constructor(
     fun counterId(): String = body.counterId()
 
     /**
-     * The date the CounterAdjustment is created for the Account _(in ISO-8601 date format)_.
+     * The date the CounterAdjustment is created for the Account *(in ISO-8601 date format)*.
      *
-     * **Note:** CounterAdjustments on Accounts are supported down to a _specific day_ of
+     * **Note:** CounterAdjustments on Accounts are supported down to a *specific day* of
      * granularity - you cannot create more than one CounterAdjustment for any given day using the
      * same Counter and you'll receive an error if you try to do this.
      *
@@ -74,7 +74,7 @@ private constructor(
      * Integer Value of the Counter used for the CounterAdjustment.
      *
      * **Note:** Use the new absolute value for the Counter for the selected date - if it was 15 and
-     * has increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. _Do not enter_
+     * has increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. *Do not enter*
      * the plus or minus value relative to the previous Counter value on the Account.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
@@ -83,7 +83,7 @@ private constructor(
     fun value(): Int = body.value()
 
     /**
-     * Purchase Order Number for the Counter Adjustment. _(Optional)_
+     * Purchase Order Number for the Counter Adjustment. *(Optional)*
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -92,7 +92,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -235,9 +235,9 @@ private constructor(
         fun counterId(counterId: JsonField<String>) = apply { body.counterId(counterId) }
 
         /**
-         * The date the CounterAdjustment is created for the Account _(in ISO-8601 date format)_.
+         * The date the CounterAdjustment is created for the Account *(in ISO-8601 date format)*.
          *
-         * **Note:** CounterAdjustments on Accounts are supported down to a _specific day_ of
+         * **Note:** CounterAdjustments on Accounts are supported down to a *specific day* of
          * granularity - you cannot create more than one CounterAdjustment for any given day using
          * the same Counter and you'll receive an error if you try to do this.
          */
@@ -255,8 +255,8 @@ private constructor(
          * Integer Value of the Counter used for the CounterAdjustment.
          *
          * **Note:** Use the new absolute value for the Counter for the selected date - if it was 15
-         * and has increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. _Do
-         * not enter_ the plus or minus value relative to the previous Counter value on the Account.
+         * and has increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. *Do
+         * not enter* the plus or minus value relative to the previous Counter value on the Account.
          */
         fun value(value: Int) = apply { body.value(value) }
 
@@ -268,7 +268,7 @@ private constructor(
          */
         fun value(value: JsonField<Int>) = apply { body.value(value) }
 
-        /** Purchase Order Number for the Counter Adjustment. _(Optional)_ */
+        /** Purchase Order Number for the Counter Adjustment. *(Optional)* */
         fun purchaseOrderNumber(purchaseOrderNumber: String) = apply {
             body.purchaseOrderNumber(purchaseOrderNumber)
         }
@@ -286,8 +286,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -456,6 +456,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val accountId: JsonField<String>,
         private val counterId: JsonField<String>,
@@ -499,9 +500,9 @@ private constructor(
         fun counterId(): String = counterId.getRequired("counterId")
 
         /**
-         * The date the CounterAdjustment is created for the Account _(in ISO-8601 date format)_.
+         * The date the CounterAdjustment is created for the Account *(in ISO-8601 date format)*.
          *
-         * **Note:** CounterAdjustments on Accounts are supported down to a _specific day_ of
+         * **Note:** CounterAdjustments on Accounts are supported down to a *specific day* of
          * granularity - you cannot create more than one CounterAdjustment for any given day using
          * the same Counter and you'll receive an error if you try to do this.
          *
@@ -514,8 +515,8 @@ private constructor(
          * Integer Value of the Counter used for the CounterAdjustment.
          *
          * **Note:** Use the new absolute value for the Counter for the selected date - if it was 15
-         * and has increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. _Do
-         * not enter_ the plus or minus value relative to the previous Counter value on the Account.
+         * and has increased to 20, enter 20; if it was 15 and has decreased to 10, enter 10. *Do
+         * not enter* the plus or minus value relative to the previous Counter value on the Account.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -523,7 +524,7 @@ private constructor(
         fun value(): Int = value.getRequired("value")
 
         /**
-         * Purchase Order Number for the Counter Adjustment. _(Optional)_
+         * Purchase Order Number for the Counter Adjustment. *(Optional)*
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -533,8 +534,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -664,10 +665,10 @@ private constructor(
             fun counterId(counterId: JsonField<String>) = apply { this.counterId = counterId }
 
             /**
-             * The date the CounterAdjustment is created for the Account _(in ISO-8601 date
-             * format)_.
+             * The date the CounterAdjustment is created for the Account *(in ISO-8601 date
+             * format)*.
              *
-             * **Note:** CounterAdjustments on Accounts are supported down to a _specific day_ of
+             * **Note:** CounterAdjustments on Accounts are supported down to a *specific day* of
              * granularity - you cannot create more than one CounterAdjustment for any given day
              * using the same Counter and you'll receive an error if you try to do this.
              */
@@ -687,7 +688,7 @@ private constructor(
              *
              * **Note:** Use the new absolute value for the Counter for the selected date - if it
              * was 15 and has increased to 20, enter 20; if it was 15 and has decreased to 10,
-             * enter 10. _Do not enter_ the plus or minus value relative to the previous Counter
+             * enter 10. *Do not enter* the plus or minus value relative to the previous Counter
              * value on the Account.
              */
             fun value(value: Int) = value(JsonField.of(value))
@@ -701,7 +702,7 @@ private constructor(
              */
             fun value(value: JsonField<Int>) = apply { this.value = value }
 
-            /** Purchase Order Number for the Counter Adjustment. _(Optional)_ */
+            /** Purchase Order Number for the Counter Adjustment. *(Optional)* */
             fun purchaseOrderNumber(purchaseOrderNumber: String) =
                 purchaseOrderNumber(JsonField.of(purchaseOrderNumber))
 
@@ -718,8 +719,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -825,12 +826,27 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && accountId == other.accountId && counterId == other.counterId && date == other.date && value == other.value && purchaseOrderNumber == other.purchaseOrderNumber && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                accountId == other.accountId &&
+                counterId == other.counterId &&
+                date == other.date &&
+                value == other.value &&
+                purchaseOrderNumber == other.purchaseOrderNumber &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountId, counterId, date, value, purchaseOrderNumber, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                accountId,
+                counterId,
+                date,
+                value,
+                purchaseOrderNumber,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -843,10 +859,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CounterAdjustmentCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CounterAdjustmentCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CounterAdjustmentCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

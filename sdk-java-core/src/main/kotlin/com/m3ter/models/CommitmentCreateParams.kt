@@ -34,9 +34,9 @@ import kotlin.jvm.optionals.getOrNull
  * **Note:** If some of the agreed Commitment amount remains unpaid at the start of an end-customer
  * contract period, when you create a Commitment for an Account you can set up billing for the
  * outstanding amount in one of two ways:
- * - Select a Product _Plan to bill with_. Use the `billingPlanId` request parameter to select the
+ * - Select a Product *Plan to bill with*. Use the `billingPlanId` request parameter to select the
  *   Plan used for billing.
- * - Define a _schedule of billing dates_. Omit a `billingPlanId` and use the `feeDates` request
+ * - Define a *schedule of billing dates*. Omit a `billingPlanId` and use the `feeDates` request
  *   parameter to define a precise schedule of bill dates and amounts.
  */
 class CommitmentCreateParams
@@ -96,7 +96,7 @@ private constructor(
 
     /**
      * The unique identifier (UUID) for the Product linked to the Commitment for accounting
-     * purposes. _(Optional)_
+     * purposes. *(Optional)*
      *
      * **NOTE:** If you're planning to set up an integration for sending Bills to an external
      * accounts receivable system, please check requirements for your chosen system. Some systems,
@@ -126,7 +126,7 @@ private constructor(
     fun amountPrePaid(): Optional<Double> = body.amountPrePaid()
 
     /**
-     * The starting date _(in ISO-8601 date format)_ from which the billing cycles are calculated.
+     * The starting date *(in ISO-8601 date format)* from which the billing cycles are calculated.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -166,9 +166,9 @@ private constructor(
      * If the Account is either a Parent or a Child Account, this specifies the Account hierarchy
      * billing mode. The mode determines how billing will be handled and shown on bills for charges
      * due on the Parent Account, and charges due on Child Accounts:
-     * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-     * - **Parent Summary** - single bill line item for all Accounts.
-     * - **Child** - the Child Account is billed.
+     * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+     * * **Parent Summary** - single bill line item for all Accounts.
+     * * **Child** - the Child Account is billed.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -176,12 +176,12 @@ private constructor(
     fun childBillingMode(): Optional<ChildBillingMode> = body.childBillingMode()
 
     /**
-     * A boolean value indicating whether the Commitment fee is billed in advance _(start of each
-     * billing period)_ or arrears _(end of each billing period)_.
+     * A boolean value indicating whether the Commitment fee is billed in advance *(start of each
+     * billing period)* or arrears *(end of each billing period)*.
      *
      * If no value is supplied, then the Organization Configuration value is used.
-     * - **TRUE** - bill in advance _(start of each billing period)_.
-     * - **FALSE** - bill in arrears _(end of each billing period)_.
+     * * **TRUE** - bill in advance *(start of each billing period)*.
+     * * **FALSE** - bill in arrears *(end of each billing period)*.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -219,8 +219,8 @@ private constructor(
     fun contractId(): Optional<String> = body.contractId()
 
     /**
-     * Optional Product ID this Commitment consumptions should be attributed to for accounting
-     * purposes
+     * Optional Product ID this Commitment's consumptions should be attributed to for accounting
+     * purposes.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -228,20 +228,20 @@ private constructor(
     fun drawdownsAccountingProductId(): Optional<String> = body.drawdownsAccountingProductId()
 
     /**
-     * Used for billing any outstanding Commitment fees _on a schedule_.
+     * Used for billing any outstanding Commitment fees *on a schedule*.
      *
      * Create an array to define a series of bill dates and amounts covering specified service
      * periods:
-     * - `date` - the billing date _(in ISO-8601 format)_.
+     * - `date` - the billing date *(in ISO-8601 format)*.
      * - `amount` - the billed amount.
      * - `servicePeriodStartDate` and `servicePeriodEndDate` - defines the service period the bill
-     *   covers _(in ISO-8601 format)_.
+     *   covers *(in ISO-8601 format)*.
      *
      * **Notes:**
-     * - If you try to set `servicePeriodStartDate` _after_ `servicePeriodEndDate`, you'll receive
+     * * If you try to set `servicePeriodStartDate` *after* `servicePeriodEndDate`, you'll receive
      *   an error.
-     * - You can set `servicePeriodStartDate` and `servicePeriodEndDate` to the _same date_ without
-     *   receiving an error, but _please be sure_ your Commitment billing use case requires this.
+     * * You can set `servicePeriodStartDate` and `servicePeriodEndDate` to the *same date* without
+     *   receiving an error, but *please be sure* your Commitment billing use case requires this.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -249,7 +249,7 @@ private constructor(
     fun feeDates(): Optional<List<CommitmentFee>> = body.feeDates()
 
     /**
-     * Optional Product ID this Commitment fees should be attributed to for accounting purposes
+     * Optional Product ID this Commitment's fees should be attributed to for accounting purposes.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -265,7 +265,7 @@ private constructor(
      * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
      * - `"COUNTER_ADJUSTMENT_DEBIT"`
      *
-     * **NOTE:** If no charge types are specified, by default _all types_ can draw-down against the
+     * **NOTE:** If no charge types are specified, by default *all types* can draw-down against the
      * Commitment amount at billing.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -284,7 +284,7 @@ private constructor(
     /**
      * The percentage surcharge applied to usage charges that exceed the Commitment amount.
      *
-     * **Note:** You can enter a _negative percentage_ if you want to give a discount rate for usage
+     * **Note:** You can enter a *negative percentage* if you want to give a discount rate for usage
      * to end customers who exceed their Commitment amount
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -309,15 +309,15 @@ private constructor(
      * overage usage is separated and a Commitment amount has been consumed by an Account, any
      * subsequent line items on Bills against the Account for usage will show as separate "overage
      * usage" charges, not simply as "usage" charges:
-     * - **TRUE** - billed separately.
-     * - **FALSE** - billed together.
+     * * **TRUE** - billed separately.
+     * * **FALSE** - billed together.
      *
      * **Notes:**
      * - Can be used only if no value or 0 has been defined for the `overageSurchargePercent`
      *   parameter. If you try to separate overage usage when a value other than 0 has been defined
      *   for `overageSurchargePercent`, you'll receive an error.
      * - If a priced Plan is used to bill any outstanding Commitment fees due and the Plan is set up
-     *   with overage pricing on a _tiered pricing structure_ and you enable separate bill line
+     *   with overage pricing on a *tiered pricing structure* and you enable separate bill line
      *   items for overage usage, then overage usage charges will be rated according to the overage
      *   pricing defined for the tiered pricing on the Plan.
      *
@@ -328,7 +328,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -662,7 +662,7 @@ private constructor(
 
         /**
          * The unique identifier (UUID) for the Product linked to the Commitment for accounting
-         * purposes. _(Optional)_
+         * purposes. *(Optional)*
          *
          * **NOTE:** If you're planning to set up an integration for sending Bills to an external
          * accounts receivable system, please check requirements for your chosen system. Some
@@ -718,7 +718,7 @@ private constructor(
         }
 
         /**
-         * The starting date _(in ISO-8601 date format)_ from which the billing cycles are
+         * The starting date *(in ISO-8601 date format)* from which the billing cycles are
          * calculated.
          */
         fun billEpoch(billEpoch: LocalDate) = apply { body.billEpoch(billEpoch) }
@@ -789,9 +789,9 @@ private constructor(
          * If the Account is either a Parent or a Child Account, this specifies the Account
          * hierarchy billing mode. The mode determines how billing will be handled and shown on
          * bills for charges due on the Parent Account, and charges due on Child Accounts:
-         * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-         * - **Parent Summary** - single bill line item for all Accounts.
-         * - **Child** - the Child Account is billed.
+         * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+         * * **Parent Summary** - single bill line item for all Accounts.
+         * * **Child** - the Child Account is billed.
          */
         fun childBillingMode(childBillingMode: ChildBillingMode) = apply {
             body.childBillingMode(childBillingMode)
@@ -809,12 +809,12 @@ private constructor(
         }
 
         /**
-         * A boolean value indicating whether the Commitment fee is billed in advance _(start of
-         * each billing period)_ or arrears _(end of each billing period)_.
+         * A boolean value indicating whether the Commitment fee is billed in advance *(start of
+         * each billing period)* or arrears *(end of each billing period)*.
          *
          * If no value is supplied, then the Organization Configuration value is used.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * * **TRUE** - bill in advance *(start of each billing period)*.
+         * * **FALSE** - bill in arrears *(end of each billing period)*.
          */
         fun commitmentFeeBillInAdvance(commitmentFeeBillInAdvance: Boolean) = apply {
             body.commitmentFeeBillInAdvance(commitmentFeeBillInAdvance)
@@ -884,8 +884,8 @@ private constructor(
         fun contractId(contractId: JsonField<String>) = apply { body.contractId(contractId) }
 
         /**
-         * Optional Product ID this Commitment consumptions should be attributed to for accounting
-         * purposes
+         * Optional Product ID this Commitment's consumptions should be attributed to for accounting
+         * purposes.
          */
         fun drawdownsAccountingProductId(drawdownsAccountingProductId: String) = apply {
             body.drawdownsAccountingProductId(drawdownsAccountingProductId)
@@ -903,20 +903,20 @@ private constructor(
         }
 
         /**
-         * Used for billing any outstanding Commitment fees _on a schedule_.
+         * Used for billing any outstanding Commitment fees *on a schedule*.
          *
          * Create an array to define a series of bill dates and amounts covering specified service
          * periods:
-         * - `date` - the billing date _(in ISO-8601 format)_.
+         * - `date` - the billing date *(in ISO-8601 format)*.
          * - `amount` - the billed amount.
          * - `servicePeriodStartDate` and `servicePeriodEndDate` - defines the service period the
-         *   bill covers _(in ISO-8601 format)_.
+         *   bill covers *(in ISO-8601 format)*.
          *
          * **Notes:**
-         * - If you try to set `servicePeriodStartDate` _after_ `servicePeriodEndDate`, you'll
+         * * If you try to set `servicePeriodStartDate` *after* `servicePeriodEndDate`, you'll
          *   receive an error.
-         * - You can set `servicePeriodStartDate` and `servicePeriodEndDate` to the _same date_
-         *   without receiving an error, but _please be sure_ your Commitment billing use case
+         * * You can set `servicePeriodStartDate` and `servicePeriodEndDate` to the *same date*
+         *   without receiving an error, but *please be sure* your Commitment billing use case
          *   requires this.
          */
         fun feeDates(feeDates: List<CommitmentFee>) = apply { body.feeDates(feeDates) }
@@ -938,7 +938,8 @@ private constructor(
         fun addFeeDate(feeDate: CommitmentFee) = apply { body.addFeeDate(feeDate) }
 
         /**
-         * Optional Product ID this Commitment fees should be attributed to for accounting purposes
+         * Optional Product ID this Commitment's fees should be attributed to for accounting
+         * purposes.
          */
         fun feesAccountingProductId(feesAccountingProductId: String) = apply {
             body.feesAccountingProductId(feesAccountingProductId)
@@ -964,7 +965,7 @@ private constructor(
          * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
          * - `"COUNTER_ADJUSTMENT_DEBIT"`
          *
-         * **NOTE:** If no charge types are specified, by default _all types_ can draw-down against
+         * **NOTE:** If no charge types are specified, by default *all types* can draw-down against
          * the Commitment amount at billing.
          */
         fun lineItemTypes(lineItemTypes: List<LineItemType>) = apply {
@@ -1010,7 +1011,7 @@ private constructor(
         /**
          * The percentage surcharge applied to usage charges that exceed the Commitment amount.
          *
-         * **Note:** You can enter a _negative percentage_ if you want to give a discount rate for
+         * **Note:** You can enter a *negative percentage* if you want to give a discount rate for
          * usage to end customers who exceed their Commitment amount
          */
         fun overageSurchargePercent(overageSurchargePercent: Double) = apply {
@@ -1058,15 +1059,15 @@ private constructor(
          * overage usage is separated and a Commitment amount has been consumed by an Account, any
          * subsequent line items on Bills against the Account for usage will show as separate
          * "overage usage" charges, not simply as "usage" charges:
-         * - **TRUE** - billed separately.
-         * - **FALSE** - billed together.
+         * * **TRUE** - billed separately.
+         * * **FALSE** - billed together.
          *
          * **Notes:**
          * - Can be used only if no value or 0 has been defined for the `overageSurchargePercent`
          *   parameter. If you try to separate overage usage when a value other than 0 has been
          *   defined for `overageSurchargePercent`, you'll receive an error.
          * - If a priced Plan is used to bill any outstanding Commitment fees due and the Plan is
-         *   set up with overage pricing on a _tiered pricing structure_ and you enable separate
+         *   set up with overage pricing on a *tiered pricing structure* and you enable separate
          *   bill line items for overage usage, then overage usage charges will be rated according
          *   to the overage pricing defined for the tiered pricing on the Plan.
          */
@@ -1087,8 +1088,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1258,6 +1259,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val accountId: JsonField<String>,
         private val amount: JsonField<Double>,
@@ -1441,7 +1443,7 @@ private constructor(
 
         /**
          * The unique identifier (UUID) for the Product linked to the Commitment for accounting
-         * purposes. _(Optional)_
+         * purposes. *(Optional)*
          *
          * **NOTE:** If you're planning to set up an integration for sending Bills to an external
          * accounts receivable system, please check requirements for your chosen system. Some
@@ -1472,7 +1474,7 @@ private constructor(
         fun amountPrePaid(): Optional<Double> = amountPrePaid.getOptional("amountPrePaid")
 
         /**
-         * The starting date _(in ISO-8601 date format)_ from which the billing cycles are
+         * The starting date *(in ISO-8601 date format)* from which the billing cycles are
          * calculated.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1513,9 +1515,9 @@ private constructor(
          * If the Account is either a Parent or a Child Account, this specifies the Account
          * hierarchy billing mode. The mode determines how billing will be handled and shown on
          * bills for charges due on the Parent Account, and charges due on Child Accounts:
-         * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-         * - **Parent Summary** - single bill line item for all Accounts.
-         * - **Child** - the Child Account is billed.
+         * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+         * * **Parent Summary** - single bill line item for all Accounts.
+         * * **Child** - the Child Account is billed.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1524,12 +1526,12 @@ private constructor(
             childBillingMode.getOptional("childBillingMode")
 
         /**
-         * A boolean value indicating whether the Commitment fee is billed in advance _(start of
-         * each billing period)_ or arrears _(end of each billing period)_.
+         * A boolean value indicating whether the Commitment fee is billed in advance *(start of
+         * each billing period)* or arrears *(end of each billing period)*.
          *
          * If no value is supplied, then the Organization Configuration value is used.
-         * - **TRUE** - bill in advance _(start of each billing period)_.
-         * - **FALSE** - bill in arrears _(end of each billing period)_.
+         * * **TRUE** - bill in advance *(start of each billing period)*.
+         * * **FALSE** - bill in arrears *(end of each billing period)*.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1570,8 +1572,8 @@ private constructor(
         fun contractId(): Optional<String> = contractId.getOptional("contractId")
 
         /**
-         * Optional Product ID this Commitment consumptions should be attributed to for accounting
-         * purposes
+         * Optional Product ID this Commitment's consumptions should be attributed to for accounting
+         * purposes.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1580,20 +1582,20 @@ private constructor(
             drawdownsAccountingProductId.getOptional("drawdownsAccountingProductId")
 
         /**
-         * Used for billing any outstanding Commitment fees _on a schedule_.
+         * Used for billing any outstanding Commitment fees *on a schedule*.
          *
          * Create an array to define a series of bill dates and amounts covering specified service
          * periods:
-         * - `date` - the billing date _(in ISO-8601 format)_.
+         * - `date` - the billing date *(in ISO-8601 format)*.
          * - `amount` - the billed amount.
          * - `servicePeriodStartDate` and `servicePeriodEndDate` - defines the service period the
-         *   bill covers _(in ISO-8601 format)_.
+         *   bill covers *(in ISO-8601 format)*.
          *
          * **Notes:**
-         * - If you try to set `servicePeriodStartDate` _after_ `servicePeriodEndDate`, you'll
+         * * If you try to set `servicePeriodStartDate` *after* `servicePeriodEndDate`, you'll
          *   receive an error.
-         * - You can set `servicePeriodStartDate` and `servicePeriodEndDate` to the _same date_
-         *   without receiving an error, but _please be sure_ your Commitment billing use case
+         * * You can set `servicePeriodStartDate` and `servicePeriodEndDate` to the *same date*
+         *   without receiving an error, but *please be sure* your Commitment billing use case
          *   requires this.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1602,7 +1604,8 @@ private constructor(
         fun feeDates(): Optional<List<CommitmentFee>> = feeDates.getOptional("feeDates")
 
         /**
-         * Optional Product ID this Commitment fees should be attributed to for accounting purposes
+         * Optional Product ID this Commitment's fees should be attributed to for accounting
+         * purposes.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1619,7 +1622,7 @@ private constructor(
          * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
          * - `"COUNTER_ADJUSTMENT_DEBIT"`
          *
-         * **NOTE:** If no charge types are specified, by default _all types_ can draw-down against
+         * **NOTE:** If no charge types are specified, by default *all types* can draw-down against
          * the Commitment amount at billing.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1640,7 +1643,7 @@ private constructor(
         /**
          * The percentage surcharge applied to usage charges that exceed the Commitment amount.
          *
-         * **Note:** You can enter a _negative percentage_ if you want to give a discount rate for
+         * **Note:** You can enter a *negative percentage* if you want to give a discount rate for
          * usage to end customers who exceed their Commitment amount
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1666,15 +1669,15 @@ private constructor(
          * overage usage is separated and a Commitment amount has been consumed by an Account, any
          * subsequent line items on Bills against the Account for usage will show as separate
          * "overage usage" charges, not simply as "usage" charges:
-         * - **TRUE** - billed separately.
-         * - **FALSE** - billed together.
+         * * **TRUE** - billed separately.
+         * * **FALSE** - billed together.
          *
          * **Notes:**
          * - Can be used only if no value or 0 has been defined for the `overageSurchargePercent`
          *   parameter. If you try to separate overage usage when a value other than 0 has been
          *   defined for `overageSurchargePercent`, you'll receive an error.
          * - If a priced Plan is used to bill any outstanding Commitment fees due and the Plan is
-         *   set up with overage pricing on a _tiered pricing structure_ and you enable separate
+         *   set up with overage pricing on a *tiered pricing structure* and you enable separate
          *   bill line items for overage usage, then overage usage charges will be rated according
          *   to the overage pricing defined for the tiered pricing on the Plan.
          *
@@ -1686,8 +1689,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -2099,7 +2102,7 @@ private constructor(
 
             /**
              * The unique identifier (UUID) for the Product linked to the Commitment for accounting
-             * purposes. _(Optional)_
+             * purposes. *(Optional)*
              *
              * **NOTE:** If you're planning to set up an integration for sending Bills to an
              * external accounts receivable system, please check requirements for your chosen
@@ -2154,7 +2157,7 @@ private constructor(
             }
 
             /**
-             * The starting date _(in ISO-8601 date format)_ from which the billing cycles are
+             * The starting date *(in ISO-8601 date format)* from which the billing cycles are
              * calculated.
              */
             fun billEpoch(billEpoch: LocalDate) = billEpoch(JsonField.of(billEpoch))
@@ -2227,9 +2230,9 @@ private constructor(
              * If the Account is either a Parent or a Child Account, this specifies the Account
              * hierarchy billing mode. The mode determines how billing will be handled and shown on
              * bills for charges due on the Parent Account, and charges due on Child Accounts:
-             * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-             * - **Parent Summary** - single bill line item for all Accounts.
-             * - **Child** - the Child Account is billed.
+             * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+             * * **Parent Summary** - single bill line item for all Accounts.
+             * * **Child** - the Child Account is billed.
              */
             fun childBillingMode(childBillingMode: ChildBillingMode) =
                 childBillingMode(JsonField.of(childBillingMode))
@@ -2246,12 +2249,12 @@ private constructor(
             }
 
             /**
-             * A boolean value indicating whether the Commitment fee is billed in advance _(start of
-             * each billing period)_ or arrears _(end of each billing period)_.
+             * A boolean value indicating whether the Commitment fee is billed in advance *(start of
+             * each billing period)* or arrears *(end of each billing period)*.
              *
              * If no value is supplied, then the Organization Configuration value is used.
-             * - **TRUE** - bill in advance _(start of each billing period)_.
-             * - **FALSE** - bill in arrears _(end of each billing period)_.
+             * * **TRUE** - bill in advance *(start of each billing period)*.
+             * * **FALSE** - bill in arrears *(end of each billing period)*.
              */
             fun commitmentFeeBillInAdvance(commitmentFeeBillInAdvance: Boolean) =
                 commitmentFeeBillInAdvance(JsonField.of(commitmentFeeBillInAdvance))
@@ -2318,8 +2321,8 @@ private constructor(
             fun contractId(contractId: JsonField<String>) = apply { this.contractId = contractId }
 
             /**
-             * Optional Product ID this Commitment consumptions should be attributed to for
-             * accounting purposes
+             * Optional Product ID this Commitment's consumptions should be attributed to for
+             * accounting purposes.
              */
             fun drawdownsAccountingProductId(drawdownsAccountingProductId: String) =
                 drawdownsAccountingProductId(JsonField.of(drawdownsAccountingProductId))
@@ -2337,20 +2340,20 @@ private constructor(
                 }
 
             /**
-             * Used for billing any outstanding Commitment fees _on a schedule_.
+             * Used for billing any outstanding Commitment fees *on a schedule*.
              *
              * Create an array to define a series of bill dates and amounts covering specified
              * service periods:
-             * - `date` - the billing date _(in ISO-8601 format)_.
+             * - `date` - the billing date *(in ISO-8601 format)*.
              * - `amount` - the billed amount.
              * - `servicePeriodStartDate` and `servicePeriodEndDate` - defines the service period
-             *   the bill covers _(in ISO-8601 format)_.
+             *   the bill covers *(in ISO-8601 format)*.
              *
              * **Notes:**
-             * - If you try to set `servicePeriodStartDate` _after_ `servicePeriodEndDate`, you'll
+             * * If you try to set `servicePeriodStartDate` *after* `servicePeriodEndDate`, you'll
              *   receive an error.
-             * - You can set `servicePeriodStartDate` and `servicePeriodEndDate` to the _same date_
-             *   without receiving an error, but _please be sure_ your Commitment billing use case
+             * * You can set `servicePeriodStartDate` and `servicePeriodEndDate` to the *same date*
+             *   without receiving an error, but *please be sure* your Commitment billing use case
              *   requires this.
              */
             fun feeDates(feeDates: List<CommitmentFee>) = feeDates(JsonField.of(feeDates))
@@ -2379,8 +2382,8 @@ private constructor(
             }
 
             /**
-             * Optional Product ID this Commitment fees should be attributed to for accounting
-             * purposes
+             * Optional Product ID this Commitment's fees should be attributed to for accounting
+             * purposes.
              */
             fun feesAccountingProductId(feesAccountingProductId: String) =
                 feesAccountingProductId(JsonField.of(feesAccountingProductId))
@@ -2405,7 +2408,7 @@ private constructor(
              * - `"COUNTER_RUNNING_TOTAL_CHARGE"`
              * - `"COUNTER_ADJUSTMENT_DEBIT"`
              *
-             * **NOTE:** If no charge types are specified, by default _all types_ can draw-down
+             * **NOTE:** If no charge types are specified, by default *all types* can draw-down
              * against the Commitment amount at billing.
              */
             fun lineItemTypes(lineItemTypes: List<LineItemType>) =
@@ -2452,7 +2455,7 @@ private constructor(
             /**
              * The percentage surcharge applied to usage charges that exceed the Commitment amount.
              *
-             * **Note:** You can enter a _negative percentage_ if you want to give a discount rate
+             * **Note:** You can enter a *negative percentage* if you want to give a discount rate
              * for usage to end customers who exceed their Commitment amount
              */
             fun overageSurchargePercent(overageSurchargePercent: Double) =
@@ -2506,8 +2509,8 @@ private constructor(
              * together. If overage usage is separated and a Commitment amount has been consumed by
              * an Account, any subsequent line items on Bills against the Account for usage will
              * show as separate "overage usage" charges, not simply as "usage" charges:
-             * - **TRUE** - billed separately.
-             * - **FALSE** - billed together.
+             * * **TRUE** - billed separately.
+             * * **FALSE** - billed together.
              *
              * **Notes:**
              * - Can be used only if no value or 0 has been defined for the
@@ -2515,7 +2518,7 @@ private constructor(
              *   value other than 0 has been defined for `overageSurchargePercent`, you'll receive
              *   an error.
              * - If a priced Plan is used to bill any outstanding Commitment fees due and the Plan
-             *   is set up with overage pricing on a _tiered pricing structure_ and you enable
+             *   is set up with overage pricing on a *tiered pricing structure* and you enable
              *   separate bill line items for overage usage, then overage usage charges will be
              *   rated according to the overage pricing defined for the tiered pricing on the Plan.
              */
@@ -2535,8 +2538,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -2703,12 +2706,67 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && accountId == other.accountId && amount == other.amount && currency == other.currency && endDate == other.endDate && startDate == other.startDate && accountingProductId == other.accountingProductId && amountFirstBill == other.amountFirstBill && amountPrePaid == other.amountPrePaid && billEpoch == other.billEpoch && billingInterval == other.billingInterval && billingOffset == other.billingOffset && billingPlanId == other.billingPlanId && childBillingMode == other.childBillingMode && commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance && commitmentFeeDescription == other.commitmentFeeDescription && commitmentUsageDescription == other.commitmentUsageDescription && contractId == other.contractId && drawdownsAccountingProductId == other.drawdownsAccountingProductId && feeDates == other.feeDates && feesAccountingProductId == other.feesAccountingProductId && lineItemTypes == other.lineItemTypes && overageDescription == other.overageDescription && overageSurchargePercent == other.overageSurchargePercent && productIds == other.productIds && separateOverageUsage == other.separateOverageUsage && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                accountId == other.accountId &&
+                amount == other.amount &&
+                currency == other.currency &&
+                endDate == other.endDate &&
+                startDate == other.startDate &&
+                accountingProductId == other.accountingProductId &&
+                amountFirstBill == other.amountFirstBill &&
+                amountPrePaid == other.amountPrePaid &&
+                billEpoch == other.billEpoch &&
+                billingInterval == other.billingInterval &&
+                billingOffset == other.billingOffset &&
+                billingPlanId == other.billingPlanId &&
+                childBillingMode == other.childBillingMode &&
+                commitmentFeeBillInAdvance == other.commitmentFeeBillInAdvance &&
+                commitmentFeeDescription == other.commitmentFeeDescription &&
+                commitmentUsageDescription == other.commitmentUsageDescription &&
+                contractId == other.contractId &&
+                drawdownsAccountingProductId == other.drawdownsAccountingProductId &&
+                feeDates == other.feeDates &&
+                feesAccountingProductId == other.feesAccountingProductId &&
+                lineItemTypes == other.lineItemTypes &&
+                overageDescription == other.overageDescription &&
+                overageSurchargePercent == other.overageSurchargePercent &&
+                productIds == other.productIds &&
+                separateOverageUsage == other.separateOverageUsage &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountId, amount, currency, endDate, startDate, accountingProductId, amountFirstBill, amountPrePaid, billEpoch, billingInterval, billingOffset, billingPlanId, childBillingMode, commitmentFeeBillInAdvance, commitmentFeeDescription, commitmentUsageDescription, contractId, drawdownsAccountingProductId, feeDates, feesAccountingProductId, lineItemTypes, overageDescription, overageSurchargePercent, productIds, separateOverageUsage, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                accountId,
+                amount,
+                currency,
+                endDate,
+                startDate,
+                accountingProductId,
+                amountFirstBill,
+                amountPrePaid,
+                billEpoch,
+                billingInterval,
+                billingOffset,
+                billingPlanId,
+                childBillingMode,
+                commitmentFeeBillInAdvance,
+                commitmentFeeDescription,
+                commitmentUsageDescription,
+                contractId,
+                drawdownsAccountingProductId,
+                feeDates,
+                feesAccountingProductId,
+                lineItemTypes,
+                overageDescription,
+                overageSurchargePercent,
+                productIds,
+                separateOverageUsage,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -2720,9 +2778,9 @@ private constructor(
      * If the Account is either a Parent or a Child Account, this specifies the Account hierarchy
      * billing mode. The mode determines how billing will be handled and shown on bills for charges
      * due on the Parent Account, and charges due on Child Accounts:
-     * - **Parent Breakdown** - a separate bill line item per Account. Default setting.
-     * - **Parent Summary** - single bill line item for all Accounts.
-     * - **Child** - the Child Account is billed.
+     * * **Parent Breakdown** - a separate bill line item per Account. Default setting.
+     * * **Parent Summary** - single bill line item for all Accounts.
+     * * **Child** - the Child Account is billed.
      */
     class ChildBillingMode @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
@@ -2850,7 +2908,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ChildBillingMode && value == other.value /* spotless:on */
+            return other is ChildBillingMode && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2996,7 +3054,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItemType && value == other.value /* spotless:on */
+            return other is LineItemType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -3009,10 +3067,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CommitmentCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is CommitmentCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "CommitmentCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

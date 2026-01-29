@@ -90,32 +90,23 @@ private constructor(
         body.autoGenerateStatementMode()
 
     /**
-     * Optional setting to define a _billing cycle date_, which sets the date of the first Bill and
+     * Optional setting to define a *billing cycle date*, which sets the date of the first Bill and
      * acts as a reference for when in the applied billing frequency period subsequent bills are
      * created:
-     * - For example, if you attach a Plan to an Account where the Plan is configured for monthly
+     * * For example, if you attach a Plan to an Account where the Plan is configured for monthly
      *   billing frequency and you've defined the period the Plan will apply to the Account to be
      *   from January 1st, 2022 until January 1st, 2023. You then set a `billEpoch` date of February
      *   15th, 2022. The first Bill will be created for the Account on February 15th, and subsequent
      *   Bills created on the 15th of the months following for the remainder of the billing period -
      *   March 15th, April 15th, and so on.
-     * - If not defined, then the relevant Epoch date set for the billing frequency period at
+     * * If not defined, then the relevant Epoch date set for the billing frequency period at
      *   Organization level will be used instead.
-     * - The date is in ISO-8601 format.
+     * * The date is in ISO-8601 format.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun billEpoch(): Optional<LocalDate> = body.billEpoch()
-
-    /**
-     * Configuration data for the Account Supported settings:
-     * - SendBillsToThirdParties ("true"/"false")
-     *
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
-     */
-    fun configData(): Optional<ConfigData> = body.configData()
 
     /**
      * Define the order in which any Prepayment or Balance amounts on the Account are to be
@@ -126,9 +117,9 @@ private constructor(
      * - `"BALANCE"`. Only draw-down against Balance credit.
      *
      * **NOTES:**
-     * - Any setting you define here overrides the setting for credit application order at
+     * * Any setting you define here overrides the setting for credit application order at
      *   Organization level.
-     * - If the Account belongs to a Parent/Child Account hierarchy, then the
+     * * If the Account belongs to a Parent/Child Account hierarchy, then the
      *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
      *   always to Prepayment then Balance order.
      *
@@ -225,7 +216,7 @@ private constructor(
 
     /**
      * The version number of the entity:
-     * - **Create entity:** Not valid for initial insertion of new entity - _do not use for Create_.
+     * - **Create entity:** Not valid for initial insertion of new entity - *do not use for Create*.
      *   On initial Create, version is set at 1 and listed in the response.
      * - **Update Entity:** On Update, version is required and must match the existing version
      *   because a check is performed to ensure sequential versioning is preserved. Version is
@@ -279,13 +270,6 @@ private constructor(
      * Unlike [billEpoch], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _billEpoch(): JsonField<LocalDate> = body._billEpoch()
-
-    /**
-     * Returns the raw JSON value of [configData].
-     *
-     * Unlike [configData], this method doesn't throw if the JSON field has an unexpected type.
-     */
-    fun _configData(): JsonField<ConfigData> = body._configData()
 
     /**
      * Returns the raw JSON value of [creditApplicationOrder].
@@ -487,18 +471,18 @@ private constructor(
         ) = apply { body.autoGenerateStatementMode(autoGenerateStatementMode) }
 
         /**
-         * Optional setting to define a _billing cycle date_, which sets the date of the first Bill
+         * Optional setting to define a *billing cycle date*, which sets the date of the first Bill
          * and acts as a reference for when in the applied billing frequency period subsequent bills
          * are created:
-         * - For example, if you attach a Plan to an Account where the Plan is configured for
+         * * For example, if you attach a Plan to an Account where the Plan is configured for
          *   monthly billing frequency and you've defined the period the Plan will apply to the
          *   Account to be from January 1st, 2022 until January 1st, 2023. You then set a
          *   `billEpoch` date of February 15th, 2022. The first Bill will be created for the Account
          *   on February 15th, and subsequent Bills created on the 15th of the months following for
          *   the remainder of the billing period - March 15th, April 15th, and so on.
-         * - If not defined, then the relevant Epoch date set for the billing frequency period at
+         * * If not defined, then the relevant Epoch date set for the billing frequency period at
          *   Organization level will be used instead.
-         * - The date is in ISO-8601 format.
+         * * The date is in ISO-8601 format.
          */
         fun billEpoch(billEpoch: LocalDate) = apply { body.billEpoch(billEpoch) }
 
@@ -512,21 +496,6 @@ private constructor(
         fun billEpoch(billEpoch: JsonField<LocalDate>) = apply { body.billEpoch(billEpoch) }
 
         /**
-         * Configuration data for the Account Supported settings:
-         * - SendBillsToThirdParties ("true"/"false")
-         */
-        fun configData(configData: ConfigData) = apply { body.configData(configData) }
-
-        /**
-         * Sets [Builder.configData] to an arbitrary JSON value.
-         *
-         * You should usually call [Builder.configData] with a well-typed [ConfigData] value
-         * instead. This method is primarily for setting the field to an undocumented or not yet
-         * supported value.
-         */
-        fun configData(configData: JsonField<ConfigData>) = apply { body.configData(configData) }
-
-        /**
          * Define the order in which any Prepayment or Balance amounts on the Account are to be
          * drawn-down against for billing. Four options:
          * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance credit.
@@ -535,9 +504,9 @@ private constructor(
          * - `"BALANCE"`. Only draw-down against Balance credit.
          *
          * **NOTES:**
-         * - Any setting you define here overrides the setting for credit application order at
+         * * Any setting you define here overrides the setting for credit application order at
          *   Organization level.
-         * - If the Account belongs to a Parent/Child Account hierarchy, then the
+         * * If the Account belongs to a Parent/Child Account hierarchy, then the
          *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
          *   always to Prepayment then Balance order.
          */
@@ -703,8 +672,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -875,6 +844,7 @@ private constructor(
 
     /** Account request for operations such as Create or Update Account. */
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val code: JsonField<String>,
         private val emailAddress: JsonField<String>,
@@ -882,7 +852,6 @@ private constructor(
         private val address: JsonField<Address>,
         private val autoGenerateStatementMode: JsonField<AutoGenerateStatementMode>,
         private val billEpoch: JsonField<LocalDate>,
-        private val configData: JsonField<ConfigData>,
         private val creditApplicationOrder: JsonField<List<CreditApplicationOrder>>,
         private val currency: JsonField<String>,
         private val customFields: JsonField<CustomFields>,
@@ -908,9 +877,6 @@ private constructor(
             @JsonProperty("billEpoch")
             @ExcludeMissing
             billEpoch: JsonField<LocalDate> = JsonMissing.of(),
-            @JsonProperty("configData")
-            @ExcludeMissing
-            configData: JsonField<ConfigData> = JsonMissing.of(),
             @JsonProperty("creditApplicationOrder")
             @ExcludeMissing
             creditApplicationOrder: JsonField<List<CreditApplicationOrder>> = JsonMissing.of(),
@@ -940,7 +906,6 @@ private constructor(
             address,
             autoGenerateStatementMode,
             billEpoch,
-            configData,
             creditApplicationOrder,
             currency,
             customFields,
@@ -997,32 +962,23 @@ private constructor(
             autoGenerateStatementMode.getOptional("autoGenerateStatementMode")
 
         /**
-         * Optional setting to define a _billing cycle date_, which sets the date of the first Bill
+         * Optional setting to define a *billing cycle date*, which sets the date of the first Bill
          * and acts as a reference for when in the applied billing frequency period subsequent bills
          * are created:
-         * - For example, if you attach a Plan to an Account where the Plan is configured for
+         * * For example, if you attach a Plan to an Account where the Plan is configured for
          *   monthly billing frequency and you've defined the period the Plan will apply to the
          *   Account to be from January 1st, 2022 until January 1st, 2023. You then set a
          *   `billEpoch` date of February 15th, 2022. The first Bill will be created for the Account
          *   on February 15th, and subsequent Bills created on the 15th of the months following for
          *   the remainder of the billing period - March 15th, April 15th, and so on.
-         * - If not defined, then the relevant Epoch date set for the billing frequency period at
+         * * If not defined, then the relevant Epoch date set for the billing frequency period at
          *   Organization level will be used instead.
-         * - The date is in ISO-8601 format.
+         * * The date is in ISO-8601 format.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
         fun billEpoch(): Optional<LocalDate> = billEpoch.getOptional("billEpoch")
-
-        /**
-         * Configuration data for the Account Supported settings:
-         * - SendBillsToThirdParties ("true"/"false")
-         *
-         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-         *   server responded with an unexpected value).
-         */
-        fun configData(): Optional<ConfigData> = configData.getOptional("configData")
 
         /**
          * Define the order in which any Prepayment or Balance amounts on the Account are to be
@@ -1033,9 +989,9 @@ private constructor(
          * - `"BALANCE"`. Only draw-down against Balance credit.
          *
          * **NOTES:**
-         * - Any setting you define here overrides the setting for credit application order at
+         * * Any setting you define here overrides the setting for credit application order at
          *   Organization level.
-         * - If the Account belongs to a Parent/Child Account hierarchy, then the
+         * * If the Account belongs to a Parent/Child Account hierarchy, then the
          *   `creditApplicationOrder` settings are not available, and the draw-down order defaults
          *   always to Prepayment then Balance order.
          *
@@ -1134,8 +1090,8 @@ private constructor(
 
         /**
          * The version number of the entity:
-         * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-         *   Create_. On initial Create, version is set at 1 and listed in the response.
+         * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+         *   Create*. On initial Create, version is set at 1 and listed in the response.
          * - **Update Entity:** On Update, version is required and must match the existing version
          *   because a check is performed to ensure sequential versioning is preserved. Version is
          *   incremented by 1 and listed in the response.
@@ -1195,15 +1151,6 @@ private constructor(
         @JsonProperty("billEpoch")
         @ExcludeMissing
         fun _billEpoch(): JsonField<LocalDate> = billEpoch
-
-        /**
-         * Returns the raw JSON value of [configData].
-         *
-         * Unlike [configData], this method doesn't throw if the JSON field has an unexpected type.
-         */
-        @JsonProperty("configData")
-        @ExcludeMissing
-        fun _configData(): JsonField<ConfigData> = configData
 
         /**
          * Returns the raw JSON value of [creditApplicationOrder].
@@ -1317,7 +1264,6 @@ private constructor(
             private var autoGenerateStatementMode: JsonField<AutoGenerateStatementMode> =
                 JsonMissing.of()
             private var billEpoch: JsonField<LocalDate> = JsonMissing.of()
-            private var configData: JsonField<ConfigData> = JsonMissing.of()
             private var creditApplicationOrder: JsonField<MutableList<CreditApplicationOrder>>? =
                 null
             private var currency: JsonField<String> = JsonMissing.of()
@@ -1337,7 +1283,6 @@ private constructor(
                 address = body.address
                 autoGenerateStatementMode = body.autoGenerateStatementMode
                 billEpoch = body.billEpoch
-                configData = body.configData
                 creditApplicationOrder = body.creditApplicationOrder.map { it.toMutableList() }
                 currency = body.currency
                 customFields = body.customFields
@@ -1420,19 +1365,19 @@ private constructor(
             ) = apply { this.autoGenerateStatementMode = autoGenerateStatementMode }
 
             /**
-             * Optional setting to define a _billing cycle date_, which sets the date of the first
+             * Optional setting to define a *billing cycle date*, which sets the date of the first
              * Bill and acts as a reference for when in the applied billing frequency period
              * subsequent bills are created:
-             * - For example, if you attach a Plan to an Account where the Plan is configured for
+             * * For example, if you attach a Plan to an Account where the Plan is configured for
              *   monthly billing frequency and you've defined the period the Plan will apply to the
              *   Account to be from January 1st, 2022 until January 1st, 2023. You then set a
              *   `billEpoch` date of February 15th, 2022. The first Bill will be created for the
              *   Account on February 15th, and subsequent Bills created on the 15th of the months
              *   following for the remainder of the billing period - March 15th, April 15th, and so
              *   on.
-             * - If not defined, then the relevant Epoch date set for the billing frequency period
+             * * If not defined, then the relevant Epoch date set for the billing frequency period
              *   at Organization level will be used instead.
-             * - The date is in ISO-8601 format.
+             * * The date is in ISO-8601 format.
              */
             fun billEpoch(billEpoch: LocalDate) = billEpoch(JsonField.of(billEpoch))
 
@@ -1446,23 +1391,6 @@ private constructor(
             fun billEpoch(billEpoch: JsonField<LocalDate>) = apply { this.billEpoch = billEpoch }
 
             /**
-             * Configuration data for the Account Supported settings:
-             * - SendBillsToThirdParties ("true"/"false")
-             */
-            fun configData(configData: ConfigData) = configData(JsonField.of(configData))
-
-            /**
-             * Sets [Builder.configData] to an arbitrary JSON value.
-             *
-             * You should usually call [Builder.configData] with a well-typed [ConfigData] value
-             * instead. This method is primarily for setting the field to an undocumented or not yet
-             * supported value.
-             */
-            fun configData(configData: JsonField<ConfigData>) = apply {
-                this.configData = configData
-            }
-
-            /**
              * Define the order in which any Prepayment or Balance amounts on the Account are to be
              * drawn-down against for billing. Four options:
              * - `"PREPAYMENT","BALANCE"`. Draw-down against Prepayment credit before Balance
@@ -1473,9 +1401,9 @@ private constructor(
              * - `"BALANCE"`. Only draw-down against Balance credit.
              *
              * **NOTES:**
-             * - Any setting you define here overrides the setting for credit application order at
+             * * Any setting you define here overrides the setting for credit application order at
              *   Organization level.
-             * - If the Account belongs to a Parent/Child Account hierarchy, then the
+             * * If the Account belongs to a Parent/Child Account hierarchy, then the
              *   `creditApplicationOrder` settings are not available, and the draw-down order
              *   defaults always to Prepayment then Balance order.
              */
@@ -1642,8 +1570,8 @@ private constructor(
 
             /**
              * The version number of the entity:
-             * - **Create entity:** Not valid for initial insertion of new entity - _do not use for
-             *   Create_. On initial Create, version is set at 1 and listed in the response.
+             * - **Create entity:** Not valid for initial insertion of new entity - *do not use for
+             *   Create*. On initial Create, version is set at 1 and listed in the response.
              * - **Update Entity:** On Update, version is required and must match the existing
              *   version because a check is performed to ensure sequential versioning is preserved.
              *   Version is incremented by 1 and listed in the response.
@@ -1700,7 +1628,6 @@ private constructor(
                     address,
                     autoGenerateStatementMode,
                     billEpoch,
-                    configData,
                     (creditApplicationOrder ?: JsonMissing.of()).map { it.toImmutable() },
                     currency,
                     customFields,
@@ -1726,7 +1653,6 @@ private constructor(
             address().ifPresent { it.validate() }
             autoGenerateStatementMode().ifPresent { it.validate() }
             billEpoch()
-            configData().ifPresent { it.validate() }
             creditApplicationOrder().ifPresent { it.forEach { it.validate() } }
             currency()
             customFields().ifPresent { it.validate() }
@@ -1760,7 +1686,6 @@ private constructor(
                 (address.asKnown().getOrNull()?.validity() ?: 0) +
                 (autoGenerateStatementMode.asKnown().getOrNull()?.validity() ?: 0) +
                 (if (billEpoch.asKnown().isPresent) 1 else 0) +
-                (configData.asKnown().getOrNull()?.validity() ?: 0) +
                 (creditApplicationOrder.asKnown().getOrNull()?.sumOf { it.validity().toInt() }
                     ?: 0) +
                 (if (currency.asKnown().isPresent) 1 else 0) +
@@ -1776,17 +1701,48 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && code == other.code && emailAddress == other.emailAddress && name == other.name && address == other.address && autoGenerateStatementMode == other.autoGenerateStatementMode && billEpoch == other.billEpoch && configData == other.configData && creditApplicationOrder == other.creditApplicationOrder && currency == other.currency && customFields == other.customFields && daysBeforeBillDue == other.daysBeforeBillDue && parentAccountId == other.parentAccountId && purchaseOrderNumber == other.purchaseOrderNumber && statementDefinitionId == other.statementDefinitionId && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                code == other.code &&
+                emailAddress == other.emailAddress &&
+                name == other.name &&
+                address == other.address &&
+                autoGenerateStatementMode == other.autoGenerateStatementMode &&
+                billEpoch == other.billEpoch &&
+                creditApplicationOrder == other.creditApplicationOrder &&
+                currency == other.currency &&
+                customFields == other.customFields &&
+                daysBeforeBillDue == other.daysBeforeBillDue &&
+                parentAccountId == other.parentAccountId &&
+                purchaseOrderNumber == other.purchaseOrderNumber &&
+                statementDefinitionId == other.statementDefinitionId &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(code, emailAddress, name, address, autoGenerateStatementMode, billEpoch, configData, creditApplicationOrder, currency, customFields, daysBeforeBillDue, parentAccountId, purchaseOrderNumber, statementDefinitionId, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                code,
+                emailAddress,
+                name,
+                address,
+                autoGenerateStatementMode,
+                billEpoch,
+                creditApplicationOrder,
+                currency,
+                customFields,
+                daysBeforeBillDue,
+                parentAccountId,
+                purchaseOrderNumber,
+                statementDefinitionId,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{code=$code, emailAddress=$emailAddress, name=$name, address=$address, autoGenerateStatementMode=$autoGenerateStatementMode, billEpoch=$billEpoch, configData=$configData, creditApplicationOrder=$creditApplicationOrder, currency=$currency, customFields=$customFields, daysBeforeBillDue=$daysBeforeBillDue, parentAccountId=$parentAccountId, purchaseOrderNumber=$purchaseOrderNumber, statementDefinitionId=$statementDefinitionId, version=$version, additionalProperties=$additionalProperties}"
+            "Body{code=$code, emailAddress=$emailAddress, name=$name, address=$address, autoGenerateStatementMode=$autoGenerateStatementMode, billEpoch=$billEpoch, creditApplicationOrder=$creditApplicationOrder, currency=$currency, customFields=$customFields, daysBeforeBillDue=$daysBeforeBillDue, parentAccountId=$parentAccountId, purchaseOrderNumber=$purchaseOrderNumber, statementDefinitionId=$statementDefinitionId, version=$version, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -1924,117 +1880,12 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AutoGenerateStatementMode && value == other.value /* spotless:on */
+            return other is AutoGenerateStatementMode && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
 
         override fun toString() = value.toString()
-    }
-
-    /**
-     * Configuration data for the Account Supported settings:
-     * - SendBillsToThirdParties ("true"/"false")
-     */
-    class ConfigData
-    @JsonCreator
-    private constructor(
-        @com.fasterxml.jackson.annotation.JsonValue
-        private val additionalProperties: Map<String, JsonValue>
-    ) {
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        fun toBuilder() = Builder().from(this)
-
-        companion object {
-
-            /** Returns a mutable builder for constructing an instance of [ConfigData]. */
-            @JvmStatic fun builder() = Builder()
-        }
-
-        /** A builder for [ConfigData]. */
-        class Builder internal constructor() {
-
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            @JvmSynthetic
-            internal fun from(configData: ConfigData) = apply {
-                additionalProperties = configData.additionalProperties.toMutableMap()
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                putAllAdditionalProperties(additionalProperties)
-            }
-
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
-
-            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
-                keys.forEach(::removeAdditionalProperty)
-            }
-
-            /**
-             * Returns an immutable instance of [ConfigData].
-             *
-             * Further updates to this [Builder] will not mutate the returned instance.
-             */
-            fun build(): ConfigData = ConfigData(additionalProperties.toImmutable())
-        }
-
-        private var validated: Boolean = false
-
-        fun validate(): ConfigData = apply {
-            if (validated) {
-                return@apply
-            }
-
-            validated = true
-        }
-
-        fun isValid(): Boolean =
-            try {
-                validate()
-                true
-            } catch (e: M3terInvalidDataException) {
-                false
-            }
-
-        /**
-         * Returns a score indicating how many valid values are contained in this object
-         * recursively.
-         *
-         * Used for best match union deserialization.
-         */
-        @JvmSynthetic
-        internal fun validity(): Int =
-            additionalProperties.count { (_, value) -> !value.isNull() && !value.isMissing() }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is ConfigData && additionalProperties == other.additionalProperties /* spotless:on */
-        }
-
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
-
-        override fun hashCode(): Int = hashCode
-
-        override fun toString() = "ConfigData{additionalProperties=$additionalProperties}"
     }
 
     class CreditApplicationOrder
@@ -2160,7 +2011,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CreditApplicationOrder && value == other.value /* spotless:on */
+            return other is CreditApplicationOrder && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -2269,12 +2120,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomFields && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is CustomFields && additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
         private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
-        /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
@@ -2286,10 +2135,16 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is AccountUpdateParams && orgId == other.orgId && id == other.id && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is AccountUpdateParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, id, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "AccountUpdateParams{orgId=$orgId, id=$id, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

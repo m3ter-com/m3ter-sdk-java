@@ -16,6 +16,7 @@ import java.util.Objects
 import java.util.Optional
 
 class ObjectUrlResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val downloadUrl: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
@@ -144,12 +145,12 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is ObjectUrlResponse && downloadUrl == other.downloadUrl && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is ObjectUrlResponse &&
+            downloadUrl == other.downloadUrl &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
     private val hashCode: Int by lazy { Objects.hash(downloadUrl, additionalProperties) }
-    /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 

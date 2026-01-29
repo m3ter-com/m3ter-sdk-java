@@ -14,14 +14,17 @@ internal class ResourceGroupListContentsResponseTest {
     fun create() {
         val resourceGroupListContentsResponse =
             ResourceGroupListContentsResponse.builder()
+                .id("id")
                 .createdBy("createdBy")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .targetId("targetId")
                 .targetType(ResourceGroupListContentsResponse.TargetType.ITEM)
+                .version(0L)
                 .build()
 
+        assertThat(resourceGroupListContentsResponse.id()).isEqualTo("id")
         assertThat(resourceGroupListContentsResponse.createdBy()).contains("createdBy")
         assertThat(resourceGroupListContentsResponse.dtCreated())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -31,6 +34,7 @@ internal class ResourceGroupListContentsResponseTest {
         assertThat(resourceGroupListContentsResponse.targetId()).contains("targetId")
         assertThat(resourceGroupListContentsResponse.targetType())
             .contains(ResourceGroupListContentsResponse.TargetType.ITEM)
+        assertThat(resourceGroupListContentsResponse.version()).contains(0L)
     }
 
     @Test
@@ -38,12 +42,14 @@ internal class ResourceGroupListContentsResponseTest {
         val jsonMapper = jsonMapper()
         val resourceGroupListContentsResponse =
             ResourceGroupListContentsResponse.builder()
+                .id("id")
                 .createdBy("createdBy")
                 .dtCreated(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .dtLastModified(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .lastModifiedBy("lastModifiedBy")
                 .targetId("targetId")
                 .targetType(ResourceGroupListContentsResponse.TargetType.ITEM)
+                .version(0L)
                 .build()
 
         val roundtrippedResourceGroupListContentsResponse =

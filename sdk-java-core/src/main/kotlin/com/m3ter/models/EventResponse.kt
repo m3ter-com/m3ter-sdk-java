@@ -18,6 +18,7 @@ import java.util.Objects
 
 /** Response containing an Event entity. */
 class EventResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val dtActioned: JsonField<OffsetDateTime>,
@@ -76,7 +77,14 @@ private constructor(
      */
     fun eventTime(): OffsetDateTime = eventTime.getRequired("eventTime")
 
-    /** The Data Transfer Object (DTO) containing the details of the Event. */
+    /**
+     * The Data Transfer Object (DTO) containing the details of the Event.
+     *
+     * This arbitrary value can be deserialized into a custom type using the `convert` method:
+     * ```java
+     * MyClass myObject = eventResponse.m3terEvent().convert(MyClass.class);
+     * ```
+     */
     @JsonProperty("m3terEvent") @ExcludeMissing fun _m3terEvent(): JsonValue = m3terEvent
 
     /**
@@ -305,12 +313,18 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventResponse && id == other.id && dtActioned == other.dtActioned && eventName == other.eventName && eventTime == other.eventTime && m3terEvent == other.m3terEvent && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is EventResponse &&
+            id == other.id &&
+            dtActioned == other.dtActioned &&
+            eventName == other.eventName &&
+            eventTime == other.eventTime &&
+            m3terEvent == other.m3terEvent &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, dtActioned, eventName, eventTime, m3terEvent, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(id, dtActioned, eventName, eventTime, m3terEvent, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

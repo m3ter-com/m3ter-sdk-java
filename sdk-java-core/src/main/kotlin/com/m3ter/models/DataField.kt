@@ -19,6 +19,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class DataField
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val category: JsonField<Category>,
     private val code: JsonField<String>,
@@ -63,7 +64,7 @@ private constructor(
     fun name(): String = name.getRequired("name")
 
     /**
-     * The units to measure the data with. Should conform to _Unified Code for Units of Measure_
+     * The units to measure the data with. Should conform to *Unified Code for Units of Measure*
      * (UCUM). Required only for numeric field categories.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -184,7 +185,7 @@ private constructor(
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
-         * The units to measure the data with. Should conform to _Unified Code for Units of Measure_
+         * The units to measure the data with. Should conform to *Unified Code for Units of Measure*
          * (UCUM). Required only for numeric field categories.
          */
         fun unit(unit: String) = unit(JsonField.of(unit))
@@ -427,7 +428,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Category && value == other.value /* spotless:on */
+            return other is Category && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -440,12 +441,17 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is DataField && category == other.category && code == other.code && name == other.name && unit == other.unit && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is DataField &&
+            category == other.category &&
+            code == other.code &&
+            name == other.name &&
+            unit == other.unit &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(category, code, name, unit, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(category, code, name, unit, additionalProperties)
+    }
 
     override fun hashCode(): Int = hashCode
 

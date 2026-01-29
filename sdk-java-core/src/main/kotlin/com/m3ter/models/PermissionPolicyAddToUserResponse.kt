@@ -11,6 +11,7 @@ import com.m3ter.core.ExcludeMissing
 import com.m3ter.core.JsonField
 import com.m3ter.core.JsonMissing
 import com.m3ter.core.JsonValue
+import com.m3ter.core.checkRequired
 import com.m3ter.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Collections
@@ -19,6 +20,7 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 class PermissionPolicyAddToUserResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
     private val id: JsonField<String>,
     private val createdBy: JsonField<String>,
@@ -69,10 +71,12 @@ private constructor(
     )
 
     /**
-     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
-     *   server responded with an unexpected value).
+     * The UUID of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
      */
-    fun id(): Optional<String> = id.getOptional("id")
+    fun id(): String = id.getRequired("id")
 
     /**
      * The id of the user who created this principal permission.
@@ -83,7 +87,7 @@ private constructor(
     fun createdBy(): Optional<String> = createdBy.getOptional("createdBy")
 
     /**
-     * The DateTime _(in ISO-8601 format)_ when the principal permission was created.
+     * The DateTime *(in ISO-8601 format)* when the principal permission was created.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -91,7 +95,7 @@ private constructor(
     fun dtCreated(): Optional<OffsetDateTime> = dtCreated.getOptional("dtCreated")
 
     /**
-     * The DateTime _(in ISO-8601 format)_ when the principal permission was last modified.
+     * The DateTime *(in ISO-8601 format)* when the principal permission was last modified.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -227,6 +231,11 @@ private constructor(
         /**
          * Returns a mutable builder for constructing an instance of
          * [PermissionPolicyAddToUserResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -234,7 +243,7 @@ private constructor(
     /** A builder for [PermissionPolicyAddToUserResponse]. */
     class Builder internal constructor() {
 
-        private var id: JsonField<String> = JsonMissing.of()
+        private var id: JsonField<String>? = null
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -261,6 +270,7 @@ private constructor(
                     permissionPolicyAddToUserResponse.additionalProperties.toMutableMap()
             }
 
+        /** The UUID of the entity. */
         fun id(id: String) = id(JsonField.of(id))
 
         /**
@@ -283,7 +293,7 @@ private constructor(
          */
         fun createdBy(createdBy: JsonField<String>) = apply { this.createdBy = createdBy }
 
-        /** The DateTime _(in ISO-8601 format)_ when the principal permission was created. */
+        /** The DateTime *(in ISO-8601 format)* when the principal permission was created. */
         fun dtCreated(dtCreated: OffsetDateTime) = dtCreated(JsonField.of(dtCreated))
 
         /**
@@ -295,7 +305,7 @@ private constructor(
          */
         fun dtCreated(dtCreated: JsonField<OffsetDateTime>) = apply { this.dtCreated = dtCreated }
 
-        /** The DateTime _(in ISO-8601 format)_ when the principal permission was last modified. */
+        /** The DateTime *(in ISO-8601 format)* when the principal permission was last modified. */
         fun dtLastModified(dtLastModified: OffsetDateTime) =
             dtLastModified(JsonField.of(dtLastModified))
 
@@ -401,10 +411,17 @@ private constructor(
          * Returns an immutable instance of [PermissionPolicyAddToUserResponse].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): PermissionPolicyAddToUserResponse =
             PermissionPolicyAddToUserResponse(
-                id,
+                checkRequired("id", id),
                 createdBy,
                 dtCreated,
                 dtLastModified,
@@ -593,7 +610,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PrincipalType && value == other.value /* spotless:on */
+            return other is PrincipalType && value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -606,12 +623,33 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PermissionPolicyAddToUserResponse && id == other.id && createdBy == other.createdBy && dtCreated == other.dtCreated && dtLastModified == other.dtLastModified && lastModifiedBy == other.lastModifiedBy && permissionPolicyId == other.permissionPolicyId && principalId == other.principalId && principalType == other.principalType && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+        return other is PermissionPolicyAddToUserResponse &&
+            id == other.id &&
+            createdBy == other.createdBy &&
+            dtCreated == other.dtCreated &&
+            dtLastModified == other.dtLastModified &&
+            lastModifiedBy == other.lastModifiedBy &&
+            permissionPolicyId == other.permissionPolicyId &&
+            principalId == other.principalId &&
+            principalType == other.principalType &&
+            version == other.version &&
+            additionalProperties == other.additionalProperties
     }
 
-    /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, createdBy, dtCreated, dtLastModified, lastModifiedBy, permissionPolicyId, principalId, principalType, version, additionalProperties) }
-    /* spotless:on */
+    private val hashCode: Int by lazy {
+        Objects.hash(
+            id,
+            createdBy,
+            dtCreated,
+            dtLastModified,
+            lastModifiedBy,
+            permissionPolicyId,
+            principalId,
+            principalType,
+            version,
+            additionalProperties,
+        )
+    }
 
     override fun hashCode(): Int = hashCode
 

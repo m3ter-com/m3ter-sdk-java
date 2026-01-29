@@ -64,7 +64,7 @@ private constructor(
     fun contactNumber(): Optional<String> = body.contactNumber()
 
     /**
-     * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no end
+     * The date when access will end for the user *(in ISO-8601 format)*. Leave blank for no end
      * date, which gives the user permanent access.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -73,7 +73,7 @@ private constructor(
     fun dtEndAccess(): Optional<OffsetDateTime> = body.dtEndAccess()
 
     /**
-     * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user can
+     * The date when the invite expires *(in ISO-8601 format)*. After this date the invited user can
      * no longer accept the invite. By default, any invite is valid for 30 days from the date the
      * invite is sent.
      *
@@ -274,7 +274,7 @@ private constructor(
         }
 
         /**
-         * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no end
+         * The date when access will end for the user *(in ISO-8601 format)*. Leave blank for no end
          * date, which gives the user permanent access.
          */
         fun dtEndAccess(dtEndAccess: OffsetDateTime) = apply { body.dtEndAccess(dtEndAccess) }
@@ -291,7 +291,7 @@ private constructor(
         }
 
         /**
-         * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user
+         * The date when the invite expires *(in ISO-8601 format)*. After this date the invited user
          * can no longer accept the invite. By default, any invite is valid for 30 days from the
          * date the invite is sent.
          */
@@ -509,6 +509,7 @@ private constructor(
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     class Body
+    @JsonCreator(mode = JsonCreator.Mode.DISABLED)
     private constructor(
         private val email: JsonField<String>,
         private val firstName: JsonField<String>,
@@ -585,7 +586,7 @@ private constructor(
         fun contactNumber(): Optional<String> = contactNumber.getOptional("contactNumber")
 
         /**
-         * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no end
+         * The date when access will end for the user *(in ISO-8601 format)*. Leave blank for no end
          * date, which gives the user permanent access.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -594,7 +595,7 @@ private constructor(
         fun dtEndAccess(): Optional<OffsetDateTime> = dtEndAccess.getOptional("dtEndAccess")
 
         /**
-         * The date when the invite expires _(in ISO-8601 format)_. After this date the invited user
+         * The date when the invite expires *(in ISO-8601 format)*. After this date the invited user
          * can no longer accept the invite. By default, any invite is valid for 30 days from the
          * date the invite is sent.
          *
@@ -801,7 +802,7 @@ private constructor(
             }
 
             /**
-             * The date when access will end for the user _(in ISO-8601 format)_. Leave blank for no
+             * The date when access will end for the user *(in ISO-8601 format)*. Leave blank for no
              * end date, which gives the user permanent access.
              */
             fun dtEndAccess(dtEndAccess: OffsetDateTime) = dtEndAccess(JsonField.of(dtEndAccess))
@@ -818,7 +819,7 @@ private constructor(
             }
 
             /**
-             * The date when the invite expires _(in ISO-8601 format)_. After this date the invited
+             * The date when the invite expires *(in ISO-8601 format)*. After this date the invited
              * user can no longer accept the invite. By default, any invite is valid for 30 days
              * from the date the invite is sent.
              */
@@ -984,12 +985,33 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && email == other.email && firstName == other.firstName && lastName == other.lastName && contactNumber == other.contactNumber && dtEndAccess == other.dtEndAccess && dtExpiry == other.dtExpiry && m3terUser == other.m3terUser && permissionPolicyIds == other.permissionPolicyIds && version == other.version && additionalProperties == other.additionalProperties /* spotless:on */
+            return other is Body &&
+                email == other.email &&
+                firstName == other.firstName &&
+                lastName == other.lastName &&
+                contactNumber == other.contactNumber &&
+                dtEndAccess == other.dtEndAccess &&
+                dtExpiry == other.dtExpiry &&
+                m3terUser == other.m3terUser &&
+                permissionPolicyIds == other.permissionPolicyIds &&
+                version == other.version &&
+                additionalProperties == other.additionalProperties
         }
 
-        /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(email, firstName, lastName, contactNumber, dtEndAccess, dtExpiry, m3terUser, permissionPolicyIds, version, additionalProperties) }
-        /* spotless:on */
+        private val hashCode: Int by lazy {
+            Objects.hash(
+                email,
+                firstName,
+                lastName,
+                contactNumber,
+                dtEndAccess,
+                dtExpiry,
+                m3terUser,
+                permissionPolicyIds,
+                version,
+                additionalProperties,
+            )
+        }
 
         override fun hashCode(): Int = hashCode
 
@@ -1002,10 +1024,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is UserInvitationCreateParams && orgId == other.orgId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is UserInvitationCreateParams &&
+            orgId == other.orgId &&
+            body == other.body &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(orgId, body, additionalHeaders, additionalQueryParams)
 
     override fun toString() =
         "UserInvitationCreateParams{orgId=$orgId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

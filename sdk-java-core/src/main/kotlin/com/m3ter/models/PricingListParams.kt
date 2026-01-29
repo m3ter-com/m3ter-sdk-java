@@ -303,10 +303,32 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PricingListParams && orgId == other.orgId && aggregationId == other.aggregationId && date == other.date && ids == other.ids && nextToken == other.nextToken && pageSize == other.pageSize && planId == other.planId && planTemplateId == other.planTemplateId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is PricingListParams &&
+            orgId == other.orgId &&
+            aggregationId == other.aggregationId &&
+            date == other.date &&
+            ids == other.ids &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            planId == other.planId &&
+            planTemplateId == other.planTemplateId &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, aggregationId, date, ids, nextToken, pageSize, planId, planTemplateId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            aggregationId,
+            date,
+            ids,
+            nextToken,
+            pageSize,
+            planId,
+            planTemplateId,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
         "PricingListParams{orgId=$orgId, aggregationId=$aggregationId, date=$date, ids=$ids, nextToken=$nextToken, pageSize=$pageSize, planId=$planId, planTemplateId=$planTemplateId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

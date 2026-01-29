@@ -261,10 +261,24 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is WebhookSetActiveParams && orgId == other.orgId && id == other.id && active == other.active && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return other is WebhookSetActiveParams &&
+            orgId == other.orgId &&
+            id == other.id &&
+            active == other.active &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams &&
+            additionalBodyProperties == other.additionalBodyProperties
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, id, active, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            id,
+            active,
+            additionalHeaders,
+            additionalQueryParams,
+            additionalBodyProperties,
+        )
 
     override fun toString() =
         "WebhookSetActiveParams{orgId=$orgId, id=$id, active=$active, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"

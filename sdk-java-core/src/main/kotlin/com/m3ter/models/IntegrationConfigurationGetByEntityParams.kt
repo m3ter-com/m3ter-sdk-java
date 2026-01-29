@@ -17,6 +17,8 @@ private constructor(
     private val destination: String?,
     private val destinationId: String?,
     private val entityId: String?,
+    private val nextToken: String?,
+    private val pageSize: Int?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -34,6 +36,12 @@ private constructor(
 
     /** UUID of the entity to retrieve IntegrationConfigs for */
     fun entityId(): Optional<String> = Optional.ofNullable(entityId)
+
+    /** nextToken for multi page retrievals */
+    fun nextToken(): Optional<String> = Optional.ofNullable(nextToken)
+
+    /** Number of configs to retrieve per page */
+    fun pageSize(): Optional<Int> = Optional.ofNullable(pageSize)
 
     /** Additional headers to send with the request. */
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -62,6 +70,8 @@ private constructor(
         private var destination: String? = null
         private var destinationId: String? = null
         private var entityId: String? = null
+        private var nextToken: String? = null
+        private var pageSize: Int? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -74,6 +84,8 @@ private constructor(
             destination = integrationConfigurationGetByEntityParams.destination
             destinationId = integrationConfigurationGetByEntityParams.destinationId
             entityId = integrationConfigurationGetByEntityParams.entityId
+            nextToken = integrationConfigurationGetByEntityParams.nextToken
+            pageSize = integrationConfigurationGetByEntityParams.pageSize
             additionalHeaders =
                 integrationConfigurationGetByEntityParams.additionalHeaders.toBuilder()
             additionalQueryParams =
@@ -110,6 +122,25 @@ private constructor(
 
         /** Alias for calling [Builder.entityId] with `entityId.orElse(null)`. */
         fun entityId(entityId: Optional<String>) = entityId(entityId.getOrNull())
+
+        /** nextToken for multi page retrievals */
+        fun nextToken(nextToken: String?) = apply { this.nextToken = nextToken }
+
+        /** Alias for calling [Builder.nextToken] with `nextToken.orElse(null)`. */
+        fun nextToken(nextToken: Optional<String>) = nextToken(nextToken.getOrNull())
+
+        /** Number of configs to retrieve per page */
+        fun pageSize(pageSize: Int?) = apply { this.pageSize = pageSize }
+
+        /**
+         * Alias for [Builder.pageSize].
+         *
+         * This unboxed primitive overload exists for backwards compatibility.
+         */
+        fun pageSize(pageSize: Int) = pageSize(pageSize as Int?)
+
+        /** Alias for calling [Builder.pageSize] with `pageSize.orElse(null)`. */
+        fun pageSize(pageSize: Optional<Int>) = pageSize(pageSize.getOrNull())
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -221,6 +252,8 @@ private constructor(
                 destination,
                 destinationId,
                 entityId,
+                nextToken,
+                pageSize,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -241,6 +274,8 @@ private constructor(
                 destination?.let { put("destination", it) }
                 destinationId?.let { put("destinationId", it) }
                 entityId?.let { put("entityId", it) }
+                nextToken?.let { put("nextToken", it) }
+                pageSize?.let { put("pageSize", it.toString()) }
                 putAll(additionalQueryParams)
             }
             .build()
@@ -250,11 +285,31 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is IntegrationConfigurationGetByEntityParams && orgId == other.orgId && entityType == other.entityType && destination == other.destination && destinationId == other.destinationId && entityId == other.entityId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return other is IntegrationConfigurationGetByEntityParams &&
+            orgId == other.orgId &&
+            entityType == other.entityType &&
+            destination == other.destination &&
+            destinationId == other.destinationId &&
+            entityId == other.entityId &&
+            nextToken == other.nextToken &&
+            pageSize == other.pageSize &&
+            additionalHeaders == other.additionalHeaders &&
+            additionalQueryParams == other.additionalQueryParams
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(orgId, entityType, destination, destinationId, entityId, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int =
+        Objects.hash(
+            orgId,
+            entityType,
+            destination,
+            destinationId,
+            entityId,
+            nextToken,
+            pageSize,
+            additionalHeaders,
+            additionalQueryParams,
+        )
 
     override fun toString() =
-        "IntegrationConfigurationGetByEntityParams{orgId=$orgId, entityType=$entityType, destination=$destination, destinationId=$destinationId, entityId=$entityId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "IntegrationConfigurationGetByEntityParams{orgId=$orgId, entityType=$entityType, destination=$destination, destinationId=$destinationId, entityId=$entityId, nextToken=$nextToken, pageSize=$pageSize, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

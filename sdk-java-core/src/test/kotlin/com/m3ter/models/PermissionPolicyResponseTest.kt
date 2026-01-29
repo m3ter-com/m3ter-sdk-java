@@ -32,7 +32,7 @@ internal class PermissionPolicyResponseTest {
                 .version(0L)
                 .build()
 
-        assertThat(permissionPolicyResponse.id()).contains("id")
+        assertThat(permissionPolicyResponse.id()).isEqualTo("id")
         assertThat(permissionPolicyResponse.createdBy()).contains("createdBy")
         assertThat(permissionPolicyResponse.dtCreated())
             .contains(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
