@@ -344,14 +344,14 @@ private constructor(
 
         companion object {
 
-            @JvmField val M3TER_SIGNED_REQUEST = of("M3TER_SIGNED_REQUEST")
+            @JvmField val M3_TER_SIGNED_REQUEST = of("M3TER_SIGNED_REQUEST")
 
             @JvmStatic fun of(value: String) = Type(JsonField.of(value))
         }
 
         /** An enum containing [Type]'s known values. */
         enum class Known {
-            M3TER_SIGNED_REQUEST
+            M3_TER_SIGNED_REQUEST
         }
 
         /**
@@ -364,7 +364,7 @@ private constructor(
          * - It was constructed with an arbitrary value using the [of] method.
          */
         enum class Value {
-            M3TER_SIGNED_REQUEST,
+            M3_TER_SIGNED_REQUEST,
             /** An enum member indicating that [Type] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -378,7 +378,7 @@ private constructor(
          */
         fun value(): Value =
             when (this) {
-                M3TER_SIGNED_REQUEST -> Value.M3TER_SIGNED_REQUEST
+                M3_TER_SIGNED_REQUEST -> Value.M3_TER_SIGNED_REQUEST
                 else -> Value._UNKNOWN
             }
 
@@ -392,7 +392,7 @@ private constructor(
          */
         fun known(): Known =
             when (this) {
-                M3TER_SIGNED_REQUEST -> Known.M3TER_SIGNED_REQUEST
+                M3_TER_SIGNED_REQUEST -> Known.M3_TER_SIGNED_REQUEST
                 else -> throw M3terInvalidDataException("Unknown Type: $value")
             }
 

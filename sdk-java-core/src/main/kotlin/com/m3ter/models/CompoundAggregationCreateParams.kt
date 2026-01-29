@@ -105,7 +105,7 @@ private constructor(
     fun unit(): String = body.unit()
 
     /**
-     * Optional Product ID this Aggregation should be attributed to for accounting purposes
+     * Optional Product ID this Aggregation should be attributed to for accounting purposes.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -407,7 +407,7 @@ private constructor(
          */
         fun unit(unit: JsonField<String>) = apply { body.unit(unit) }
 
-        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes. */
         fun accountingProductId(accountingProductId: String) = apply {
             body.accountingProductId(accountingProductId)
         }
@@ -788,7 +788,7 @@ private constructor(
         fun unit(): String = unit.getRequired("unit")
 
         /**
-         * Optional Product ID this Aggregation should be attributed to for accounting purposes
+         * Optional Product ID this Aggregation should be attributed to for accounting purposes.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1106,7 +1106,7 @@ private constructor(
             fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
             /**
-             * Optional Product ID this Aggregation should be attributed to for accounting purposes
+             * Optional Product ID this Aggregation should be attributed to for accounting purposes.
              */
             fun accountingProductId(accountingProductId: String) =
                 accountingProductId(JsonField.of(accountingProductId))

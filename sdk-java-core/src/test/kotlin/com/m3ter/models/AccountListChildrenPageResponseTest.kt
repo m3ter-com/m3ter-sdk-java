@@ -11,12 +11,12 @@ import kotlin.jvm.optionals.getOrNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class AccountGetChildrenResponseTest {
+internal class AccountListChildrenPageResponseTest {
 
     @Test
     fun create() {
-        val accountGetChildrenResponse =
-            AccountGetChildrenResponse.builder()
+        val accountListChildrenPageResponse =
+            AccountListChildrenPageResponse.builder()
                 .addData(
                     AccountResponse.builder()
                         .id("id")
@@ -35,11 +35,6 @@ internal class AccountGetChildrenResponseTest {
                         .autoGenerateStatementMode(AccountResponse.AutoGenerateStatementMode.NONE)
                         .billEpoch(LocalDate.parse("2019-12-27"))
                         .code("code")
-                        .configData(
-                            AccountResponse.ConfigData.builder()
-                                .putAdditionalProperty("foo", JsonValue.from("bar"))
-                                .build()
-                        )
                         .createdBy("createdBy")
                         .addCreditApplicationOrder(
                             AccountResponse.CreditApplicationOrder.PREPAYMENT
@@ -65,7 +60,7 @@ internal class AccountGetChildrenResponseTest {
                 .nextToken("nextToken")
                 .build()
 
-        assertThat(accountGetChildrenResponse.data().getOrNull())
+        assertThat(accountListChildrenPageResponse.data().getOrNull())
             .containsExactly(
                 AccountResponse.builder()
                     .id("id")
@@ -84,11 +79,6 @@ internal class AccountGetChildrenResponseTest {
                     .autoGenerateStatementMode(AccountResponse.AutoGenerateStatementMode.NONE)
                     .billEpoch(LocalDate.parse("2019-12-27"))
                     .code("code")
-                    .configData(
-                        AccountResponse.ConfigData.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
-                            .build()
-                    )
                     .createdBy("createdBy")
                     .addCreditApplicationOrder(AccountResponse.CreditApplicationOrder.PREPAYMENT)
                     .currency("USD")
@@ -109,14 +99,14 @@ internal class AccountGetChildrenResponseTest {
                     .version(0L)
                     .build()
             )
-        assertThat(accountGetChildrenResponse.nextToken()).contains("nextToken")
+        assertThat(accountListChildrenPageResponse.nextToken()).contains("nextToken")
     }
 
     @Test
     fun roundtrip() {
         val jsonMapper = jsonMapper()
-        val accountGetChildrenResponse =
-            AccountGetChildrenResponse.builder()
+        val accountListChildrenPageResponse =
+            AccountListChildrenPageResponse.builder()
                 .addData(
                     AccountResponse.builder()
                         .id("id")
@@ -135,11 +125,6 @@ internal class AccountGetChildrenResponseTest {
                         .autoGenerateStatementMode(AccountResponse.AutoGenerateStatementMode.NONE)
                         .billEpoch(LocalDate.parse("2019-12-27"))
                         .code("code")
-                        .configData(
-                            AccountResponse.ConfigData.builder()
-                                .putAdditionalProperty("foo", JsonValue.from("bar"))
-                                .build()
-                        )
                         .createdBy("createdBy")
                         .addCreditApplicationOrder(
                             AccountResponse.CreditApplicationOrder.PREPAYMENT
@@ -165,12 +150,13 @@ internal class AccountGetChildrenResponseTest {
                 .nextToken("nextToken")
                 .build()
 
-        val roundtrippedAccountGetChildrenResponse =
+        val roundtrippedAccountListChildrenPageResponse =
             jsonMapper.readValue(
-                jsonMapper.writeValueAsString(accountGetChildrenResponse),
-                jacksonTypeRef<AccountGetChildrenResponse>(),
+                jsonMapper.writeValueAsString(accountListChildrenPageResponse),
+                jacksonTypeRef<AccountListChildrenPageResponse>(),
             )
 
-        assertThat(roundtrippedAccountGetChildrenResponse).isEqualTo(accountGetChildrenResponse)
+        assertThat(roundtrippedAccountListChildrenPageResponse)
+            .isEqualTo(accountListChildrenPageResponse)
     }
 }

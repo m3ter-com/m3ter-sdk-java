@@ -20,6 +20,8 @@ import com.m3ter.services.async.BillJobServiceAsync
 import com.m3ter.services.async.BillJobServiceAsyncImpl
 import com.m3ter.services.async.BillServiceAsync
 import com.m3ter.services.async.BillServiceAsyncImpl
+import com.m3ter.services.async.ChargeServiceAsync
+import com.m3ter.services.async.ChargeServiceAsyncImpl
 import com.m3ter.services.async.CommitmentServiceAsync
 import com.m3ter.services.async.CommitmentServiceAsyncImpl
 import com.m3ter.services.async.CompoundAggregationServiceAsync
@@ -48,6 +50,8 @@ import com.m3ter.services.async.ExternalMappingServiceAsync
 import com.m3ter.services.async.ExternalMappingServiceAsyncImpl
 import com.m3ter.services.async.IntegrationConfigurationServiceAsync
 import com.m3ter.services.async.IntegrationConfigurationServiceAsyncImpl
+import com.m3ter.services.async.LookupTableServiceAsync
+import com.m3ter.services.async.LookupTableServiceAsyncImpl
 import com.m3ter.services.async.MeterServiceAsync
 import com.m3ter.services.async.MeterServiceAsyncImpl
 import com.m3ter.services.async.NotificationConfigurationServiceAsync
@@ -135,6 +139,10 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
         BillJobServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val charges: ChargeServiceAsync by lazy {
+        ChargeServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     private val compoundAggregations: CompoundAggregationServiceAsync by lazy {
         CompoundAggregationServiceAsyncImpl(clientOptionsWithUserAgent)
     }
@@ -185,6 +193,10 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
     private val integrationConfigurations: IntegrationConfigurationServiceAsync by lazy {
         IntegrationConfigurationServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
+    private val lookupTables: LookupTableServiceAsync by lazy {
+        LookupTableServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
     private val meters: MeterServiceAsync by lazy {
@@ -276,6 +288,8 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
     override fun billJobs(): BillJobServiceAsync = billJobs
 
+    override fun charges(): ChargeServiceAsync = charges
+
     override fun compoundAggregations(): CompoundAggregationServiceAsync = compoundAggregations
 
     override fun contracts(): ContractServiceAsync = contracts
@@ -302,6 +316,8 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
     override fun integrationConfigurations(): IntegrationConfigurationServiceAsync =
         integrationConfigurations
+
+    override fun lookupTables(): LookupTableServiceAsync = lookupTables
 
     override fun meters(): MeterServiceAsync = meters
 
@@ -380,6 +396,10 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
             BillJobServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val charges: ChargeServiceAsync.WithRawResponse by lazy {
+            ChargeServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val compoundAggregations: CompoundAggregationServiceAsync.WithRawResponse by lazy {
             CompoundAggregationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
@@ -431,6 +451,10 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
         private val integrationConfigurations:
             IntegrationConfigurationServiceAsync.WithRawResponse by lazy {
             IntegrationConfigurationServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val lookupTables: LookupTableServiceAsync.WithRawResponse by lazy {
+            LookupTableServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
         private val meters: MeterServiceAsync.WithRawResponse by lazy {
@@ -528,6 +552,8 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
         override fun billJobs(): BillJobServiceAsync.WithRawResponse = billJobs
 
+        override fun charges(): ChargeServiceAsync.WithRawResponse = charges
+
         override fun compoundAggregations(): CompoundAggregationServiceAsync.WithRawResponse =
             compoundAggregations
 
@@ -557,6 +583,8 @@ class M3terClientAsyncImpl(private val clientOptions: ClientOptions) : M3terClie
 
         override fun integrationConfigurations():
             IntegrationConfigurationServiceAsync.WithRawResponse = integrationConfigurations
+
+        override fun lookupTables(): LookupTableServiceAsync.WithRawResponse = lookupTables
 
         override fun meters(): MeterServiceAsync.WithRawResponse = meters
 

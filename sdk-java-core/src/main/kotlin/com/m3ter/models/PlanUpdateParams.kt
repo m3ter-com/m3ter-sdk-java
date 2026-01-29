@@ -119,7 +119,8 @@ private constructor(
     fun minimumSpend(): Optional<Double> = body.minimumSpend()
 
     /**
-     * Optional Product ID this plan's minimum spend should be attributed to for accounting purposes
+     * Optional Product ID this Plan's minimum spend should be attributed to for accounting
+     * purposes.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -127,9 +128,9 @@ private constructor(
     fun minimumSpendAccountingProductId(): Optional<String> = body.minimumSpendAccountingProductId()
 
     /**
-     * When TRUE, minimum spend is billed at the start of each billing period.
+     * When **TRUE**, minimum spend is billed at the start of each billing period.
      *
-     * When FALSE, minimum spend is billed at the end of each billing period.
+     * When **FALSE**, minimum spend is billed at the end of each billing period.
      *
      * *(Optional)*. Overrides the setting at PlanTemplate level for minimum spend billing in
      * arrears/in advance.
@@ -171,8 +172,8 @@ private constructor(
     fun standingCharge(): Optional<Double> = body.standingCharge()
 
     /**
-     * Optional Product ID this plan's standing charge should be attributed to for accounting
-     * purposes
+     * Optional Product ID this Plan's standing charge should be attributed to for accounting
+     * purposes.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -181,9 +182,9 @@ private constructor(
         body.standingChargeAccountingProductId()
 
     /**
-     * When TRUE, standing charge is billed at the start of each billing period.
+     * When **TRUE**, standing charge is billed at the start of each billing period.
      *
-     * When FALSE, standing charge is billed at the end of each billing period.
+     * When **FALSE**, standing charge is billed at the end of each billing period.
      *
      * *(Optional)*. Overrides the setting at PlanTemplate level for standing charge billing in
      * arrears/in advance.
@@ -520,8 +521,8 @@ private constructor(
         }
 
         /**
-         * Optional Product ID this plan's minimum spend should be attributed to for accounting
-         * purposes
+         * Optional Product ID this Plan's minimum spend should be attributed to for accounting
+         * purposes.
          */
         fun minimumSpendAccountingProductId(minimumSpendAccountingProductId: String) = apply {
             body.minimumSpendAccountingProductId(minimumSpendAccountingProductId)
@@ -540,9 +541,9 @@ private constructor(
             }
 
         /**
-         * When TRUE, minimum spend is billed at the start of each billing period.
+         * When **TRUE**, minimum spend is billed at the start of each billing period.
          *
-         * When FALSE, minimum spend is billed at the end of each billing period.
+         * When **FALSE**, minimum spend is billed at the end of each billing period.
          *
          * *(Optional)*. Overrides the setting at PlanTemplate level for minimum spend billing in
          * arrears/in advance.
@@ -615,8 +616,8 @@ private constructor(
         }
 
         /**
-         * Optional Product ID this plan's standing charge should be attributed to for accounting
-         * purposes
+         * Optional Product ID this Plan's standing charge should be attributed to for accounting
+         * purposes.
          */
         fun standingChargeAccountingProductId(standingChargeAccountingProductId: String) = apply {
             body.standingChargeAccountingProductId(standingChargeAccountingProductId)
@@ -634,9 +635,9 @@ private constructor(
         ) = apply { body.standingChargeAccountingProductId(standingChargeAccountingProductId) }
 
         /**
-         * When TRUE, standing charge is billed at the start of each billing period.
+         * When **TRUE**, standing charge is billed at the start of each billing period.
          *
-         * When FALSE, standing charge is billed at the end of each billing period.
+         * When **FALSE**, standing charge is billed at the end of each billing period.
          *
          * *(Optional)*. Overrides the setting at PlanTemplate level for standing charge billing in
          * arrears/in advance.
@@ -1004,8 +1005,8 @@ private constructor(
         fun minimumSpend(): Optional<Double> = minimumSpend.getOptional("minimumSpend")
 
         /**
-         * Optional Product ID this plan's minimum spend should be attributed to for accounting
-         * purposes
+         * Optional Product ID this Plan's minimum spend should be attributed to for accounting
+         * purposes.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1014,9 +1015,9 @@ private constructor(
             minimumSpendAccountingProductId.getOptional("minimumSpendAccountingProductId")
 
         /**
-         * When TRUE, minimum spend is billed at the start of each billing period.
+         * When **TRUE**, minimum spend is billed at the start of each billing period.
          *
-         * When FALSE, minimum spend is billed at the end of each billing period.
+         * When **FALSE**, minimum spend is billed at the end of each billing period.
          *
          * *(Optional)*. Overrides the setting at PlanTemplate level for minimum spend billing in
          * arrears/in advance.
@@ -1060,8 +1061,8 @@ private constructor(
         fun standingCharge(): Optional<Double> = standingCharge.getOptional("standingCharge")
 
         /**
-         * Optional Product ID this plan's standing charge should be attributed to for accounting
-         * purposes
+         * Optional Product ID this Plan's standing charge should be attributed to for accounting
+         * purposes.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1070,9 +1071,9 @@ private constructor(
             standingChargeAccountingProductId.getOptional("standingChargeAccountingProductId")
 
         /**
-         * When TRUE, standing charge is billed at the start of each billing period.
+         * When **TRUE**, standing charge is billed at the start of each billing period.
          *
-         * When FALSE, standing charge is billed at the end of each billing period.
+         * When **FALSE**, standing charge is billed at the end of each billing period.
          *
          * *(Optional)*. Overrides the setting at PlanTemplate level for standing charge billing in
          * arrears/in advance.
@@ -1438,8 +1439,8 @@ private constructor(
             }
 
             /**
-             * Optional Product ID this plan's minimum spend should be attributed to for accounting
-             * purposes
+             * Optional Product ID this Plan's minimum spend should be attributed to for accounting
+             * purposes.
              */
             fun minimumSpendAccountingProductId(minimumSpendAccountingProductId: String) =
                 minimumSpendAccountingProductId(JsonField.of(minimumSpendAccountingProductId))
@@ -1456,9 +1457,9 @@ private constructor(
             ) = apply { this.minimumSpendAccountingProductId = minimumSpendAccountingProductId }
 
             /**
-             * When TRUE, minimum spend is billed at the start of each billing period.
+             * When **TRUE**, minimum spend is billed at the start of each billing period.
              *
-             * When FALSE, minimum spend is billed at the end of each billing period.
+             * When **FALSE**, minimum spend is billed at the end of each billing period.
              *
              * *(Optional)*. Overrides the setting at PlanTemplate level for minimum spend billing
              * in arrears/in advance.
@@ -1532,8 +1533,8 @@ private constructor(
             }
 
             /**
-             * Optional Product ID this plan's standing charge should be attributed to for
-             * accounting purposes
+             * Optional Product ID this Plan's standing charge should be attributed to for
+             * accounting purposes.
              */
             fun standingChargeAccountingProductId(standingChargeAccountingProductId: String) =
                 standingChargeAccountingProductId(JsonField.of(standingChargeAccountingProductId))
@@ -1550,9 +1551,9 @@ private constructor(
             ) = apply { this.standingChargeAccountingProductId = standingChargeAccountingProductId }
 
             /**
-             * When TRUE, standing charge is billed at the start of each billing period.
+             * When **TRUE**, standing charge is billed at the start of each billing period.
              *
-             * When FALSE, standing charge is billed at the end of each billing period.
+             * When **FALSE**, standing charge is billed at the end of each billing period.
              *
              * *(Optional)*. Overrides the setting at PlanTemplate level for standing charge billing
              * in arrears/in advance.

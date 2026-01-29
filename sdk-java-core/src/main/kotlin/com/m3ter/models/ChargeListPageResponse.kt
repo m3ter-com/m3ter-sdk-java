@@ -18,10 +18,10 @@ import java.util.Objects
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
-class AccountGetChildrenResponse
+class ChargeListPageResponse
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
-    private val data: JsonField<List<AccountResponse>>,
+    private val data: JsonField<List<ChargeListResponse>>,
     private val nextToken: JsonField<String>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
@@ -30,7 +30,7 @@ private constructor(
     private constructor(
         @JsonProperty("data")
         @ExcludeMissing
-        data: JsonField<List<AccountResponse>> = JsonMissing.of(),
+        data: JsonField<List<ChargeListResponse>> = JsonMissing.of(),
         @JsonProperty("nextToken") @ExcludeMissing nextToken: JsonField<String> = JsonMissing.of(),
     ) : this(data, nextToken, mutableMapOf())
 
@@ -38,7 +38,7 @@ private constructor(
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
-    fun data(): Optional<List<AccountResponse>> = data.getOptional("data")
+    fun data(): Optional<List<ChargeListResponse>> = data.getOptional("data")
 
     /**
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -51,7 +51,7 @@ private constructor(
      *
      * Unlike [data], this method doesn't throw if the JSON field has an unexpected type.
      */
-    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<AccountResponse>> = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<ChargeListResponse>> = data
 
     /**
      * Returns the raw JSON value of [nextToken].
@@ -74,45 +74,43 @@ private constructor(
 
     companion object {
 
-        /**
-         * Returns a mutable builder for constructing an instance of [AccountGetChildrenResponse].
-         */
+        /** Returns a mutable builder for constructing an instance of [ChargeListPageResponse]. */
         @JvmStatic fun builder() = Builder()
     }
 
-    /** A builder for [AccountGetChildrenResponse]. */
+    /** A builder for [ChargeListPageResponse]. */
     class Builder internal constructor() {
 
-        private var data: JsonField<MutableList<AccountResponse>>? = null
+        private var data: JsonField<MutableList<ChargeListResponse>>? = null
         private var nextToken: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
-        internal fun from(accountGetChildrenResponse: AccountGetChildrenResponse) = apply {
-            data = accountGetChildrenResponse.data.map { it.toMutableList() }
-            nextToken = accountGetChildrenResponse.nextToken
-            additionalProperties = accountGetChildrenResponse.additionalProperties.toMutableMap()
+        internal fun from(chargeListPageResponse: ChargeListPageResponse) = apply {
+            data = chargeListPageResponse.data.map { it.toMutableList() }
+            nextToken = chargeListPageResponse.nextToken
+            additionalProperties = chargeListPageResponse.additionalProperties.toMutableMap()
         }
 
-        fun data(data: List<AccountResponse>) = data(JsonField.of(data))
+        fun data(data: List<ChargeListResponse>) = data(JsonField.of(data))
 
         /**
          * Sets [Builder.data] to an arbitrary JSON value.
          *
-         * You should usually call [Builder.data] with a well-typed `List<AccountResponse>` value
+         * You should usually call [Builder.data] with a well-typed `List<ChargeListResponse>` value
          * instead. This method is primarily for setting the field to an undocumented or not yet
          * supported value.
          */
-        fun data(data: JsonField<List<AccountResponse>>) = apply {
+        fun data(data: JsonField<List<ChargeListResponse>>) = apply {
             this.data = data.map { it.toMutableList() }
         }
 
         /**
-         * Adds a single [AccountResponse] to [Builder.data].
+         * Adds a single [ChargeListResponse] to [Builder.data].
          *
          * @throws IllegalStateException if the field was previously set to a non-list.
          */
-        fun addData(data: AccountResponse) = apply {
+        fun addData(data: ChargeListResponse) = apply {
             this.data =
                 (this.data ?: JsonField.of(mutableListOf())).also {
                     checkKnown("data", it).add(data)
@@ -150,12 +148,12 @@ private constructor(
         }
 
         /**
-         * Returns an immutable instance of [AccountGetChildrenResponse].
+         * Returns an immutable instance of [ChargeListPageResponse].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
          */
-        fun build(): AccountGetChildrenResponse =
-            AccountGetChildrenResponse(
+        fun build(): ChargeListPageResponse =
+            ChargeListPageResponse(
                 (data ?: JsonMissing.of()).map { it.toImmutable() },
                 nextToken,
                 additionalProperties.toMutableMap(),
@@ -164,7 +162,7 @@ private constructor(
 
     private var validated: Boolean = false
 
-    fun validate(): AccountGetChildrenResponse = apply {
+    fun validate(): ChargeListPageResponse = apply {
         if (validated) {
             return@apply
         }
@@ -197,7 +195,7 @@ private constructor(
             return true
         }
 
-        return other is AccountGetChildrenResponse &&
+        return other is ChargeListPageResponse &&
             data == other.data &&
             nextToken == other.nextToken &&
             additionalProperties == other.additionalProperties
@@ -208,5 +206,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "AccountGetChildrenResponse{data=$data, nextToken=$nextToken, additionalProperties=$additionalProperties}"
+        "ChargeListPageResponse{data=$data, nextToken=$nextToken, additionalProperties=$additionalProperties}"
 }

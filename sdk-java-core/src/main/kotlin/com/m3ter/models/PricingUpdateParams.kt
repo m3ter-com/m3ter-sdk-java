@@ -141,8 +141,8 @@ private constructor(
 
     /**
      * The default value is **FALSE**.
-     * * When TRUE, minimum spend is billed at the start of each billing period.
-     * * When FALSE, minimum spend is billed at the end of each billing period.
+     * * When **TRUE**, minimum spend is billed at the start of each billing period.
+     * * When **FALSE**, minimum spend is billed at the end of each billing period.
      *
      * *(Optional)*. Overrides the setting at Organization level for minimum spend billing in
      * arrears/in advance.
@@ -216,10 +216,10 @@ private constructor(
 
     /**
      * The default value is **FALSE**.
-     * * If TRUE, usage accumulates over the entire period the priced Plan is active for the
+     * * If **TRUE**, usage accumulates over the entire period the priced Plan is active for the
      *   account, and is not reset for pricing band rates at the start of each billing period.
-     * * If FALSE, usage does not accumulate, and is reset for pricing bands at the start of each
-     *   billing period.
+     * * If **FALSE**, usage does not accumulate, and is reset for pricing bands at the start of
+     *   each billing period.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -628,8 +628,8 @@ private constructor(
 
         /**
          * The default value is **FALSE**.
-         * * When TRUE, minimum spend is billed at the start of each billing period.
-         * * When FALSE, minimum spend is billed at the end of each billing period.
+         * * When **TRUE**, minimum spend is billed at the start of each billing period.
+         * * When **FALSE**, minimum spend is billed at the end of each billing period.
          *
          * *(Optional)*. Overrides the setting at Organization level for minimum spend billing in
          * arrears/in advance.
@@ -754,9 +754,9 @@ private constructor(
 
         /**
          * The default value is **FALSE**.
-         * * If TRUE, usage accumulates over the entire period the priced Plan is active for the
+         * * If **TRUE**, usage accumulates over the entire period the priced Plan is active for the
          *   account, and is not reset for pricing band rates at the start of each billing period.
-         * * If FALSE, usage does not accumulate, and is reset for pricing bands at the start of
+         * * If **FALSE**, usage does not accumulate, and is reset for pricing bands at the start of
          *   each billing period.
          */
         fun tiersSpanPlan(tiersSpanPlan: Boolean) = apply { body.tiersSpanPlan(tiersSpanPlan) }
@@ -1157,8 +1157,8 @@ private constructor(
 
         /**
          * The default value is **FALSE**.
-         * * When TRUE, minimum spend is billed at the start of each billing period.
-         * * When FALSE, minimum spend is billed at the end of each billing period.
+         * * When **TRUE**, minimum spend is billed at the start of each billing period.
+         * * When **FALSE**, minimum spend is billed at the end of each billing period.
          *
          * *(Optional)*. Overrides the setting at Organization level for minimum spend billing in
          * arrears/in advance.
@@ -1235,9 +1235,9 @@ private constructor(
 
         /**
          * The default value is **FALSE**.
-         * * If TRUE, usage accumulates over the entire period the priced Plan is active for the
+         * * If **TRUE**, usage accumulates over the entire period the priced Plan is active for the
          *   account, and is not reset for pricing band rates at the start of each billing period.
-         * * If FALSE, usage does not accumulate, and is reset for pricing bands at the start of
+         * * If **FALSE**, usage does not accumulate, and is reset for pricing bands at the start of
          *   each billing period.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
@@ -1692,8 +1692,8 @@ private constructor(
 
             /**
              * The default value is **FALSE**.
-             * * When TRUE, minimum spend is billed at the start of each billing period.
-             * * When FALSE, minimum spend is billed at the end of each billing period.
+             * * When **TRUE**, minimum spend is billed at the start of each billing period.
+             * * When **FALSE**, minimum spend is billed at the end of each billing period.
              *
              * *(Optional)*. Overrides the setting at Organization level for minimum spend billing
              * in arrears/in advance.
@@ -1821,11 +1821,11 @@ private constructor(
 
             /**
              * The default value is **FALSE**.
-             * * If TRUE, usage accumulates over the entire period the priced Plan is active for the
-             *   account, and is not reset for pricing band rates at the start of each billing
+             * * If **TRUE**, usage accumulates over the entire period the priced Plan is active for
+             *   the account, and is not reset for pricing band rates at the start of each billing
              *   period.
-             * * If FALSE, usage does not accumulate, and is reset for pricing bands at the start of
-             *   each billing period.
+             * * If **FALSE**, usage does not accumulate, and is reset for pricing bands at the
+             *   start of each billing period.
              */
             fun tiersSpanPlan(tiersSpanPlan: Boolean) = tiersSpanPlan(JsonField.of(tiersSpanPlan))
 

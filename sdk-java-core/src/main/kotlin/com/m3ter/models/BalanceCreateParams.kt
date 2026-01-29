@@ -95,6 +95,16 @@ private constructor(
     fun startDate(): OffsetDateTime = body.startDate()
 
     /**
+     * Allow balance amounts to fall below zero. This feature is enabled on request. Please get in
+     * touch with m3ter Support or your m3ter contact if you would like it enabling for your
+     * organization(s).
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun allowOverdraft(): Optional<Boolean> = body.allowOverdraft()
+
+    /**
      * A description for the bill line items for draw-down charges against the Balance.
      * *(Optional).*
      *
@@ -288,6 +298,13 @@ private constructor(
      * Unlike [startDate], this method doesn't throw if the JSON field has an unexpected type.
      */
     fun _startDate(): JsonField<OffsetDateTime> = body._startDate()
+
+    /**
+     * Returns the raw JSON value of [allowOverdraft].
+     *
+     * Unlike [allowOverdraft], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    fun _allowOverdraft(): JsonField<Boolean> = body._allowOverdraft()
 
     /**
      * Returns the raw JSON value of [balanceDrawDownDescription].
@@ -526,6 +543,24 @@ private constructor(
          * supported value.
          */
         fun startDate(startDate: JsonField<OffsetDateTime>) = apply { body.startDate(startDate) }
+
+        /**
+         * Allow balance amounts to fall below zero. This feature is enabled on request. Please get
+         * in touch with m3ter Support or your m3ter contact if you would like it enabling for your
+         * organization(s).
+         */
+        fun allowOverdraft(allowOverdraft: Boolean) = apply { body.allowOverdraft(allowOverdraft) }
+
+        /**
+         * Sets [Builder.allowOverdraft] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.allowOverdraft] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun allowOverdraft(allowOverdraft: JsonField<Boolean>) = apply {
+            body.allowOverdraft(allowOverdraft)
+        }
 
         /**
          * A description for the bill line items for draw-down charges against the Balance.
@@ -970,6 +1005,7 @@ private constructor(
         private val endDate: JsonField<OffsetDateTime>,
         private val name: JsonField<String>,
         private val startDate: JsonField<OffsetDateTime>,
+        private val allowOverdraft: JsonField<Boolean>,
         private val balanceDrawDownDescription: JsonField<String>,
         private val consumptionsAccountingProductId: JsonField<String>,
         private val contractId: JsonField<String>,
@@ -1002,6 +1038,9 @@ private constructor(
             @JsonProperty("startDate")
             @ExcludeMissing
             startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("allowOverdraft")
+            @ExcludeMissing
+            allowOverdraft: JsonField<Boolean> = JsonMissing.of(),
             @JsonProperty("balanceDrawDownDescription")
             @ExcludeMissing
             balanceDrawDownDescription: JsonField<String> = JsonMissing.of(),
@@ -1046,6 +1085,7 @@ private constructor(
             endDate,
             name,
             startDate,
+            allowOverdraft,
             balanceDrawDownDescription,
             consumptionsAccountingProductId,
             contractId,
@@ -1114,6 +1154,16 @@ private constructor(
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
          */
         fun startDate(): OffsetDateTime = startDate.getRequired("startDate")
+
+        /**
+         * Allow balance amounts to fall below zero. This feature is enabled on request. Please get
+         * in touch with m3ter Support or your m3ter contact if you would like it enabling for your
+         * organization(s).
+         *
+         * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+         *   server responded with an unexpected value).
+         */
+        fun allowOverdraft(): Optional<Boolean> = allowOverdraft.getOptional("allowOverdraft")
 
         /**
          * A description for the bill line items for draw-down charges against the Balance.
@@ -1324,6 +1374,16 @@ private constructor(
         fun _startDate(): JsonField<OffsetDateTime> = startDate
 
         /**
+         * Returns the raw JSON value of [allowOverdraft].
+         *
+         * Unlike [allowOverdraft], this method doesn't throw if the JSON field has an unexpected
+         * type.
+         */
+        @JsonProperty("allowOverdraft")
+        @ExcludeMissing
+        fun _allowOverdraft(): JsonField<Boolean> = allowOverdraft
+
+        /**
          * Returns the raw JSON value of [balanceDrawDownDescription].
          *
          * Unlike [balanceDrawDownDescription], this method doesn't throw if the JSON field has an
@@ -1486,6 +1546,7 @@ private constructor(
             private var endDate: JsonField<OffsetDateTime>? = null
             private var name: JsonField<String>? = null
             private var startDate: JsonField<OffsetDateTime>? = null
+            private var allowOverdraft: JsonField<Boolean> = JsonMissing.of()
             private var balanceDrawDownDescription: JsonField<String> = JsonMissing.of()
             private var consumptionsAccountingProductId: JsonField<String> = JsonMissing.of()
             private var contractId: JsonField<String> = JsonMissing.of()
@@ -1509,6 +1570,7 @@ private constructor(
                 endDate = body.endDate
                 name = body.name
                 startDate = body.startDate
+                allowOverdraft = body.allowOverdraft
                 balanceDrawDownDescription = body.balanceDrawDownDescription
                 consumptionsAccountingProductId = body.consumptionsAccountingProductId
                 contractId = body.contractId
@@ -1604,6 +1666,25 @@ private constructor(
              */
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
+            }
+
+            /**
+             * Allow balance amounts to fall below zero. This feature is enabled on request. Please
+             * get in touch with m3ter Support or your m3ter contact if you would like it enabling
+             * for your organization(s).
+             */
+            fun allowOverdraft(allowOverdraft: Boolean) =
+                allowOverdraft(JsonField.of(allowOverdraft))
+
+            /**
+             * Sets [Builder.allowOverdraft] to an arbitrary JSON value.
+             *
+             * You should usually call [Builder.allowOverdraft] with a well-typed [Boolean] value
+             * instead. This method is primarily for setting the field to an undocumented or not yet
+             * supported value.
+             */
+            fun allowOverdraft(allowOverdraft: JsonField<Boolean>) = apply {
+                this.allowOverdraft = allowOverdraft
             }
 
             /**
@@ -1936,6 +2017,7 @@ private constructor(
                     checkRequired("endDate", endDate),
                     checkRequired("name", name),
                     checkRequired("startDate", startDate),
+                    allowOverdraft,
                     balanceDrawDownDescription,
                     consumptionsAccountingProductId,
                     contractId,
@@ -1966,6 +2048,7 @@ private constructor(
             endDate()
             name()
             startDate()
+            allowOverdraft()
             balanceDrawDownDescription()
             consumptionsAccountingProductId()
             contractId()
@@ -2004,6 +2087,7 @@ private constructor(
                 (if (endDate.asKnown().isPresent) 1 else 0) +
                 (if (name.asKnown().isPresent) 1 else 0) +
                 (if (startDate.asKnown().isPresent) 1 else 0) +
+                (if (allowOverdraft.asKnown().isPresent) 1 else 0) +
                 (if (balanceDrawDownDescription.asKnown().isPresent) 1 else 0) +
                 (if (consumptionsAccountingProductId.asKnown().isPresent) 1 else 0) +
                 (if (contractId.asKnown().isPresent) 1 else 0) +
@@ -2030,6 +2114,7 @@ private constructor(
                 endDate == other.endDate &&
                 name == other.name &&
                 startDate == other.startDate &&
+                allowOverdraft == other.allowOverdraft &&
                 balanceDrawDownDescription == other.balanceDrawDownDescription &&
                 consumptionsAccountingProductId == other.consumptionsAccountingProductId &&
                 contractId == other.contractId &&
@@ -2054,6 +2139,7 @@ private constructor(
                 endDate,
                 name,
                 startDate,
+                allowOverdraft,
                 balanceDrawDownDescription,
                 consumptionsAccountingProductId,
                 contractId,
@@ -2074,7 +2160,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{accountId=$accountId, code=$code, currency=$currency, endDate=$endDate, name=$name, startDate=$startDate, balanceDrawDownDescription=$balanceDrawDownDescription, consumptionsAccountingProductId=$consumptionsAccountingProductId, contractId=$contractId, customFields=$customFields, description=$description, feesAccountingProductId=$feesAccountingProductId, lineItemTypes=$lineItemTypes, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, version=$version, additionalProperties=$additionalProperties}"
+            "Body{accountId=$accountId, code=$code, currency=$currency, endDate=$endDate, name=$name, startDate=$startDate, allowOverdraft=$allowOverdraft, balanceDrawDownDescription=$balanceDrawDownDescription, consumptionsAccountingProductId=$consumptionsAccountingProductId, contractId=$contractId, customFields=$customFields, description=$description, feesAccountingProductId=$feesAccountingProductId, lineItemTypes=$lineItemTypes, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, version=$version, additionalProperties=$additionalProperties}"
     }
 
     /**

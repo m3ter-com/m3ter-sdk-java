@@ -12,6 +12,8 @@ import com.m3ter.models.BalanceListPageAsync
 import com.m3ter.models.BalanceListParams
 import com.m3ter.models.BalanceRetrieveParams
 import com.m3ter.models.BalanceUpdateParams
+import com.m3ter.services.async.balances.ChargeScheduleServiceAsync
+import com.m3ter.services.async.balances.TransactionScheduleServiceAsync
 import com.m3ter.services.async.balances.TransactionServiceAsync
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
@@ -31,6 +33,10 @@ interface BalanceServiceAsync {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): BalanceServiceAsync
 
     fun transactions(): TransactionServiceAsync
+
+    fun chargeSchedules(): ChargeScheduleServiceAsync
+
+    fun transactionSchedules(): TransactionScheduleServiceAsync
 
     /**
      * Create a new Balance for the given end customer Account.
@@ -185,6 +191,10 @@ interface BalanceServiceAsync {
         ): BalanceServiceAsync.WithRawResponse
 
         fun transactions(): TransactionServiceAsync.WithRawResponse
+
+        fun chargeSchedules(): ChargeScheduleServiceAsync.WithRawResponse
+
+        fun transactionSchedules(): TransactionScheduleServiceAsync.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/balances`, but is otherwise

@@ -20,6 +20,8 @@ import com.m3ter.services.blocking.BillJobService
 import com.m3ter.services.blocking.BillJobServiceImpl
 import com.m3ter.services.blocking.BillService
 import com.m3ter.services.blocking.BillServiceImpl
+import com.m3ter.services.blocking.ChargeService
+import com.m3ter.services.blocking.ChargeServiceImpl
 import com.m3ter.services.blocking.CommitmentService
 import com.m3ter.services.blocking.CommitmentServiceImpl
 import com.m3ter.services.blocking.CompoundAggregationService
@@ -48,6 +50,8 @@ import com.m3ter.services.blocking.ExternalMappingService
 import com.m3ter.services.blocking.ExternalMappingServiceImpl
 import com.m3ter.services.blocking.IntegrationConfigurationService
 import com.m3ter.services.blocking.IntegrationConfigurationServiceImpl
+import com.m3ter.services.blocking.LookupTableService
+import com.m3ter.services.blocking.LookupTableServiceImpl
 import com.m3ter.services.blocking.MeterService
 import com.m3ter.services.blocking.MeterServiceImpl
 import com.m3ter.services.blocking.NotificationConfigurationService
@@ -129,6 +133,8 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
 
     private val billJobs: BillJobService by lazy { BillJobServiceImpl(clientOptionsWithUserAgent) }
 
+    private val charges: ChargeService by lazy { ChargeServiceImpl(clientOptionsWithUserAgent) }
+
     private val compoundAggregations: CompoundAggregationService by lazy {
         CompoundAggregationServiceImpl(clientOptionsWithUserAgent)
     }
@@ -175,6 +181,10 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
 
     private val integrationConfigurations: IntegrationConfigurationService by lazy {
         IntegrationConfigurationServiceImpl(clientOptionsWithUserAgent)
+    }
+
+    private val lookupTables: LookupTableService by lazy {
+        LookupTableServiceImpl(clientOptionsWithUserAgent)
     }
 
     private val meters: MeterService by lazy { MeterServiceImpl(clientOptionsWithUserAgent) }
@@ -256,6 +266,8 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
 
     override fun billJobs(): BillJobService = billJobs
 
+    override fun charges(): ChargeService = charges
+
     override fun compoundAggregations(): CompoundAggregationService = compoundAggregations
 
     override fun contracts(): ContractService = contracts
@@ -282,6 +294,8 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
 
     override fun integrationConfigurations(): IntegrationConfigurationService =
         integrationConfigurations
+
+    override fun lookupTables(): LookupTableService = lookupTables
 
     override fun meters(): MeterService = meters
 
@@ -360,6 +374,10 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
             BillJobServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val charges: ChargeService.WithRawResponse by lazy {
+            ChargeServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
         private val compoundAggregations: CompoundAggregationService.WithRawResponse by lazy {
             CompoundAggregationServiceImpl.WithRawResponseImpl(clientOptions)
         }
@@ -411,6 +429,10 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
         private val integrationConfigurations:
             IntegrationConfigurationService.WithRawResponse by lazy {
             IntegrationConfigurationServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val lookupTables: LookupTableService.WithRawResponse by lazy {
+            LookupTableServiceImpl.WithRawResponseImpl(clientOptions)
         }
 
         private val meters: MeterService.WithRawResponse by lazy {
@@ -508,6 +530,8 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
 
         override fun billJobs(): BillJobService.WithRawResponse = billJobs
 
+        override fun charges(): ChargeService.WithRawResponse = charges
+
         override fun compoundAggregations(): CompoundAggregationService.WithRawResponse =
             compoundAggregations
 
@@ -536,6 +560,8 @@ class M3terClientImpl(private val clientOptions: ClientOptions) : M3terClient {
 
         override fun integrationConfigurations(): IntegrationConfigurationService.WithRawResponse =
             integrationConfigurations
+
+        override fun lookupTables(): LookupTableService.WithRawResponse = lookupTables
 
         override fun meters(): MeterService.WithRawResponse = meters
 

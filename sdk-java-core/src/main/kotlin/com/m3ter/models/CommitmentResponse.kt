@@ -346,6 +346,9 @@ private constructor(
     fun currency(): Optional<String> = currency.getOptional("currency")
 
     /**
+     * Optional Product ID this Commitment's consumptions should be attributed to for accounting
+     * purposes.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -391,6 +394,8 @@ private constructor(
     fun feeDates(): Optional<List<CommitmentFee>> = feeDates.getOptional("feeDates")
 
     /**
+     * Optional Product ID this Commitment's fees should be attributed to for accounting purposes.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -1131,6 +1136,10 @@ private constructor(
          */
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+        /**
+         * Optional Product ID this Commitment's consumptions should be attributed to for accounting
+         * purposes.
+         */
         fun drawdownsAccountingProductId(drawdownsAccountingProductId: String) =
             drawdownsAccountingProductId(JsonField.of(drawdownsAccountingProductId))
 
@@ -1218,6 +1227,10 @@ private constructor(
                 }
         }
 
+        /**
+         * Optional Product ID this Commitment's fees should be attributed to for accounting
+         * purposes.
+         */
         fun feesAccountingProductId(feesAccountingProductId: String) =
             feesAccountingProductId(JsonField.of(feesAccountingProductId))
 

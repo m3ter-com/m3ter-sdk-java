@@ -24,6 +24,10 @@ import com.m3ter.models.BalanceListPageResponse
 import com.m3ter.models.BalanceListParams
 import com.m3ter.models.BalanceRetrieveParams
 import com.m3ter.models.BalanceUpdateParams
+import com.m3ter.services.async.balances.ChargeScheduleServiceAsync
+import com.m3ter.services.async.balances.ChargeScheduleServiceAsyncImpl
+import com.m3ter.services.async.balances.TransactionScheduleServiceAsync
+import com.m3ter.services.async.balances.TransactionScheduleServiceAsyncImpl
 import com.m3ter.services.async.balances.TransactionServiceAsync
 import com.m3ter.services.async.balances.TransactionServiceAsyncImpl
 import java.util.concurrent.CompletableFuture
@@ -41,12 +45,24 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
         TransactionServiceAsyncImpl(clientOptions)
     }
 
+    private val chargeSchedules: ChargeScheduleServiceAsync by lazy {
+        ChargeScheduleServiceAsyncImpl(clientOptions)
+    }
+
+    private val transactionSchedules: TransactionScheduleServiceAsync by lazy {
+        TransactionScheduleServiceAsyncImpl(clientOptions)
+    }
+
     override fun withRawResponse(): BalanceServiceAsync.WithRawResponse = withRawResponse
 
     override fun withOptions(modifier: Consumer<ClientOptions.Builder>): BalanceServiceAsync =
         BalanceServiceAsyncImpl(clientOptions.toBuilder().apply(modifier::accept).build())
 
     override fun transactions(): TransactionServiceAsync = transactions
+
+    override fun chargeSchedules(): ChargeScheduleServiceAsync = chargeSchedules
+
+    override fun transactionSchedules(): TransactionScheduleServiceAsync = transactionSchedules
 
     override fun create(
         params: BalanceCreateParams,
@@ -93,6 +109,14 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             TransactionServiceAsyncImpl.WithRawResponseImpl(clientOptions)
         }
 
+        private val chargeSchedules: ChargeScheduleServiceAsync.WithRawResponse by lazy {
+            ChargeScheduleServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val transactionSchedules: TransactionScheduleServiceAsync.WithRawResponse by lazy {
+            TransactionScheduleServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
         override fun withOptions(
             modifier: Consumer<ClientOptions.Builder>
         ): BalanceServiceAsync.WithRawResponse =
@@ -101,6 +125,11 @@ class BalanceServiceAsyncImpl internal constructor(private val clientOptions: Cl
             )
 
         override fun transactions(): TransactionServiceAsync.WithRawResponse = transactions
+
+        override fun chargeSchedules(): ChargeScheduleServiceAsync.WithRawResponse = chargeSchedules
+
+        override fun transactionSchedules(): TransactionScheduleServiceAsync.WithRawResponse =
+            transactionSchedules
 
         private val createHandler: Handler<Balance> = jsonHandler<Balance>(clientOptions.jsonMapper)
 

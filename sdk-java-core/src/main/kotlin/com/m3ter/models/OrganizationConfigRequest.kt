@@ -44,6 +44,7 @@ private constructor(
     private val externalInvoiceDate: JsonField<String>,
     private val minimumSpendBillInAdvance: JsonField<Boolean>,
     private val scheduledBillInterval: JsonField<Double>,
+    private val scheduledBillOffset: JsonField<Int>,
     private val sequenceStartNumber: JsonField<Int>,
     private val standingChargeBillInAdvance: JsonField<Boolean>,
     private val suppressedEmptyBills: JsonField<Boolean>,
@@ -106,6 +107,9 @@ private constructor(
         @JsonProperty("scheduledBillInterval")
         @ExcludeMissing
         scheduledBillInterval: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("scheduledBillOffset")
+        @ExcludeMissing
+        scheduledBillOffset: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("sequenceStartNumber")
         @ExcludeMissing
         sequenceStartNumber: JsonField<Int> = JsonMissing.of(),
@@ -138,6 +142,7 @@ private constructor(
         externalInvoiceDate,
         minimumSpendBillInAdvance,
         scheduledBillInterval,
+        scheduledBillOffset,
         sequenceStartNumber,
         standingChargeBillInAdvance,
         suppressedEmptyBills,
@@ -260,7 +265,12 @@ private constructor(
         allowNegativeBalances.getOptional("allowNegativeBalances")
 
     /**
-     * Allows plans to overlap time periods for different contracts.
+     * Boolean setting to control whether or not multiple plans for the same Product can be active
+     * on an Account at the same time:
+     * * **TRUE** - multiple overlapping plans for the same product can be attached to the same
+     *   Account.
+     * * **FALSE** - multiple overlapping plans for the same product cannot be attached to the same
+     *   Account.(*Default*)
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -437,6 +447,17 @@ private constructor(
      */
     fun scheduledBillInterval(): Optional<Double> =
         scheduledBillInterval.getOptional("scheduledBillInterval")
+
+    /**
+     * Offset (hours) within the scheduled interval to start the run, interpreted in the
+     * organization's timezone. For daily (24h) schedules this is the hour of day (0-23). Only
+     * supported when ScheduledBillInterval is 24 (daily) at present.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun scheduledBillOffset(): Optional<Int> =
+        scheduledBillOffset.getOptional("scheduledBillOffset")
 
     /**
      * The starting number to be used for sequential invoice numbers. This will be combined with the
@@ -680,6 +701,16 @@ private constructor(
     fun _scheduledBillInterval(): JsonField<Double> = scheduledBillInterval
 
     /**
+     * Returns the raw JSON value of [scheduledBillOffset].
+     *
+     * Unlike [scheduledBillOffset], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("scheduledBillOffset")
+    @ExcludeMissing
+    fun _scheduledBillOffset(): JsonField<Int> = scheduledBillOffset
+
+    /**
      * Returns the raw JSON value of [sequenceStartNumber].
      *
      * Unlike [sequenceStartNumber], this method doesn't throw if the JSON field has an unexpected
@@ -772,6 +803,7 @@ private constructor(
         private var externalInvoiceDate: JsonField<String> = JsonMissing.of()
         private var minimumSpendBillInAdvance: JsonField<Boolean> = JsonMissing.of()
         private var scheduledBillInterval: JsonField<Double> = JsonMissing.of()
+        private var scheduledBillOffset: JsonField<Int> = JsonMissing.of()
         private var sequenceStartNumber: JsonField<Int> = JsonMissing.of()
         private var standingChargeBillInAdvance: JsonField<Boolean> = JsonMissing.of()
         private var suppressedEmptyBills: JsonField<Boolean> = JsonMissing.of()
@@ -804,6 +836,7 @@ private constructor(
             externalInvoiceDate = organizationConfigRequest.externalInvoiceDate
             minimumSpendBillInAdvance = organizationConfigRequest.minimumSpendBillInAdvance
             scheduledBillInterval = organizationConfigRequest.scheduledBillInterval
+            scheduledBillOffset = organizationConfigRequest.scheduledBillOffset
             sequenceStartNumber = organizationConfigRequest.sequenceStartNumber
             standingChargeBillInAdvance = organizationConfigRequest.standingChargeBillInAdvance
             suppressedEmptyBills = organizationConfigRequest.suppressedEmptyBills
@@ -974,7 +1007,14 @@ private constructor(
             this.allowNegativeBalances = allowNegativeBalances
         }
 
-        /** Allows plans to overlap time periods for different contracts. */
+        /**
+         * Boolean setting to control whether or not multiple plans for the same Product can be
+         * active on an Account at the same time:
+         * * **TRUE** - multiple overlapping plans for the same product can be attached to the same
+         *   Account.
+         * * **FALSE** - multiple overlapping plans for the same product cannot be attached to the
+         *   same Account.(*Default*)
+         */
         fun allowOverlappingPlans(allowOverlappingPlans: Boolean) =
             allowOverlappingPlans(JsonField.of(allowOverlappingPlans))
 
@@ -1282,6 +1322,25 @@ private constructor(
         }
 
         /**
+         * Offset (hours) within the scheduled interval to start the run, interpreted in the
+         * organization's timezone. For daily (24h) schedules this is the hour of day (0-23). Only
+         * supported when ScheduledBillInterval is 24 (daily) at present.
+         */
+        fun scheduledBillOffset(scheduledBillOffset: Int) =
+            scheduledBillOffset(JsonField.of(scheduledBillOffset))
+
+        /**
+         * Sets [Builder.scheduledBillOffset] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.scheduledBillOffset] with a well-typed [Int] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun scheduledBillOffset(scheduledBillOffset: JsonField<Int>) = apply {
+            this.scheduledBillOffset = scheduledBillOffset
+        }
+
+        /**
          * The starting number to be used for sequential invoice numbers. This will be combined with
          * the `billPrefix`.
          *
@@ -1422,6 +1481,7 @@ private constructor(
                 externalInvoiceDate,
                 minimumSpendBillInAdvance,
                 scheduledBillInterval,
+                scheduledBillOffset,
                 sequenceStartNumber,
                 standingChargeBillInAdvance,
                 suppressedEmptyBills,
@@ -1458,6 +1518,7 @@ private constructor(
         externalInvoiceDate()
         minimumSpendBillInAdvance()
         scheduledBillInterval()
+        scheduledBillOffset()
         sequenceStartNumber()
         standingChargeBillInAdvance()
         suppressedEmptyBills()
@@ -1501,6 +1562,7 @@ private constructor(
             (if (externalInvoiceDate.asKnown().isPresent) 1 else 0) +
             (if (minimumSpendBillInAdvance.asKnown().isPresent) 1 else 0) +
             (if (scheduledBillInterval.asKnown().isPresent) 1 else 0) +
+            (if (scheduledBillOffset.asKnown().isPresent) 1 else 0) +
             (if (sequenceStartNumber.asKnown().isPresent) 1 else 0) +
             (if (standingChargeBillInAdvance.asKnown().isPresent) 1 else 0) +
             (if (suppressedEmptyBills.asKnown().isPresent) 1 else 0) +
@@ -1810,6 +1872,7 @@ private constructor(
             externalInvoiceDate == other.externalInvoiceDate &&
             minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
             scheduledBillInterval == other.scheduledBillInterval &&
+            scheduledBillOffset == other.scheduledBillOffset &&
             sequenceStartNumber == other.sequenceStartNumber &&
             standingChargeBillInAdvance == other.standingChargeBillInAdvance &&
             suppressedEmptyBills == other.suppressedEmptyBills &&
@@ -1840,6 +1903,7 @@ private constructor(
             externalInvoiceDate,
             minimumSpendBillInAdvance,
             scheduledBillInterval,
+            scheduledBillOffset,
             sequenceStartNumber,
             standingChargeBillInAdvance,
             suppressedEmptyBills,
@@ -1851,5 +1915,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "OrganizationConfigRequest{currency=$currency, dayEpoch=$dayEpoch, daysBeforeBillDue=$daysBeforeBillDue, monthEpoch=$monthEpoch, timezone=$timezone, weekEpoch=$weekEpoch, yearEpoch=$yearEpoch, allowNegativeBalances=$allowNegativeBalances, allowOverlappingPlans=$allowOverlappingPlans, autoApproveBillsGracePeriod=$autoApproveBillsGracePeriod, autoApproveBillsGracePeriodUnit=$autoApproveBillsGracePeriodUnit, autoGenerateStatementMode=$autoGenerateStatementMode, billPrefix=$billPrefix, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, consolidateBills=$consolidateBills, creditApplicationOrder=$creditApplicationOrder, currencyConversions=$currencyConversions, defaultStatementDefinitionId=$defaultStatementDefinitionId, externalInvoiceDate=$externalInvoiceDate, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, scheduledBillInterval=$scheduledBillInterval, sequenceStartNumber=$sequenceStartNumber, standingChargeBillInAdvance=$standingChargeBillInAdvance, suppressedEmptyBills=$suppressedEmptyBills, version=$version, additionalProperties=$additionalProperties}"
+        "OrganizationConfigRequest{currency=$currency, dayEpoch=$dayEpoch, daysBeforeBillDue=$daysBeforeBillDue, monthEpoch=$monthEpoch, timezone=$timezone, weekEpoch=$weekEpoch, yearEpoch=$yearEpoch, allowNegativeBalances=$allowNegativeBalances, allowOverlappingPlans=$allowOverlappingPlans, autoApproveBillsGracePeriod=$autoApproveBillsGracePeriod, autoApproveBillsGracePeriodUnit=$autoApproveBillsGracePeriodUnit, autoGenerateStatementMode=$autoGenerateStatementMode, billPrefix=$billPrefix, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, consolidateBills=$consolidateBills, creditApplicationOrder=$creditApplicationOrder, currencyConversions=$currencyConversions, defaultStatementDefinitionId=$defaultStatementDefinitionId, externalInvoiceDate=$externalInvoiceDate, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, scheduledBillInterval=$scheduledBillInterval, scheduledBillOffset=$scheduledBillOffset, sequenceStartNumber=$sequenceStartNumber, standingChargeBillInAdvance=$standingChargeBillInAdvance, suppressedEmptyBills=$suppressedEmptyBills, version=$version, additionalProperties=$additionalProperties}"
 }

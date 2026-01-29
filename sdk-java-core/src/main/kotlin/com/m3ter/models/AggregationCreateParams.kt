@@ -37,7 +37,7 @@ private constructor(
 
     /**
      * Specifies the computation method applied to usage data collected in `targetField`.
-     * Aggregation unit value depends on the **Category** configured for the selected targetField.
+     * Aggregation unit value depends on the **Category** configured for the selected `targetField`.
      *
      * Enum:
      * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
@@ -56,6 +56,8 @@ private constructor(
      *   **Income**, or **Cost** `targetField`.
      * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
+     * * **CUSTOM_SQL**. Uses an SQL query expression. If you select this Aggregation type, use the
+     *   `customSQL` request parameter to enter an SQL query.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
      *   missing or null (e.g. if the server responded with an unexpected value).
@@ -131,7 +133,7 @@ private constructor(
     fun unit(): String = body.unit()
 
     /**
-     * Optional Product ID this Aggregation should be attributed to for accounting purposes
+     * Optional Product ID this Aggregation should be attributed to for accounting purposes.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -153,9 +155,14 @@ private constructor(
     fun customFields(): Optional<CustomFields> = body.customFields()
 
     /**
-     * **NOTE:** The `customSql` Aggregation type is currently only available in Beta release and on
-     * request. If you are interested in using this feature, please get in touch with m3ter Support
-     * or your m3ter contact.
+     * Enter the SQL query expression to be used for a Custom SQL Aggregation. Custom SQL queries
+     * should be run against the Measurements table - for more details see
+     * [Custom SQL Aggregations](https://www.m3ter.com/docs/guides/usage-data-aggregations/custom-sql-aggregations)
+     * in your main User documentation.
+     *
+     * **NOTE:** The `customSql` Aggregation type is currently available in Preview release. If you
+     * are interested in using this feature, please get in touch with m3ter Support or your m3ter
+     * contact.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -393,7 +400,7 @@ private constructor(
         /**
          * Specifies the computation method applied to usage data collected in `targetField`.
          * Aggregation unit value depends on the **Category** configured for the selected
-         * targetField.
+         * `targetField`.
          *
          * Enum:
          * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
@@ -412,6 +419,8 @@ private constructor(
          *   **Income**, or **Cost** `targetField`.
          * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
+         * * **CUSTOM_SQL**. Uses an SQL query expression. If you select this Aggregation type, use
+         *   the `customSQL` request parameter to enter an SQL query.
          */
         fun aggregation(aggregation: Aggregation) = apply { body.aggregation(aggregation) }
 
@@ -529,7 +538,7 @@ private constructor(
          */
         fun unit(unit: JsonField<String>) = apply { body.unit(unit) }
 
-        /** Optional Product ID this Aggregation should be attributed to for accounting purposes */
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes. */
         fun accountingProductId(accountingProductId: String) = apply {
             body.accountingProductId(accountingProductId)
         }
@@ -570,9 +579,14 @@ private constructor(
         }
 
         /**
-         * **NOTE:** The `customSql` Aggregation type is currently only available in Beta release
-         * and on request. If you are interested in using this feature, please get in touch with
-         * m3ter Support or your m3ter contact.
+         * Enter the SQL query expression to be used for a Custom SQL Aggregation. Custom SQL
+         * queries should be run against the Measurements table - for more details see
+         * [Custom SQL Aggregations](https://www.m3ter.com/docs/guides/usage-data-aggregations/custom-sql-aggregations)
+         * in your main User documentation.
+         *
+         * **NOTE:** The `customSql` Aggregation type is currently available in Preview release. If
+         * you are interested in using this feature, please get in touch with m3ter Support or your
+         * m3ter contact.
          */
         fun customSql(customSql: String) = apply { body.customSql(customSql) }
 
@@ -923,7 +937,7 @@ private constructor(
         /**
          * Specifies the computation method applied to usage data collected in `targetField`.
          * Aggregation unit value depends on the **Category** configured for the selected
-         * targetField.
+         * `targetField`.
          *
          * Enum:
          * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
@@ -942,6 +956,8 @@ private constructor(
          *   **Income**, or **Cost** `targetField`.
          * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
+         * * **CUSTOM_SQL**. Uses an SQL query expression. If you select this Aggregation type, use
+         *   the `customSQL` request parameter to enter an SQL query.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type or is
          *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
@@ -1017,7 +1033,7 @@ private constructor(
         fun unit(): String = unit.getRequired("unit")
 
         /**
-         * Optional Product ID this Aggregation should be attributed to for accounting purposes
+         * Optional Product ID this Aggregation should be attributed to for accounting purposes.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1040,9 +1056,14 @@ private constructor(
         fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
         /**
-         * **NOTE:** The `customSql` Aggregation type is currently only available in Beta release
-         * and on request. If you are interested in using this feature, please get in touch with
-         * m3ter Support or your m3ter contact.
+         * Enter the SQL query expression to be used for a Custom SQL Aggregation. Custom SQL
+         * queries should be run against the Measurements table - for more details see
+         * [Custom SQL Aggregations](https://www.m3ter.com/docs/guides/usage-data-aggregations/custom-sql-aggregations)
+         * in your main User documentation.
+         *
+         * **NOTE:** The `customSql` Aggregation type is currently available in Preview release. If
+         * you are interested in using this feature, please get in touch with m3ter Support or your
+         * m3ter contact.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1307,7 +1328,7 @@ private constructor(
             /**
              * Specifies the computation method applied to usage data collected in `targetField`.
              * Aggregation unit value depends on the **Category** configured for the selected
-             * targetField.
+             * `targetField`.
              *
              * Enum:
              * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
@@ -1326,6 +1347,8 @@ private constructor(
              *   **Income**, or **Cost** `targetField`.
              * * **UNIQUE**. Uses unique values and returns a count of the number of unique values.
              *   Can be applied to a **Metadata** `targetField`.
+             * * **CUSTOM_SQL**. Uses an SQL query expression. If you select this Aggregation type,
+             *   use the `customSQL` request parameter to enter an SQL query.
              */
             fun aggregation(aggregation: Aggregation) = aggregation(JsonField.of(aggregation))
 
@@ -1451,7 +1474,7 @@ private constructor(
             fun unit(unit: JsonField<String>) = apply { this.unit = unit }
 
             /**
-             * Optional Product ID this Aggregation should be attributed to for accounting purposes
+             * Optional Product ID this Aggregation should be attributed to for accounting purposes.
              */
             fun accountingProductId(accountingProductId: String) =
                 accountingProductId(JsonField.of(accountingProductId))
@@ -1493,9 +1516,14 @@ private constructor(
             }
 
             /**
-             * **NOTE:** The `customSql` Aggregation type is currently only available in Beta
-             * release and on request. If you are interested in using this feature, please get in
-             * touch with m3ter Support or your m3ter contact.
+             * Enter the SQL query expression to be used for a Custom SQL Aggregation. Custom SQL
+             * queries should be run against the Measurements table - for more details see
+             * [Custom SQL Aggregations](https://www.m3ter.com/docs/guides/usage-data-aggregations/custom-sql-aggregations)
+             * in your main User documentation.
+             *
+             * **NOTE:** The `customSql` Aggregation type is currently available in Preview release.
+             * If you are interested in using this feature, please get in touch with m3ter Support
+             * or your m3ter contact.
              */
             fun customSql(customSql: String) = customSql(JsonField.of(customSql))
 
@@ -1789,7 +1817,7 @@ private constructor(
 
     /**
      * Specifies the computation method applied to usage data collected in `targetField`.
-     * Aggregation unit value depends on the **Category** configured for the selected targetField.
+     * Aggregation unit value depends on the **Category** configured for the selected `targetField`.
      *
      * Enum:
      * * **SUM**. Adds the values. Can be applied to a **Measure**, **Income**, or **Cost**
@@ -1808,6 +1836,8 @@ private constructor(
      *   **Income**, or **Cost** `targetField`.
      * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
+     * * **CUSTOM_SQL**. Uses an SQL query expression. If you select this Aggregation type, use the
+     *   `customSQL` request parameter to enter an SQL query.
      */
     class Aggregation @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {

@@ -35,11 +35,6 @@ internal class AccountListPageResponseTest {
                         .autoGenerateStatementMode(AccountResponse.AutoGenerateStatementMode.NONE)
                         .billEpoch(LocalDate.parse("2019-12-27"))
                         .code("code")
-                        .configData(
-                            AccountResponse.ConfigData.builder()
-                                .putAdditionalProperty("foo", JsonValue.from("bar"))
-                                .build()
-                        )
                         .createdBy("createdBy")
                         .addCreditApplicationOrder(
                             AccountResponse.CreditApplicationOrder.PREPAYMENT
@@ -84,11 +79,6 @@ internal class AccountListPageResponseTest {
                     .autoGenerateStatementMode(AccountResponse.AutoGenerateStatementMode.NONE)
                     .billEpoch(LocalDate.parse("2019-12-27"))
                     .code("code")
-                    .configData(
-                        AccountResponse.ConfigData.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
-                            .build()
-                    )
                     .createdBy("createdBy")
                     .addCreditApplicationOrder(AccountResponse.CreditApplicationOrder.PREPAYMENT)
                     .currency("USD")
@@ -135,11 +125,6 @@ internal class AccountListPageResponseTest {
                         .autoGenerateStatementMode(AccountResponse.AutoGenerateStatementMode.NONE)
                         .billEpoch(LocalDate.parse("2019-12-27"))
                         .code("code")
-                        .configData(
-                            AccountResponse.ConfigData.builder()
-                                .putAdditionalProperty("foo", JsonValue.from("bar"))
-                                .build()
-                        )
                         .createdBy("createdBy")
                         .addCreditApplicationOrder(
                             AccountResponse.CreditApplicationOrder.PREPAYMENT

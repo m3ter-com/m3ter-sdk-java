@@ -71,7 +71,11 @@ private constructor(
      * AccountPlanGroups in the list.
      * * **TRUE** - both active and inactive AccountPlans and AccountPlanGroups are included in the
      *   list.
-     * * **FALSE** - only active AccountPlans and AccountPlanGroups are retrieved in the list.
+     * * **FALSE** - only active AccountPlans and AccountPlanGroups are retrieved in the
+     *   list.*(Default)*
+     *
+     * **NOTE:** Only operative if you also have one of `account`, `plan` or `contract` as a query
+     * parameter.
      */
     fun includeall(): Optional<Boolean> = Optional.ofNullable(includeall)
 
@@ -211,7 +215,11 @@ private constructor(
          * and AccountPlanGroups in the list.
          * * **TRUE** - both active and inactive AccountPlans and AccountPlanGroups are included in
          *   the list.
-         * * **FALSE** - only active AccountPlans and AccountPlanGroups are retrieved in the list.
+         * * **FALSE** - only active AccountPlans and AccountPlanGroups are retrieved in the
+         *   list.*(Default)*
+         *
+         * **NOTE:** Only operative if you also have one of `account`, `plan` or `contract` as a
+         * query parameter.
          */
         fun includeall(includeall: Boolean?) = apply { this.includeall = includeall }
 
