@@ -26,6 +26,7 @@ class Balance
 private constructor(
     private val id: JsonField<String>,
     private val accountId: JsonField<String>,
+    private val allowOverdraft: JsonField<Boolean>,
     private val amount: JsonField<Double>,
     private val balanceDrawDownDescription: JsonField<String>,
     private val code: JsonField<String>,
@@ -56,6 +57,9 @@ private constructor(
     private constructor(
         @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
         @JsonProperty("accountId") @ExcludeMissing accountId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("allowOverdraft")
+        @ExcludeMissing
+        allowOverdraft: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("amount") @ExcludeMissing amount: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("balanceDrawDownDescription")
         @ExcludeMissing
@@ -116,6 +120,7 @@ private constructor(
     ) : this(
         id,
         accountId,
+        allowOverdraft,
         amount,
         balanceDrawDownDescription,
         code,
@@ -157,6 +162,16 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun accountId(): Optional<String> = accountId.getOptional("accountId")
+
+    /**
+     * Allow balance amounts to fall below zero. This feature is enabled on request. Please get in
+     * touch with m3ter Support or your m3ter contact if you would like it enabling for your
+     * organization(s).
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun allowOverdraft(): Optional<Boolean> = allowOverdraft.getOptional("allowOverdraft")
 
     /**
      * The financial value that the Balance holds.
@@ -379,6 +394,15 @@ private constructor(
      * Unlike [accountId], this method doesn't throw if the JSON field has an unexpected type.
      */
     @JsonProperty("accountId") @ExcludeMissing fun _accountId(): JsonField<String> = accountId
+
+    /**
+     * Returns the raw JSON value of [allowOverdraft].
+     *
+     * Unlike [allowOverdraft], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("allowOverdraft")
+    @ExcludeMissing
+    fun _allowOverdraft(): JsonField<Boolean> = allowOverdraft
 
     /**
      * Returns the raw JSON value of [amount].
@@ -604,6 +628,7 @@ private constructor(
 
         private var id: JsonField<String>? = null
         private var accountId: JsonField<String> = JsonMissing.of()
+        private var allowOverdraft: JsonField<Boolean> = JsonMissing.of()
         private var amount: JsonField<Double> = JsonMissing.of()
         private var balanceDrawDownDescription: JsonField<String> = JsonMissing.of()
         private var code: JsonField<String> = JsonMissing.of()
@@ -633,6 +658,7 @@ private constructor(
         internal fun from(balance: Balance) = apply {
             id = balance.id
             accountId = balance.accountId
+            allowOverdraft = balance.allowOverdraft
             amount = balance.amount
             balanceDrawDownDescription = balance.balanceDrawDownDescription
             code = balance.code
@@ -681,6 +707,24 @@ private constructor(
          * value.
          */
         fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
+
+        /**
+         * Allow balance amounts to fall below zero. This feature is enabled on request. Please get
+         * in touch with m3ter Support or your m3ter contact if you would like it enabling for your
+         * organization(s).
+         */
+        fun allowOverdraft(allowOverdraft: Boolean) = allowOverdraft(JsonField.of(allowOverdraft))
+
+        /**
+         * Sets [Builder.allowOverdraft] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.allowOverdraft] with a well-typed [Boolean] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun allowOverdraft(allowOverdraft: JsonField<Boolean>) = apply {
+            this.allowOverdraft = allowOverdraft
+        }
 
         /** The financial value that the Balance holds. */
         fun amount(amount: Double) = amount(JsonField.of(amount))
@@ -1083,6 +1127,7 @@ private constructor(
             Balance(
                 checkRequired("id", id),
                 accountId,
+                allowOverdraft,
                 amount,
                 balanceDrawDownDescription,
                 code,
@@ -1119,6 +1164,7 @@ private constructor(
 
         id()
         accountId()
+        allowOverdraft()
         amount()
         balanceDrawDownDescription()
         code()
@@ -1162,6 +1208,7 @@ private constructor(
     internal fun validity(): Int =
         (if (id.asKnown().isPresent) 1 else 0) +
             (if (accountId.asKnown().isPresent) 1 else 0) +
+            (if (allowOverdraft.asKnown().isPresent) 1 else 0) +
             (if (amount.asKnown().isPresent) 1 else 0) +
             (if (balanceDrawDownDescription.asKnown().isPresent) 1 else 0) +
             (if (code.asKnown().isPresent) 1 else 0) +
@@ -1457,6 +1504,7 @@ private constructor(
         return other is Balance &&
             id == other.id &&
             accountId == other.accountId &&
+            allowOverdraft == other.allowOverdraft &&
             amount == other.amount &&
             balanceDrawDownDescription == other.balanceDrawDownDescription &&
             code == other.code &&
@@ -1487,6 +1535,7 @@ private constructor(
         Objects.hash(
             id,
             accountId,
+            allowOverdraft,
             amount,
             balanceDrawDownDescription,
             code,
@@ -1517,5 +1566,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Balance{id=$id, accountId=$accountId, amount=$amount, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, contractId=$contractId, createdBy=$createdBy, currency=$currency, customFields=$customFields, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, startDate=$startDate, version=$version, additionalProperties=$additionalProperties}"
+        "Balance{id=$id, accountId=$accountId, allowOverdraft=$allowOverdraft, amount=$amount, balanceDrawDownDescription=$balanceDrawDownDescription, code=$code, consumptionsAccountingProductId=$consumptionsAccountingProductId, contractId=$contractId, createdBy=$createdBy, currency=$currency, customFields=$customFields, description=$description, dtCreated=$dtCreated, dtLastModified=$dtLastModified, endDate=$endDate, feesAccountingProductId=$feesAccountingProductId, lastModifiedBy=$lastModifiedBy, lineItemTypes=$lineItemTypes, name=$name, overageDescription=$overageDescription, overageSurchargePercent=$overageSurchargePercent, productIds=$productIds, rolloverAmount=$rolloverAmount, rolloverEndDate=$rolloverEndDate, startDate=$startDate, version=$version, additionalProperties=$additionalProperties}"
 }

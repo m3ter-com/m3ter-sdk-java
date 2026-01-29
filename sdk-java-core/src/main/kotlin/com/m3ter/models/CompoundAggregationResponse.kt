@@ -111,6 +111,8 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
+     * Optional Product ID this Aggregation should be attributed to for accounting purposes.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -480,6 +482,7 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes. */
         fun accountingProductId(accountingProductId: String) =
             accountingProductId(JsonField.of(accountingProductId))
 

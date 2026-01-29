@@ -31,11 +31,6 @@ internal class AccountCreateParamsTest {
             )
             .autoGenerateStatementMode(AccountCreateParams.AutoGenerateStatementMode.NONE)
             .billEpoch(LocalDate.parse("2019-12-27"))
-            .configData(
-                AccountCreateParams.ConfigData.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
-                    .build()
-            )
             .addCreditApplicationOrder(AccountCreateParams.CreditApplicationOrder.PREPAYMENT)
             .currency("USD")
             .customFields(
@@ -87,11 +82,6 @@ internal class AccountCreateParamsTest {
                 )
                 .autoGenerateStatementMode(AccountCreateParams.AutoGenerateStatementMode.NONE)
                 .billEpoch(LocalDate.parse("2019-12-27"))
-                .configData(
-                    AccountCreateParams.ConfigData.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("bar"))
-                        .build()
-                )
                 .addCreditApplicationOrder(AccountCreateParams.CreditApplicationOrder.PREPAYMENT)
                 .currency("USD")
                 .customFields(
@@ -127,12 +117,6 @@ internal class AccountCreateParamsTest {
         assertThat(body.autoGenerateStatementMode())
             .contains(AccountCreateParams.AutoGenerateStatementMode.NONE)
         assertThat(body.billEpoch()).contains(LocalDate.parse("2019-12-27"))
-        assertThat(body.configData())
-            .contains(
-                AccountCreateParams.ConfigData.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("bar"))
-                    .build()
-            )
         assertThat(body.creditApplicationOrder().getOrNull())
             .containsExactly(AccountCreateParams.CreditApplicationOrder.PREPAYMENT)
         assertThat(body.currency()).contains("USD")

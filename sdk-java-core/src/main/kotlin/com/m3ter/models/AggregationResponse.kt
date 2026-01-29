@@ -124,6 +124,8 @@ private constructor(
     fun id(): String = id.getRequired("id")
 
     /**
+     * Optional Product ID this Aggregation should be attributed to for accounting purposes.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -151,6 +153,8 @@ private constructor(
      *   **Income**, or **Cost** `targetField`.
      * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
+     * * **CUSTOM_SQL**. Uses an SQL query expression. The `customSQL` parameter is used for the SQL
+     *   query.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -180,6 +184,8 @@ private constructor(
     fun customFields(): Optional<CustomFields> = customFields.getOptional("customFields")
 
     /**
+     * The SQL query expression to be used for a Custom SQL Aggregation.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -571,6 +577,7 @@ private constructor(
          */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
+        /** Optional Product ID this Aggregation should be attributed to for accounting purposes. */
         fun accountingProductId(accountingProductId: String) =
             accountingProductId(JsonField.of(accountingProductId))
 
@@ -607,6 +614,8 @@ private constructor(
          *   **Income**, or **Cost** `targetField`.
          * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can
          *   be applied to a **Metadata** `targetField`.
+         * * **CUSTOM_SQL**. Uses an SQL query expression. The `customSQL` parameter is used for the
+         *   SQL query.
          */
         fun aggregation(aggregation: Aggregation) = aggregation(JsonField.of(aggregation))
 
@@ -657,6 +666,7 @@ private constructor(
             this.customFields = customFields
         }
 
+        /** The SQL query expression to be used for a Custom SQL Aggregation. */
         fun customSql(customSql: String) = customSql(JsonField.of(customSql))
 
         /**
@@ -1060,6 +1070,8 @@ private constructor(
      *   **Income**, or **Cost** `targetField`.
      * * **UNIQUE**. Uses unique values and returns a count of the number of unique values. Can be
      *   applied to a **Metadata** `targetField`.
+     * * **CUSTOM_SQL**. Uses an SQL query expression. The `customSQL` parameter is used for the SQL
+     *   query.
      */
     class Aggregation @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {

@@ -15,8 +15,8 @@ import kotlin.jvm.optionals.getOrNull
  * Deletes the Contract with the specified UUID. Used to remove an existing Contract from an
  * Account.
  *
- * **Note:** This call will fail if there are any AccountPlans or Commitments that have been added
- * to the Contract.
+ * **Note:** This call will fail if there are any other billing entities associated with the Account
+ * and that have been added to the Contract, such as AccountPlans, Balance, or Commitments.
  */
 class ContractDeleteParams
 private constructor(

@@ -84,6 +84,7 @@ internal class OrganizationConfigServiceAsyncTest {
                             .externalInvoiceDate("LAST_DAY_OF_ARREARS")
                             .minimumSpendBillInAdvance(true)
                             .scheduledBillInterval(0.0)
+                            .scheduledBillOffset(0)
                             .sequenceStartNumber(1000)
                             .standingChargeBillInAdvance(true)
                             .suppressedEmptyBills(true)

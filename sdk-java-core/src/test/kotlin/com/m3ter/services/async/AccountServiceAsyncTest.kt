@@ -8,7 +8,6 @@ import com.m3ter.core.JsonValue
 import com.m3ter.models.AccountCreateParams
 import com.m3ter.models.AccountDeleteParams
 import com.m3ter.models.AccountEndDateBillingEntitiesParams
-import com.m3ter.models.AccountGetChildrenParams
 import com.m3ter.models.AccountRetrieveParams
 import com.m3ter.models.AccountSearchParams
 import com.m3ter.models.AccountUpdateParams
@@ -54,11 +53,6 @@ internal class AccountServiceAsyncTest {
                     )
                     .autoGenerateStatementMode(AccountCreateParams.AutoGenerateStatementMode.NONE)
                     .billEpoch(LocalDate.parse("2019-12-27"))
-                    .configData(
-                        AccountCreateParams.ConfigData.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
-                            .build()
-                    )
                     .addCreditApplicationOrder(
                         AccountCreateParams.CreditApplicationOrder.PREPAYMENT
                     )
@@ -135,11 +129,6 @@ internal class AccountServiceAsyncTest {
                     )
                     .autoGenerateStatementMode(AccountUpdateParams.AutoGenerateStatementMode.NONE)
                     .billEpoch(LocalDate.parse("2019-12-27"))
-                    .configData(
-                        AccountUpdateParams.ConfigData.builder()
-                            .putAdditionalProperty("foo", JsonValue.from("bar"))
-                            .build()
-                    )
                     .addCreditApplicationOrder(
                         AccountUpdateParams.CreditApplicationOrder.PREPAYMENT
                     )
@@ -228,7 +217,7 @@ internal class AccountServiceAsyncTest {
     }
 
     @Test
-    fun getChildren() {
+    fun listChildren() {
         val client =
             M3terOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -239,18 +228,10 @@ internal class AccountServiceAsyncTest {
                 .build()
         val accountServiceAsync = client.accounts()
 
-        val responseFuture =
-            accountServiceAsync.getChildren(
-                AccountGetChildrenParams.builder()
-                    .orgId("orgId")
-                    .id("id")
-                    .nextToken("nextToken")
-                    .pageSize(1)
-                    .build()
-            )
+        val pageFuture = accountServiceAsync.listChildren("id")
 
-        val response = responseFuture.get()
-        response.validate()
+        val page = pageFuture.get()
+        page.response().validate()
     }
 
     @Test

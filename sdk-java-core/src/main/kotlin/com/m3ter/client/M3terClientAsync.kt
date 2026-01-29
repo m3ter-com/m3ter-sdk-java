@@ -11,6 +11,7 @@ import com.m3ter.services.async.BalanceServiceAsync
 import com.m3ter.services.async.BillConfigServiceAsync
 import com.m3ter.services.async.BillJobServiceAsync
 import com.m3ter.services.async.BillServiceAsync
+import com.m3ter.services.async.ChargeServiceAsync
 import com.m3ter.services.async.CommitmentServiceAsync
 import com.m3ter.services.async.CompoundAggregationServiceAsync
 import com.m3ter.services.async.ContractServiceAsync
@@ -25,6 +26,7 @@ import com.m3ter.services.async.DebitReasonServiceAsync
 import com.m3ter.services.async.EventServiceAsync
 import com.m3ter.services.async.ExternalMappingServiceAsync
 import com.m3ter.services.async.IntegrationConfigurationServiceAsync
+import com.m3ter.services.async.LookupTableServiceAsync
 import com.m3ter.services.async.MeterServiceAsync
 import com.m3ter.services.async.NotificationConfigurationServiceAsync
 import com.m3ter.services.async.OrganizationConfigServiceAsync
@@ -98,6 +100,8 @@ interface M3terClientAsync {
 
     fun billJobs(): BillJobServiceAsync
 
+    fun charges(): ChargeServiceAsync
+
     fun compoundAggregations(): CompoundAggregationServiceAsync
 
     fun contracts(): ContractServiceAsync
@@ -123,6 +127,8 @@ interface M3terClientAsync {
     fun externalMappings(): ExternalMappingServiceAsync
 
     fun integrationConfigurations(): IntegrationConfigurationServiceAsync
+
+    fun lookupTables(): LookupTableServiceAsync
 
     fun meters(): MeterServiceAsync
 
@@ -199,6 +205,8 @@ interface M3terClientAsync {
 
         fun billJobs(): BillJobServiceAsync.WithRawResponse
 
+        fun charges(): ChargeServiceAsync.WithRawResponse
+
         fun compoundAggregations(): CompoundAggregationServiceAsync.WithRawResponse
 
         fun contracts(): ContractServiceAsync.WithRawResponse
@@ -224,6 +232,8 @@ interface M3terClientAsync {
         fun externalMappings(): ExternalMappingServiceAsync.WithRawResponse
 
         fun integrationConfigurations(): IntegrationConfigurationServiceAsync.WithRawResponse
+
+        fun lookupTables(): LookupTableServiceAsync.WithRawResponse
 
         fun meters(): MeterServiceAsync.WithRawResponse
 

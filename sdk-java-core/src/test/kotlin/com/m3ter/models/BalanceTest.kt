@@ -18,6 +18,7 @@ internal class BalanceTest {
             Balance.builder()
                 .id("id")
                 .accountId("accountId")
+                .allowOverdraft(true)
                 .amount(0.0)
                 .balanceDrawDownDescription("balanceDrawDownDescription")
                 .code("code")
@@ -49,6 +50,7 @@ internal class BalanceTest {
 
         assertThat(balance.id()).isEqualTo("id")
         assertThat(balance.accountId()).contains("accountId")
+        assertThat(balance.allowOverdraft()).contains(true)
         assertThat(balance.amount()).contains(0.0)
         assertThat(balance.balanceDrawDownDescription()).contains("balanceDrawDownDescription")
         assertThat(balance.code()).contains("code")
@@ -90,6 +92,7 @@ internal class BalanceTest {
             Balance.builder()
                 .id("id")
                 .accountId("accountId")
+                .allowOverdraft(true)
                 .amount(0.0)
                 .balanceDrawDownDescription("balanceDrawDownDescription")
                 .code("code")

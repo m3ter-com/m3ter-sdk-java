@@ -122,6 +122,13 @@ private constructor(
     fun accountId(): Optional<String> = accountId.getOptional("accountId")
 
     /**
+     * For Contract billing, a boolean setting for restricting the charges billed to the period
+     * defined for the Contract:
+     * * **TRUE** - Contract billing for the Account will be restricted to charge amounts that fall
+     *   within the defined Contract period.
+     * * **FALSE** - The period for amounts billed under the Contract will be determined by the
+     *   Account Plan attached to the Account and linked to the Contract.(*Default*)
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -129,6 +136,8 @@ private constructor(
         applyContractPeriodLimits.getOptional("applyContractPeriodLimits")
 
     /**
+     * The ID of the Bill Grouping Key assigned to the Contract.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -235,6 +244,13 @@ private constructor(
     fun startDate(): Optional<LocalDate> = startDate.getOptional("startDate")
 
     /**
+     * Used to control Contract billing and charge at billing only for usage where Product Meter
+     * dimensions equal specific defined values:
+     * * Usage filters are defined to either *include* or *exclude* charges for usage associated
+     *   with specific Meter dimensions.
+     * * The Meter dimensions must be present in the data field schema of the Meter used to submit
+     *   usage data measurements.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -481,6 +497,14 @@ private constructor(
          */
         fun accountId(accountId: JsonField<String>) = apply { this.accountId = accountId }
 
+        /**
+         * For Contract billing, a boolean setting for restricting the charges billed to the period
+         * defined for the Contract:
+         * * **TRUE** - Contract billing for the Account will be restricted to charge amounts that
+         *   fall within the defined Contract period.
+         * * **FALSE** - The period for amounts billed under the Contract will be determined by the
+         *   Account Plan attached to the Account and linked to the Contract.(*Default*)
+         */
         fun applyContractPeriodLimits(applyContractPeriodLimits: Boolean) =
             applyContractPeriodLimits(JsonField.of(applyContractPeriodLimits))
 
@@ -495,6 +519,7 @@ private constructor(
             this.applyContractPeriodLimits = applyContractPeriodLimits
         }
 
+        /** The ID of the Bill Grouping Key assigned to the Contract. */
         fun billGroupingKeyId(billGroupingKeyId: String) =
             billGroupingKeyId(JsonField.of(billGroupingKeyId))
 
@@ -666,6 +691,14 @@ private constructor(
          */
         fun startDate(startDate: JsonField<LocalDate>) = apply { this.startDate = startDate }
 
+        /**
+         * Used to control Contract billing and charge at billing only for usage where Product Meter
+         * dimensions equal specific defined values:
+         * * Usage filters are defined to either *include* or *exclude* charges for usage associated
+         *   with specific Meter dimensions.
+         * * The Meter dimensions must be present in the data field schema of the Meter used to
+         *   submit usage data measurements.
+         */
         fun usageFilters(usageFilters: List<UsageFilter>) = usageFilters(JsonField.of(usageFilters))
 
         /**

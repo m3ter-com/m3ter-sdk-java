@@ -1,0 +1,207 @@
+// File generated from our OpenAPI spec by Stainless.
+
+package com.m3ter.models
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter
+import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.m3ter.core.ExcludeMissing
+import com.m3ter.core.JsonField
+import com.m3ter.core.JsonMissing
+import com.m3ter.core.JsonValue
+import com.m3ter.errors.M3terInvalidDataException
+import java.time.OffsetDateTime
+import java.util.Collections
+import java.util.Objects
+import java.util.Optional
+
+/** Response containing the archive job URL details */
+class LookupTableLookupTableRevisionDataArchieveResponse
+@JsonCreator(mode = JsonCreator.Mode.DISABLED)
+private constructor(
+    private val expiry: JsonField<OffsetDateTime>,
+    private val url: JsonField<String>,
+    private val additionalProperties: MutableMap<String, JsonValue>,
+) {
+
+    @JsonCreator
+    private constructor(
+        @JsonProperty("expiry")
+        @ExcludeMissing
+        expiry: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("url") @ExcludeMissing url: JsonField<String> = JsonMissing.of(),
+    ) : this(expiry, url, mutableMapOf())
+
+    /**
+     * The URL expiry time
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun expiry(): Optional<OffsetDateTime> = expiry.getOptional("expiry")
+
+    /**
+     * The presigned URL
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun url(): Optional<String> = url.getOptional("url")
+
+    /**
+     * Returns the raw JSON value of [expiry].
+     *
+     * Unlike [expiry], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("expiry") @ExcludeMissing fun _expiry(): JsonField<OffsetDateTime> = expiry
+
+    /**
+     * Returns the raw JSON value of [url].
+     *
+     * Unlike [url], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("url") @ExcludeMissing fun _url(): JsonField<String> = url
+
+    @JsonAnySetter
+    private fun putAdditionalProperty(key: String, value: JsonValue) {
+        additionalProperties.put(key, value)
+    }
+
+    @JsonAnyGetter
+    @ExcludeMissing
+    fun _additionalProperties(): Map<String, JsonValue> =
+        Collections.unmodifiableMap(additionalProperties)
+
+    fun toBuilder() = Builder().from(this)
+
+    companion object {
+
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [LookupTableLookupTableRevisionDataArchieveResponse].
+         */
+        @JvmStatic fun builder() = Builder()
+    }
+
+    /** A builder for [LookupTableLookupTableRevisionDataArchieveResponse]. */
+    class Builder internal constructor() {
+
+        private var expiry: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var url: JsonField<String> = JsonMissing.of()
+        private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+        @JvmSynthetic
+        internal fun from(
+            lookupTableLookupTableRevisionDataArchieveResponse:
+                LookupTableLookupTableRevisionDataArchieveResponse
+        ) = apply {
+            expiry = lookupTableLookupTableRevisionDataArchieveResponse.expiry
+            url = lookupTableLookupTableRevisionDataArchieveResponse.url
+            additionalProperties =
+                lookupTableLookupTableRevisionDataArchieveResponse.additionalProperties
+                    .toMutableMap()
+        }
+
+        /** The URL expiry time */
+        fun expiry(expiry: OffsetDateTime) = expiry(JsonField.of(expiry))
+
+        /**
+         * Sets [Builder.expiry] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.expiry] with a well-typed [OffsetDateTime] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun expiry(expiry: JsonField<OffsetDateTime>) = apply { this.expiry = expiry }
+
+        /** The presigned URL */
+        fun url(url: String) = url(JsonField.of(url))
+
+        /**
+         * Sets [Builder.url] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.url] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun url(url: JsonField<String>) = apply { this.url = url }
+
+        fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.clear()
+            putAllAdditionalProperties(additionalProperties)
+        }
+
+        fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+            additionalProperties.put(key, value)
+        }
+
+        fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+            this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
+        }
+
+        /**
+         * Returns an immutable instance of [LookupTableLookupTableRevisionDataArchieveResponse].
+         *
+         * Further updates to this [Builder] will not mutate the returned instance.
+         */
+        fun build(): LookupTableLookupTableRevisionDataArchieveResponse =
+            LookupTableLookupTableRevisionDataArchieveResponse(
+                expiry,
+                url,
+                additionalProperties.toMutableMap(),
+            )
+    }
+
+    private var validated: Boolean = false
+
+    fun validate(): LookupTableLookupTableRevisionDataArchieveResponse = apply {
+        if (validated) {
+            return@apply
+        }
+
+        expiry()
+        url()
+        validated = true
+    }
+
+    fun isValid(): Boolean =
+        try {
+            validate()
+            true
+        } catch (e: M3terInvalidDataException) {
+            false
+        }
+
+    /**
+     * Returns a score indicating how many valid values are contained in this object recursively.
+     *
+     * Used for best match union deserialization.
+     */
+    @JvmSynthetic
+    internal fun validity(): Int =
+        (if (expiry.asKnown().isPresent) 1 else 0) + (if (url.asKnown().isPresent) 1 else 0)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return other is LookupTableLookupTableRevisionDataArchieveResponse &&
+            expiry == other.expiry &&
+            url == other.url &&
+            additionalProperties == other.additionalProperties
+    }
+
+    private val hashCode: Int by lazy { Objects.hash(expiry, url, additionalProperties) }
+
+    override fun hashCode(): Int = hashCode
+
+    override fun toString() =
+        "LookupTableLookupTableRevisionDataArchieveResponse{expiry=$expiry, url=$url, additionalProperties=$additionalProperties}"
+}

@@ -25,10 +25,11 @@ import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
 
 /**
- * Create a new Contract.
- *
  * Creates a new Contract for the specified Account. The Contract includes information such as the
  * associated Account along with start and end dates.
+ *
+ * If you intend to bill an Account on a Contract basis, you can use the `billGroupingKeyId`,
+ * `applyContractPeriodLimits`, and `usageFilters` request parameters to control Contract billing.
  */
 class ContractCreateParams
 private constructor(
@@ -76,12 +77,30 @@ private constructor(
     fun startDate(): LocalDate = body.startDate()
 
     /**
+     * For Contract billing, a boolean setting for restricting the charges billed to the period
+     * defined for the Contract:
+     * * **TRUE** - Contract billing for the Account will be restricted to charge amounts that fall
+     *   within the defined Contract period.
+     * * **FALSE** - The period for amounts billed under the Contract will be determined by the
+     *   Account Plan attached to the Account and linked to the Contract.(*Default*)
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
     fun applyContractPeriodLimits(): Optional<Boolean> = body.applyContractPeriodLimits()
 
     /**
+     * The ID of the Bill Grouping Key assigned to the Contract.
+     *
+     * If you are implementing Contract Billing for an Account, use `billGroupingKey` to control how
+     * charges linked to Contracts on the Account will be billed:
+     * * **Independent Contract billing**. Assign an *exclusive* Bill Grouping Key to the Contract -
+     *   only charges due against the Account and linked to the single Contract will appear on a
+     *   separate Bill.
+     * * **Collective Contract billing**. Assign the same *non-exclusive* Bill Grouping Key to
+     *   multiple Contracts - all charges due against the Account and linked to the multiple
+     *   Contracts will appear together on a single Bill.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -129,6 +148,13 @@ private constructor(
     fun purchaseOrderNumber(): Optional<String> = body.purchaseOrderNumber()
 
     /**
+     * Use `usageFilters` to control Contract billing and charge at billing only for usage where
+     * Product Meter dimensions equal specific defined values:
+     * * Define Usage filters to either *include* or *exclude* charges for usage associated with
+     *   specific Meter dimensions.
+     * * The Meter dimensions must be present in the data field schema of the Meter used to submit
+     *   usage data measurements.
+     *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
      */
@@ -350,6 +376,14 @@ private constructor(
          */
         fun startDate(startDate: JsonField<LocalDate>) = apply { body.startDate(startDate) }
 
+        /**
+         * For Contract billing, a boolean setting for restricting the charges billed to the period
+         * defined for the Contract:
+         * * **TRUE** - Contract billing for the Account will be restricted to charge amounts that
+         *   fall within the defined Contract period.
+         * * **FALSE** - The period for amounts billed under the Contract will be determined by the
+         *   Account Plan attached to the Account and linked to the Contract.(*Default*)
+         */
         fun applyContractPeriodLimits(applyContractPeriodLimits: Boolean) = apply {
             body.applyContractPeriodLimits(applyContractPeriodLimits)
         }
@@ -365,6 +399,18 @@ private constructor(
             body.applyContractPeriodLimits(applyContractPeriodLimits)
         }
 
+        /**
+         * The ID of the Bill Grouping Key assigned to the Contract.
+         *
+         * If you are implementing Contract Billing for an Account, use `billGroupingKey` to control
+         * how charges linked to Contracts on the Account will be billed:
+         * * **Independent Contract billing**. Assign an *exclusive* Bill Grouping Key to the
+         *   Contract - only charges due against the Account and linked to the single Contract will
+         *   appear on a separate Bill.
+         * * **Collective Contract billing**. Assign the same *non-exclusive* Bill Grouping Key to
+         *   multiple Contracts - all charges due against the Account and linked to the multiple
+         *   Contracts will appear together on a single Bill.
+         */
         fun billGroupingKeyId(billGroupingKeyId: String) = apply {
             body.billGroupingKeyId(billGroupingKeyId)
         }
@@ -444,6 +490,14 @@ private constructor(
             body.purchaseOrderNumber(purchaseOrderNumber)
         }
 
+        /**
+         * Use `usageFilters` to control Contract billing and charge at billing only for usage where
+         * Product Meter dimensions equal specific defined values:
+         * * Define Usage filters to either *include* or *exclude* charges for usage associated with
+         *   specific Meter dimensions.
+         * * The Meter dimensions must be present in the data field schema of the Meter used to
+         *   submit usage data measurements.
+         */
         fun usageFilters(usageFilters: List<UsageFilter>) = apply {
             body.usageFilters(usageFilters)
         }
@@ -738,6 +792,13 @@ private constructor(
         fun startDate(): LocalDate = startDate.getRequired("startDate")
 
         /**
+         * For Contract billing, a boolean setting for restricting the charges billed to the period
+         * defined for the Contract:
+         * * **TRUE** - Contract billing for the Account will be restricted to charge amounts that
+         *   fall within the defined Contract period.
+         * * **FALSE** - The period for amounts billed under the Contract will be determined by the
+         *   Account Plan attached to the Account and linked to the Contract.(*Default*)
+         *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
@@ -745,6 +806,17 @@ private constructor(
             applyContractPeriodLimits.getOptional("applyContractPeriodLimits")
 
         /**
+         * The ID of the Bill Grouping Key assigned to the Contract.
+         *
+         * If you are implementing Contract Billing for an Account, use `billGroupingKey` to control
+         * how charges linked to Contracts on the Account will be billed:
+         * * **Independent Contract billing**. Assign an *exclusive* Bill Grouping Key to the
+         *   Contract - only charges due against the Account and linked to the single Contract will
+         *   appear on a separate Bill.
+         * * **Collective Contract billing**. Assign the same *non-exclusive* Bill Grouping Key to
+         *   multiple Contracts - all charges due against the Account and linked to the multiple
+         *   Contracts will appear together on a single Bill.
+         *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
@@ -794,6 +866,13 @@ private constructor(
             purchaseOrderNumber.getOptional("purchaseOrderNumber")
 
         /**
+         * Use `usageFilters` to control Contract billing and charge at billing only for usage where
+         * Product Meter dimensions equal specific defined values:
+         * * Define Usage filters to either *include* or *exclude* charges for usage associated with
+         *   specific Meter dimensions.
+         * * The Meter dimensions must be present in the data field schema of the Meter used to
+         *   submit usage data measurements.
+         *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
          */
@@ -1031,6 +1110,14 @@ private constructor(
              */
             fun startDate(startDate: JsonField<LocalDate>) = apply { this.startDate = startDate }
 
+            /**
+             * For Contract billing, a boolean setting for restricting the charges billed to the
+             * period defined for the Contract:
+             * * **TRUE** - Contract billing for the Account will be restricted to charge amounts
+             *   that fall within the defined Contract period.
+             * * **FALSE** - The period for amounts billed under the Contract will be determined by
+             *   the Account Plan attached to the Account and linked to the Contract.(*Default*)
+             */
             fun applyContractPeriodLimits(applyContractPeriodLimits: Boolean) =
                 applyContractPeriodLimits(JsonField.of(applyContractPeriodLimits))
 
@@ -1045,6 +1132,18 @@ private constructor(
                 this.applyContractPeriodLimits = applyContractPeriodLimits
             }
 
+            /**
+             * The ID of the Bill Grouping Key assigned to the Contract.
+             *
+             * If you are implementing Contract Billing for an Account, use `billGroupingKey` to
+             * control how charges linked to Contracts on the Account will be billed:
+             * * **Independent Contract billing**. Assign an *exclusive* Bill Grouping Key to the
+             *   Contract - only charges due against the Account and linked to the single Contract
+             *   will appear on a separate Bill.
+             * * **Collective Contract billing**. Assign the same *non-exclusive* Bill Grouping Key
+             *   to multiple Contracts - all charges due against the Account and linked to the
+             *   multiple Contracts will appear together on a single Bill.
+             */
             fun billGroupingKeyId(billGroupingKeyId: String) =
                 billGroupingKeyId(JsonField.of(billGroupingKeyId))
 
@@ -1125,6 +1224,14 @@ private constructor(
                 this.purchaseOrderNumber = purchaseOrderNumber
             }
 
+            /**
+             * Use `usageFilters` to control Contract billing and charge at billing only for usage
+             * where Product Meter dimensions equal specific defined values:
+             * * Define Usage filters to either *include* or *exclude* charges for usage associated
+             *   with specific Meter dimensions.
+             * * The Meter dimensions must be present in the data field schema of the Meter used to
+             *   submit usage data measurements.
+             */
             fun usageFilters(usageFilters: List<UsageFilter>) =
                 usageFilters(JsonField.of(usageFilters))
 

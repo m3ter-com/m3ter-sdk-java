@@ -6,13 +6,14 @@ import com.m3ter.core.http.QueryParams
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-internal class AccountGetChildrenParamsTest {
+internal class LookupTableListParamsTest {
 
     @Test
     fun create() {
-        AccountGetChildrenParams.builder()
+        LookupTableListParams.builder()
             .orgId("orgId")
-            .id("id")
+            .addAdditional("string")
+            .addCode("string")
             .nextToken("nextToken")
             .pageSize(1)
             .build()
@@ -20,20 +21,20 @@ internal class AccountGetChildrenParamsTest {
 
     @Test
     fun pathParams() {
-        val params = AccountGetChildrenParams.builder().id("id").build()
+        val params = LookupTableListParams.builder().build()
 
         assertThat(params._pathParam(0)).isEqualTo("")
-        assertThat(params._pathParam(1)).isEqualTo("id")
         // out-of-bound path param
-        assertThat(params._pathParam(2)).isEqualTo("")
+        assertThat(params._pathParam(1)).isEqualTo("")
     }
 
     @Test
     fun queryParams() {
         val params =
-            AccountGetChildrenParams.builder()
+            LookupTableListParams.builder()
                 .orgId("orgId")
-                .id("id")
+                .addAdditional("string")
+                .addCode("string")
                 .nextToken("nextToken")
                 .pageSize(1)
                 .build()
@@ -42,13 +43,18 @@ internal class AccountGetChildrenParamsTest {
 
         assertThat(queryParams)
             .isEqualTo(
-                QueryParams.builder().put("nextToken", "nextToken").put("pageSize", "1").build()
+                QueryParams.builder()
+                    .put("additional", listOf("string").joinToString(","))
+                    .put("codes", listOf("string").joinToString(","))
+                    .put("nextToken", "nextToken")
+                    .put("pageSize", "1")
+                    .build()
             )
     }
 
     @Test
     fun queryParamsWithoutOptionalFields() {
-        val params = AccountGetChildrenParams.builder().id("id").build()
+        val params = LookupTableListParams.builder().build()
 
         val queryParams = params._queryParams()
 

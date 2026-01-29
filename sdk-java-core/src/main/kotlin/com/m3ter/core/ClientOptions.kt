@@ -413,13 +413,13 @@ private constructor(
          *
          * See this table for the available options:
          *
-         * |Setter     |System property  |Environment variable|Required|Default value            |
-         * |-----------|-----------------|--------------------|--------|-------------------------|
-         * |`apiKey`   |`m3ter.apiKey`   |`M3TER_API_KEY`     |true    |-                        |
-         * |`apiSecret`|`m3ter.apiSecret`|`M3TER_API_SECRET`  |true    |-                        |
-         * |`token`    |`m3ter.apiToken` |`M3TER_API_TOKEN`   |false   |-                        |
-         * |`orgId`    |`m3ter.orgId`    |`M3TER_ORG_ID`      |true    |-                        |
-         * |`baseUrl`  |`m3ter.baseUrl`  |`M3TER_BASE_URL`    |true    |`"https://api.m3ter.com"`|
+         * |Setter     |System property       |Environment variable|Required|Default value            |
+         * |-----------|----------------------|--------------------|--------|-------------------------|
+         * |`apiKey`   |`m3ter.m3TerApiKey`   |`M3TER_API_KEY`     |true    |-                        |
+         * |`apiSecret`|`m3ter.m3TerApiSecret`|`M3TER_API_SECRET`  |true    |-                        |
+         * |`token`    |`m3ter.m3TerApiToken` |`M3TER_API_TOKEN`   |false   |-                        |
+         * |`orgId`    |`m3ter.m3TerOrgId`    |`M3TER_ORG_ID`      |true    |-                        |
+         * |`baseUrl`  |`m3ter.baseUrl`       |`M3TER_BASE_URL`    |true    |`"https://api.m3ter.com"`|
          *
          * System properties take precedence over environment variables.
          */
@@ -427,16 +427,18 @@ private constructor(
             (System.getProperty("m3ter.baseUrl") ?: System.getenv("M3TER_BASE_URL"))?.let {
                 baseUrl(it)
             }
-            (System.getProperty("m3ter.apiKey") ?: System.getenv("M3TER_API_KEY"))?.let {
+            (System.getProperty("m3ter.m3TerApiKey") ?: System.getenv("M3TER_API_KEY"))?.let {
                 apiKey(it)
             }
-            (System.getProperty("m3ter.apiSecret") ?: System.getenv("M3TER_API_SECRET"))?.let {
+            (System.getProperty("m3ter.m3TerApiSecret") ?: System.getenv("M3TER_API_SECRET"))?.let {
                 apiSecret(it)
             }
-            (System.getProperty("m3ter.apiToken") ?: System.getenv("M3TER_API_TOKEN"))?.let {
+            (System.getProperty("m3ter.m3TerApiToken") ?: System.getenv("M3TER_API_TOKEN"))?.let {
                 token(it)
             }
-            (System.getProperty("m3ter.orgId") ?: System.getenv("M3TER_ORG_ID"))?.let { orgId(it) }
+            (System.getProperty("m3ter.m3TerOrgId") ?: System.getenv("M3TER_ORG_ID"))?.let {
+                orgId(it)
+            }
         }
 
         /**

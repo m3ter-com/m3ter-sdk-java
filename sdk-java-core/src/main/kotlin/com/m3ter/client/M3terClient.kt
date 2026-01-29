@@ -11,6 +11,7 @@ import com.m3ter.services.blocking.BalanceService
 import com.m3ter.services.blocking.BillConfigService
 import com.m3ter.services.blocking.BillJobService
 import com.m3ter.services.blocking.BillService
+import com.m3ter.services.blocking.ChargeService
 import com.m3ter.services.blocking.CommitmentService
 import com.m3ter.services.blocking.CompoundAggregationService
 import com.m3ter.services.blocking.ContractService
@@ -25,6 +26,7 @@ import com.m3ter.services.blocking.DebitReasonService
 import com.m3ter.services.blocking.EventService
 import com.m3ter.services.blocking.ExternalMappingService
 import com.m3ter.services.blocking.IntegrationConfigurationService
+import com.m3ter.services.blocking.LookupTableService
 import com.m3ter.services.blocking.MeterService
 import com.m3ter.services.blocking.NotificationConfigurationService
 import com.m3ter.services.blocking.OrganizationConfigService
@@ -98,6 +100,8 @@ interface M3terClient {
 
     fun billJobs(): BillJobService
 
+    fun charges(): ChargeService
+
     fun compoundAggregations(): CompoundAggregationService
 
     fun contracts(): ContractService
@@ -123,6 +127,8 @@ interface M3terClient {
     fun externalMappings(): ExternalMappingService
 
     fun integrationConfigurations(): IntegrationConfigurationService
+
+    fun lookupTables(): LookupTableService
 
     fun meters(): MeterService
 
@@ -199,6 +205,8 @@ interface M3terClient {
 
         fun billJobs(): BillJobService.WithRawResponse
 
+        fun charges(): ChargeService.WithRawResponse
+
         fun compoundAggregations(): CompoundAggregationService.WithRawResponse
 
         fun contracts(): ContractService.WithRawResponse
@@ -224,6 +232,8 @@ interface M3terClient {
         fun externalMappings(): ExternalMappingService.WithRawResponse
 
         fun integrationConfigurations(): IntegrationConfigurationService.WithRawResponse
+
+        fun lookupTables(): LookupTableService.WithRawResponse
 
         fun meters(): MeterService.WithRawResponse
 

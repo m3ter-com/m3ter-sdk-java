@@ -1493,7 +1493,7 @@ private constructor(
 
                 @JvmField val OAUTH_CLIENT_CREDENTIALS = of("OAUTH_CLIENT_CREDENTIALS")
 
-                @JvmField val M3TER_SIGNED_REQUEST = of("M3TER_SIGNED_REQUEST")
+                @JvmField val M3_TER_SIGNED_REQUEST = of("M3TER_SIGNED_REQUEST")
 
                 @JvmField val AWS_INTEGRATION = of("AWS_INTEGRATION")
 
@@ -1503,9 +1503,9 @@ private constructor(
 
                 @JvmField val CHARGEBEE_AUTH = of("CHARGEBEE_AUTH")
 
-                @JvmField val M3TER_APP_SIGNATURE = of("M3TER_APP_SIGNATURE")
+                @JvmField val M3_TER_APP_SIGNATURE = of("M3TER_APP_SIGNATURE")
 
-                @JvmField val M3TER_SERVICE_USER = of("M3TER_SERVICE_USER")
+                @JvmField val M3_TER_SERVICE_USER = of("M3TER_SERVICE_USER")
 
                 @JvmField val STRIPE_SIGNED_REQUEST = of("STRIPE_SIGNED_REQUEST")
 
@@ -1522,6 +1522,8 @@ private constructor(
                 @JvmField
                 val SAGE_INTACCT_CLIENT_CREDENTIALS = of("SAGE_INTACCT_CLIENT_CREDENTIALS")
 
+                @JvmField val SAGE_INTACCT_CLIENT_SECRET = of("SAGE_INTACCT_CLIENT_SECRET")
+
                 @JvmStatic fun of(value: String) = Type(JsonField.of(value))
             }
 
@@ -1529,13 +1531,13 @@ private constructor(
             enum class Known {
                 HTTP_BASIC,
                 OAUTH_CLIENT_CREDENTIALS,
-                M3TER_SIGNED_REQUEST,
+                M3_TER_SIGNED_REQUEST,
                 AWS_INTEGRATION,
                 PADDLE_AUTH,
                 NETSUITE_AUTH,
                 CHARGEBEE_AUTH,
-                M3TER_APP_SIGNATURE,
-                M3TER_SERVICE_USER,
+                M3_TER_APP_SIGNATURE,
+                M3_TER_SERVICE_USER,
                 STRIPE_SIGNED_REQUEST,
                 HUBSPOT_ACCESS_TOKEN,
                 HUBSPOT_CLIENT_SECRET,
@@ -1543,6 +1545,7 @@ private constructor(
                 SAP_BYD,
                 SLACK_WEBHOOK,
                 SAGE_INTACCT_CLIENT_CREDENTIALS,
+                SAGE_INTACCT_CLIENT_SECRET,
             }
 
             /**
@@ -1557,13 +1560,13 @@ private constructor(
             enum class Value {
                 HTTP_BASIC,
                 OAUTH_CLIENT_CREDENTIALS,
-                M3TER_SIGNED_REQUEST,
+                M3_TER_SIGNED_REQUEST,
                 AWS_INTEGRATION,
                 PADDLE_AUTH,
                 NETSUITE_AUTH,
                 CHARGEBEE_AUTH,
-                M3TER_APP_SIGNATURE,
-                M3TER_SERVICE_USER,
+                M3_TER_APP_SIGNATURE,
+                M3_TER_SERVICE_USER,
                 STRIPE_SIGNED_REQUEST,
                 HUBSPOT_ACCESS_TOKEN,
                 HUBSPOT_CLIENT_SECRET,
@@ -1571,6 +1574,7 @@ private constructor(
                 SAP_BYD,
                 SLACK_WEBHOOK,
                 SAGE_INTACCT_CLIENT_CREDENTIALS,
+                SAGE_INTACCT_CLIENT_SECRET,
                 /** An enum member indicating that [Type] was instantiated with an unknown value. */
                 _UNKNOWN,
             }
@@ -1586,13 +1590,13 @@ private constructor(
                 when (this) {
                     HTTP_BASIC -> Value.HTTP_BASIC
                     OAUTH_CLIENT_CREDENTIALS -> Value.OAUTH_CLIENT_CREDENTIALS
-                    M3TER_SIGNED_REQUEST -> Value.M3TER_SIGNED_REQUEST
+                    M3_TER_SIGNED_REQUEST -> Value.M3_TER_SIGNED_REQUEST
                     AWS_INTEGRATION -> Value.AWS_INTEGRATION
                     PADDLE_AUTH -> Value.PADDLE_AUTH
                     NETSUITE_AUTH -> Value.NETSUITE_AUTH
                     CHARGEBEE_AUTH -> Value.CHARGEBEE_AUTH
-                    M3TER_APP_SIGNATURE -> Value.M3TER_APP_SIGNATURE
-                    M3TER_SERVICE_USER -> Value.M3TER_SERVICE_USER
+                    M3_TER_APP_SIGNATURE -> Value.M3_TER_APP_SIGNATURE
+                    M3_TER_SERVICE_USER -> Value.M3_TER_SERVICE_USER
                     STRIPE_SIGNED_REQUEST -> Value.STRIPE_SIGNED_REQUEST
                     HUBSPOT_ACCESS_TOKEN -> Value.HUBSPOT_ACCESS_TOKEN
                     HUBSPOT_CLIENT_SECRET -> Value.HUBSPOT_CLIENT_SECRET
@@ -1600,6 +1604,7 @@ private constructor(
                     SAP_BYD -> Value.SAP_BYD
                     SLACK_WEBHOOK -> Value.SLACK_WEBHOOK
                     SAGE_INTACCT_CLIENT_CREDENTIALS -> Value.SAGE_INTACCT_CLIENT_CREDENTIALS
+                    SAGE_INTACCT_CLIENT_SECRET -> Value.SAGE_INTACCT_CLIENT_SECRET
                     else -> Value._UNKNOWN
                 }
 
@@ -1616,13 +1621,13 @@ private constructor(
                 when (this) {
                     HTTP_BASIC -> Known.HTTP_BASIC
                     OAUTH_CLIENT_CREDENTIALS -> Known.OAUTH_CLIENT_CREDENTIALS
-                    M3TER_SIGNED_REQUEST -> Known.M3TER_SIGNED_REQUEST
+                    M3_TER_SIGNED_REQUEST -> Known.M3_TER_SIGNED_REQUEST
                     AWS_INTEGRATION -> Known.AWS_INTEGRATION
                     PADDLE_AUTH -> Known.PADDLE_AUTH
                     NETSUITE_AUTH -> Known.NETSUITE_AUTH
                     CHARGEBEE_AUTH -> Known.CHARGEBEE_AUTH
-                    M3TER_APP_SIGNATURE -> Known.M3TER_APP_SIGNATURE
-                    M3TER_SERVICE_USER -> Known.M3TER_SERVICE_USER
+                    M3_TER_APP_SIGNATURE -> Known.M3_TER_APP_SIGNATURE
+                    M3_TER_SERVICE_USER -> Known.M3_TER_SERVICE_USER
                     STRIPE_SIGNED_REQUEST -> Known.STRIPE_SIGNED_REQUEST
                     HUBSPOT_ACCESS_TOKEN -> Known.HUBSPOT_ACCESS_TOKEN
                     HUBSPOT_CLIENT_SECRET -> Known.HUBSPOT_CLIENT_SECRET
@@ -1630,6 +1635,7 @@ private constructor(
                     SAP_BYD -> Known.SAP_BYD
                     SLACK_WEBHOOK -> Known.SLACK_WEBHOOK
                     SAGE_INTACCT_CLIENT_CREDENTIALS -> Known.SAGE_INTACCT_CLIENT_CREDENTIALS
+                    SAGE_INTACCT_CLIENT_SECRET -> Known.SAGE_INTACCT_CLIENT_SECRET
                     else -> throw M3terInvalidDataException("Unknown Type: $value")
                 }
 
@@ -1726,7 +1732,7 @@ private constructor(
 
                 @JvmField val QUICKBOOKS_SANDBOX = of("QUICKBOOKS_SANDBOX")
 
-                @JvmField val M3TER = of("M3TER")
+                @JvmField val M3_TER = of("M3TER")
 
                 @JvmStatic fun of(value: String) = Destination(JsonField.of(value))
             }
@@ -1745,7 +1751,7 @@ private constructor(
                 CHARGEBEE,
                 QUICKBOOKS,
                 QUICKBOOKS_SANDBOX,
-                M3TER,
+                M3_TER,
             }
 
             /**
@@ -1770,7 +1776,7 @@ private constructor(
                 CHARGEBEE,
                 QUICKBOOKS,
                 QUICKBOOKS_SANDBOX,
-                M3TER,
+                M3_TER,
                 /**
                  * An enum member indicating that [Destination] was instantiated with an unknown
                  * value.
@@ -1799,7 +1805,7 @@ private constructor(
                     CHARGEBEE -> Value.CHARGEBEE
                     QUICKBOOKS -> Value.QUICKBOOKS
                     QUICKBOOKS_SANDBOX -> Value.QUICKBOOKS_SANDBOX
-                    M3TER -> Value.M3TER
+                    M3_TER -> Value.M3_TER
                     else -> Value._UNKNOWN
                 }
 
@@ -1826,7 +1832,7 @@ private constructor(
                     CHARGEBEE -> Known.CHARGEBEE
                     QUICKBOOKS -> Known.QUICKBOOKS
                     QUICKBOOKS_SANDBOX -> Known.QUICKBOOKS_SANDBOX
-                    M3TER -> Known.M3TER
+                    M3_TER -> Known.M3_TER
                     else -> throw M3terInvalidDataException("Unknown Destination: $value")
                 }
 

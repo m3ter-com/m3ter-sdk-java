@@ -13,6 +13,8 @@ import com.m3ter.models.BalanceListPage
 import com.m3ter.models.BalanceListParams
 import com.m3ter.models.BalanceRetrieveParams
 import com.m3ter.models.BalanceUpdateParams
+import com.m3ter.services.blocking.balances.ChargeScheduleService
+import com.m3ter.services.blocking.balances.TransactionScheduleService
 import com.m3ter.services.blocking.balances.TransactionService
 import java.util.function.Consumer
 
@@ -31,6 +33,10 @@ interface BalanceService {
     fun withOptions(modifier: Consumer<ClientOptions.Builder>): BalanceService
 
     fun transactions(): TransactionService
+
+    fun chargeSchedules(): ChargeScheduleService
+
+    fun transactionSchedules(): TransactionScheduleService
 
     /**
      * Create a new Balance for the given end customer Account.
@@ -173,6 +179,10 @@ interface BalanceService {
         fun withOptions(modifier: Consumer<ClientOptions.Builder>): BalanceService.WithRawResponse
 
         fun transactions(): TransactionService.WithRawResponse
+
+        fun chargeSchedules(): ChargeScheduleService.WithRawResponse
+
+        fun transactionSchedules(): TransactionScheduleService.WithRawResponse
 
         /**
          * Returns a raw HTTP response for `post /organizations/{orgId}/balances`, but is otherwise

@@ -132,9 +132,9 @@ private constructor(
 
     /**
      * The default value is **TRUE**.
-     * * When TRUE, counter adjustment credits are prorated and are billed according to the number
-     *   of days in billing period.
-     * * When FALSE, counter adjustment credits are not prorated and are billed for the entire
+     * * When **TRUE**, counter adjustment credits are prorated and are billed according to the
+     *   number of days in billing period.
+     * * When **FALSE**, counter adjustment credits are not prorated and are billed for the entire
      *   billing period.
      *
      * *(Optional)*.
@@ -146,9 +146,9 @@ private constructor(
 
     /**
      * The default value is **TRUE**.
-     * * When TRUE, counter adjustment debits are prorated and are billed according to the number of
-     *   days in billing period.
-     * * When FALSE, counter adjustment debits are not prorated and are billed for the entire
+     * * When **TRUE**, counter adjustment debits are prorated and are billed according to the
+     *   number of days in billing period.
+     * * When **FALSE**, counter adjustment debits are not prorated and are billed for the entire
      *   billing period.
      *
      * *(Optional)*.
@@ -160,10 +160,10 @@ private constructor(
 
     /**
      * The default value is **TRUE**.
-     * * When TRUE, counter running total charges are prorated and are billed according to the
+     * * When **TRUE**, counter running total charges are prorated and are billed according to the
      *   number of days in billing period.
-     * * When FALSE, counter running total charges are not prorated and are billed for the entire
-     *   billing period.
+     * * When **FALSE**, counter running total charges are not prorated and are billed for the
+     *   entire billing period.
      *
      * *(Optional)*.
      *
@@ -174,8 +174,8 @@ private constructor(
 
     /**
      * The default value is **TRUE**.
-     * * When TRUE, running totals are billed at the start of each billing period.
-     * * When FALSE, running totals are billed at the end of each billing period.
+     * * When **TRUE**, running totals are billed at the start of each billing period.
+     * * When **FALSE**, running totals are billed at the end of each billing period.
      *
      * *(Optional)*.
      *
@@ -523,10 +523,10 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * * When TRUE, counter adjustment credits are prorated and are billed according to the
+         * * When **TRUE**, counter adjustment credits are prorated and are billed according to the
          *   number of days in billing period.
-         * * When FALSE, counter adjustment credits are not prorated and are billed for the entire
-         *   billing period.
+         * * When **FALSE**, counter adjustment credits are not prorated and are billed for the
+         *   entire billing period.
          *
          * *(Optional)*.
          */
@@ -547,10 +547,10 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * * When TRUE, counter adjustment debits are prorated and are billed according to the
+         * * When **TRUE**, counter adjustment debits are prorated and are billed according to the
          *   number of days in billing period.
-         * * When FALSE, counter adjustment debits are not prorated and are billed for the entire
-         *   billing period.
+         * * When **FALSE**, counter adjustment debits are not prorated and are billed for the
+         *   entire billing period.
          *
          * *(Optional)*.
          */
@@ -571,9 +571,9 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * * When TRUE, counter running total charges are prorated and are billed according to the
-         *   number of days in billing period.
-         * * When FALSE, counter running total charges are not prorated and are billed for the
+         * * When **TRUE**, counter running total charges are prorated and are billed according to
+         *   the number of days in billing period.
+         * * When **FALSE**, counter running total charges are not prorated and are billed for the
          *   entire billing period.
          *
          * *(Optional)*.
@@ -595,8 +595,8 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * * When TRUE, running totals are billed at the start of each billing period.
-         * * When FALSE, running totals are billed at the end of each billing period.
+         * * When **TRUE**, running totals are billed at the start of each billing period.
+         * * When **FALSE**, running totals are billed at the end of each billing period.
          *
          * *(Optional)*.
          */
@@ -959,10 +959,10 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * * When TRUE, counter adjustment credits are prorated and are billed according to the
+         * * When **TRUE**, counter adjustment credits are prorated and are billed according to the
          *   number of days in billing period.
-         * * When FALSE, counter adjustment credits are not prorated and are billed for the entire
-         *   billing period.
+         * * When **FALSE**, counter adjustment credits are not prorated and are billed for the
+         *   entire billing period.
          *
          * *(Optional)*.
          *
@@ -974,10 +974,10 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * * When TRUE, counter adjustment debits are prorated and are billed according to the
+         * * When **TRUE**, counter adjustment debits are prorated and are billed according to the
          *   number of days in billing period.
-         * * When FALSE, counter adjustment debits are not prorated and are billed for the entire
-         *   billing period.
+         * * When **FALSE**, counter adjustment debits are not prorated and are billed for the
+         *   entire billing period.
          *
          * *(Optional)*.
          *
@@ -989,9 +989,9 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * * When TRUE, counter running total charges are prorated and are billed according to the
-         *   number of days in billing period.
-         * * When FALSE, counter running total charges are not prorated and are billed for the
+         * * When **TRUE**, counter running total charges are prorated and are billed according to
+         *   the number of days in billing period.
+         * * When **FALSE**, counter running total charges are not prorated and are billed for the
          *   entire billing period.
          *
          * *(Optional)*.
@@ -1004,8 +1004,8 @@ private constructor(
 
         /**
          * The default value is **TRUE**.
-         * * When TRUE, running totals are billed at the start of each billing period.
-         * * When FALSE, running totals are billed at the end of each billing period.
+         * * When **TRUE**, running totals are billed at the start of each billing period.
+         * * When **FALSE**, running totals are billed at the end of each billing period.
          *
          * *(Optional)*.
          *
@@ -1392,9 +1392,9 @@ private constructor(
 
             /**
              * The default value is **TRUE**.
-             * * When TRUE, counter adjustment credits are prorated and are billed according to the
-             *   number of days in billing period.
-             * * When FALSE, counter adjustment credits are not prorated and are billed for the
+             * * When **TRUE**, counter adjustment credits are prorated and are billed according to
+             *   the number of days in billing period.
+             * * When **FALSE**, counter adjustment credits are not prorated and are billed for the
              *   entire billing period.
              *
              * *(Optional)*.
@@ -1415,9 +1415,9 @@ private constructor(
 
             /**
              * The default value is **TRUE**.
-             * * When TRUE, counter adjustment debits are prorated and are billed according to the
-             *   number of days in billing period.
-             * * When FALSE, counter adjustment debits are not prorated and are billed for the
+             * * When **TRUE**, counter adjustment debits are prorated and are billed according to
+             *   the number of days in billing period.
+             * * When **FALSE**, counter adjustment debits are not prorated and are billed for the
              *   entire billing period.
              *
              * *(Optional)*.
@@ -1438,10 +1438,10 @@ private constructor(
 
             /**
              * The default value is **TRUE**.
-             * * When TRUE, counter running total charges are prorated and are billed according to
-             *   the number of days in billing period.
-             * * When FALSE, counter running total charges are not prorated and are billed for the
-             *   entire billing period.
+             * * When **TRUE**, counter running total charges are prorated and are billed according
+             *   to the number of days in billing period.
+             * * When **FALSE**, counter running total charges are not prorated and are billed for
+             *   the entire billing period.
              *
              * *(Optional)*.
              */
@@ -1461,8 +1461,8 @@ private constructor(
 
             /**
              * The default value is **TRUE**.
-             * * When TRUE, running totals are billed at the start of each billing period.
-             * * When FALSE, running totals are billed at the end of each billing period.
+             * * When **TRUE**, running totals are billed at the start of each billing period.
+             * * When **FALSE**, running totals are billed at the end of each billing period.
              *
              * *(Optional)*.
              */

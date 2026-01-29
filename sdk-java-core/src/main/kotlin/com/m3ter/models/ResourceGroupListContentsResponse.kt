@@ -11,6 +11,7 @@ import com.m3ter.core.ExcludeMissing
 import com.m3ter.core.JsonField
 import com.m3ter.core.JsonMissing
 import com.m3ter.core.JsonValue
+import com.m3ter.core.checkRequired
 import com.m3ter.errors.M3terInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Collections
@@ -21,17 +22,20 @@ import kotlin.jvm.optionals.getOrNull
 class ResourceGroupListContentsResponse
 @JsonCreator(mode = JsonCreator.Mode.DISABLED)
 private constructor(
+    private val id: JsonField<String>,
     private val createdBy: JsonField<String>,
     private val dtCreated: JsonField<OffsetDateTime>,
     private val dtLastModified: JsonField<OffsetDateTime>,
     private val lastModifiedBy: JsonField<String>,
     private val targetId: JsonField<String>,
     private val targetType: JsonField<TargetType>,
+    private val version: JsonField<Long>,
     private val additionalProperties: MutableMap<String, JsonValue>,
 ) {
 
     @JsonCreator
     private constructor(
+        @JsonProperty("id") @ExcludeMissing id: JsonField<String> = JsonMissing.of(),
         @JsonProperty("createdBy") @ExcludeMissing createdBy: JsonField<String> = JsonMissing.of(),
         @JsonProperty("dtCreated")
         @ExcludeMissing
@@ -46,15 +50,26 @@ private constructor(
         @JsonProperty("targetType")
         @ExcludeMissing
         targetType: JsonField<TargetType> = JsonMissing.of(),
+        @JsonProperty("version") @ExcludeMissing version: JsonField<Long> = JsonMissing.of(),
     ) : this(
+        id,
         createdBy,
         dtCreated,
         dtLastModified,
         lastModifiedBy,
         targetId,
         targetType,
+        version,
         mutableMapOf(),
     )
+
+    /**
+     * The UUID of the entity.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type or is unexpectedly
+     *   missing or null (e.g. if the server responded with an unexpected value).
+     */
+    fun id(): String = id.getRequired("id")
 
     /**
      * The id of the user who created this item for the resource group.
@@ -101,6 +116,24 @@ private constructor(
      *   server responded with an unexpected value).
      */
     fun targetType(): Optional<TargetType> = targetType.getOptional("targetType")
+
+    /**
+     * The version number:
+     * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+     *   response.
+     * - **Update:** On successful Update, the version is incremented by 1 in the response.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun version(): Optional<Long> = version.getOptional("version")
+
+    /**
+     * Returns the raw JSON value of [id].
+     *
+     * Unlike [id], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
      * Returns the raw JSON value of [createdBy].
@@ -152,6 +185,13 @@ private constructor(
     @ExcludeMissing
     fun _targetType(): JsonField<TargetType> = targetType
 
+    /**
+     * Returns the raw JSON value of [version].
+     *
+     * Unlike [version], this method doesn't throw if the JSON field has an unexpected type.
+     */
+    @JsonProperty("version") @ExcludeMissing fun _version(): JsonField<Long> = version
+
     @JsonAnySetter
     private fun putAdditionalProperty(key: String, value: JsonValue) {
         additionalProperties.put(key, value)
@@ -169,6 +209,11 @@ private constructor(
         /**
          * Returns a mutable builder for constructing an instance of
          * [ResourceGroupListContentsResponse].
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
          */
         @JvmStatic fun builder() = Builder()
     }
@@ -176,26 +221,41 @@ private constructor(
     /** A builder for [ResourceGroupListContentsResponse]. */
     class Builder internal constructor() {
 
+        private var id: JsonField<String>? = null
         private var createdBy: JsonField<String> = JsonMissing.of()
         private var dtCreated: JsonField<OffsetDateTime> = JsonMissing.of()
         private var dtLastModified: JsonField<OffsetDateTime> = JsonMissing.of()
         private var lastModifiedBy: JsonField<String> = JsonMissing.of()
         private var targetId: JsonField<String> = JsonMissing.of()
         private var targetType: JsonField<TargetType> = JsonMissing.of()
+        private var version: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         @JvmSynthetic
         internal fun from(resourceGroupListContentsResponse: ResourceGroupListContentsResponse) =
             apply {
+                id = resourceGroupListContentsResponse.id
                 createdBy = resourceGroupListContentsResponse.createdBy
                 dtCreated = resourceGroupListContentsResponse.dtCreated
                 dtLastModified = resourceGroupListContentsResponse.dtLastModified
                 lastModifiedBy = resourceGroupListContentsResponse.lastModifiedBy
                 targetId = resourceGroupListContentsResponse.targetId
                 targetType = resourceGroupListContentsResponse.targetType
+                version = resourceGroupListContentsResponse.version
                 additionalProperties =
                     resourceGroupListContentsResponse.additionalProperties.toMutableMap()
             }
+
+        /** The UUID of the entity. */
+        fun id(id: String) = id(JsonField.of(id))
+
+        /**
+         * Sets [Builder.id] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.id] with a well-typed [String] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** The id of the user who created this item for the resource group. */
         fun createdBy(createdBy: String) = createdBy(JsonField.of(createdBy))
@@ -272,6 +332,22 @@ private constructor(
          */
         fun targetType(targetType: JsonField<TargetType>) = apply { this.targetType = targetType }
 
+        /**
+         * The version number:
+         * - **Create:** On initial Create to insert a new entity, the version is set at 1 in the
+         *   response.
+         * - **Update:** On successful Update, the version is incremented by 1 in the response.
+         */
+        fun version(version: Long) = version(JsonField.of(version))
+
+        /**
+         * Sets [Builder.version] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.version] with a well-typed [Long] value instead. This
+         * method is primarily for setting the field to an undocumented or not yet supported value.
+         */
+        fun version(version: JsonField<Long>) = apply { this.version = version }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -295,15 +371,24 @@ private constructor(
          * Returns an immutable instance of [ResourceGroupListContentsResponse].
          *
          * Further updates to this [Builder] will not mutate the returned instance.
+         *
+         * The following fields are required:
+         * ```java
+         * .id()
+         * ```
+         *
+         * @throws IllegalStateException if any required field is unset.
          */
         fun build(): ResourceGroupListContentsResponse =
             ResourceGroupListContentsResponse(
+                checkRequired("id", id),
                 createdBy,
                 dtCreated,
                 dtLastModified,
                 lastModifiedBy,
                 targetId,
                 targetType,
+                version,
                 additionalProperties.toMutableMap(),
             )
     }
@@ -315,12 +400,14 @@ private constructor(
             return@apply
         }
 
+        id()
         createdBy()
         dtCreated()
         dtLastModified()
         lastModifiedBy()
         targetId()
         targetType().ifPresent { it.validate() }
+        version()
         validated = true
     }
 
@@ -339,12 +426,14 @@ private constructor(
      */
     @JvmSynthetic
     internal fun validity(): Int =
-        (if (createdBy.asKnown().isPresent) 1 else 0) +
+        (if (id.asKnown().isPresent) 1 else 0) +
+            (if (createdBy.asKnown().isPresent) 1 else 0) +
             (if (dtCreated.asKnown().isPresent) 1 else 0) +
             (if (dtLastModified.asKnown().isPresent) 1 else 0) +
             (if (lastModifiedBy.asKnown().isPresent) 1 else 0) +
             (if (targetId.asKnown().isPresent) 1 else 0) +
-            (targetType.asKnown().getOrNull()?.validity() ?: 0)
+            (targetType.asKnown().getOrNull()?.validity() ?: 0) +
+            (if (version.asKnown().isPresent) 1 else 0)
 
     class TargetType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
@@ -478,23 +567,27 @@ private constructor(
         }
 
         return other is ResourceGroupListContentsResponse &&
+            id == other.id &&
             createdBy == other.createdBy &&
             dtCreated == other.dtCreated &&
             dtLastModified == other.dtLastModified &&
             lastModifiedBy == other.lastModifiedBy &&
             targetId == other.targetId &&
             targetType == other.targetType &&
+            version == other.version &&
             additionalProperties == other.additionalProperties
     }
 
     private val hashCode: Int by lazy {
         Objects.hash(
+            id,
             createdBy,
             dtCreated,
             dtLastModified,
             lastModifiedBy,
             targetId,
             targetType,
+            version,
             additionalProperties,
         )
     }
@@ -502,5 +595,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "ResourceGroupListContentsResponse{createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, targetId=$targetId, targetType=$targetType, additionalProperties=$additionalProperties}"
+        "ResourceGroupListContentsResponse{id=$id, createdBy=$createdBy, dtCreated=$dtCreated, dtLastModified=$dtLastModified, lastModifiedBy=$lastModifiedBy, targetId=$targetId, targetType=$targetType, version=$version, additionalProperties=$additionalProperties}"
 }

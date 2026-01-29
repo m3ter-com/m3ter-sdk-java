@@ -47,6 +47,7 @@ private constructor(
     private val minimumSpendBillInAdvance: JsonField<Boolean>,
     private val monthEpoch: JsonField<String>,
     private val scheduledBillInterval: JsonField<Double>,
+    private val scheduledBillOffset: JsonField<Int>,
     private val sequenceStartNumber: JsonField<Int>,
     private val standingChargeBillInAdvance: JsonField<Boolean>,
     private val suppressedEmptyBills: JsonField<Boolean>,
@@ -121,6 +122,9 @@ private constructor(
         @JsonProperty("scheduledBillInterval")
         @ExcludeMissing
         scheduledBillInterval: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("scheduledBillOffset")
+        @ExcludeMissing
+        scheduledBillOffset: JsonField<Int> = JsonMissing.of(),
         @JsonProperty("sequenceStartNumber")
         @ExcludeMissing
         sequenceStartNumber: JsonField<Int> = JsonMissing.of(),
@@ -158,6 +162,7 @@ private constructor(
         minimumSpendBillInAdvance,
         monthEpoch,
         scheduledBillInterval,
+        scheduledBillOffset,
         sequenceStartNumber,
         standingChargeBillInAdvance,
         suppressedEmptyBills,
@@ -394,6 +399,17 @@ private constructor(
      */
     fun scheduledBillInterval(): Optional<Double> =
         scheduledBillInterval.getOptional("scheduledBillInterval")
+
+    /**
+     * Offset (hours) within the scheduled interval to run the job, interpreted in the
+     * organization's timezone. For daily (24h) schedules this is the hour of day (0-23). Only
+     * supported when ScheduledBillInterval is 24 (daily) at present.
+     *
+     * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
+     */
+    fun scheduledBillOffset(): Optional<Int> =
+        scheduledBillOffset.getOptional("scheduledBillOffset")
 
     /**
      * The starting number to be used for sequential invoice numbers. This will be combined with the
@@ -675,6 +691,16 @@ private constructor(
     fun _scheduledBillInterval(): JsonField<Double> = scheduledBillInterval
 
     /**
+     * Returns the raw JSON value of [scheduledBillOffset].
+     *
+     * Unlike [scheduledBillOffset], this method doesn't throw if the JSON field has an unexpected
+     * type.
+     */
+    @JsonProperty("scheduledBillOffset")
+    @ExcludeMissing
+    fun _scheduledBillOffset(): JsonField<Int> = scheduledBillOffset
+
+    /**
      * Returns the raw JSON value of [sequenceStartNumber].
      *
      * Unlike [sequenceStartNumber], this method doesn't throw if the JSON field has an unexpected
@@ -785,6 +811,7 @@ private constructor(
         private var minimumSpendBillInAdvance: JsonField<Boolean> = JsonMissing.of()
         private var monthEpoch: JsonField<String> = JsonMissing.of()
         private var scheduledBillInterval: JsonField<Double> = JsonMissing.of()
+        private var scheduledBillOffset: JsonField<Int> = JsonMissing.of()
         private var sequenceStartNumber: JsonField<Int> = JsonMissing.of()
         private var standingChargeBillInAdvance: JsonField<Boolean> = JsonMissing.of()
         private var suppressedEmptyBills: JsonField<Boolean> = JsonMissing.of()
@@ -822,6 +849,7 @@ private constructor(
             minimumSpendBillInAdvance = organizationConfigResponse.minimumSpendBillInAdvance
             monthEpoch = organizationConfigResponse.monthEpoch
             scheduledBillInterval = organizationConfigResponse.scheduledBillInterval
+            scheduledBillOffset = organizationConfigResponse.scheduledBillOffset
             sequenceStartNumber = organizationConfigResponse.sequenceStartNumber
             standingChargeBillInAdvance = organizationConfigResponse.standingChargeBillInAdvance
             suppressedEmptyBills = organizationConfigResponse.suppressedEmptyBills
@@ -1239,6 +1267,25 @@ private constructor(
         }
 
         /**
+         * Offset (hours) within the scheduled interval to run the job, interpreted in the
+         * organization's timezone. For daily (24h) schedules this is the hour of day (0-23). Only
+         * supported when ScheduledBillInterval is 24 (daily) at present.
+         */
+        fun scheduledBillOffset(scheduledBillOffset: Int) =
+            scheduledBillOffset(JsonField.of(scheduledBillOffset))
+
+        /**
+         * Sets [Builder.scheduledBillOffset] to an arbitrary JSON value.
+         *
+         * You should usually call [Builder.scheduledBillOffset] with a well-typed [Int] value
+         * instead. This method is primarily for setting the field to an undocumented or not yet
+         * supported value.
+         */
+        fun scheduledBillOffset(scheduledBillOffset: JsonField<Int>) = apply {
+            this.scheduledBillOffset = scheduledBillOffset
+        }
+
+        /**
          * The starting number to be used for sequential invoice numbers. This will be combined with
          * the `billPrefix`.
          */
@@ -1402,6 +1449,7 @@ private constructor(
                 minimumSpendBillInAdvance,
                 monthEpoch,
                 scheduledBillInterval,
+                scheduledBillOffset,
                 sequenceStartNumber,
                 standingChargeBillInAdvance,
                 suppressedEmptyBills,
@@ -1443,6 +1491,7 @@ private constructor(
         minimumSpendBillInAdvance()
         monthEpoch()
         scheduledBillInterval()
+        scheduledBillOffset()
         sequenceStartNumber()
         standingChargeBillInAdvance()
         suppressedEmptyBills()
@@ -1491,6 +1540,7 @@ private constructor(
             (if (minimumSpendBillInAdvance.asKnown().isPresent) 1 else 0) +
             (if (monthEpoch.asKnown().isPresent) 1 else 0) +
             (if (scheduledBillInterval.asKnown().isPresent) 1 else 0) +
+            (if (scheduledBillOffset.asKnown().isPresent) 1 else 0) +
             (if (sequenceStartNumber.asKnown().isPresent) 1 else 0) +
             (if (standingChargeBillInAdvance.asKnown().isPresent) 1 else 0) +
             (if (suppressedEmptyBills.asKnown().isPresent) 1 else 0) +
@@ -2075,6 +2125,7 @@ private constructor(
             minimumSpendBillInAdvance == other.minimumSpendBillInAdvance &&
             monthEpoch == other.monthEpoch &&
             scheduledBillInterval == other.scheduledBillInterval &&
+            scheduledBillOffset == other.scheduledBillOffset &&
             sequenceStartNumber == other.sequenceStartNumber &&
             standingChargeBillInAdvance == other.standingChargeBillInAdvance &&
             suppressedEmptyBills == other.suppressedEmptyBills &&
@@ -2110,6 +2161,7 @@ private constructor(
             minimumSpendBillInAdvance,
             monthEpoch,
             scheduledBillInterval,
+            scheduledBillOffset,
             sequenceStartNumber,
             standingChargeBillInAdvance,
             suppressedEmptyBills,
@@ -2124,5 +2176,5 @@ private constructor(
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "OrganizationConfigResponse{id=$id, allowNegativeBalances=$allowNegativeBalances, allowOverlappingPlans=$allowOverlappingPlans, autoApproveBillsGracePeriod=$autoApproveBillsGracePeriod, autoApproveBillsGracePeriodUnit=$autoApproveBillsGracePeriodUnit, autoGenerateStatementMode=$autoGenerateStatementMode, billPrefix=$billPrefix, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, consolidateBills=$consolidateBills, createdBy=$createdBy, creditApplicationOrder=$creditApplicationOrder, currency=$currency, currencyConversions=$currencyConversions, dayEpoch=$dayEpoch, daysBeforeBillDue=$daysBeforeBillDue, defaultStatementDefinitionId=$defaultStatementDefinitionId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, externalInvoiceDate=$externalInvoiceDate, lastModifiedBy=$lastModifiedBy, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, monthEpoch=$monthEpoch, scheduledBillInterval=$scheduledBillInterval, sequenceStartNumber=$sequenceStartNumber, standingChargeBillInAdvance=$standingChargeBillInAdvance, suppressedEmptyBills=$suppressedEmptyBills, timezone=$timezone, version=$version, weekEpoch=$weekEpoch, yearEpoch=$yearEpoch, additionalProperties=$additionalProperties}"
+        "OrganizationConfigResponse{id=$id, allowNegativeBalances=$allowNegativeBalances, allowOverlappingPlans=$allowOverlappingPlans, autoApproveBillsGracePeriod=$autoApproveBillsGracePeriod, autoApproveBillsGracePeriodUnit=$autoApproveBillsGracePeriodUnit, autoGenerateStatementMode=$autoGenerateStatementMode, billPrefix=$billPrefix, commitmentFeeBillInAdvance=$commitmentFeeBillInAdvance, consolidateBills=$consolidateBills, createdBy=$createdBy, creditApplicationOrder=$creditApplicationOrder, currency=$currency, currencyConversions=$currencyConversions, dayEpoch=$dayEpoch, daysBeforeBillDue=$daysBeforeBillDue, defaultStatementDefinitionId=$defaultStatementDefinitionId, dtCreated=$dtCreated, dtLastModified=$dtLastModified, externalInvoiceDate=$externalInvoiceDate, lastModifiedBy=$lastModifiedBy, minimumSpendBillInAdvance=$minimumSpendBillInAdvance, monthEpoch=$monthEpoch, scheduledBillInterval=$scheduledBillInterval, scheduledBillOffset=$scheduledBillOffset, sequenceStartNumber=$sequenceStartNumber, standingChargeBillInAdvance=$standingChargeBillInAdvance, suppressedEmptyBills=$suppressedEmptyBills, timezone=$timezone, version=$version, weekEpoch=$weekEpoch, yearEpoch=$yearEpoch, additionalProperties=$additionalProperties}"
 }

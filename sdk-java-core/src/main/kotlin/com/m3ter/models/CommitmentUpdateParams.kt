@@ -214,8 +214,8 @@ private constructor(
     fun contractId(): Optional<String> = body.contractId()
 
     /**
-     * Optional Product ID this Commitment consumptions should be attributed to for accounting
-     * purposes
+     * Optional Product ID this Commitment's consumptions should be attributed to for accounting
+     * purposes.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -244,7 +244,7 @@ private constructor(
     fun feeDates(): Optional<List<CommitmentFee>> = body.feeDates()
 
     /**
-     * Optional Product ID this Commitment fees should be attributed to for accounting purposes
+     * Optional Product ID this Commitment's fees should be attributed to for accounting purposes.
      *
      * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
      *   server responded with an unexpected value).
@@ -886,8 +886,8 @@ private constructor(
         fun contractId(contractId: JsonField<String>) = apply { body.contractId(contractId) }
 
         /**
-         * Optional Product ID this Commitment consumptions should be attributed to for accounting
-         * purposes
+         * Optional Product ID this Commitment's consumptions should be attributed to for accounting
+         * purposes.
          */
         fun drawdownsAccountingProductId(drawdownsAccountingProductId: String) = apply {
             body.drawdownsAccountingProductId(drawdownsAccountingProductId)
@@ -940,7 +940,8 @@ private constructor(
         fun addFeeDate(feeDate: CommitmentFee) = apply { body.addFeeDate(feeDate) }
 
         /**
-         * Optional Product ID this Commitment fees should be attributed to for accounting purposes
+         * Optional Product ID this Commitment's fees should be attributed to for accounting
+         * purposes.
          */
         fun feesAccountingProductId(feesAccountingProductId: String) = apply {
             body.feesAccountingProductId(feesAccountingProductId)
@@ -1575,8 +1576,8 @@ private constructor(
         fun contractId(): Optional<String> = contractId.getOptional("contractId")
 
         /**
-         * Optional Product ID this Commitment consumptions should be attributed to for accounting
-         * purposes
+         * Optional Product ID this Commitment's consumptions should be attributed to for accounting
+         * purposes.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -1607,7 +1608,8 @@ private constructor(
         fun feeDates(): Optional<List<CommitmentFee>> = feeDates.getOptional("feeDates")
 
         /**
-         * Optional Product ID this Commitment fees should be attributed to for accounting purposes
+         * Optional Product ID this Commitment's fees should be attributed to for accounting
+         * purposes.
          *
          * @throws M3terInvalidDataException if the JSON field has an unexpected type (e.g. if the
          *   server responded with an unexpected value).
@@ -2323,8 +2325,8 @@ private constructor(
             fun contractId(contractId: JsonField<String>) = apply { this.contractId = contractId }
 
             /**
-             * Optional Product ID this Commitment consumptions should be attributed to for
-             * accounting purposes
+             * Optional Product ID this Commitment's consumptions should be attributed to for
+             * accounting purposes.
              */
             fun drawdownsAccountingProductId(drawdownsAccountingProductId: String) =
                 drawdownsAccountingProductId(JsonField.of(drawdownsAccountingProductId))
@@ -2384,8 +2386,8 @@ private constructor(
             }
 
             /**
-             * Optional Product ID this Commitment fees should be attributed to for accounting
-             * purposes
+             * Optional Product ID this Commitment's fees should be attributed to for accounting
+             * purposes.
              */
             fun feesAccountingProductId(feesAccountingProductId: String) =
                 feesAccountingProductId(JsonField.of(feesAccountingProductId))
