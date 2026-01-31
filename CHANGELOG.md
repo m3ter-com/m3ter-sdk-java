@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.5.1 (2026-01-31)
+
+Full Changelog: [v0.5.0...v0.5.1](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.5.0...v0.5.1)
+
+### Chores
+
+* **internal:** allow passing args to `./scripts/test` ([8fe5d12](https://github.com/m3ter-com/m3ter-sdk-java/commit/8fe5d12d621bb65422e5986710c416a2a1c148c7))
+
 ## 0.5.0 (2026-01-29)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/m3ter-com/m3ter-sdk-java/compare/v0.4.0...v0.5.0)

@@ -9,7 +9,7 @@ repositories {
 
 allprojects {
     group = "com.m3ter"
-    version = "0.5.0" // x-release-please-version
+    version = "0.5.1" // x-release-please-version
 }
 
 subprojects {
